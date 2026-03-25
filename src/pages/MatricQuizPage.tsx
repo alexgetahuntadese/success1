@@ -157,6 +157,10 @@ const MatricQuizPage = () => {
         {showExplanation && (
           <Card className="bg-white/[0.04] backdrop-blur-xl border-white/[0.08] mb-6 animate-fade-in">
             <CardContent className="p-5">
+              <p className="text-emerald-300 text-sm font-medium mb-2">
+                Correct answer: {String.fromCharCode(65 + currentQuestion.correctAnswer)}.{" "}
+                {currentQuestion.options[currentQuestion.correctAnswer]}
+              </p>
               <p className="text-white/70 text-sm">{currentQuestion.explanation}</p>
             </CardContent>
           </Card>

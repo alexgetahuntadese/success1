@@ -1,0 +1,88 @@
+import fs from "node:fs";
+import path from "node:path";
+
+const filePath = path.join(process.cwd(), "src", "data", "matric2017ChemistryQuestions.ts");
+let text = fs.readFileSync(filePath, "utf8");
+
+const replacements = new Map([
+  ["m2017-chem-1", "Soda-lime glass is made by heating silica with sodium carbonate and limestone, which is the standard composition of ordinary window glass."],
+  ["m2017-chem-2", "For a galvanic cell, E°cell = E°cathode - E°anode. Since 0.51 = E°B - (-0.76), the reduction potential of B is -0.25 V."],
+  ["m2017-chem-3", "Nylon is a strong synthetic fiber widely used in ropes, clothes, combs, and stockings."],
+  ["m2017-chem-4", "The Ostwald process uses platinum as the catalyst for oxidation of ammonia during nitric acid production."],
+  ["m2017-chem-5", "For reactions involving solid reactants, factors like temperature and surface condition matter, but the container volume is not the main rate factor."],
+  ["m2017-chem-6", "O2^- has one more electron than O2, so the extra electron enters an antibonding pi* orbital in the molecular orbital diagram."],
+  ["m2017-chem-7", "Kc alone does not show which way the system will move unless the current concentrations are known and compared through Qc."],
+  ["m2017-chem-8", "Using lambda = c/f gives (3.00 x 10^8)/(7.11 x 10^14) m = 4.219 x 10^-7 m = 421.9 nm."],
+  ["m2017-chem-9", "Moving to a higher energy level means the electron goes farther from the nucleus, so energy must be absorbed."],
+  ["m2017-chem-10", "For an s orbital, l = 0 and therefore m_l = 0. Since it is the 5s orbital, n = 5 and spin can be +1/2 or -1/2."],
+  ["m2017-chem-11", "In helium both electrons occupy the 1s orbital, but the Pauli exclusion principle requires opposite spins."],
+  ["m2017-chem-12", "A covalent bond is formed when atoms share electrons rather than transfer them."],
+  ["m2017-chem-13", "Dipole-dipole forces are attractions between molecules that have permanent dipoles, so they occur between polar molecules."],
+  ["m2017-chem-14", "Among common intermolecular attractions, van der Waals forces are weaker than hydrogen bonding and much weaker than ionic attractions."],
+  ["m2017-chem-15", "More greenhouse gases trap more infrared radiation, so that statement is false and is therefore the correct choice for NOT true."],
+  ["m2017-chem-16", "Crops can be regrown and replaced over relatively short times, so they are renewable resources."],
+  ["m2017-chem-17", "NH3 is a Bronsted-Lowry base because it accepts a proton to form NH4+."],
+  ["m2017-chem-18", "In molten PbBr2, bromide ions lose electrons at the anode, producing bromine gas, while Pb2+ is reduced at the cathode."],
+  ["m2017-chem-19", "Dumping non-biodegradable waste mainly contaminates soil and land surfaces, so it is land pollution."],
+  ["m2017-chem-20", "During conversion of pig iron to steel, impurities such as carbon are oxidized and removed."],
+  ["m2017-chem-21", "The law of conservation of mass states that total mass remains constant during a chemical reaction."],
+  ["m2017-chem-22", "Using d = PM/RT with P = 900/760 atm, M = 16 for CH4, T = 298 K, and R = 0.082 gives about 0.78 g/L."],
+  ["m2017-chem-23", "By Graham's law, rate is inversely proportional to the square root of molar mass. Methane is four times heavier than helium, so it diffuses at half the rate and takes twice as long: 4.5 minutes."],
+  ["m2017-chem-24", "Reaction rate is defined by how fast reactant concentrations decrease or product concentrations increase per unit time."],
+  ["m2017-chem-25", "This source key appears inconsistent with Le Chatelier's principle. Increasing reactants and decreasing product would usually shift this equilibrium to the right, not the left."],
+  ["m2017-chem-26", "Balancing 4Al + 3O2 -> 2Al2O3 shows that the coefficient of aluminum is 4."],
+  ["m2017-chem-27", "Heating an ionic compound in a crucible lets you observe the temperature at which it melts, so this tests melting point."],
+  ["m2017-chem-28", "The weighted average is (107 x 0.52) + (108 x 0.48) = 107.48."],
+  ["m2017-chem-29", "A cation forms when a neutral atom loses one or more electrons, as sodium does here."],
+  ["m2017-chem-30", "The end point is detected by the indicator color change, while the equivalence point is the stoichiometric point where acid and base have fully reacted."],
+  ["m2017-chem-31", "Faraday's first law states that the mass deposited is proportional to the quantity of electricity passed, giving m = MIt/(nF)."],
+  ["m2017-chem-32", "Industrial manufacturing converts raw materials into useful products through planned processing steps using energy."],
+  ["m2017-chem-33", "For a weak acid, x ≈ sqrt(KaC) = sqrt((7.1 x 10^-4)(0.5)) ≈ 0.0188 M, so percent ionization is (0.0188/0.5) x 100 ≈ 3.8%."],
+  ["m2017-chem-34", "In this reaction, sulfuric acid oxidizes copper to Cu2+ while sulfur in H2SO4 is reduced from +6 to +4 in SO2, so H2SO4 acts as the oxidizing agent."],
+  ["m2017-chem-35", "pOH = 2 means [OH-] = 10^-2 M. Then Kb = x^2/(0.47 - x) ≈ (10^-2)^2/0.46 ≈ 2.17 x 10^-4."],
+  ["m2017-chem-36", "That statement is the incorrect one because electrons move from the zinc anode to the copper cathode, not the reverse."],
+  ["m2017-chem-39", "Acidic oxides react with water to produce acids, such as SO3 forming H2SO4."],
+  ["m2017-chem-40", "A weak acid ionizes only partially in water, unlike a strong acid which ionizes almost completely."],
+  ["m2017-chem-41", "A pH of 13 is far above 7, so the solution is strongly basic."],
+  ["m2017-chem-42", "Calcium reacts with water to form calcium hydroxide, making the solution basic and turning red litmus blue."],
+  ["m2017-chem-43", "Since c = lambda f and the speed of light is constant in a given medium, frequency increases when wavelength decreases."],
+  ["m2017-chem-44", "Ethanol has hydrogen bonding, giving it a much higher boiling point than ethene, ethane, or ethanal."],
+  ["m2017-chem-45", "A Lewis base donates an electron pair to form a coordinate bond."],
+  ["m2017-chem-46", "Percent ionization is the amount ionized divided by the initial concentration, multiplied by 100, so it is (x/0.2) x 100%."],
+  ["m2017-chem-47", "Scandium has a partially filled d subshell in its atom, so it is classified as a transition element."],
+  ["m2017-chem-48", "NaCl has a stronger ionic lattice and a higher melting point than CuCl2, so it withstands heating to a higher temperature before melting."],
+  ["m2017-chem-49", "HF, H2O, and NH3 all form hydrogen bonds, which raise their boiling points above similar molecules."],
+  ["m2017-chem-50", "Average kinetic energy depends only on absolute temperature, not on how much gas is present."],
+  ["m2017-chem-51", "If the gas diffuses at half the rate of He, then by Graham's law sqrt(4/M) = 1/2, so M = 16 g/mol."],
+  ["m2017-chem-52", "Boiling chips provide nucleation sites so the liquid boils smoothly and avoids bumping."],
+  ["m2017-chem-53", "In KMnO4, K is +1 and four oxygens contribute -8 total, so manganese must be +7."],
+  ["m2017-chem-54", "Numbering from the double-bond end gives the alkene at carbon 1 and the methyl substituent at carbon 2, matching 2-methyl-1-butene."],
+  ["m2017-chem-55", "Ethene is oxidized industrially to give ethane-1,2-diol, so it is the starting organic compound used."],
+  ["m2017-chem-56", "Methane is the major component of natural gas."],
+  ["m2017-chem-57", "The source is internally inconsistent here: the printed stem states a correct Kp of 1.56 x 10^-7, but none of the listed options match that value."],
+  ["m2017-chem-58", "Tetrachloroethene, C2Cl4, is the standard solvent used in dry cleaning."],
+  ["m2017-chem-59", "BF3 has three bonding regions around boron and no lone pair on the central atom, so its geometry is trigonal planar."],
+  ["m2017-chem-60", "Water always contains hydrogen and oxygen in the same fixed mass ratio, which is the law of definite proportion."],
+  ["m2017-chem-61", "At equilibrium the reaction is dynamic: both directions continue, but at equal rates."],
+  ["m2017-chem-62", "Hydrocarbons containing double or triple bonds are called unsaturated hydrocarbons."],
+  ["m2017-chem-63", "Atom economy is (molar mass of desired product / total molar mass of reactants) x 100, which gives 30.43% for this reaction."],
+  ["m2017-chem-64", "Food preservation prevents microbial growth and slows oxidation that spoils fats and oils."],
+  ["m2017-chem-65", "In molten NaCl, Na+ is reduced to sodium metal at the cathode and Cl- is oxidized to chlorine gas at the anode, giving this overall reaction."],
+  ["m2017-chem-66", "In dilute sulfuric acid, H+ is reduced at the cathode to hydrogen gas, so it is discharged at the negative electrode."],
+  ["m2017-chem-67", "Redox reactions involve electron transfer and changes in oxidation number, whereas non-redox reactions do not."],
+  ["m2017-chem-68", "The solid carbon is omitted from the equilibrium expression, so K = [CO]^2/[CO2]."],
+  ["m2017-chem-69", "At room temperature and 1 atm, both water and mercury are liquids."],
+  ["m2017-chem-70", "The ideal gas law PV = nRT includes pressure, volume, temperature, and number of moles together."],
+  ["m2017-chem-71", "The relative charges are electron = -1, proton = +1, and neutron = 0."],
+  ["m2017-chem-72", "Bohr's model proposes that electrons move around the nucleus in fixed circular energy levels."],
+  ["m2017-chem-73", "Periodicity means properties recur in a regular pattern across the periodic table as atomic number increases."],
+  ["m2017-chem-74", "Hydrogen bonding occurs when hydrogen is bonded to a highly electronegative atom such as O, N, or F and interacts with a lone pair nearby."],
+]);
+
+for (const [id, explanation] of replacements) {
+  const pattern = new RegExp(`(id: "${id}",[\\s\\S]*?explanation: )"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"`, "m");
+  text = text.replace(pattern, `$1${JSON.stringify(explanation)}`);
+}
+
+fs.writeFileSync(filePath, text);
+console.log(`Updated ${replacements.size} explanations.`);

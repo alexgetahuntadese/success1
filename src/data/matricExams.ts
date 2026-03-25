@@ -1,4 +1,18 @@
+import { matric2015BiologyQuestions } from "./matric2015BiologyQuestions";
+import { matric2015EnglishQuestions } from "./matric2015EnglishQuestions";
+import { matric2015MathQuestions } from "./matric2015MathQuestions";
+import { matric2016BiologyQuestions } from "./matric2016BiologyQuestions";
+import { matric2016ChemistryQuestions } from "./matric2016ChemistryQuestions";
+import { matric2016EnglishQuestions } from "./matric2016EnglishQuestions";
 import { matric2016MathQuestions } from "./matric2016MathQuestions";
+import { matric2016PhysicsQuestions } from "./matric2016PhysicsQuestions";
+import { matric2016ScholasticAptitudeQuestions } from "./matric2016ScholasticAptitudeQuestions";
+import { matric2017BiologyQuestions } from "./matric2017BiologyQuestions";
+import { matric2017ChemistryQuestions } from "./matric2017ChemistryQuestions";
+import { matric2017EnglishQuestions } from "./matric2017EnglishQuestions";
+import { matric2017MathQuestions } from "./matric2017MathQuestions";
+import { matric2017PhysicsQuestions } from "./matric2017PhysicsQuestions";
+import { matric2017ScholasticAptitudeQuestions } from "./matric2017ScholasticAptitudeQuestions";
 
 export interface MatricExamQuestion {
   id: string;
@@ -20,24 +34,37 @@ export interface MatricExamYear {
 
 export const matricExams: MatricExamYear[] = [
   {
+    year: 2017,
+    subjects: [
+      { subject: "Mathematics", questions: matric2017MathQuestions },
+      { subject: "Physics", questions: matric2017PhysicsQuestions },
+      { subject: "Chemistry", questions: matric2017ChemistryQuestions },
+      { subject: "Biology", questions: matric2017BiologyQuestions },
+      { subject: "English", questions: matric2017EnglishQuestions },
+      { subject: "Scholastic Aptitude Test", questions: matric2017ScholasticAptitudeQuestions },
+      { subject: "Civics", questions: [] },
+    ],
+  },
+  {
     year: 2016,
     subjects: [
       { subject: "Mathematics", questions: matric2016MathQuestions },
-      { subject: "Physics", questions: [] },
-      { subject: "Chemistry", questions: [] },
-      { subject: "Biology", questions: [] },
-      { subject: "English", questions: [] },
+      { subject: "Physics", questions: matric2016PhysicsQuestions },
+      { subject: "Chemistry", questions: matric2016ChemistryQuestions },
+      { subject: "Biology", questions: matric2016BiologyQuestions },
+      { subject: "English", questions: matric2016EnglishQuestions },
+      { subject: "Scholastic Aptitude Test", questions: matric2016ScholasticAptitudeQuestions },
       { subject: "Civics", questions: [] },
     ],
   },
   {
     year: 2015,
     subjects: [
-      { subject: "Mathematics", questions: [] },
+      { subject: "Mathematics", questions: matric2015MathQuestions },
       { subject: "Physics", questions: [] },
       { subject: "Chemistry", questions: [] },
-      { subject: "Biology", questions: [] },
-      { subject: "English", questions: [] },
+      { subject: "Biology", questions: matric2015BiologyQuestions },
+      { subject: "English", questions: matric2015EnglishQuestions },
       { subject: "Civics", questions: [] },
     ],
   },
