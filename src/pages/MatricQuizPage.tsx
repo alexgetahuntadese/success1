@@ -1,0 +1,178 @@
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { ArrowLeft, CheckCircle2, XCircle, ChevronRight } from 'lucide-react';
+import { getMatricQuestions, MatricExamQuestion } from '@/data/matricExams';
+import TopBar from '@/components/TopBar';
+import StarField from '@/components/StarField';
+
+const MatricQuizPage = () => {
+  const { year, subject } = useParams<{ year: string; subject: string }>();
+  const navigate = useNavigate();
+  const yearNum = Number(year);
+  const questions = getMatricQuestions(yearNum, subject ?? '');
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [showExplanation, setShowExplanation] = useState(false);
+  const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
+
+  if (questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 overflow-hidden relative flex items-center justify-center">
+        <StarField starCount={30} shootingCount={2} />
+        <TopBar />
+        <div className="text-center text-white relative z-10">
+          <p className="text-xl mb-4">No questions available yet for {subject} ({yearNum} E.C.)</p>
+          <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => navigate(`/matric/${yearNum}`)}>
+            Go Back
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion: MatricExamQuestion = questions[currentIndex];
+
+  const handleAnswer = (index: number) => {
+    if (selectedAnswer !== null) return;
+    setSelectedAnswer(index);
+    setShowExplanation(true);
+    if (index === currentQuestion.correctAnswer) {
+      setScore((s) => s + 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentIndex + 1 >= questions.length) {
+      setFinished(true);
+    } else {
+      setCurrentIndex((i) => i + 1);
+      setSelectedAnswer(null);
+      setShowExplanation(false);
+    }
+  };
+
+  if (finished) {
+    const percentage = Math.round((score / questions.length) * 100);
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 overflow-hidden relative">
+        <StarField starCount={30} shootingCount={2} />
+        <TopBar />
+        <div className="max-w-lg mx-auto relative z-10 mt-20 text-center">
+          <Card className="bg-white/[0.06] backdrop-blur-xl border-white/[0.1]">
+            <CardContent className="p-8">
+              <h2 className="text-3xl font-bold text-white mb-2">Exam Complete!</h2>
+              <p className="text-white/50 mb-6">{subject} — {yearNum} E.C.</p>
+              <div className="text-6xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent mb-2">
+                {percentage}%
+              </div>
+              <p className="text-white/60 mb-8">{score} / {questions.length} correct</p>
+              <div className="flex gap-3 justify-center">
+                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => navigate(`/matric/${yearNum}`)}>
+                  Back to Subjects
+                </Button>
+                <Button className="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white" onClick={() => { setCurrentIndex(0); setSelectedAnswer(null); setShowExplanation(false); setScore(0); setFinished(false); }}>
+                  Retry
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 overflow-hidden relative">
+      <StarField starCount={30} shootingCount={2} />
+      <TopBar />
+
+      <div className="max-w-2xl mx-auto relative z-10">
+        <div className="flex items-center gap-4 mb-6">
+          <Button variant="ghost" size="icon" onClick={() => navigate(`/matric/${yearNum}`)} className="text-white/60 hover:text-white hover:bg-white/10">
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div className="flex-1">
+            <h1 className="text-xl font-bold text-white">{subject} — {yearNum} E.C.</h1>
+            <p className="text-white/40 text-sm">Question {currentIndex + 1} of {questions.length}</p>
+          </div>
+        </div>
+
+        {/* Progress bar */}
+        <div className="w-full h-1.5 bg-white/10 rounded-full mb-8">
+          <div
+            className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all duration-300"
+            style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
+          />
+        </div>
+
+        <Card className="bg-white/[0.04] backdrop-blur-xl border-white/[0.08] mb-6">
+          <CardContent className="p-6">
+            <p className="text-white text-lg font-medium mb-6">
+              <span className="text-white/50 mr-2">{currentIndex + 1}.</span>
+              {currentQuestion.question}
+            </p>
+            <div className="space-y-3">
+              {currentQuestion.options.map((option, idx) => {
+                let borderClass = 'border-white/[0.08] hover:border-white/20';
+                let bgClass = 'bg-white/[0.02] hover:bg-white/[0.06]';
+
+                if (selectedAnswer !== null) {
+                  if (idx === currentQuestion.correctAnswer) {
+                    borderClass = 'border-emerald-500/50';
+                    bgClass = 'bg-emerald-500/10';
+                  } else if (idx === selectedAnswer) {
+                    borderClass = 'border-red-500/50';
+                    bgClass = 'bg-red-500/10';
+                  }
+                }
+
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => handleAnswer(idx)}
+                    disabled={selectedAnswer !== null}
+                    className={`w-full text-left p-4 rounded-xl border ${borderClass} ${bgClass} transition-all duration-200 flex items-center gap-3`}
+                  >
+                    <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white/60 text-sm font-medium shrink-0">
+                      {String.fromCharCode(65 + idx)}
+                    </span>
+                    <span className="text-white/80 text-sm">{option}</span>
+                    {selectedAnswer !== null && idx === currentQuestion.correctAnswer && (
+                      <CheckCircle2 className="h-5 w-5 text-emerald-400 ml-auto shrink-0" />
+                    )}
+                    {selectedAnswer === idx && idx !== currentQuestion.correctAnswer && (
+                      <XCircle className="h-5 w-5 text-red-400 ml-auto shrink-0" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+
+        {showExplanation && (
+          <Card className="bg-white/[0.04] backdrop-blur-xl border-white/[0.08] mb-6 animate-fade-in">
+            <CardContent className="p-5">
+              <p className="text-white/70 text-sm">{currentQuestion.explanation}</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {selectedAnswer !== null && (
+          <div className="flex justify-end">
+            <Button onClick={handleNext} className="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white gap-2">
+              {currentIndex + 1 >= questions.length ? 'Finish' : 'Next'}
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default MatricQuizPage;
