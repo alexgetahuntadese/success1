@@ -724,7 +724,9 @@ const ChaptersPage = () => {
           })(),
           id: index + 1,
           title: chapter,
-          description: `Grade 9 ${decodedSubject} - ${chapter}`,
+          description: decodedSubject === 'Amharic'
+            ? `የ9ኛ ክፍል አማርኛ - ${chapter}`
+            : `Grade 9 ${decodedSubject} - ${chapter}`,
           duration: '20 min',
           difficulty: 'Medium' as const,
           progress: 0,

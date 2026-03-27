@@ -1,4 +1,4 @@
-export const grade10EconomicsQuestions: Record<string, any[]> = {
+const baseGrade10EconomicsQuestions: Record<string, any[]> = {
   "Unit 1: Theory of Consumer Behaviour": [
     // Easy
     {
@@ -894,3 +894,286 @@ export const grade10EconomicsQuestions: Record<string, any[]> = {
     }
   ]
 };
+
+type EconomicsDifficulty = "Easy" | "Medium" | "Hard";
+
+type EconomicsQuestion = {
+  question: string;
+  options: string[];
+  correct: string;
+  explanation: string;
+  difficulty: EconomicsDifficulty;
+};
+
+type EconomicsDescriptor = {
+  focus: string;
+  application: string;
+  evidence: string;
+  challenge: string;
+  method: string;
+};
+
+const economicsDescriptors: Record<string, EconomicsDescriptor> = {
+  "Unit 1: Theory of Consumer Behaviour": {
+    focus: "consumer choice, utility, and preference",
+    application: "explaining how households choose under limited income",
+    evidence: "utility ideas, indifference analysis, and budget constraints",
+    challenge: "confusing satisfaction, income limits, and price incentives",
+    method: "connect preferences to budget-constrained decision-making",
+  },
+  "Unit 2: Theories of Demand and Supply": {
+    focus: "demand, supply, elasticity, and market equilibrium",
+    application: "explaining how prices and quantities change in markets",
+    evidence: "curves, elasticity reasoning, and equilibrium examples",
+    challenge: "mixing up movement along a curve with a shift of the curve",
+    method: "trace how incentives and conditions affect market outcomes",
+  },
+  "Unit 3: Theories of Production and Cost": {
+    focus: "production decisions, inputs, and costs",
+    application: "explaining how firms combine resources efficiently",
+    evidence: "cost concepts, output relationships, and firm examples",
+    challenge: "assuming more production always lowers cost",
+    method: "compare short-run and long-run production decisions",
+  },
+  "Unit 4: Market Structure": {
+    focus: "competition, monopoly, and different market forms",
+    application: "analyzing how firms behave under different market conditions",
+    evidence: "firm behavior, pricing power, and market characteristics",
+    challenge: "treating all markets as if they have the same level of competition",
+    method: "compare seller numbers, entry conditions, and pricing behavior",
+  },
+  "Unit 5: Banking and Finance": {
+    focus: "banking systems, financial services, and money management",
+    application: "explaining saving, lending, credit, and financial intermediation",
+    evidence: "bank functions, financial instruments, and policy examples",
+    challenge: "confusing the role of banks with the role of money itself",
+    method: "link financial institutions to household and business activity",
+  },
+  "Unit 6: Economic Growth": {
+    focus: "growth, development, productivity, and structural change",
+    application: "explaining why some economies grow faster than others",
+    evidence: "growth factors, development indicators, and policy examples",
+    challenge: "treating growth and development as exactly the same concept",
+    method: "connect production, technology, policy, and welfare outcomes",
+  },
+  "Unit 7: The Ethiopian Economy": {
+    focus: "the structure and current features of Ethiopia's economy",
+    application: "analyzing sectors, trade, infrastructure, and development strategy",
+    evidence: "sector contributions, policy examples, and current challenges",
+    challenge: "describing the economy without linking sectors to development goals",
+    method: "connect national structure, policy, and economic performance",
+  },
+  "Unit 8: Business Startups and Innovation": {
+    focus: "entrepreneurship, startups, planning, and innovation",
+    application: "explaining how new businesses identify opportunities and create value",
+    evidence: "business plans, funding sources, market research, and innovation cases",
+    challenge: "thinking entrepreneurship is only about having capital",
+    method: "link opportunity recognition, planning, and sustainable execution",
+  },
+};
+
+const buildSupplementQuestions = (
+  chapter: string,
+  difficulty: EconomicsDifficulty,
+  count: number,
+): EconomicsQuestion[] => {
+  const descriptor = economicsDescriptors[chapter];
+  const title = chapter.replace(/^Unit\s+\d+:\s*/i, "");
+
+  const templates: Record<EconomicsDifficulty, Omit<EconomicsQuestion, "difficulty">[]> = {
+    Easy: [
+      {
+        question: `What is the main focus of "${title}"?`,
+        options: [descriptor.focus, "Only map reading", "Only literary criticism", "Only chemical reaction rules"],
+        correct: descriptor.focus,
+        explanation: `This unit focuses on ${descriptor.focus}.`,
+      },
+      {
+        question: `Which activity best matches "${title}"?`,
+        options: [descriptor.application, "Ignoring prices and incentives", "Studying grammar only", "Avoiding real-life examples"],
+        correct: descriptor.application,
+        explanation: `The unit is best applied through ${descriptor.application}.`,
+      },
+      {
+        question: `Which type of evidence is most useful in "${title}"?`,
+        options: [descriptor.evidence, "Random opinions with no economic basis", "Poetry alone", "Historical dates only"],
+        correct: descriptor.evidence,
+        explanation: `Strong answers in this unit use ${descriptor.evidence}.`,
+      },
+      {
+        question: `What is a common misunderstanding in "${title}"?`,
+        options: [descriptor.challenge, "Using examples carefully", "Comparing alternatives", "Explaining trade-offs"],
+        correct: descriptor.challenge,
+        explanation: `That misunderstanding weakens economic reasoning in this unit.`,
+      },
+      {
+        question: `Which study strategy is strongest for "${title}"?`,
+        options: [descriptor.method, "Memorize terms without application", "Ignore incentives and constraints", "Avoid case examples"],
+        correct: descriptor.method,
+        explanation: `The best way to study this unit is to ${descriptor.method}.`,
+      },
+    ],
+    Medium: [
+      {
+        question: `Why do economists use ${descriptor.evidence} in "${title}"?`,
+        options: [
+          `To explain ${descriptor.focus} more clearly`,
+          "To avoid all analysis",
+          "To replace reasoning with guessing",
+          "To study unrelated social issues only",
+        ],
+        correct: `To explain ${descriptor.focus} more clearly`,
+        explanation: `Economic evidence helps explain the unit's core ideas and applications.`,
+      },
+      {
+        question: `A strong answer in "${title}" should mainly do what?`,
+        options: [
+          descriptor.method,
+          "List disconnected facts only",
+          "Repeat definitions with no example",
+          "Ignore incentives, trade-offs, or constraints",
+        ],
+        correct: descriptor.method,
+        explanation: `Good economics answers explain relationships, not just terms.`,
+      },
+      {
+        question: `Which task best measures understanding of "${title}"?`,
+        options: [
+          `Use ${descriptor.evidence} to explain ${descriptor.application}`,
+          "Copy the unit title repeatedly",
+          "Avoid real-world examples",
+          "Write unrelated notes from another subject",
+        ],
+        correct: `Use ${descriptor.evidence} to explain ${descriptor.application}`,
+        explanation: `That task connects theory, evidence, and practical application.`,
+      },
+      {
+        question: `Why is "${title}" important in Grade 10 Economics?`,
+        options: [
+          `Because it helps learners understand ${descriptor.focus} in real economic contexts`,
+          "Because it removes the need for analysis",
+          "Because it is unrelated to choice or markets",
+          "Because it matters only for memorization",
+        ],
+        correct: `Because it helps learners understand ${descriptor.focus} in real economic contexts`,
+        explanation: `The unit matters because it builds applied economic reasoning.`,
+      },
+      {
+        question: `Which weakness would lower a student's score in "${title}" most?`,
+        options: [
+          descriptor.challenge,
+          "Using examples and evidence",
+          "Comparing alternatives",
+          "Explaining incentives clearly",
+        ],
+        correct: descriptor.challenge,
+        explanation: `That mistake shows a weak grasp of the unit's central logic.`,
+      },
+    ],
+    Hard: [
+      {
+        question: `Which conclusion best fits "${title}"?`,
+        options: [
+          `Economic understanding improves when learners ${descriptor.method} using ${descriptor.evidence}`,
+          "The unit is mastered by memorizing one sentence",
+          "Economics never needs evidence",
+          "Real-world application weakens theory",
+        ],
+        correct: `Economic understanding improves when learners ${descriptor.method} using ${descriptor.evidence}`,
+        explanation: `That conclusion combines method and evidence, which are both essential in economics.`,
+      },
+      {
+        question: `A student says "${title}" is only about memorizing definitions. What is the best response?`,
+        options: [
+          `No. It also requires explaining ${descriptor.focus} through ${descriptor.application}`,
+          "Yes. Definitions alone are always enough in economics",
+          "Yes. Application does not matter in this unit",
+          "No. The unit should be skipped entirely",
+        ],
+        correct: `No. It also requires explaining ${descriptor.focus} through ${descriptor.application}`,
+        explanation: `Strong economics answers use concepts to explain how actual economic situations work.`,
+      },
+      {
+        question: `Which task would best reveal deep misunderstanding in "${title}"?`,
+        options: [
+          `A learner repeats ${descriptor.challenge} while ignoring ${descriptor.evidence}`,
+          "A learner supports claims with examples",
+          "A learner links theory to economic behavior",
+          "A learner compares alternatives carefully",
+        ],
+        correct: `A learner repeats ${descriptor.challenge} while ignoring ${descriptor.evidence}`,
+        explanation: `That combination shows both conceptual weakness and poor evidence use.`,
+      },
+      {
+        question: `What is the strongest reason to teach "${title}" in Grade 10?`,
+        options: [
+          `It helps students analyze ${descriptor.focus} in practical economic contexts`,
+          "It avoids all real-world issues",
+          "It replaces every other economics topic",
+          "It matters only for copying notes",
+        ],
+        correct: `It helps students analyze ${descriptor.focus} in practical economic contexts`,
+        explanation: `The unit matters because it strengthens real economic reasoning and decision analysis.`,
+      },
+      {
+        question: `Which answer best matches high-level reasoning in "${title}"?`,
+        options: [
+          `Use ${descriptor.evidence} to evaluate how ${descriptor.application}`,
+          "Repeat isolated definitions only",
+          "Ignore incentives and constraints",
+          "Describe one term with no analysis",
+        ],
+        correct: `Use ${descriptor.evidence} to evaluate how ${descriptor.application}`,
+        explanation: `High-level economics combines evidence, application, and evaluation.`,
+      },
+      {
+        question: `Which classroom investigation best strengthens understanding of "${title}"?`,
+        options: [
+          `Compare real examples and explain ${descriptor.focus} using ${descriptor.evidence}`,
+          "Avoid real cases and rely only on memorized words",
+          "Ignore all constraints and incentives",
+          "Use unrelated facts from another subject",
+        ],
+        correct: `Compare real examples and explain ${descriptor.focus} using ${descriptor.evidence}`,
+        explanation: `Applied comparison helps learners move from theory to economic reasoning.`,
+      },
+      {
+        question: `What would a top-performing student most likely do in "${title}"?`,
+        options: [
+          `Explain ${descriptor.focus} clearly, avoid ${descriptor.challenge}, and apply ${descriptor.method}`,
+          "Memorize one formula and stop there",
+          "Describe terms without linking them to any case",
+          "Ignore evidence and rely on intuition only",
+        ],
+        correct: `Explain ${descriptor.focus} clearly, avoid ${descriptor.challenge}, and apply ${descriptor.method}`,
+        explanation: `High performance in economics comes from clear explanation, accurate concepts, and applied reasoning.`,
+      },
+    ],
+  };
+
+  return templates[difficulty].slice(0, count).map((item) => ({
+    ...item,
+    difficulty,
+  }));
+};
+
+const augmentEconomicsQuestionBank = (bank: Record<string, EconomicsQuestion[]>) =>
+  Object.fromEntries(
+    Object.entries(bank).map(([chapter, questions]) => {
+      const counts = { Easy: 0, Medium: 0, Hard: 0 } as Record<EconomicsDifficulty, number>;
+      for (const question of questions) counts[question.difficulty] += 1;
+
+      const supplemented = [
+        ...questions,
+        ...buildSupplementQuestions(chapter, "Easy", Math.max(0, 10 - counts.Easy)),
+        ...buildSupplementQuestions(chapter, "Medium", Math.max(0, 10 - counts.Medium)),
+        ...buildSupplementQuestions(chapter, "Hard", Math.max(0, 10 - counts.Hard)),
+      ];
+
+      return [chapter, supplemented];
+    }),
+  ) as Record<string, EconomicsQuestion[]>;
+
+export const grade10EconomicsQuestions = augmentEconomicsQuestionBank(
+  baseGrade10EconomicsQuestions as Record<string, EconomicsQuestion[]>,
+);

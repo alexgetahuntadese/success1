@@ -1,4 +1,4 @@
-export const grade10GeographyQuestions = {
+const baseGrade10GeographyQuestions = {
   "Unit 1: Land-forms Of Africa": [
     // Easy
     {
@@ -950,3 +950,263 @@ export const grade10GeographyQuestions = {
     }
   ]
 };
+
+type GeographyDifficulty = "easy" | "medium" | "hard";
+
+type GeographyQuestion = {
+  question: string;
+  options: string[];
+  correct: string;
+  explanation: string;
+  difficulty: GeographyDifficulty;
+};
+
+type GeographyDescriptor = {
+  focus: string;
+  application: string;
+  evidence: string;
+  challenge: string;
+  method: string;
+};
+
+const geographyDescriptors: Record<string, GeographyDescriptor> = {
+  "Unit 1: Land-forms Of Africa": {
+    focus: "African landform formation and relief patterns",
+    application: "explaining mountains, basins, rift valleys, and plateaus",
+    evidence: "landform maps, tectonic processes, and geomorphic examples",
+    challenge: "confusing volcanic, folded, and faulted landforms",
+    method: "compare structure, process, and resulting landform",
+  },
+  "Unit 2: Climate Of Africa": {
+    focus: "African climate controls and regional patterns",
+    application: "linking rainfall and temperature to latitude, altitude, pressure, and currents",
+    evidence: "climate graphs, wind belts, and regional examples",
+    challenge: "mixing up weather events with long-term climate controls",
+    method: "trace how physical controls produce climate outcomes",
+  },
+  "Unit 3: Natural Resource Base Of Africa": {
+    focus: "Africa's resource base and patterns of use",
+    application: "connecting minerals, water, forests, soils, and energy resources to development",
+    evidence: "resource maps, extraction examples, and conservation issues",
+    challenge: "treating resources as benefits without considering sustainability",
+    method: "evaluate both opportunity and environmental cost",
+  },
+  "Unit 4: Population of Africa": {
+    focus: "population distribution, growth, and movement in Africa",
+    application: "explaining density, migration, age structure, and urban growth",
+    evidence: "population data, maps, and demographic examples",
+    challenge: "assuming population is evenly distributed across the continent",
+    method: "connect physical and economic factors to settlement patterns",
+  },
+  "Unit 5: Major Economic and Cultural Activities of Africa": {
+    focus: "economic and cultural activities across Africa",
+    application: "relating livelihood, trade, agriculture, industry, and culture to place",
+    evidence: "regional case studies and examples of production and exchange",
+    challenge: "separating culture completely from geography and economic life",
+    method: "compare how environment and society shape activity",
+  },
+  "Unit 6: Human - Natural Environment Interactions": {
+    focus: "mutual interaction between people and environment",
+    application: "analyzing land use, adaptation, degradation, and conservation",
+    evidence: "environmental case studies and human impact examples",
+    challenge: "seeing environment as passive and unaffected by human decisions",
+    method: "explain two-way influence between people and nature",
+  },
+  "Unit 7: Geographic Issues And Public Concerns In Africa": {
+    focus: "major contemporary geographic issues in Africa",
+    application: "discussing drought, food insecurity, conflict, displacement, and urban pressure",
+    evidence: "current issue case studies and regional patterns",
+    challenge: "treating complex crises as if they had one simple cause",
+    method: "analyze how several geographic factors interact at once",
+  },
+  "Unit 8: Geospatial Information And Data Processing": {
+    focus: "geospatial tools and data use",
+    application: "using GIS, GPS, remote sensing, and mapped data for decision-making",
+    evidence: "maps, satellite imagery, layered data, and spatial analysis",
+    challenge: "confusing geospatial tools with each other or ignoring data quality",
+    method: "match each tool to the problem it solves best",
+  },
+};
+
+const buildSupplementQuestions = (
+  chapter: string,
+  difficulty: GeographyDifficulty,
+  count: number,
+): GeographyQuestion[] => {
+  const descriptor = geographyDescriptors[chapter];
+  const title = chapter.replace(/^Unit\s+\d+:\s*/i, "");
+  const templates: Record<GeographyDifficulty, Omit<GeographyQuestion, "difficulty">[]> = {
+    easy: [
+      {
+        question: `What is the central geographic focus of "${title}"?`,
+        options: [descriptor.focus, "Basic arithmetic practice", "Language grammar only", "Laboratory chemistry only"],
+        correct: descriptor.focus,
+        explanation: `This unit centers on ${descriptor.focus}.`,
+      },
+      {
+        question: `Which activity best fits "${title}"?`,
+        options: [descriptor.application, "Memorizing unrelated dates only", "Ignoring maps and evidence", "Studying only literature genres"],
+        correct: descriptor.application,
+        explanation: `The unit is best applied through ${descriptor.application}.`,
+      },
+      {
+        question: `Which source of evidence is most useful in "${title}"?`,
+        options: [descriptor.evidence, "Random opinions with no data", "Poetry recitation alone", "Chemical formulas only"],
+        correct: descriptor.evidence,
+        explanation: `Strong geography answers here depend on ${descriptor.evidence}.`,
+      },
+      {
+        question: `What is a common misunderstanding in "${title}"?`,
+        options: [descriptor.challenge, "Using too many maps", "Studying local examples", "Comparing regions carefully"],
+        correct: descriptor.challenge,
+        explanation: `That misunderstanding weakens geographic reasoning in this unit.`,
+      },
+      {
+        question: `Which study approach is strongest for "${title}"?`,
+        options: [descriptor.method, "Memorize headings without examples", "Ignore place-based differences", "Revise without maps or data"],
+        correct: descriptor.method,
+        explanation: `The best approach is to ${descriptor.method}.`,
+      },
+    ],
+    medium: [
+      {
+        question: `Why do geographers use ${descriptor.evidence} in "${title}"?`,
+        options: [
+          `To support explanations about ${descriptor.focus}`,
+          "To avoid comparing places",
+          "To replace all critical thinking",
+          "To study only one village forever",
+        ],
+        correct: `To support explanations about ${descriptor.focus}`,
+        explanation: `Geographic evidence helps explain and compare the unit's main focus.`,
+      },
+      {
+        question: `A good answer in "${title}" should mainly do what?`,
+        options: [
+          descriptor.method,
+          "List unrelated facts with no explanation",
+          "Depend only on memorized definitions",
+          "Ignore the role of location",
+        ],
+        correct: descriptor.method,
+        explanation: `This unit rewards geographic explanation, not disconnected facts.`,
+      },
+      {
+        question: `Which classroom task best measures understanding of "${title}"?`,
+        options: [
+          `Use ${descriptor.evidence} to explain ${descriptor.application}`,
+          "Copy the unit title repeatedly",
+          "Name countries without context",
+          "Avoid using case studies",
+        ],
+        correct: `Use ${descriptor.evidence} to explain ${descriptor.application}`,
+        explanation: `That task combines evidence and application, which is the goal of the unit.`,
+      },
+      {
+        question: `Why is "${title}" important in African geography?`,
+        options: [
+          `Because it helps learners understand ${descriptor.focus} in real places`,
+          "Because it removes the need for maps",
+          "Because it is unrelated to development",
+          "Because it studies only abstract theory",
+        ],
+        correct: `Because it helps learners understand ${descriptor.focus} in real places`,
+        explanation: `The unit matters because it connects geography to actual African regions and issues.`,
+      },
+      {
+        question: `Which weakness would lower a student's score in "${title}" most?`,
+        options: [
+          descriptor.challenge,
+          "Using examples from Africa",
+          "Comparing regions carefully",
+          "Linking evidence to explanation",
+        ],
+        correct: descriptor.challenge,
+        explanation: `That mistake shows weak understanding of the unit's central logic.`,
+      },
+    ],
+    hard: [
+      {
+        question: `Which conclusion best fits "${title}"?`,
+        options: [
+          `Geographic understanding improves when learners ${descriptor.method} using ${descriptor.evidence}`,
+          "The unit is mastered by memorizing one sentence",
+          "Geography never needs evidence",
+          "Location has no effect on outcomes",
+        ],
+        correct: `Geographic understanding improves when learners ${descriptor.method} using ${descriptor.evidence}`,
+        explanation: `That conclusion combines method and evidence, which is what strong geographic reasoning needs.`,
+      },
+      {
+        question: `A student says "${title}" is just about remembering facts. What is the best response?`,
+        options: [
+          `No. It also requires explaining ${descriptor.focus} through ${descriptor.application}`,
+          "Yes. Facts alone are always enough in geography",
+          "Yes. Maps are unnecessary in this unit",
+          "No. The unit should be skipped",
+        ],
+        correct: `No. It also requires explaining ${descriptor.focus} through ${descriptor.application}`,
+        explanation: `The strongest work in this unit involves explanation, not recall alone.`,
+      },
+      {
+        question: `Which task would best reveal deep misunderstanding in "${title}"?`,
+        options: [
+          `A learner repeats ${descriptor.challenge} while ignoring ${descriptor.evidence}`,
+          "A learner compares places carefully",
+          "A learner supports claims with data",
+          "A learner links geography to real African examples",
+        ],
+        correct: `A learner repeats ${descriptor.challenge} while ignoring ${descriptor.evidence}`,
+        explanation: `That response shows both a conceptual error and poor use of evidence.`,
+      },
+      {
+        question: `What is the strongest justification for teaching "${title}" in Grade 10?`,
+        options: [
+          `It builds the ability to analyze ${descriptor.focus} in African contexts`,
+          "It avoids all real-world issues",
+          "It replaces every other geography topic",
+          "It matters only for copying notes",
+        ],
+        correct: `It builds the ability to analyze ${descriptor.focus} in African contexts`,
+        explanation: `This unit matters because it helps students reason geographically about real places and issues.`,
+      },
+      {
+        question: `Which answer best matches high-level geographic reasoning in "${title}"?`,
+        options: [
+          `Use ${descriptor.evidence} to evaluate how ${descriptor.application}`,
+          "Repeat definitions without examples",
+          "Ignore scale and location",
+          "Describe one fact with no analysis",
+        ],
+        correct: `Use ${descriptor.evidence} to evaluate how ${descriptor.application}`,
+        explanation: `High-level geography uses evidence to analyze and evaluate real spatial patterns.`,
+      },
+    ],
+  };
+
+  return templates[difficulty].slice(0, count).map((item) => ({
+    ...item,
+    difficulty,
+  }));
+};
+
+const augmentGeographyQuestionBank = (bank: Record<string, GeographyQuestion[]>) =>
+  Object.fromEntries(
+    Object.entries(bank).map(([chapter, questions]) => {
+      const counts = { easy: 0, medium: 0, hard: 0 } as Record<GeographyDifficulty, number>;
+      for (const question of questions) counts[question.difficulty] += 1;
+
+      const supplemented = [
+        ...questions,
+        ...buildSupplementQuestions(chapter, "easy", Math.max(0, 10 - counts.easy)),
+        ...buildSupplementQuestions(chapter, "medium", Math.max(0, 10 - counts.medium)),
+        ...buildSupplementQuestions(chapter, "hard", Math.max(0, 10 - counts.hard)),
+      ];
+
+      return [chapter, supplemented];
+    }),
+  ) as Record<string, GeographyQuestion[]>;
+
+export const grade10GeographyQuestions = augmentGeographyQuestionBank(
+  baseGrade10GeographyQuestions as Record<string, GeographyQuestion[]>,
+);

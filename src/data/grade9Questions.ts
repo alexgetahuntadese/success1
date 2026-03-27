@@ -21,7 +21,11 @@ type Descriptor = {
 };
 
 const cleanTitle = (chapter: string) =>
-  chapter.replace(/^Unit\s+\d+:\s*/i, "").replace(/^Chapter\s+\d+:\s*/i, "").trim();
+  chapter
+    .replace(/^Unit\s+\d+:\s*/i, "")
+    .replace(/^Chapter\s+\d+:\s*/i, "")
+    .replace(/^ምዕራፍ\s*[^:]+:\s*/i, "")
+    .trim();
 
 const slugify = (value: string) =>
   value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
@@ -99,12 +103,16 @@ const inferDescriptor = (subject: string, chapter: string): Descriptor => {
   }
 
   if (subject === "Amharic") {
-    if (title.includes("novel")) return pick("novel study in Amharic", "analyze character, theme, and plot", "interpreting literary texts", "narrative structure and examples", "retelling plot without interpretation", "literary analysis");
-    if (title.includes("poetry")) return pick("poetry in Amharic", "interpret imagery and theme", "responding to poems thoughtfully", "figurative language and line analysis", "reading poetry only literally", "poem analysis");
-    if (title.includes("drama")) return pick("drama and performance", "analyze dialogue and conflict", "understanding stage action and role", "scene examples and scripts", "reading drama like ordinary narration", "script study");
-    if (title.includes("social media")) return pick("social media and communication", "use language responsibly online", "communicating ethically on digital platforms", "message examples and audience awareness", "thinking online language has no consequences", "digital texts");
-    if (title.includes("covid")) return pick("health communication in Amharic", "share clear public-awareness messages", "explaining prevention and care", "health notices and examples", "treating public communication as separate from language study", "informational texts");
-    return pick(`${cleanTitle(chapter).toLowerCase()} in Amharic`, "interpret language and expression in context", "connecting language learning to social life", "texts, vocabulary, and examples", "treating language study as memorization only", "reading and writing practice");
+    if (title.includes("ቋንቋ")) return pick("የአማርኛ ቋንቋ አወቃቀርና አጠቃቀም", "ሀሳብ በቋንቋ እንዴት እንደሚገለጽ በአውድ መተንተን", "ቃላትንና ዓረፍተ ነገሮችን በትክክል በንግግርና በጽሑፍ መጠቀም", "ጽሑፎች፣ ሰዋሰው እና አውዳዊ ምሳሌዎች", "የቋንቋ ትምህርትን የተነጠሉ ቃላት ማስታወስ ብቻ መሆኑን መመልከት", "ንባብና ጽሑፍ ልምምድ");
+    if (title.includes("ሥራ")) return pick("በሥራ እና በትጋት ዙሪያ የሚያተኩር ቋንቋ", "ጽሑፎች ሥራን፣ ኃላፊነትንና አስተዋጽኦን እንዴት እንደሚያቀርቡ መተንተን", "በአማርኛ የሥራ ባህልና ማህበራዊ ኃላፊነትን መግለጽ", "አጫጭር ጽሑፎች፣ ቃላት እና ተግባራዊ ጽሑፍ", "ምዕራፉን የሥራ ስሞች ዝርዝር ብቻ መመልከት", "መመሪያ ያለው ድርሰት");
+    if (title.includes("ማዕድን")) return pick("ስለ ማዕድንና የተፈጥሮ ሀብት የሚናገሩ የአማርኛ ጽሑፎች", "ቋንቋ ሀብትን፣ ማውጣትንና ማህበራዊ ተፅእኖን እንዴት እንደሚያብራራ መተንተን", "ልማትንና የሀብት አጠቃቀምን በግልጽ አማርኛ መወያየት", "መረጃ ሰጪ ጽሑፎችና ርእሰ ጉዳይ ቃላት", "ጉዳዩን ሳይረዱ በቃላት ላይ ብቻ ማተኮር", "የርእስ ጉዳይ ንባብ");
+    if (title.includes("ልቦለድ")) return pick("የልቦለድ ጥናት", "ገጸ ባህሪ፣ ጭብጥና ተረት አቀራረብን መተንተን", "ሥነ ጽሑፋዊ ጽሑፎችን መተርጎም", "የተረት አወቃቀርና ምሳሌዎች", "ትርጓሜ ሳይሰጥ ተረቱን ብቻ መድገም", "ሥነ ጽሑፍ ትንተና");
+    if (title.includes("ቃላዊ")) return pick("የቃላዊ ሥነ ጽሑፍ ጥናት", "ምሳሌዎችን፣ ተረቶችንና የአፍ ሥነ ጽሑፍ አቀራረብን በአውድ መተንተን", "የቃል ሥነ ጽሑፍን ከባህልና ከዕለት ተዕለት ሕይወት ጋር ማገናኘት", "ምሳሌዎች፣ ተረቶችና የአቀራረብ ምሳሌዎች", "የቃላዊ ሥነ ጽሑፍን ትርጉም የሌለው መዝናኛ ብቻ ማየት", "የአፍ ጽሑፍ ትንተና");
+    if (title.includes("ግጥም")) return pick("የግጥም ጥናት", "ምስልና ጭብጥን መተርጎም", "ለግጥሞች በአስተዋይነት ምላሽ መስጠት", "ዘይቤያዊ አገላለጽና የስንኝ ትንተና", "ግጥምን ቀጥተኛ ትርጉም ብቻ በመስጠት መንበብ", "የግጥም ትንተና");
+    if (title.includes("ድራማ")) return pick("የድራማ እና የትዕይንት ጥናት", "ውይይትና ግጭትን መተንተን", "የመድረክ እንቅስቃሴንና ሚናን መረዳት", "ትዕይንት ምሳሌዎችና ስክሪፕቶች", "ድራማን እንደ ተራ ትረካ ማንበብ", "የስክሪፕት ጥናት");
+    if (title.includes("ማህበራዊ ሚዲያ") || title.includes("ተግባቦት")) return pick("ማህበራዊ ሚዲያና ተግባቦት", "ቋንቋን በዲጂታል አውድ በኃላፊነት መጠቀም", "በመስመር ላይ መድረኮች ላይ ሥነ ምግባራዊ መልዕክት መላክ", "የመልዕክት ምሳሌዎችና የተቀባይ ግንዛቤ", "የመስመር ላይ ቋንቋ አጠቃቀም ተፅእኖ የለውም ብሎ መመልከት", "ዲጂታል ጽሑፎች");
+    if (title.includes("ኮቪድ") || title.includes("ኮሮና")) return pick("የጤና መረጃ አቀራረብ በአማርኛ", "ግልጽ የህዝብ ግንዛቤ መልዕክቶችን ማቅረብ", "መከላከልንና እንክብካቤን መግለጽ", "የጤና ማስጠንቀቂያዎችና ምሳሌዎች", "የህዝብ ግንዛቤ መልዕክትን ከቋንቋ ትምህርት ውጭ መቆጠር", "መረጃ ሰጪ ጽሑፎች");
+    return pick(`${cleanTitle(chapter)} በአማርኛ`, "ቋንቋንና አገላለጽን በአውድ መተርጎም", "የቋንቋ ትምህርትን ከማህበራዊ ሕይወት ጋር ማገናኘት", "ጽሑፎች፣ ቃላትና ምሳሌዎች", "የቋንቋ ትምህርትን ማስታወስ ብቻ እንደሆነ መመልከት", "ንባብና ጽሑፍ ልምምድ");
   }
 
   if (subject === "Geography") {
@@ -206,6 +214,43 @@ const buildChapterQuestions = (subject: string, chapter: string): Grade9Question
     chapter,
     subject,
   });
+
+  if (subject === "Amharic") {
+    return [
+      make("Easy", 1, `"${title}" የሚገኘው በየትኛው የ9ኛ ክፍል ትምህርት ነው?`, subject, others, `"${title}" በ9ኛ ክፍል አማርኛ ትምህርት ውስጥ ይገኛል።`),
+      make("Easy", 2, `"${title}" ዋና ትኩረቱ ምንድን ነው?`, descriptor.concept, peers.map((item) => item.descriptor.concept), `ይህ ምዕራፍ በዋናነት ${descriptor.concept} ላይ ያተኩራል።`),
+      make("Easy", 3, `"${title}" ጋር በትክክል የሚስማማው የመማር ግብ የቱ ነው?`, descriptor.skill, peers.map((item) => item.descriptor.skill), `ተማሪዎች በዚህ ምዕራፍ ${descriptor.skill} እንዲችሉ ይማራሉ።`),
+      make("Easy", 4, `"${title}" ጋር በተግባር በጣም የሚገናኘው ሁኔታ የቱ ነው?`, descriptor.application, peers.map((item) => item.descriptor.application), `ይህ ምዕራፍ በተግባር ${descriptor.application} ጋር ይዛመዳል።`),
+      make("Easy", 5, `"${title}" ለመከለስ በጣም የሚረዳው መሣሪያ የቱ ነው?`, descriptor.tool, peers.map((item) => item.descriptor.tool), `${descriptor.tool} ይህን ምዕራፍ ለመከለስ ጥሩ መነሻ ነው።`),
+      make("Easy", 6, `"${title}" በአጭሩ በጣም የሚገልጸው ዓረፍተ ነገር የቱ ነው?`, `${descriptor.concept} እንዲገባ ያግዛል።`, peers.slice(0, 3).map((item) => `${item.descriptor.concept} እንዲገባ ያግዛል።`), `ይህ ምዕራፉን በትክክል የሚገልጽ መልስ ነው።`),
+      make("Easy", 7, `"${title}" በደንብ የተማረ ተማሪ ምን ማድረግ መቻል አለበት?`, descriptor.skill, peers.map((item) => item.descriptor.skill), `ይህ ምዕራፍ ተማሪዎችን ${descriptor.skill} እንዲችሉ ያዘጋጃል።`),
+      make("Easy", 8, `"${title}" ውስጥ በብዛት የሚታየው የማስረጃ አይነት የቱ ነው?`, descriptor.evidence, peers.map((item) => item.descriptor.evidence), `${descriptor.evidence} የምዕራፉን ግንዛቤ ይደግፋል።`),
+      make("Easy", 9, `${peer(0).descriptor.concept} ላይ የበለጠ የሚያተኩረው ከአንድ ትምህርት ውስጥ የትኛው ሌላ ምዕራፍ ነው?`, peer(0).title, [peer(1).title, peer(2).title, title], `"${peer(0).title}" ለዚያ ትኩረት የበለጠ ይስማማል።`),
+      make("Easy", 10, `"${title}" ላይ የሚከሰት የተለመደ ስህተት የቱ ነው?`, descriptor.misconception, peers.map((item) => item.descriptor.misconception), `ይህ ስህተት ከምዕራፉ ዋና ሐሳብ ጋር ይጋጫል።`),
+
+      make("Medium", 1, `አንድ ተማሪ ${descriptor.application} ማድረግ ይፈልጋል። መጀመሪያ የትኛውን ምዕራፍ ሊከልስ ይገባል?`, title, [peer(0).title, peer(1).title, peer(2).title], `"${title}" በቀጥታ ${descriptor.concept} ላይ ስለሚያተኩር ተገቢ ነው።`),
+      make("Medium", 2, `"${title}" ጋር በተሻለ ሁኔታ የሚስማማው የክለሳ እቅድ የቱ ነው?`, `${descriptor.evidence} በመማር ${descriptor.skill} መለማመድ`, peers.map((item) => `${item.descriptor.evidence} በመማር ${item.descriptor.skill} መለማመድ`), `ይህ እቅድ እውቀትንና ተግባርን አንድ ላይ ያዋህዳል።`),
+      make("Medium", 3, `ትክክለኛው ንጽጽር የቱ ነው?`, `"${title}" በ${descriptor.concept} ላይ ያተኩራል፣ "${peer(0).title}" ደግሞ በ${peer(0).descriptor.concept} ላይ ያተኩራል።`, [`"${title}" እና "${peer(0).title}" ሙሉ በሙሉ አንድ ናቸው።`, `"${title}" የ${subject} አይደለም።`, `"${peer(0).title}" ከ${subject} ጋር ግንኙነት የለውም።`], `ሁለቱም ተያያዥ ቢሆኑም ትኩረታቸው አይመሳሰልም።`),
+      make("Medium", 4, `"${title}" ውስጥ ከፍ ያለ ውጤት የሚያስመጣ መልስ የቱ ይሆናል?`, `${descriptor.evidence} በመጠቀም ${descriptor.skill} የሚያሳይ መልስ`, peers.map((item) => `${item.descriptor.evidence} በመጠቀም ${item.descriptor.skill} የሚያሳይ መልስ`), `ጠንካራ መልሶች ከምዕራፉ ትኩረት ጋር የሚስማማ ማስረጃ ይጠቀማሉ።`),
+      make("Medium", 5, `አንድ ተማሪ "${title}" ን ቢያስታውስም በተግባር ማዋል ካልቻለ የጎደለው ምንድን ነው?`, "ተግባራዊ ግንዛቤና ምክንያታዊ አስተሳሰብ", ["ተጨማሪ መቅዳት", "የምዕራፉ ርዕስ ብቻ", "ተጨማሪ ገጾች"], `ይህ ምዕራፍ ማስታወስ ብቻ ሳይሆን መረዳትና መተግበር ይጠይቃል።`),
+      make("Medium", 6, `ከትምህርት ቤት ሥራዎች ውስጥ ከ"${title}" ጋር በተሻለ ሁኔታ የሚስማማው የቱ ነው?`, `${descriptor.tool} በመጠቀም ${descriptor.skill} የሚያሳይ ሥራ`, peers.map((item) => `${item.descriptor.tool} በመጠቀም ${item.descriptor.skill} የሚያሳይ ሥራ`), `ተገቢ የክፍል ሥራ የምዕራፉን ዘዴና ውጤት አንድ ላይ ያዛል።`),
+      make("Medium", 7, `"${title}" ዓላማውን በተሻለ ሁኔታ የሚገልጸው የቱ ነው?`, `${descriptor.concept} በ${descriptor.evidence} በመጠቀም እንዲጠቀሙ ያግዛል።`, peers.map((item) => `${item.descriptor.concept} በ${item.descriptor.evidence} በመጠቀም እንዲጠቀሙ ያግዛል።`), `ይህ አላማንና ዘዴን አንድ ላይ ያሳያል።`),
+      make("Medium", 8, `ከ"${title}" ጋር የተያያዘ ያልተረዳ አስተሳሰብን የሚያሳይ የቱ ነው?`, descriptor.misconception, peers.map((item) => item.descriptor.misconception), `ይህ ስህተት በምዕራፉ ውስጥ ደካማ መልስ ያስከትላል።`),
+      make("Medium", 9, `"${title}" ጋር በቀጥታ የሚዛመደው ውጤት የቱ ነው?`, `ተማሪዎች ${descriptor.skill} በተግባራዊ ሁኔታ ሊያሳዩ ይችላሉ።`, peers.map((item) => `ተማሪዎች ${item.descriptor.skill} በተግባራዊ ሁኔታ ሊያሳዩ ይችላሉ።`), `ዋናው ውጤት እውቀትን በተግባር ማሳየት ነው።`),
+      make("Medium", 10, `"${title}" ውስጥ በብዛት ሊቀርብ የሚችል ጥያቄ የቱ ነው?`, `${descriptor.concept} በ${descriptor.application} እንዴት እንጠቀማለን?`, peers.map((item) => `${item.descriptor.concept} በ${item.descriptor.application} እንዴት እንጠቀማለን?`), `ይህ ጥያቄ ከምዕራፉ ዋና ሐሳብ ጋር በቀጥታ ይዛመዳል።`),
+
+      make("Hard", 1, `አንድ ተማሪ "${title}" ማለት እውነታዎችን ማስታወስ ብቻ ነው ይላል። ከሚከተሉት ውስጥ በጣም ጠንካራው ምላሽ የቱ ነው?`, `አይደለም። ${descriptor.skill} ማድረግን እና ሀሳቦችን ከ${descriptor.application} ጋር ማገናኘትንም ይጠይቃል።`, [`አዎ። ማስታወስ ብቻ በቂ ነው።`, `አዎ። "${title}" ተግባራዊ ዋጋ የለውም።`, `አይደለም። ምዕራፉን መተው ይሻላል።`], `ጥሩ ውጤት ለማምጣት መረዳትና ተግባራዊ አጠቃቀም አስፈላጊ ናቸው።`),
+      make("Hard", 2, `"${title}" ጥልቅ ግንዛቤ እንዳለ ለመለካት በጣም የሚመጥነው የፈተና አይነት የቱ ነው?`, `${descriptor.evidence} በመጠቀም ${descriptor.skill} እንደሚችሉ እንዲያሳዩ መጠየቅ`, peers.map((item) => `${item.descriptor.evidence} በመጠቀም ${item.descriptor.skill} እንደሚችሉ እንዲያሳዩ መጠየቅ`), `ይህ ስራ ማስታወስ ብቻ ሳይሆን እውነተኛ ግንዛቤን ይመለከታል።`),
+      make("Hard", 3, `"${title}" ዓላማውን በማጠቃለል በጣም የሚገልጸው የቱ ነው?`, `ተማሪዎች ከትርጉም መግለጫ ወደ ${descriptor.concept} በተግባር መጠቀም ሊሸጋገሩ አለባቸው።`, peers.map((item) => `ተማሪዎች ከትርጉም መግለጫ ወደ ${item.descriptor.concept} በተግባር መጠቀም ሊሸጋገሩ አለባቸው።`), `ይህ ምዕራፉ የሚፈልገውን ከእውቀት ወደ ተግባር ሽግግር ይገልጻል።`),
+      make("Hard", 4, `"${title}" ላይ የተመሠረተ መልስን በጣም የሚያዳክም የምክንያት ስህተት የቱ ነው?`, descriptor.misconception, peers.map((item) => item.descriptor.misconception), `ይህ ስህተት የምዕራፉን ትክክለኛ ግንዛቤ በቀጥታ ያበላሻል።`),
+      make("Hard", 5, `"${title}" ን ከተማሪዎች ዕለታዊ ሕይወት ጋር ለማገናኘት በጣም የሚመጥነው የፕሮጀክት አይነት የቱ ነው?`, `ተማሪዎች ${descriptor.skill} በ${descriptor.application} እንዲያሳዩ የሚያግዙ የአካባቢ ምሳሌዎችን መጠቀም`, peers.map((item) => `ተማሪዎች ${item.descriptor.skill} በ${item.descriptor.application} እንዲያሳዩ የሚያግዙ የአካባቢ ምሳሌዎችን መጠቀም`), `ጠንካራ ፕሮጀክት ምዕራፉን ተግባራዊና የአካባቢ ልምድ ጋር ያገናኛል።`),
+      make("Hard", 6, `ለምን "${descriptor.tool}" ከበደንብ መቅዳት ይልቅ ለ"${title}" የበለጠ ይጠቅማል?`, `ምክንያቱም ይህ ምዕራፍ ተማሪዎች ${descriptor.skill} እንዲያደርጉ ይፈልጋል፣ ማስታወስ ብቻን አይደለም።`, [`ምክንያቱም መቅዳት ሁልጊዜ ግንዛቤን ያረጋግጣል።`, `ምክንያቱም መሣሪያዎች በ9ኛ ክፍል አያስፈልጉም።`, `ምክንያቱም "${title}" የምክንያት ጥያቄዎች የሉትም።`], `ይህ ምዕራፍ ንቁ አጠቃቀምን ይፈልጋል እንጂ ተራ መቅዳትን አይደለም።`),
+      make("Hard", 7, `በጣም ትክክለኛው ንጽጽር የቱ ነው?`, `"${title}" በ${descriptor.concept} ላይ ያተኩራል፣ "${peer(1).title}" ደግሞ በ${peer(1).descriptor.concept} ላይ ያተኩራል።`, [`"${title}" እና "${peer(1).title}" ሁልጊዜ አንድ አይነት መልስ ይፈልጋሉ።`, `"${peer(1).title}" የ${subject} አይደለም።`, `"${title}" ግልጽ ትኩረት የለውም።`], `ጠንካራ ተማሪዎች ተያያዥ ምዕራፎችን በትክክል ይለያያሉ።`),
+      make("Hard", 8, `"${title}" ላይ ያለ ያልተረዳ አስተሳሰብን ለማጋለጥ በጣም የሚረዳው የመምህር ጥያቄ የቱ ነው?`, `${descriptor.concept} ከ${peer(2).descriptor.concept} እንዴት ይለያል?`, [`የምዕራፉን ርዕስ በደንብ ጻፍ።`, `የገጹን ቁጥር ብቻ ተናገር።`, `የትምህርቱን ስም ብቻ ጥራ።`], `የንጽጽር ጥያቄዎች ተማሪው የሀሳቦችን ወሰን በትክክል እንደተረዳ ያሳያሉ።`),
+      make("Hard", 9, `"${title}" በ9ኛ ክፍል ሥርዓተ ትምህርት ውስጥ መኖሩ ለምን አስፈላጊ ነው?`, `ተማሪዎች ${descriptor.skill} እንዲችሉ እና ትምህርታቸውን ከክፍል ውጭ እንዲጠቀሙበት ያግዛል።`, [`የምዕራፎችን ብዛት ለመጨመር ብቻ ነው።`, `ለፈተና ብቻ ነው የሚጠቅመው።`, `ጥልቅ ግንዛቤ ሳይሰጥ ቃላትን ብቻ ያክላል።`], `ዋናው ጥቅም ተላላፊ የሆነ ግንዛቤን ማበረታታት ነው።`),
+      make("Hard", 10, `"${title}" የሚያቀርበውን ችግኝ በተሻለ ሁኔታ የሚመልሰው መልስ የቱ ነው?`, `${descriptor.evidence} እና ${descriptor.tool} በመጠቀም ተማሪዎች ${descriptor.skill} እንደሚችሉ ማሳየት`, peers.map((item) => `${item.descriptor.evidence} እና ${item.descriptor.tool} በመጠቀም ተማሪዎች ${item.descriptor.skill} እንደሚችሉ ማሳየት`), `ይህ መልስ ዘዴን፣ ማስረጃን እና ውጤትን አንድ ላይ ያቀርባል።`),
+    ];
+  }
 
   return [
     make("Easy", 1, `Which Grade 9 subject includes the chapter "${title}"?`, subject, others, `"${title}" is part of Grade 9 ${subject}.`),
