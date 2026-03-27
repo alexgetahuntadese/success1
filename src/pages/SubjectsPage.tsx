@@ -1,4 +1,5 @@
 
+import type { ComponentType } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,6 +25,47 @@ import {
   Monitor
 } from 'lucide-react';
 
+type SubjectCardData = {
+  name: string;
+  description: string;
+  chapters: number;
+  estimatedTime: string;
+  difficulty: 'Advanced' | 'Intermediate' | 'Beginner';
+  icon: ComponentType<{ className?: string }>;
+  category: 'Natural Sciences' | 'Social Sciences' | 'Languages' | 'Mathematics' | 'Applied Sciences';
+};
+
+const categoryMeta = {
+  'Mathematics': {
+    description: 'Quantitative reasoning, abstraction, proof, and formal problem solving.',
+    badgeClass: 'bg-cyan-500/15 text-cyan-200 border-cyan-400/20',
+  },
+  'Natural Sciences': {
+    description: 'Empirical sciences grounded in observation, experiment, models, and causal explanation.',
+    badgeClass: 'bg-emerald-500/15 text-emerald-200 border-emerald-400/20',
+  },
+  'Social Sciences': {
+    description: 'Human systems, institutions, development, policy, and evidence-based social analysis.',
+    badgeClass: 'bg-amber-500/15 text-amber-100 border-amber-400/20',
+  },
+  'Languages': {
+    description: 'Communication, interpretation, expression, literature, and disciplinary writing.',
+    badgeClass: 'bg-fuchsia-500/15 text-fuchsia-100 border-fuchsia-400/20',
+  },
+  'Applied Sciences': {
+    description: 'Technical and practice-oriented fields that connect scientific knowledge to real systems.',
+    badgeClass: 'bg-violet-500/15 text-violet-100 border-violet-400/20',
+  },
+} as const;
+
+const categoryOrder: SubjectCardData['category'][] = [
+  'Mathematics',
+  'Natural Sciences',
+  'Social Sciences',
+  'Languages',
+  'Applied Sciences',
+];
+
 const SubjectsPage = () => {
   const navigate = useNavigate();
   const { grade } = useParams();
@@ -48,8 +90,225 @@ const SubjectsPage = () => {
   };
 
   // Grade-specific subjects configuration
-  const getSubjectsForGrade = (gradeNum: string) => {
-    const baseSubjects = [
+  const getSubjectsForGrade = (gradeNum: string): SubjectCardData[] => {
+    if (gradeNum === '12') {
+      return [
+        {
+          name: 'Mathematics',
+          description: 'Sequences, calculus, statistics, linear programming, and business applications',
+          chapters: 5,
+          estimatedTime: '13 hours',
+          difficulty: 'Advanced',
+          icon: subjectIcons.Mathematics,
+          category: 'Mathematics',
+        },
+        {
+          name: 'Physics',
+          description: 'Applications of physics, motion, fluids, electromagnetism, and electronics',
+          chapters: 5,
+          estimatedTime: '19 hours',
+          difficulty: 'Advanced',
+          icon: subjectIcons.Physics,
+          category: 'Natural Sciences',
+        },
+        {
+          name: 'Chemistry',
+          description: 'Acid-base equilibrium, electrochemistry, industrial chemistry, and polymers',
+          chapters: 5,
+          estimatedTime: '19 hours',
+          difficulty: 'Advanced',
+          icon: subjectIcons.Chemistry,
+          category: 'Natural Sciences',
+        },
+        {
+          name: 'Biology',
+          description: 'Applications of biology, microorganisms, evolution, human systems, and climate change',
+          chapters: 6,
+          estimatedTime: '23 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.Biology,
+          category: 'Natural Sciences',
+        },
+        {
+          name: 'English',
+          description: 'Theme-based language study covering sustainability, management, health, and robotics',
+          chapters: 10,
+          estimatedTime: '38 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.English,
+          category: 'Languages',
+        },
+        {
+          name: 'History',
+          description: 'Capitalism, colonialism, world wars, modern Ethiopia, and post-1991 developments',
+          chapters: 9,
+          estimatedTime: '34 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.History,
+          category: 'Social Sciences',
+        },
+        {
+          name: 'Geography',
+          description: 'Plate tectonics, climate change, resources, development, sustainability, and geographic enquiry',
+          chapters: 8,
+          estimatedTime: '30 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.Geography,
+          category: 'Social Sciences',
+        },
+        {
+          name: 'Civic Education',
+          description: 'Democracy, rule of law, equality, justice, patriotism, participation, and civic responsibility',
+          chapters: 11,
+          estimatedTime: '26 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons['Civic Education'],
+          category: 'Social Sciences',
+        },
+        {
+          name: 'Economics',
+          description: 'Macroeconomics, demand and supply analysis, public policy, tax, inequality, and reform',
+          chapters: 8,
+          estimatedTime: '20 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.Economics,
+          category: 'Social Sciences',
+        },
+        {
+          name: 'Amharic',
+          description: 'Language, literature, criticism, poetry, research writing, and decision-focused communication',
+          chapters: 9,
+          estimatedTime: '23 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.Amharic,
+          category: 'Languages',
+        },
+        {
+          name: 'Agriculture',
+          description: 'Crop and livestock management, agroforestry, conservation, nutrition, and agricultural ICT',
+          chapters: 17,
+          estimatedTime: '39 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.Agriculture,
+          category: 'Applied Sciences',
+        },
+        {
+          name: 'Information Technology',
+          description: 'Information systems, emerging technologies, databases, web authoring, and programming',
+          chapters: 6,
+          estimatedTime: '23 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons['Information Technology'],
+          category: 'Applied Sciences',
+        },
+      ];
+    }
+
+    if (gradeNum === '11') {
+      return [
+        {
+          name: 'Mathematics',
+          description: 'Relations, rational functions, matrices, determinants, vectors, transformations, statistics, and probability',
+          chapters: 8,
+          estimatedTime: '30 hours',
+          difficulty: 'Advanced',
+          icon: subjectIcons.Mathematics,
+          category: 'Mathematics',
+        },
+        {
+          name: 'Physics',
+          description: 'Mechanics, waves, thermodynamics, electricity, optics, and modern physics',
+          chapters: 6,
+          estimatedTime: '23 hours',
+          difficulty: 'Advanced',
+          icon: subjectIcons.Physics,
+          category: 'Natural Sciences',
+        },
+        {
+          name: 'Chemistry',
+          description: 'Atomic structure, bonding, states of matter, kinetics, equilibrium, and organic compounds',
+          chapters: 6,
+          estimatedTime: '23 hours',
+          difficulty: 'Advanced',
+          icon: subjectIcons.Chemistry,
+          category: 'Natural Sciences',
+        },
+        {
+          name: 'Biology',
+          description: 'Biology and technology, animals, enzymes, genetics, body systems, and population resources',
+          chapters: 6,
+          estimatedTime: '23 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.Biology,
+          category: 'Natural Sciences',
+        },
+        {
+          name: 'Geography',
+          description: 'Continents, climate regions, resources, population, development, environmental change, and geospatial data',
+          chapters: 8,
+          estimatedTime: '30 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.Geography,
+          category: 'Social Sciences',
+        },
+        {
+          name: 'History',
+          description: 'Human evolution, civilizations, Ethiopia and the Horn, Africa, and the age of revolutions',
+          chapters: 9,
+          estimatedTime: '34 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.History,
+          category: 'Social Sciences',
+        },
+        {
+          name: 'Civic Education',
+          description: 'Democracy, constitutionalism, ethics, patriotism, equality, peace building, and good governance',
+          chapters: 11,
+          estimatedTime: '35 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons['Civic Education'],
+          category: 'Social Sciences',
+        },
+        {
+          name: 'Economics',
+          description: 'Consumer behavior, firms, national income, investment, trade, development, and Ethiopian sectors',
+          chapters: 7,
+          estimatedTime: '27 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.Economics,
+          category: 'Social Sciences',
+        },
+        {
+          name: 'English',
+          description: 'Theme-based English covering hazards, civilization, accidents, resources, health, and artificial intelligence',
+          chapters: 10,
+          estimatedTime: '38 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.English,
+          category: 'Languages',
+        },
+        {
+          name: 'Amharic',
+          description: 'Amharic language, literature, poetry, heritage, patriotism, success, and art',
+          chapters: 10,
+          estimatedTime: '30 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.Amharic,
+          category: 'Languages',
+        },
+        {
+          name: 'Agriculture',
+          description: 'Crop production, farm animals, natural resources, biodiversity, climate adaptation, and nutrition',
+          chapters: 16,
+          estimatedTime: '50 hours',
+          difficulty: 'Intermediate',
+          icon: subjectIcons.Agriculture,
+          category: 'Applied Sciences',
+        },
+      ];
+    }
+
+    const baseSubjects: SubjectCardData[] = [
       {
         name: 'Mathematics',
         description: 'Numbers, algebra, geometry, and problem solving',
@@ -57,6 +316,7 @@ const SubjectsPage = () => {
         estimatedTime: '45 hours',
         difficulty: 'Advanced',
         icon: subjectIcons.Mathematics,
+        category: 'Mathematics',
       },
       {
         name: 'Physics',
@@ -65,6 +325,7 @@ const SubjectsPage = () => {
         estimatedTime: '40 hours',
         difficulty: 'Advanced',
         icon: subjectIcons.Physics,
+        category: 'Natural Sciences',
       },
       {
         name: 'Chemistry',
@@ -73,6 +334,7 @@ const SubjectsPage = () => {
         estimatedTime: '35 hours',
         difficulty: 'Advanced',
         icon: subjectIcons.Chemistry,
+        category: 'Natural Sciences',
       },
       {
         name: 'Biology',
@@ -81,6 +343,7 @@ const SubjectsPage = () => {
         estimatedTime: '38 hours',
         difficulty: 'Intermediate',
         icon: subjectIcons.Biology,
+        category: 'Natural Sciences',
       },
       {
         name: 'English',
@@ -89,6 +352,7 @@ const SubjectsPage = () => {
         estimatedTime: '30 hours',
         difficulty: 'Intermediate',
         icon: subjectIcons.English,
+        category: 'Languages',
       },
       {
         name: 'Geography',
@@ -97,6 +361,7 @@ const SubjectsPage = () => {
         estimatedTime: '25 hours',
         difficulty: 'Intermediate',
         icon: subjectIcons.Geography,
+        category: 'Social Sciences',
       },
       {
         name: 'History',
@@ -105,6 +370,7 @@ const SubjectsPage = () => {
         estimatedTime: '32 hours',
         difficulty: 'Intermediate',
         icon: subjectIcons.History,
+        category: 'Social Sciences',
       },
       {
         name: 'Civic Education',
@@ -113,6 +379,7 @@ const SubjectsPage = () => {
         estimatedTime: '35 hours',
         difficulty: 'Intermediate',
         icon: subjectIcons['Civic Education'],
+        category: 'Social Sciences',
       },
     ];
 
@@ -126,6 +393,7 @@ const SubjectsPage = () => {
           estimatedTime: '25 hours',
           difficulty: 'Intermediate',
           icon: subjectIcons.Amharic,
+          category: 'Languages',
         }
       );
       if (gradeNum === '10') {
@@ -137,6 +405,7 @@ const SubjectsPage = () => {
             estimatedTime: '28 hours',
             difficulty: 'Intermediate',
             icon: subjectIcons.Economics,
+            category: 'Social Sciences',
           }
         );
       }
@@ -152,6 +421,7 @@ const SubjectsPage = () => {
           estimatedTime: '50 hours',
           difficulty: 'Intermediate',
           icon: subjectIcons.Agriculture,
+          category: 'Applied Sciences',
         },
         {
           name: 'Amharic',
@@ -160,35 +430,20 @@ const SubjectsPage = () => {
           estimatedTime: '30 hours',
           difficulty: 'Intermediate',
           icon: subjectIcons.Amharic,
+          category: 'Languages',
         }
       );
     }
-
-    if (gradeNum === '12') {
-      baseSubjects.push(
-        {
-          name: 'Agriculture',
-          description: 'Crop production, livestock, soil science, and sustainable farming',
-          chapters: 6,
-          estimatedTime: '40 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.Agriculture,
-        },
-        {
-          name: 'Information Technology',
-          description: 'Computer systems, programming, databases, web development, and emerging technologies',
-          chapters: 6,
-          estimatedTime: '42 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons['Information Technology'],
-        }
-      );
-    }
-
     return baseSubjects;
   };
 
   const subjects = getSubjectsForGrade(grade || '12');
+  const groupedSubjects = categoryOrder
+    .map((category) => ({
+      category,
+      subjects: subjects.filter((subject) => subject.category === category),
+    }))
+    .filter((group) => group.subjects.length > 0);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -199,8 +454,8 @@ const SubjectsPage = () => {
     }
   };
 
-  const handleSubjectSelect = (subjectName: string) => {
-    navigate(`/grade/${grade}/subject/${encodeURIComponent(subjectName)}/chapters`);
+  const handleSubjectSelect = (subject: SubjectCardData) => {
+    navigate(`/grade/${grade}/subject/${encodeURIComponent(subject.name)}/chapters`);
   };
 
   return (
@@ -224,62 +479,89 @@ const SubjectsPage = () => {
             Grade {grade} • Ethiopian Curriculum
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
-            Choose a Subject
+            Choose a Quiz Subject
           </h1>
           <p className="text-lg text-white/50 max-w-md mx-auto">
-            Explore chapters and start learning
+            Quiz chapters live here. Notes stay in the separate notes section.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {subjects.map((subject, index) => {
-            const IconComponent = subject.icon;
-            return (
-              <div
-                key={subject.name}
-                onClick={() => handleSubjectSelect(subject.name)}
-                className="group relative cursor-pointer opacity-0 animate-fade-in"
-                style={{ animationDelay: `${0.1 + 0.08 * index}s`, animationFillMode: 'forwards' }}
-              >
-                {/* Glow effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-2xl opacity-0 group-hover:opacity-15 blur-xl transition-opacity duration-500" />
-
-                <div className="relative bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-6 transition-all duration-500 group-hover:bg-white/[0.08] group-hover:border-white/[0.15] group-hover:scale-[1.02] shadow-2xl h-full">
-                  <Sparkles className="absolute top-4 right-4 h-4 w-4 text-white/10 group-hover:text-white/30 transition-colors duration-500" />
-
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg group-hover:shadow-violet-500/30 transition-shadow duration-500">
-                      <IconComponent className="h-6 w-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white mb-1">{subject.name}</h3>
-                      <Badge className={`${getDifficultyColor(subject.difficulty)} text-xs`}>
-                        {subject.difficulty}
-                      </Badge>
-                    </div>
+        <div className="space-y-10">
+          {groupedSubjects.map((group, groupIndex) => (
+            <section
+              key={group.category}
+              className="opacity-0 animate-fade-in"
+              style={{ animationDelay: `${0.1 + 0.08 * groupIndex}s`, animationFillMode: 'forwards' }}
+            >
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-5">
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h2 className="text-2xl font-bold text-white">{group.category}</h2>
+                    <Badge variant="outline" className={categoryMeta[group.category].badgeClass}>
+                      {group.subjects.length} subjects
+                    </Badge>
                   </div>
-
-                  <p className="text-white/40 text-sm mb-5">{subject.description}</p>
-
-                  <div className="flex items-center gap-4 text-white/40 text-sm mb-5">
-                    <div className="flex items-center gap-1.5">
-                      <BookOpen className="h-3.5 w-3.5" />
-                      <span>{subject.chapters} chapters</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <Clock className="h-3.5 w-3.5" />
-                      <span>{subject.estimatedTime}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center text-white/30 group-hover:text-violet-300 text-sm transition-colors duration-300">
-                    <span>Explore chapters</span>
-                    <ArrowLeft className="ml-2 h-4 w-4 rotate-180 group-hover:translate-x-1 transition-transform duration-300" />
-                  </div>
+                  <p className="text-sm text-white/45 max-w-3xl">
+                    {categoryMeta[group.category].description}
+                  </p>
                 </div>
               </div>
-            );
-          })}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {group.subjects.map((subject) => {
+                  const IconComponent = subject.icon;
+                  return (
+                    <div
+                      key={subject.name}
+                      onClick={() => handleSubjectSelect(subject)}
+                      className="group relative cursor-pointer"
+                    >
+                      <div className="absolute -inset-1 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-2xl opacity-0 group-hover:opacity-15 blur-xl transition-opacity duration-500" />
+
+                      <div className="relative bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-6 transition-all duration-500 group-hover:bg-white/[0.08] group-hover:border-white/[0.15] group-hover:scale-[1.02] shadow-2xl h-full">
+                        <Sparkles className="absolute top-4 right-4 h-4 w-4 text-white/10 group-hover:text-white/30 transition-colors duration-500" />
+
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="p-3 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg group-hover:shadow-violet-500/30 transition-shadow duration-500">
+                            <IconComponent className="h-6 w-6 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-xl font-bold text-white mb-1">{subject.name}</h3>
+                            <div className="flex flex-wrap gap-2">
+                              <Badge className={`${getDifficultyColor(subject.difficulty)} text-xs`}>
+                                {subject.difficulty}
+                              </Badge>
+                              <Badge variant="outline" className={categoryMeta[group.category].badgeClass}>
+                                {subject.category}
+                              </Badge>
+                            </div>
+                          </div>
+                        </div>
+
+                        <p className="text-white/40 text-sm mb-5">{subject.description}</p>
+
+                        <div className="flex items-center gap-4 text-white/40 text-sm mb-5">
+                          <div className="flex items-center gap-1.5">
+                            <BookOpen className="h-3.5 w-3.5" />
+                            <span>{subject.chapters} chapters</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Clock className="h-3.5 w-3.5" />
+                            <span>{subject.estimatedTime}</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center text-white/30 group-hover:text-violet-300 text-sm transition-colors duration-300">
+                          <span>Explore quiz chapters</span>
+                          <ArrowLeft className="ml-2 h-4 w-4 rotate-180 group-hover:translate-x-1 transition-transform duration-300" />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          ))}
         </div>
       </div>
     </div>

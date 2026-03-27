@@ -1977,8 +1977,26 @@ export const grade12GeographyQuestions: { [unit: string]: GeographyQuestion[] } 
   ]
 };
 
+const grade12GeographyTitleAliases: Record<string, string> = {
+  "Unit 3: Population Policies, Programs and the Environment": "Unit 3: Population Policies Programs and the Environment",
+  "Unit 6: Environmental Sustainability Responses": "Unit 6: Solutions to Environmental and Sustainability Problems Solutions",
+};
+
+export const normalizeGrade12GeographyUnit = (unit: string) =>
+  grade12GeographyTitleAliases[unit] || unit;
+
+export const getGrade12GeographyDisplayTitle = (unit: string) => {
+  const displayTitles: Record<string, string> = {
+    "Unit 3: Population Policies Programs and the Environment": "Unit 3: Population Policies, Programs and the Environment",
+    "Unit 6: Solutions to Environmental and Sustainability Problems Solutions": "Unit 6: Environmental Sustainability Responses",
+  };
+
+  return displayTitles[unit] || unit;
+};
+
 export const getGrade12GeographyQuestions = (unit: string, difficulty: 'easy' | 'medium' | 'hard', count: number = 10) => {
-  const unitQuestions = grade12GeographyQuestions[unit];
+  const normalizedUnit = normalizeGrade12GeographyUnit(unit);
+  const unitQuestions = grade12GeographyQuestions[normalizedUnit];
   if (!unitQuestions) {
     console.log('No questions found for unit:', unit);
     return [];

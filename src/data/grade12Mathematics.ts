@@ -205,6 +205,87 @@ export const grade12Mathematics: MathSubjectData = {
       explanation: "From a₄ = 24 and a₇ = 192: a₇/a₄ = r³ = 192/24 = 8, so r = 2. Then a₄ = a₁r³ = 24, so a₁ = 24/8 = 3. Therefore a₁₀ = 3 × 2⁹ = 3 × 512 = 1536.",
       difficulty: "Hard",
       chapter: "Unit 1: Sequence and Series"
+    },
+    {
+      id: 1022,
+      question: "What is the 4th term of the geometric sequence 5, 10, 20, ...?",
+      options: ["25", "30", "40", "45"],
+      correct: "40",
+      explanation: "This is a geometric sequence with common ratio 2, so the 4th term is 20 times 2 = 40.",
+      difficulty: "Easy",
+      chapter: "Unit 1: Sequence and Series"
+    },
+    {
+      id: 1023,
+      question: "If the first term of an arithmetic sequence is 12 and the 6th term is 27, what is the common difference?",
+      options: ["2", "3", "4", "5"],
+      correct: "3",
+      explanation: "Using a6 = a1 + 5d: 27 = 12 + 5d, so d = 3.",
+      difficulty: "Easy",
+      chapter: "Unit 1: Sequence and Series"
+    },
+    {
+      id: 1024,
+      question: "What is the sum of the first five terms of the geometric series 2 + 4 + 8 + 16 + ...?",
+      options: ["30", "48", "62", "64"],
+      correct: "62",
+      explanation: "The first five terms are 2, 4, 8, 16, and 32. Their sum is 62.",
+      difficulty: "Easy",
+      chapter: "Unit 1: Sequence and Series"
+    },
+    {
+      id: 1025,
+      question: "Find the nth term of the geometric sequence 4, 12, 36, 108, ...",
+      options: ["4 * 2^(n-1)", "4 * 3^(n-1)", "3 * 4^(n-1)", "12 * 3^(n-2)"],
+      correct: "4 * 3^(n-1)",
+      explanation: "The first term is 4 and the common ratio is 3, so an = 4 * 3^(n-1).",
+      difficulty: "Medium",
+      chapter: "Unit 1: Sequence and Series"
+    },
+    {
+      id: 1026,
+      question: "In an arithmetic sequence, the 9th term is 29 and the common difference is 3. What is the first term?",
+      options: ["2", "5", "8", "11"],
+      correct: "5",
+      explanation: "Using an = a1 + (n-1)d: 29 = a1 + 8(3), so a1 = 5.",
+      difficulty: "Medium",
+      chapter: "Unit 1: Sequence and Series"
+    },
+    {
+      id: 1027,
+      question: "Find the sum of the infinite geometric series 6 - 3 + 1.5 - 0.75 + ...",
+      options: ["2", "3", "4", "6"],
+      correct: "4",
+      explanation: "Here a1 = 6 and r = -1/2. Since |r| < 1, S = a1/(1-r) = 6/(1 + 1/2) = 4.",
+      difficulty: "Medium",
+      chapter: "Unit 1: Sequence and Series"
+    },
+    {
+      id: 1028,
+      question: "In an arithmetic sequence, the 4th term is 13 and the 9th term is 28. Find the sum of the first 12 terms.",
+      options: ["228", "234", "246", "252"],
+      correct: "246",
+      explanation: "From a4 = a + 3d = 13 and a9 = a + 8d = 28, we get d = 3 and a = 4. Then S12 = 12/2[2(4) + 11(3)] = 246.",
+      difficulty: "Hard",
+      chapter: "Unit 1: Sequence and Series"
+    },
+    {
+      id: 1029,
+      question: "What is the sum of the geometric series 64 + 32 + 16 + 8 + 4 + 2 + 1?",
+      options: ["126", "127", "128", "129"],
+      correct: "127",
+      explanation: "Adding the terms gives 127.",
+      difficulty: "Hard",
+      chapter: "Unit 1: Sequence and Series"
+    },
+    {
+      id: 1030,
+      question: "Three positive numbers are in geometric progression. If their sum is 14 and their product is 64, what is the middle term?",
+      options: ["2", "4", "6", "8"],
+      correct: "4",
+      explanation: "Let the terms be a/r, a, ar. Their product is a^3 = 64, so a = 4.",
+      difficulty: "Hard",
+      chapter: "Unit 1: Sequence and Series"
     }
   ],
   "Unit 2: Introduction to Calculus": [
@@ -394,6 +475,87 @@ export const grade12Mathematics: MathSubjectData = {
       options: ["e^(2x)/2 + C", "2e^(2x) + C", "e^(2x) + C", "e^(2x)/4 + C"],
       correct: "e^(2x)/2 + C",
       explanation: "∫e^(2x) dx = e^(2x)/2 + C, using the substitution u = 2x.",
+      difficulty: "Hard",
+      chapter: "Unit 2: Introduction to Calculus"
+    },
+    {
+      id: 2022,
+      question: "What is the derivative of f(x) = x^3 + 2x?",
+      options: ["3x^2 + 2", "x^2 + 2", "3x + 2", "x^3"],
+      correct: "3x^2 + 2",
+      explanation: "Differentiate term by term: d/dx(x^3) = 3x^2 and d/dx(2x) = 2.",
+      difficulty: "Easy",
+      chapter: "Unit 2: Introduction to Calculus"
+    },
+    {
+      id: 2023,
+      question: "Evaluate integral of 4x with respect to x.",
+      options: ["2x^2 + C", "4x + C", "x^2 + C", "4x^2 + C"],
+      correct: "2x^2 + C",
+      explanation: "Using the power rule for integration, integral of 4x dx = 2x^2 + C.",
+      difficulty: "Easy",
+      chapter: "Unit 2: Introduction to Calculus"
+    },
+    {
+      id: 2024,
+      question: "Find the limit of x^2 + 3 as x approaches 2.",
+      options: ["5", "6", "7", "8"],
+      correct: "7",
+      explanation: "Since polynomials are continuous, substitute x = 2 directly to get 7.",
+      difficulty: "Easy",
+      chapter: "Unit 2: Introduction to Calculus"
+    },
+    {
+      id: 2025,
+      question: "What is the derivative of sin(3x)?",
+      options: ["cos(3x)", "3cos(3x)", "3sin(3x)", "-3sin(3x)"],
+      correct: "3cos(3x)",
+      explanation: "Using the chain rule, d/dx[sin(3x)] = cos(3x) times 3.",
+      difficulty: "Medium",
+      chapter: "Unit 2: Introduction to Calculus"
+    },
+    {
+      id: 2026,
+      question: "Find the slope of the tangent to y = x^2 - 4x at x = 3.",
+      options: ["1", "2", "3", "6"],
+      correct: "2",
+      explanation: "The derivative is y' = 2x - 4. At x = 3, the slope is 2.",
+      difficulty: "Medium",
+      chapter: "Unit 2: Introduction to Calculus"
+    },
+    {
+      id: 2027,
+      question: "Evaluate the definite integral from 0 to 2 of x + 1.",
+      options: ["2", "3", "4", "5"],
+      correct: "4",
+      explanation: "Integral from 0 to 2 of (x + 1) dx = [x^2/2 + x] from 0 to 2 = 4.",
+      difficulty: "Medium",
+      chapter: "Unit 2: Introduction to Calculus"
+    },
+    {
+      id: 2028,
+      question: "For f(x) = x^3 - 3x, at which x-values does f have local extrema?",
+      options: ["x = -1 and x = 1", "x = 0 only", "x = -3 and x = 3", "x = 1 only"],
+      correct: "x = -1 and x = 1",
+      explanation: "f'(x) = 3x^2 - 3 = 3(x - 1)(x + 1), so the critical points are x = -1 and x = 1.",
+      difficulty: "Hard",
+      chapter: "Unit 2: Introduction to Calculus"
+    },
+    {
+      id: 2029,
+      question: "Find the limit of (x^2 - 9)/(x - 3) as x approaches 3.",
+      options: ["3", "6", "9", "12"],
+      correct: "6",
+      explanation: "Factor the numerator: (x^2 - 9)/(x - 3) = x + 3 for x not equal to 3. The limit is 6.",
+      difficulty: "Hard",
+      chapter: "Unit 2: Introduction to Calculus"
+    },
+    {
+      id: 2030,
+      question: "Evaluate the definite integral from 1 to 3 of 2x + 1.",
+      options: ["6", "8", "10", "12"],
+      correct: "10",
+      explanation: "Integral from 1 to 3 of (2x + 1) dx = [x^2 + x] from 1 to 3 = 10.",
       difficulty: "Hard",
       chapter: "Unit 2: Introduction to Calculus"
     }
@@ -587,6 +749,87 @@ export const grade12Mathematics: MathSubjectData = {
       explanation: "For a binomial distribution, expected value E(X) = np = 10 × 0.3 = 3.",
       difficulty: "Hard",
       chapter: "Unit 3: Statistics"
+    },
+    {
+      id: 3022,
+      question: "Which graph is most suitable for continuous grouped data?",
+      options: ["Pie chart", "Histogram", "Pictogram", "Scatter diagram"],
+      correct: "Histogram",
+      explanation: "A histogram is used for continuous grouped data because the bars touch to show continuity.",
+      difficulty: "Easy",
+      chapter: "Unit 3: Statistics"
+    },
+    {
+      id: 3023,
+      question: "If P(A) = 0.7, what is P(A')?",
+      options: ["0.1", "0.2", "0.3", "0.7"],
+      correct: "0.3",
+      explanation: "The probability of the complement is 1 - 0.7 = 0.3.",
+      difficulty: "Easy",
+      chapter: "Unit 3: Statistics"
+    },
+    {
+      id: 3024,
+      question: "Find the mean of 5, 5, 7, 8, 10.",
+      options: ["6", "7", "8", "9"],
+      correct: "7",
+      explanation: "Mean = (5 + 5 + 7 + 8 + 10)/5 = 35/5 = 7.",
+      difficulty: "Easy",
+      chapter: "Unit 3: Statistics"
+    },
+    {
+      id: 3025,
+      question: "What is the class midpoint of the interval 20-29?",
+      options: ["24", "24.5", "25", "25.5"],
+      correct: "24.5",
+      explanation: "Class midpoint = (20 + 29)/2 = 24.5.",
+      difficulty: "Medium",
+      chapter: "Unit 3: Statistics"
+    },
+    {
+      id: 3026,
+      question: "If the mean is 20 and the standard deviation is 4, what is the coefficient of variation?",
+      options: ["0.1", "0.2", "0.25", "0.4"],
+      correct: "0.2",
+      explanation: "Coefficient of variation = standard deviation divided by mean = 4/20 = 0.2.",
+      difficulty: "Medium",
+      chapter: "Unit 3: Statistics"
+    },
+    {
+      id: 3027,
+      question: "What is the probability of getting an even number when a fair die is rolled?",
+      options: ["1/6", "1/3", "1/2", "2/3"],
+      correct: "1/2",
+      explanation: "The even outcomes are 2, 4, and 6, so the probability is 3/6 = 1/2.",
+      difficulty: "Medium",
+      chapter: "Unit 3: Statistics"
+    },
+    {
+      id: 3028,
+      question: "A group of 10 values has mean 8 and another group of 15 values has mean 12. What is the combined mean?",
+      options: ["9.6", "10", "10.4", "11"],
+      correct: "10.4",
+      explanation: "Combined mean = (10 * 8 + 15 * 12)/(10 + 15) = 260/25 = 10.4.",
+      difficulty: "Hard",
+      chapter: "Unit 3: Statistics"
+    },
+    {
+      id: 3029,
+      question: "If a value has z-score -1.5 in a distribution with mean 50 and standard deviation 4, what is the value?",
+      options: ["42", "44", "46", "48"],
+      correct: "44",
+      explanation: "x = mean + z times standard deviation = 50 + (-1.5)(4) = 44.",
+      difficulty: "Hard",
+      chapter: "Unit 3: Statistics"
+    },
+    {
+      id: 3030,
+      question: "For a binomial distribution with n = 5 and p = 0.4, what is the expected value?",
+      options: ["1", "1.5", "2", "2.5"],
+      correct: "2",
+      explanation: "Expected value of a binomial distribution is np = 5 * 0.4 = 2.",
+      difficulty: "Hard",
+      chapter: "Unit 3: Statistics"
     }
   ],
   "Unit 4: Introduction to Linear Programming": [
@@ -778,6 +1021,87 @@ export const grade12Mathematics: MathSubjectData = {
       explanation: "The Big M method uses a very large coefficient M with artificial variables in the objective function to ensure they become zero in the optimal solution.",
       difficulty: "Hard",
       chapter: "Unit 4: Introduction to Linear Programming"
+    },
+    {
+      id: 4022,
+      question: "What is the feasible region in a linear programming problem?",
+      options: ["The graph of the objective function", "The set of points satisfying all constraints", "The set of corner points only", "The x-axis region"],
+      correct: "The set of points satisfying all constraints",
+      explanation: "The feasible region is the collection of all points that satisfy every constraint in the problem.",
+      difficulty: "Easy",
+      chapter: "Unit 4: Introduction to Linear Programming"
+    },
+    {
+      id: 4023,
+      question: "What do non-negativity constraints require?",
+      options: ["Variables must be equal", "Variables must be integers", "Variables must be greater than or equal to zero", "Variables must be less than zero"],
+      correct: "Variables must be greater than or equal to zero",
+      explanation: "Non-negativity constraints require decision variables to be zero or positive.",
+      difficulty: "Easy",
+      chapter: "Unit 4: Introduction to Linear Programming"
+    },
+    {
+      id: 4024,
+      question: "In graphical linear programming, where is the optimal solution usually found?",
+      options: ["At any interior point", "At a corner point of the feasible region", "Always on the x-axis", "Always at the origin"],
+      correct: "At a corner point of the feasible region",
+      explanation: "For linear objective functions over a feasible polygon, the optimum occurs at a corner point.",
+      difficulty: "Easy",
+      chapter: "Unit 4: Introduction to Linear Programming"
+    },
+    {
+      id: 4025,
+      question: "Maximize Z = 3x + 2y subject to x + y <= 4, x >= 0, y >= 0. What is the maximum value?",
+      options: ["8", "10", "12", "14"],
+      correct: "12",
+      explanation: "The corner points are (0,0), (4,0), and (0,4). Z is largest at (4,0), where Z = 12.",
+      difficulty: "Medium",
+      chapter: "Unit 4: Introduction to Linear Programming"
+    },
+    {
+      id: 4026,
+      question: "If x + y <= 10 and a solution has x = 6 and y = 3, what is the slack?",
+      options: ["1", "2", "3", "4"],
+      correct: "1",
+      explanation: "Slack is the unused amount: 10 - (6 + 3) = 1.",
+      difficulty: "Medium",
+      chapter: "Unit 4: Introduction to Linear Programming"
+    },
+    {
+      id: 4027,
+      question: "Minimize C = 2x + 5y subject to x + y >= 6, x >= 0, y >= 0. What is the minimum value?",
+      options: ["10", "12", "18", "30"],
+      correct: "12",
+      explanation: "To minimize cost, place as much weight as possible on the cheaper variable x. At (6,0), C = 12.",
+      difficulty: "Medium",
+      chapter: "Unit 4: Introduction to Linear Programming"
+    },
+    {
+      id: 4028,
+      question: "Maximize P = 5x + 4y subject to x + y <= 5, x <= 3, x >= 0, y >= 0. What is the maximum value?",
+      options: ["20", "21", "23", "25"],
+      correct: "23",
+      explanation: "Checking the corner points shows the maximum occurs at (3,2), where P = 23.",
+      difficulty: "Hard",
+      chapter: "Unit 4: Introduction to Linear Programming"
+    },
+    {
+      id: 4029,
+      question: "What condition leads to multiple optimal solutions in a linear programming problem?",
+      options: ["The feasible region is empty", "The objective function is parallel to a boundary segment of the feasible region", "There are too many variables", "All constraints are equalities"],
+      correct: "The objective function is parallel to a boundary segment of the feasible region",
+      explanation: "If the objective function is parallel to a boundary edge, every point on that edge can give the same optimal value.",
+      difficulty: "Hard",
+      chapter: "Unit 4: Introduction to Linear Programming"
+    },
+    {
+      id: 4030,
+      question: "In the simplex method for a maximization problem, which variable usually enters the basis next?",
+      options: ["The variable with the smallest positive coefficient", "The variable with the largest positive coefficient in the objective row", "The variable with the largest slack", "The artificial variable"],
+      correct: "The variable with the largest positive coefficient in the objective row",
+      explanation: "For maximization, the entering variable is typically chosen from the column that can improve the objective value the most.",
+      difficulty: "Hard",
+      chapter: "Unit 4: Introduction to Linear Programming"
     }
   ],
   "Unit 5: Mathematical Application in Business": [
@@ -967,6 +1291,87 @@ export const grade12Mathematics: MathSubjectData = {
       options: ["$950.26", "$975.50", "$1000.00", "$1025.75"],
       correct: "$950.26",
       explanation: "Price = $80/(1.10) + $80/(1.10)² + $1080/(1.10)³ = $72.73 + $66.12 + $811.41 = $950.26.",
+      difficulty: "Hard",
+      chapter: "Unit 5: Mathematical Application in Business"
+    },
+    {
+      id: 5022,
+      question: "What is the sales tax on a $150 item if the tax rate is 10%?",
+      options: ["$10", "$12", "$15", "$20"],
+      correct: "$15",
+      explanation: "Sales tax = 10% of $150 = $15.",
+      difficulty: "Easy",
+      chapter: "Unit 5: Mathematical Application in Business"
+    },
+    {
+      id: 5023,
+      question: "What is the total revenue from selling 40 units at $25 each?",
+      options: ["$800", "$900", "$1000", "$1200"],
+      correct: "$1000",
+      explanation: "Revenue = price times quantity = 25 times 40 = 1000 dollars.",
+      difficulty: "Easy",
+      chapter: "Unit 5: Mathematical Application in Business"
+    },
+    {
+      id: 5024,
+      question: "If a product costing $250 is marked up by 20%, what is the selling price?",
+      options: ["$275", "$290", "$300", "$320"],
+      correct: "$300",
+      explanation: "Markup = 20% of 250 = 50, so the selling price is 300 dollars.",
+      difficulty: "Easy",
+      chapter: "Unit 5: Mathematical Application in Business"
+    },
+    {
+      id: 5025,
+      question: "Find the simple interest on $2000 at 8% per year for 3 years.",
+      options: ["$320", "$400", "$480", "$520"],
+      correct: "$480",
+      explanation: "Simple interest = principal times rate times time = 2000 times 0.08 times 3 = 480.",
+      difficulty: "Medium",
+      chapter: "Unit 5: Mathematical Application in Business"
+    },
+    {
+      id: 5026,
+      question: "If fixed costs are $1500, the selling price per unit is $30, and the variable cost per unit is $20, what is the break-even point?",
+      options: ["100 units", "150 units", "200 units", "300 units"],
+      correct: "150 units",
+      explanation: "Break-even point = fixed cost divided by contribution per unit = 1500 divided by (30 - 20) = 150 units.",
+      difficulty: "Medium",
+      chapter: "Unit 5: Mathematical Application in Business"
+    },
+    {
+      id: 5027,
+      question: "A $100 item is discounted successively by 10% and then 20%. What is the final price?",
+      options: ["$70", "$72", "$75", "$80"],
+      correct: "$72",
+      explanation: "After a 10% discount the price is $90, and after a further 20% discount it becomes $72.",
+      difficulty: "Medium",
+      chapter: "Unit 5: Mathematical Application in Business"
+    },
+    {
+      id: 5028,
+      question: "What is the compound amount of $1000 invested at 10% annually for 3 years?",
+      options: ["$1300", "$1331", "$1360", "$1400"],
+      correct: "$1331",
+      explanation: "A = P(1 + r)^n = 1000 times 1.1^3 = 1331.",
+      difficulty: "Hard",
+      chapter: "Unit 5: Mathematical Application in Business"
+    },
+    {
+      id: 5029,
+      question: "If the profit function is P(x) = -x^2 + 40x - 300, what is the maximum profit?",
+      options: ["$80", "$100", "$120", "$140"],
+      correct: "$100",
+      explanation: "The maximum occurs at x = -b/(2a) = 20. Then P(20) = 100.",
+      difficulty: "Hard",
+      chapter: "Unit 5: Mathematical Application in Business"
+    },
+    {
+      id: 5030,
+      question: "An asset is depreciated by the straight-line method over 5 years. If its salvage value is $10,000 and annual depreciation is $12,000, what was the original cost?",
+      options: ["$58,000", "$60,000", "$70,000", "$72,000"],
+      correct: "$70,000",
+      explanation: "Total depreciation over 5 years is 5 times 12,000 = 60,000. Original cost = 60,000 + 10,000 = 70,000.",
       difficulty: "Hard",
       chapter: "Unit 5: Mathematical Application in Business"
     }

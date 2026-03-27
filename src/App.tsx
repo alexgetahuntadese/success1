@@ -22,6 +22,9 @@ import NotFound from "./pages/NotFound";
 import MatricExamPage from "./pages/MatricExamPage";
 import MatricYearPage from "./pages/MatricYearPage";
 import MatricQuizPage from "./pages/MatricQuizPage";
+import NotesPage from "./pages/NotesPage";
+import NotesSubjectsPage from "./pages/NotesSubjectsPage";
+import NotesChaptersPage from "./pages/NotesChaptersPage";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +51,9 @@ const App = () => (
                 <Route path="/matric" element={<ProtectedRoute><MatricExamPage /></ProtectedRoute>} />
                 <Route path="/matric/:year" element={<ProtectedRoute><MatricYearPage /></ProtectedRoute>} />
                 <Route path="/matric/:year/:subject" element={<ProtectedRoute><MatricQuizPage /></ProtectedRoute>} />
+                <Route path="/notes" element={<ProtectedRoute><NotesPage /></ProtectedRoute>} />
+                <Route path="/notes/:grade" element={<ProtectedRoute><NotesSubjectsPage /></ProtectedRoute>} />
+                <Route path="/notes/:grade/:subject" element={<ProtectedRoute><NotesChaptersPage /></ProtectedRoute>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

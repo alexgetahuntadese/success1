@@ -6,17 +6,24 @@ import { grade12PhysicsQuestions } from '@/data/grade12PhysicsQuestions';
 import { grade12ChemistryQuestions } from '@/data/grade12ChemistryQuestions';
 import { grade12BiologyQuestions } from '@/data/grade12BiologyQuestions';
 import { grade12EnglishQuestions } from '@/data/grade12EnglishQuestions';
+import { grade12AgricultureQuestions } from '@/data/grade12AgricultureQuestions';
+import { grade12EconomicsQuestions } from '@/data/grade12EconomicsQuestions';
+import { grade12AmharicQuestions } from '@/data/grade12AmharicQuestions';
 import { grade12CivicsQuestions } from '@/data/grade12CivicsQuestions';
 import { grade12HistoryQuestions } from '@/data/grade12HistoryQuestions';
 import { grade12ITQuestions } from '@/data/grade12ITQuestions';
-import { grade12AgricultureQuestions } from '@/data/grade12AgricultureQuestions';
-import { getGrade12GeographyQuestions } from '@/data/grade12GeographyQuestions';
+import { getGrade12GeographyQuestions, normalizeGrade12GeographyUnit } from '@/data/grade12GeographyQuestions';
 import { getGrade11BiologyQuestions } from '@/data/grade11Biology';
 import { getGrade11PhysicsQuestions } from '@/data/grade11Physics';
 import { getGrade11ChemistryQuestions } from '@/data/grade11Chemistry';
 import { getGrade11AgricultureQuestions } from '@/data/grade11AgricultureQuestions';
 import { getGrade11MathematicsQuestions } from '@/data/grade11MathematicsQuestions';
 import { grade11CivicsQuestions } from '@/data/grade11CivicsQuestions';
+import { grade11EconomicsQuestions } from '@/data/grade11EconomicsQuestions';
+import { grade11EnglishQuestions } from '@/data/grade11EnglishQuestions';
+import { grade11HistoryQuestions } from '@/data/grade11HistoryQuestions';
+import { grade11GeographyQuestions } from '@/data/grade11GeographyQuestions';
+import { grade11AmharicQuestions } from '@/data/grade11AmharicQuestions';
 import { getGrade10BiologyQuestions } from '@/data/grade10BiologyQuestions';
 import { grade10MathematicsQuestions } from '@/data/grade10MathematicsQuestions';
 import { grade10PhysicsQuestions } from '@/data/grade10PhysicsQuestions';
@@ -40,6 +47,9 @@ interface Question {
   correct: string;
   explanation: string;
 }
+
+const unsupportedGrade12QuizSubjects = new Set([
+]);
 
 const getQuestionsForSubject = (subject: string, chapter: string, difficulty: string, grade: string, count: number = 10): Question[] => {
   let allQuestions: any[] = [];
@@ -164,6 +174,76 @@ const getQuestionsForSubject = (subject: string, chapter: string, difficulty: st
             correct: q.correct,
             explanation: q.explanation
           }));
+
+        case 'Economics':
+          const economicsData = grade11EconomicsQuestions[chapter];
+          if (!economicsData) return [];
+          return economicsData
+            .filter(q => q.difficulty.toLowerCase() === difficultyLevel)
+            .slice(0, count)
+            .map(q => ({
+              id: q.id,
+              question: q.question,
+              options: q.options,
+              correct: q.correct,
+              explanation: q.explanation
+            }));
+
+        case 'English':
+          const englishData = grade11EnglishQuestions[chapter];
+          if (!englishData) return [];
+          return englishData
+            .filter(q => q.difficulty.toLowerCase() === difficultyLevel)
+            .slice(0, count)
+            .map(q => ({
+              id: q.id,
+              question: q.question,
+              options: q.options,
+              correct: q.correct,
+              explanation: q.explanation
+            }));
+
+        case 'History':
+          const historyData = grade11HistoryQuestions[chapter];
+          if (!historyData) return [];
+          return historyData
+            .filter(q => q.difficulty.toLowerCase() === difficultyLevel)
+            .slice(0, count)
+            .map(q => ({
+              id: q.id,
+              question: q.question,
+              options: q.options,
+              correct: q.correct,
+              explanation: q.explanation
+            }));
+
+        case 'Geography':
+          const geographyData = grade11GeographyQuestions[chapter];
+          if (!geographyData) return [];
+          return geographyData
+            .filter(q => q.difficulty.toLowerCase() === difficultyLevel)
+            .slice(0, count)
+            .map(q => ({
+              id: q.id,
+              question: q.question,
+              options: q.options,
+              correct: q.correct,
+              explanation: q.explanation
+            }));
+
+        case 'Amharic':
+          const amharicData = grade11AmharicQuestions[chapter];
+          if (!amharicData) return [];
+          return amharicData
+            .filter(q => q.difficulty.toLowerCase() === difficultyLevel)
+            .slice(0, count)
+            .map(q => ({
+              id: q.id,
+              question: q.question,
+              options: q.options,
+              correct: q.correct,
+              explanation: q.explanation
+            }));
           
         default:
           console.warn('Grade 11 subject not implemented:', subject);
@@ -171,6 +251,11 @@ const getQuestionsForSubject = (subject: string, chapter: string, difficulty: st
       }
     }
     
+    if (grade === '12' && unsupportedGrade12QuizSubjects.has(subject)) {
+      console.warn(`Grade 12 quiz bank is not available for ${subject}`);
+      return [];
+    }
+
     // Handle Grade 12 subjects (existing logic)
     switch (subject) {
       case 'Mathematics':
@@ -193,8 +278,20 @@ const getQuestionsForSubject = (subject: string, chapter: string, difficulty: st
         const engData = grade12EnglishQuestions[chapter];
         allQuestions = Array.isArray(engData) ? engData : [];
         break;
-      case 'Civics':
+      case 'Agriculture':
+        const agriData = grade12AgricultureQuestions[chapter];
+        allQuestions = Array.isArray(agriData) ? agriData : [];
+        break;
+      case 'Economics':
+        const ecoData = grade12EconomicsQuestions[chapter];
+        allQuestions = Array.isArray(ecoData) ? ecoData : [];
+        break;
+      case 'Amharic':
+        const amhData = grade12AmharicQuestions[chapter];
+        allQuestions = Array.isArray(amhData) ? amhData : [];
+        break;
       case 'Civic Education':
+      case 'Civics':
         const civicsData = grade12CivicsQuestions[chapter];
         allQuestions = Array.isArray(civicsData) ? civicsData : [];
         break;
@@ -207,12 +304,12 @@ const getQuestionsForSubject = (subject: string, chapter: string, difficulty: st
         const itData = grade12ITQuestions[chapter];
         allQuestions = Array.isArray(itData) ? itData : [];
         break;
-      case 'Agriculture':
-        const agriData = grade12AgricultureQuestions[chapter];
-        allQuestions = Array.isArray(agriData) ? agriData : [];
-        break;
       case 'Geography':
-        return getGrade12GeographyQuestions(chapter, difficulty.toLowerCase() as 'easy' | 'medium' | 'hard', count);
+        return getGrade12GeographyQuestions(
+          normalizeGrade12GeographyUnit(chapter),
+          difficulty.toLowerCase() as 'easy' | 'medium' | 'hard',
+          count
+        );
       default:
         console.warn('Unknown subject:', subject);
         return [];
@@ -289,6 +386,13 @@ const QuizPage = () => {
       setIsLoading(false);
       return;
     }
+
+    if (grade === '12' && unsupportedGrade12QuizSubjects.has(subject)) {
+      setError(`Grade 12 ${subject} quizzes are not available yet. Use the notes section for this subject.`);
+      setQuestions([]);
+      setIsLoading(false);
+      return;
+    }
     
     try {
       const fetchedQuestions = getQuestionsForSubject(subject, chapterId, difficulty, grade, 10);
@@ -318,7 +422,7 @@ const QuizPage = () => {
 
   useEffect(() => {
     initializeQuestions();
-  }, [subject, chapterId, difficulty]);
+  }, [subject, chapterId, difficulty, grade]);
 
   useEffect(() => {
     let intervalId: ReturnType<typeof setInterval>;

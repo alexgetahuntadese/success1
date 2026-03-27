@@ -11,9 +11,11 @@ import { grade12ChemistryQuestions } from '@/data/grade12ChemistryQuestions';
 import { grade12PhysicsQuestions } from '@/data/grade12PhysicsQuestions';
 import { grade12EnglishQuestions } from '@/data/grade12EnglishQuestions';
 import { grade12AgricultureQuestions } from '@/data/grade12AgricultureQuestions';
-import { grade12GeographyQuestions } from '@/data/grade12GeographyQuestions';
-import { grade12HistoryQuestions } from '@/data/grade12HistoryQuestions';
+import { grade12EconomicsQuestions } from '@/data/grade12EconomicsQuestions';
+import { grade12AmharicQuestions } from '@/data/grade12AmharicQuestions';
 import { grade12CivicsQuestions } from '@/data/grade12CivicsQuestions';
+import { grade12GeographyQuestions, getGrade12GeographyDisplayTitle } from '@/data/grade12GeographyQuestions';
+import { grade12HistoryQuestions } from '@/data/grade12HistoryQuestions';
 import { grade12ITQuestions } from '@/data/grade12ITQuestions';
 import { grade11Biology } from '@/data/grade11Biology';
 import { grade11AgricultureQuestions } from '@/data/grade11AgricultureQuestions';
@@ -41,6 +43,9 @@ const ChaptersPage = () => {
   const navigate = useNavigate();
   const { grade, subject } = useParams();
   const decodedSubject = decodeURIComponent(subject || '');
+  const isUnavailableGrade12QuizSubject =
+    grade === '12' &&
+    false;
 
   // Get chapters based on subject and grade
   const getChaptersForSubject = () => {
@@ -325,14 +330,14 @@ const ChaptersPage = () => {
         };
       });
     }
-    
+
     if (decodedSubject === 'Agriculture' && grade === '12') {
       return Object.keys(grade12AgricultureQuestions).map((unitName, index) => {
         const questions = grade12AgricultureQuestions[unitName];
         const easyQuestions = questions.filter(q => q.difficulty === 'Easy').length;
         const mediumQuestions = questions.filter(q => q.difficulty === 'Medium').length;
         const hardQuestions = questions.filter(q => q.difficulty === 'Hard').length;
-        
+
         return {
           id: index + 1,
           title: unitName,
@@ -350,7 +355,7 @@ const ChaptersPage = () => {
         };
       });
     }
-
+    
     // Handle Grade 11 History
     if (decodedSubject === 'History' && grade === '11') {
       return Object.keys(grade11HistoryQuestions).map((chapterName, index) => {
@@ -438,7 +443,7 @@ const ChaptersPage = () => {
         return {
           id: index + 1,
           title: chapterName,
-          description: `Grade 11 Physics - ${chapterName}`,
+          description: getGrade11PhysicsChapterDescription(chapterName),
           duration: getDurationEstimate(questions.length),
           difficulty: getDominantDifficulty(easyQuestions, mediumQuestions, hardQuestions),
           progress: Math.floor(Math.random() * 101),
@@ -488,7 +493,7 @@ const ChaptersPage = () => {
         
         return {
           id: index + 1,
-          title: unitName,
+          title: getGrade12GeographyDisplayTitle(unitName),
           description: getGeographyUnitDescription(unitName),
           duration: getDurationEstimate(questions.length),
           difficulty: getDominantDifficulty(easyQuestions, mediumQuestions, hardQuestions),
@@ -529,13 +534,63 @@ const ChaptersPage = () => {
       });
     }
 
-    if (decodedSubject === 'Civic Education' && grade === '12') {
+    if (decodedSubject === 'Economics' && grade === '12') {
+      return Object.keys(grade12EconomicsQuestions).map((unitName, index) => {
+        const questions = grade12EconomicsQuestions[unitName];
+        const easyQuestions = questions.filter(q => q.difficulty === 'Easy').length;
+        const mediumQuestions = questions.filter(q => q.difficulty === 'Medium').length;
+        const hardQuestions = questions.filter(q => q.difficulty === 'Hard').length;
+
+        return {
+          id: index + 1,
+          title: unitName,
+          description: getEconomicsUnitDescription(unitName),
+          duration: getDurationEstimate(questions.length),
+          difficulty: getDominantDifficulty(easyQuestions, mediumQuestions, hardQuestions),
+          progress: Math.floor(Math.random() * 101),
+          isCompleted: Math.random() > 0.7,
+          questionsCount: questions.length,
+          difficultyBreakdown: {
+            easy: easyQuestions,
+            medium: mediumQuestions,
+            hard: hardQuestions
+          }
+        };
+      });
+    }
+
+    if (decodedSubject === 'Amharic' && grade === '12') {
+      return Object.keys(grade12AmharicQuestions).map((unitName, index) => {
+        const questions = grade12AmharicQuestions[unitName];
+        const easyQuestions = questions.filter(q => q.difficulty === 'Easy').length;
+        const mediumQuestions = questions.filter(q => q.difficulty === 'Medium').length;
+        const hardQuestions = questions.filter(q => q.difficulty === 'Hard').length;
+
+        return {
+          id: index + 1,
+          title: unitName,
+          description: getAmharicUnitDescription(unitName),
+          duration: getDurationEstimate(questions.length),
+          difficulty: getDominantDifficulty(easyQuestions, mediumQuestions, hardQuestions),
+          progress: Math.floor(Math.random() * 101),
+          isCompleted: Math.random() > 0.7,
+          questionsCount: questions.length,
+          difficultyBreakdown: {
+            easy: easyQuestions,
+            medium: mediumQuestions,
+            hard: hardQuestions
+          }
+        };
+      });
+    }
+
+    if ((decodedSubject === 'Civic Education' || decodedSubject === 'Civics') && grade === '12') {
       return Object.keys(grade12CivicsQuestions).map((unitName, index) => {
         const questions = grade12CivicsQuestions[unitName];
         const easyQuestions = questions.filter(q => q.difficulty === 'Easy').length;
         const mediumQuestions = questions.filter(q => q.difficulty === 'Medium').length;
         const hardQuestions = questions.filter(q => q.difficulty === 'Hard').length;
-        
+
         return {
           id: index + 1,
           title: unitName,
@@ -755,6 +810,18 @@ const ChaptersPage = () => {
     return descriptions[chapterName] || "Comprehensive study of geographical concepts";
   };
 
+  const getGrade11PhysicsChapterDescription = (chapterName: string) => {
+    const descriptions: { [key: string]: string } = {
+      "Chapter 1: Mechanics": "Study motion, forces, work, energy, momentum, and the laws that govern moving objects",
+      "Chapter 2: Waves and Sound": "Explore wave properties, sound propagation, interference, resonance, and practical wave behavior",
+      "Chapter 3: Heat and Thermodynamics": "Learn temperature, heat transfer, gas laws, and the principles that connect heat and energy",
+      "Chapter 4: Electricity and Magnetism": "Understand electric charge, current, circuits, magnetic fields, and electromagnetic effects",
+      "Chapter 5: Optics": "Examine reflection, refraction, lenses, mirrors, image formation, and the behavior of light",
+      "Chapter 6: Modern Physics": "Explore relativity, atomic structure, radioactivity, quantum ideas, and other foundations of modern physics"
+    };
+    return descriptions[chapterName] || "Comprehensive study of Grade 11 Physics concepts and applications";
+  };
+
   const getGrade11EnglishChapterDescription = (chapterName: string) => {
     const descriptions: { [key: string]: string } = {
       "Unit 1: Environmental Hazards": "Explore environmental threats, their causes, effects, and how to communicate about ecological challenges",
@@ -834,12 +901,23 @@ const ChaptersPage = () => {
 
   const getAgricultureUnitDescription = (unitName: string) => {
     const descriptions: { [key: string]: string } = {
-      "Unit 1: Crop Production": "Learn crop cultivation techniques, planting methods, soil preparation, and harvest management",
-      "Unit 2: Livestock Management": "Study animal husbandry, nutrition, breeding, health management, and livestock production systems",
-      "Unit 3: Soil Science and Fertility": "Explore soil composition, fertility management, conservation practices, and sustainable soil use",
-      "Unit 4: Agricultural Economics": "Understand farm economics, marketing, cooperatives, and agricultural finance systems",
-      "Unit 5: Agricultural Technology": "Discover modern farming technologies, precision agriculture, and digital farming tools",
-      "Unit 6: Sustainable Agriculture": "Learn sustainable farming practices, environmental conservation, and climate-smart agriculture"
+      "Unit 1: Vegetable Crops Production and Management": "Focus on vegetable crop establishment, field practices, and quality-oriented production management",
+      "Unit 2: Fruit Crops Production and Management": "Study orchard planning, fruit crop care, and management decisions that affect quality and yield",
+      "Unit 3: Root and Tuber Crops Production and Management": "Learn propagation, field management, and the food-security value of root and tuber crops",
+      "Unit 4: Coffee, Tea and Spices Production and Management": "Explore the management of high-value perennial crops and their market-oriented production systems",
+      "Unit 5: Introduction to Plant Biotechnology": "Understand how biotechnology supports propagation, crop improvement, and agricultural innovation",
+      "Unit 6: Beef Cattle Production and Management": "Study breed choice, feeding, housing, and herd-health practices for beef systems",
+      "Unit 7: Sheep and Goat Production and Management": "Learn practical small-ruminant management for productivity, resilience, and health",
+      "Unit 8: Camel Production and Management": "Examine camel production in dryland systems and their role in pastoral livelihoods",
+      "Unit 9: Poultry Production and Management": "Focus on brooding, feeding, disease prevention, and enterprise management in poultry systems",
+      "Unit 10: Fishery Production and Management": "Study aquaculture and fishery management as tools for nutrition and income generation",
+      "Unit 11: Beekeeping": "Explore hive management, colony care, pollination benefits, and honey production",
+      "Unit 12: Nursery and Plantation Technology": "Learn how to raise healthy seedlings and establish productive plantations",
+      "Unit 13: Basics of Agro-Forestry Systems and Practices": "Connect tree-based systems with conservation, resilience, and diversified farm output",
+      "Unit 14: Soil and Water Conservation": "Focus on protecting land resources through erosion control and water-management practices",
+      "Unit 15: Gender and Human Nutrition": "Link agricultural work with gender roles, nutrition awareness, and household well-being",
+      "Unit 16: Safe Food Production and Postharvest Handling": "Study how handling, storage, and food-safety practices reduce loss and protect quality",
+      "Unit 17: Application of Information and Communication Technologies (ICT) in Agriculture": "Understand how digital tools improve planning, extension, market access, and farm decisions"
     };
     return descriptions[unitName] || "Comprehensive study of agricultural principles and sustainable farming practices";
   };
@@ -851,7 +929,7 @@ const ChaptersPage = () => {
       "Unit 3: Population Policies Programs and the Environment": "Examine population dynamics, demographic policies, and their environmental implications",
       "Unit 4: Solutions to Environmental and Sustainability Problems": "Learn about renewable energy, conservation, sustainable development, and green technologies",
       "Unit 5: Challenges of Economic Development": "Investigate economic development challenges, poverty, inequality, and environmental trade-offs",
-      "Unit 6: Solutions to Environmental and Sustainability Problems Solutions": "Discover conservation strategies, community-based solutions, and ecosystem management",
+      "Unit 6: Solutions to Environmental and Sustainability Problems Solutions": "Focus on conservation strategies, environmental monitoring, and practical sustainability responses",
       "Unit 7: Contemporary Global Geographic Issues and Public Concerns": "Analyze globalization, urbanization, food security, and contemporary geographic challenges",
       "Unit 8: Geographical Enquiry and Map Making": "Master GIS, remote sensing, cartography, and geographic research methods"
     };
@@ -871,6 +949,35 @@ const ChaptersPage = () => {
       "Unit 9: Indigenous Knowledge Systems and Heritages of Ethiopia": "Explore Ethiopian traditional knowledge, cultural heritage, and indigenous practices"
     };
     return descriptions[unitName] || "Comprehensive study of historical developments and their contemporary significance";
+  };
+
+  const getEconomicsUnitDescription = (unitName: string) => {
+    const descriptions: { [key: string]: string } = {
+      "Unit 1: The Fundamental Concepts Of Macroeconomics": "Build the macroeconomic language needed to discuss growth, output, inflation, and employment",
+      "Unit 2: Aggregate Demand And Aggregate Supply Analysis": "Study economy-wide equilibrium by tracking how aggregate demand and supply interact",
+      "Unit 3: Market Failure And Consumer Protection": "Examine inefficient markets, consumer welfare, and the case for public regulation",
+      "Unit 4: Macroeconomic Policy Instruments": "Compare fiscal and monetary tools used to stabilize and guide the economy",
+      "Unit 5: Tax Theory And Practice": "Understand taxation as a source of revenue, equity, incentives, and development finance",
+      "Unit 6: Poverty And Inequality": "Focus on how deprivation and inequality are measured, explained, and addressed through policy",
+      "Unit 7: Macroeconomic Reforms In Ethiopia": "Connect economic theory to Ethiopia through reform, liberalization, and structural change",
+      "Unit 8: Economy, Environment And Climate Change": "Link economic growth to environmental limits, climate risk, and sustainable development"
+    };
+    return descriptions[unitName] || "Comprehensive study of economics principles and macroeconomic policy.";
+  };
+
+  const getAmharicUnitDescription = (unitName: string) => {
+    const descriptions: { [key: string]: string } = {
+      "Chapter 1: Language and Society": "Explore how language functions in identity, culture, and community life",
+      "Chapter 2: Origin and Development of Amharic": "Study the historical growth of Amharic and the processes of language change",
+      "Chapter 3: Criticism": "Practice reasoned evaluation of texts, arguments, and style using evidence",
+      "Chapter 4: Literature": "Interpret literary genres, themes, and artistic expression in Amharic texts",
+      "Chapter 5: Humanity": "Use language study to reflect on values, dignity, empathy, and social responsibility",
+      "Chapter 6: Research Writing": "Build formal writing skills through structure, evidence, and organized presentation of ideas",
+      "Chapter 7: Poetry": "Focus on imagery, rhythm, figurative language, and deeper interpretation of poems",
+      "Chapter 8: Reaching a Decision": "Strengthen judgment, persuasion, and clear communication when defending decisions",
+      "Chapter 9: Society and Health": "Discuss health issues clearly by connecting social awareness with effective communication"
+    };
+    return descriptions[unitName] || "Comprehensive study of advanced Amharic language and literature.";
   };
 
   const getCivicsUnitDescription = (unitName: string) => {
@@ -937,7 +1044,9 @@ const ChaptersPage = () => {
     navigate(`/grade/${grade}/subject/${encodeURIComponent(decodedSubject)}/chapter/${chapterSlug}/difficulty/${difficultySlug}/quiz`);
   };
 
-  const overallProgress = Math.round(chapters.reduce((acc, chapter) => acc + chapter.progress, 0) / chapters.length);
+  const overallProgress = chapters.length
+    ? Math.round(chapters.reduce((acc, chapter) => acc + chapter.progress, 0) / chapters.length)
+    : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 md:p-8 md:pt-14 overflow-hidden relative">
@@ -963,26 +1072,70 @@ const ChaptersPage = () => {
             {decodedSubject} Chapters
           </h1>
           <p className="text-lg text-white/50 max-w-md mx-auto mb-8">
-            Choose a chapter to start your quiz
+            {isUnavailableGrade12QuizSubject
+              ? 'This Grade 12 subject currently has notes, but not a full quiz bank.'
+              : 'Choose a chapter to start your quiz'}
           </p>
 
-          {/* Overall Progress */}
-          <div className="max-w-sm mx-auto bg-white/[0.04] backdrop-blur-xl rounded-2xl p-5 border border-white/[0.08]">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-white/70 font-medium text-sm">Overall Progress</span>
-              <span className={`font-bold text-sm ${getProgressColor(overallProgress)}`}>
-                {overallProgress}%
-              </span>
+          {!isUnavailableGrade12QuizSubject && chapters.length > 0 && (
+            <div className="max-w-sm mx-auto bg-white/[0.04] backdrop-blur-xl rounded-2xl p-5 border border-white/[0.08]">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-white/70 font-medium text-sm">Overall Progress</span>
+                <span className={`font-bold text-sm ${getProgressColor(overallProgress)}`}>
+                  {overallProgress}%
+                </span>
+              </div>
+              <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all duration-700"
+                  style={{ width: `${overallProgress}%` }}
+                />
+              </div>
             </div>
-            <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all duration-700"
-                style={{ width: `${overallProgress}%` }}
-              />
-            </div>
-          </div>
+          )}
         </div>
 
+        {isUnavailableGrade12QuizSubject && (
+          <div className="max-w-2xl mx-auto bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8 text-center">
+            <h2 className="text-2xl font-bold text-white mb-3">Quiz Bank Not Ready Yet</h2>
+            <p className="text-white/50 mb-6">
+              Grade 12 {decodedSubject} is available in the notes flow, but its quiz chapters are still being rebuilt to match the current curriculum.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
+              <Button
+                className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white"
+                onClick={() => navigate(`/notes/${grade}/${encodeURIComponent(decodedSubject)}`)}
+              >
+                Open Notes
+              </Button>
+              <Button
+                variant="outline"
+                className="border-white/[0.08] text-white hover:bg-white/10"
+                onClick={() => navigate(`/grade/${grade}/subjects`)}
+              >
+                Back to Quiz Subjects
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {!isUnavailableGrade12QuizSubject && chapters.length === 0 && (
+          <div className="max-w-2xl mx-auto bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8 text-center">
+            <h2 className="text-2xl font-bold text-white mb-3">No Quiz Chapters Found</h2>
+            <p className="text-white/50 mb-6">
+              This quiz subject does not have chapter data available yet.
+            </p>
+            <Button
+              variant="outline"
+              className="border-white/[0.08] text-white hover:bg-white/10"
+              onClick={() => navigate(`/grade/${grade}/subjects`)}
+            >
+              Back to Quiz Subjects
+            </Button>
+          </div>
+        )}
+
+        {!isUnavailableGrade12QuizSubject && chapters.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {chapters.map((chapter, index) => (
             <div
@@ -1098,6 +1251,7 @@ const ChaptersPage = () => {
             </div>
           ))}
         </div>
+        )}
       </div>
     </div>
   );

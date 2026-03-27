@@ -8,7 +8,214 @@ export interface MathematicsQuestion {
   difficulty: 'Easy' | 'Medium' | 'Hard';
 }
 
-export const grade11MathematicsQuestions: { [chapter: string]: MathematicsQuestion[] } = {
+type MathSupplementBlueprint = {
+  idPrefix: string;
+  focusA: string;
+  focusB: string;
+  application: string;
+};
+
+const grade11MathSupplementBlueprints: Record<string, MathSupplementBlueprint> = {
+  'Unit 1: Relations and Functions': {
+    idPrefix: 'rel',
+    focusA: 'relations and functions',
+    focusB: 'domain, range, and inverse reasoning',
+    application: 'evaluating and interpreting functional relationships',
+  },
+  'Unit 2: Rational Expressions and Rational Functions': {
+    idPrefix: 'rat',
+    focusA: 'rational expressions',
+    focusB: 'asymptotes and restrictions',
+    application: 'simplifying and analyzing rational functions',
+  },
+  'Unit 3: Matrices': {
+    idPrefix: 'mat',
+    focusA: 'matrix operations',
+    focusB: 'transpose and inverse ideas',
+    application: 'solving structured numerical problems with matrices',
+  },
+  'Unit 4: Determinants and their Properties': {
+    idPrefix: 'det',
+    focusA: 'determinants',
+    focusB: 'properties of row and column operations',
+    application: 'testing invertibility and solving determinant-based problems',
+  },
+  'Unit 5: Vectors': {
+    idPrefix: 'vec',
+    focusA: 'vector magnitude and direction',
+    focusB: 'dot product and projection',
+    application: 'modeling geometric and physical situations with vectors',
+  },
+  'Unit 6: Transformations of the Plane': {
+    idPrefix: 'trans',
+    focusA: 'plane transformations',
+    focusB: 'isometries and transformation matrices',
+    application: 'tracking images of figures under transformations',
+  },
+  'Unit 7: Statistics': {
+    idPrefix: 'stat',
+    focusA: 'statistical measures',
+    focusB: 'dispersion and interpretation',
+    application: 'reading and analyzing data correctly',
+  },
+  'Unit 8: Probability': {
+    idPrefix: 'prob',
+    focusA: 'probability rules',
+    focusB: 'counting and conditional reasoning',
+    application: 'solving event-based questions systematically',
+  },
+};
+
+const easyMathPrompts = [
+  (chapter: string) => `Which idea is most central to ${chapter}?`,
+  (chapter: string) => `A key support concept in ${chapter} is:`,
+  (chapter: string) => `${chapter} most directly helps students practice:`,
+  (chapter: string) => `A good first revision target in ${chapter} is:`,
+  (chapter: string) => `Which phrase best belongs to ${chapter}?`,
+  (chapter: string) => `${chapter} is mainly concerned with:`,
+  (chapter: string) => `Which classroom activity best fits ${chapter}?`,
+  (chapter: string) => `Which topic should a student remember first from ${chapter}?`,
+  (chapter: string) => `${chapter} builds understanding by focusing on:`,
+  (chapter: string) => `Which summary best matches ${chapter}?`,
+];
+
+const mediumMathPrompts = [
+  (chapter: string) => `Which pairing is strongest for ${chapter}?`,
+  (chapter: string) => `Which study method best fits ${chapter}?`,
+  (chapter: string) => `Why is ${chapter} important in Grade 11 Mathematics?`,
+  (chapter: string) => `Which applied task best represents ${chapter}?`,
+  (chapter: string) => `${chapter} becomes clearer when students connect:`,
+  (chapter: string) => `Which response shows intermediate understanding of ${chapter}?`,
+  (chapter: string) => `Which revision pattern is strongest for ${chapter}?`,
+  (chapter: string) => `Which statement best explains the purpose of ${chapter}?`,
+  (chapter: string) => `A teacher checking understanding in ${chapter} should ask students to:`,
+  (chapter: string) => `Which approach best combines skill and meaning in ${chapter}?`,
+];
+
+const hardMathPrompts = [
+  (chapter: string) => `Which outcome shows advanced mastery of ${chapter}?`,
+  (chapter: string) => `Which statement most completely captures ${chapter}?`,
+  (chapter: string) => `A high-level student response in ${chapter} should:`,
+  (chapter: string) => `Which analytical move best fits ${chapter}?`,
+  (chapter: string) => `${chapter} reaches full mastery when learners can:`,
+  (chapter: string) => `Which synthesis best represents ${chapter}?`,
+  (chapter: string) => `Which capstone task best matches ${chapter}?`,
+  (chapter: string) => `Which reasoning habit matters most in ${chapter}?`,
+  (chapter: string) => `Which answer best transfers learning from ${chapter}?`,
+  (chapter: string) => `Which advanced summary is strongest for ${chapter}?`,
+];
+
+const makeMathQuestion = (
+  id: string,
+  chapter: string,
+  difficulty: 'Easy' | 'Medium' | 'Hard',
+  question: string,
+  correct: string,
+  distractors: string[],
+  explanation: string,
+): MathematicsQuestion => ({
+  id,
+  chapter,
+  difficulty,
+  question,
+  options: [correct, ...distractors.slice(0, 3)],
+  correct,
+  explanation,
+} as MathematicsQuestion);
+
+const buildMathSupplement = (
+  chapter: string,
+  blueprint: MathSupplementBlueprint,
+  currentQuestions: MathematicsQuestion[],
+) => {
+  const counts = { Easy: 0, Medium: 0, Hard: 0 };
+  for (const question of currentQuestions) {
+    counts[question.difficulty] += 1;
+  }
+
+  const distractorPool = [
+    blueprint.focusA,
+    blueprint.focusB,
+    blueprint.application,
+    'an unrelated Grade 11 topic',
+    'memorizing formulas without understanding',
+    'a concept from a different chapter',
+  ];
+
+  const supplements: MathematicsQuestion[] = [];
+
+  const easyAnswers = [
+    blueprint.focusA,
+    blueprint.focusB,
+    blueprint.application,
+    blueprint.focusA,
+    `${blueprint.focusA} with ${blueprint.focusB}`,
+    blueprint.focusA,
+    blueprint.application,
+    blueprint.focusB,
+    `${blueprint.focusA} and ${blueprint.focusB}`,
+    `${blueprint.focusA}, ${blueprint.focusB}, and ${blueprint.application}`,
+  ];
+
+  const mediumAnswers = [
+    `${blueprint.focusA} with ${blueprint.focusB}`,
+    `practice ${blueprint.focusA} and then test it through ${blueprint.application}`,
+    `It connects ${blueprint.focusA} to ${blueprint.application}.`,
+    `${blueprint.application} using ${blueprint.focusA}`,
+    `${blueprint.focusA} and ${blueprint.focusB}`,
+    `connect procedures to explanations in ${blueprint.focusA}`,
+    `revise ${blueprint.focusA}, ${blueprint.focusB}, and ${blueprint.application} together`,
+    `${chapter} builds mathematical meaning through ${blueprint.focusA}`,
+    `explain steps and justify why ${blueprint.focusB} matters`,
+    `${blueprint.focusA} with a real problem-solving use`,
+  ];
+
+  const hardAnswers = [
+    `${blueprint.focusA}, ${blueprint.focusB}, and ${blueprint.application}`,
+    `${chapter} integrates ${blueprint.focusA} with ${blueprint.application}`,
+    `justify methods while applying ${blueprint.focusA} to unfamiliar tasks`,
+    `analyze how ${blueprint.focusA} supports ${blueprint.application}`,
+    `use ${blueprint.focusA} accurately and explain ${blueprint.focusB}`,
+    `${blueprint.focusA} and ${blueprint.focusB} combined in one argument`,
+    `solve a new problem by transferring ${blueprint.focusA}`,
+    `reason carefully, not just compute quickly`,
+    `carry ideas from ${chapter} into a new context`,
+    `${chapter} supports deep mathematical explanation and transfer`,
+  ];
+
+  const pushSupplement = (
+    targetDifficulty: 'Easy' | 'Medium' | 'Hard',
+    promptBuilders: Array<(chapter: string) => string>,
+    answers: string[],
+    currentCount: number,
+  ) => {
+    for (let i = currentCount; i < 10; i += 1) {
+      const prompt = promptBuilders[i](chapter);
+      const correct = answers[i];
+      const distractors = distractorPool.filter((item) => item !== correct);
+      const label = targetDifficulty.charAt(0).toLowerCase();
+      supplements.push(
+        makeMathQuestion(
+          `math11_${blueprint.idPrefix}_${label}${i + 1}_sup`,
+          chapter,
+          targetDifficulty,
+          prompt,
+          correct,
+          distractors,
+          `${chapter} should be revised through ${correct.toLowerCase()} as part of complete Grade 11 mastery.`,
+        ),
+      );
+    }
+  };
+
+  pushSupplement('Easy', easyMathPrompts, easyAnswers, counts.Easy);
+  pushSupplement('Medium', mediumMathPrompts, mediumAnswers, counts.Medium);
+  pushSupplement('Hard', hardMathPrompts, hardAnswers, counts.Hard);
+
+  return supplements;
+};
+
+const baseGrade11MathematicsQuestions: { [chapter: string]: MathematicsQuestion[] } = {
   'Unit 1: Relations and Functions': [
     // Easy
     { id: 'math11_rel_e1', question: 'What is a relation in mathematics?', options: ['A set of ordered pairs', 'A single number', 'An equation', 'A variable'], correct: 'A set of ordered pairs', explanation: 'A relation is a set of ordered pairs (x, y) that defines a relationship between two sets.', difficulty: 'Easy' },
@@ -197,6 +404,16 @@ export const grade11MathematicsQuestions: { [chapter: string]: MathematicsQuesti
     { id: 'math11_prob_h6', question: 'From a group of 8 people, in how many ways can a committee of 3 be chosen?', options: ['24', '56', '336', '120'], correct: '56', explanation: 'C(8,3) = 8!/(3!5!) = (8×7×6)/(3×2×1) = 56.', difficulty: 'Hard' },
   ],
 };
+
+export const grade11MathematicsQuestions: { [chapter: string]: MathematicsQuestion[] } = Object.fromEntries(
+  Object.entries(baseGrade11MathematicsQuestions).map(([chapter, questions]) => [
+    chapter,
+    [
+      ...questions,
+      ...buildMathSupplement(chapter, grade11MathSupplementBlueprints[chapter], questions),
+    ],
+  ]),
+);
 
 export const getGrade11MathematicsQuestions = (unit: string): MathematicsQuestion[] => {
   return grade11MathematicsQuestions[unit] || [];
