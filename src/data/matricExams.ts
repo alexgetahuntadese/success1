@@ -1,6 +1,8 @@
+import { matric2014MathQuestions } from "./matric2014MathQuestions";
 import { matric2015BiologyQuestions } from "./matric2015BiologyQuestions";
 import { matric2015EnglishQuestions } from "./matric2015EnglishQuestions";
 import { matric2015MathQuestions } from "./matric2015MathQuestions";
+import { matric2015PhysicsQuestions } from "./matric2015PhysicsQuestions";
 import { matric2016BiologyQuestions } from "./matric2016BiologyQuestions";
 import { matric2016ChemistryQuestions } from "./matric2016ChemistryQuestions";
 import { matric2016EnglishQuestions } from "./matric2016EnglishQuestions";
@@ -61,7 +63,7 @@ export const matricExams: MatricExamYear[] = [
     year: 2015,
     subjects: [
       { subject: "Mathematics", questions: matric2015MathQuestions },
-      { subject: "Physics", questions: [] },
+      { subject: "Physics", questions: matric2015PhysicsQuestions },
       { subject: "Chemistry", questions: [] },
       { subject: "Biology", questions: matric2015BiologyQuestions },
       { subject: "English", questions: matric2015EnglishQuestions },
@@ -71,7 +73,7 @@ export const matricExams: MatricExamYear[] = [
   {
     year: 2014,
     subjects: [
-      { subject: "Mathematics", questions: [] },
+      { subject: "Mathematics", questions: matric2014MathQuestions },
       { subject: "Physics", questions: [] },
       { subject: "Chemistry", questions: [] },
       { subject: "Biology", questions: [] },

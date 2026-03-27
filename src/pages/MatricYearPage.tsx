@@ -1,18 +1,31 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, BookOpen, AlertCircle } from 'lucide-react';
+import {
+  ArrowLeft,
+  BookOpen,
+  AlertCircle,
+  Calculator,
+  Atom,
+  FlaskConical,
+  Dna,
+  Languages,
+  Landmark,
+  GraduationCap,
+  type LucideIcon,
+} from 'lucide-react';
 import { getMatricSubjectsForYear } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
 
-const subjectIcons: Record<string, string> = {
-  Mathematics: '📐',
-  Physics: '⚛️',
-  Chemistry: '🧪',
-  Biology: '🧬',
-  English: '📝',
-  Civics: '🏛️',
+const subjectIcons: Record<string, LucideIcon> = {
+  Mathematics: Calculator,
+  Physics: Atom,
+  Chemistry: FlaskConical,
+  Biology: Dna,
+  English: Languages,
+  Civics: Landmark,
+  "Scholastic Aptitude Test": GraduationCap,
 };
 
 const MatricYearPage = () => {
@@ -45,6 +58,8 @@ const MatricYearPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {subjects.map((subj) => {
             const hasQuestions = subj.questions.length > 0;
+            const SubjectIcon = subjectIcons[subj.subject] ?? BookOpen;
+
             return (
               <Card
                 key={subj.subject}
@@ -57,7 +72,7 @@ const MatricYearPage = () => {
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{subjectIcons[subj.subject] ?? '📚'}</span>
+                    <SubjectIcon className="h-6 w-6 text-white/70" />
                     <CardTitle className="text-white text-lg">{subj.subject}</CardTitle>
                   </div>
                 </CardHeader>

@@ -12,6 +12,7 @@ const MatricQuizPage = () => {
   const navigate = useNavigate();
   const yearNum = Number(year);
   const questions = getMatricQuestions(yearNum, subject ?? '');
+  const scoreableQuestions = questions.filter((question) => question.correctAnswer >= 0).length;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -40,7 +41,7 @@ const MatricQuizPage = () => {
     if (selectedAnswer !== null) return;
     setSelectedAnswer(index);
     setShowExplanation(true);
-    if (index === currentQuestion.correctAnswer) {
+    if (currentQuestion.correctAnswer >= 0 && index === currentQuestion.correctAnswer) {
       setScore((s) => s + 1);
     }
   };
@@ -56,7 +57,10 @@ const MatricQuizPage = () => {
   };
 
   if (finished) {
-    const percentage = Math.round((score / questions.length) * 100);
+    const percentage = scoreableQuestions > 0
+      ? Math.round((score / scoreableQuestions) * 100)
+      : 0;
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 overflow-hidden relative">
         <StarField starCount={30} shootingCount={2} />
@@ -65,16 +69,31 @@ const MatricQuizPage = () => {
           <Card className="bg-white/[0.06] backdrop-blur-xl border-white/[0.1]">
             <CardContent className="p-8">
               <h2 className="text-3xl font-bold text-white mb-2">Exam Complete!</h2>
-              <p className="text-white/50 mb-6">{subject} — {yearNum} E.C.</p>
+              <p className="text-white/50 mb-6">{subject} - {yearNum} E.C.</p>
               <div className="text-6xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent mb-2">
                 {percentage}%
               </div>
-              <p className="text-white/60 mb-8">{score} / {questions.length} correct</p>
+              <p className="text-white/60 mb-2">{score} / {scoreableQuestions || questions.length} correct</p>
+              {scoreableQuestions === 0 && (
+                <p className="text-white/40 text-sm mb-8">
+                  This exam set does not include an official answer key in the source.
+                </p>
+              )}
+              {scoreableQuestions > 0 && <div className="mb-8" />}
               <div className="flex gap-3 justify-center">
                 <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => navigate(`/matric/${yearNum}`)}>
                   Back to Subjects
                 </Button>
-                <Button className="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white" onClick={() => { setCurrentIndex(0); setSelectedAnswer(null); setShowExplanation(false); setScore(0); setFinished(false); }}>
+                <Button
+                  className="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white"
+                  onClick={() => {
+                    setCurrentIndex(0);
+                    setSelectedAnswer(null);
+                    setShowExplanation(false);
+                    setScore(0);
+                    setFinished(false);
+                  }}
+                >
                   Retry
                 </Button>
               </div>
@@ -96,12 +115,11 @@ const MatricQuizPage = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-xl font-bold text-white">{subject} — {yearNum} E.C.</h1>
+            <h1 className="text-xl font-bold text-white">{subject} - {yearNum} E.C.</h1>
             <p className="text-white/40 text-sm">Question {currentIndex + 1} of {questions.length}</p>
           </div>
         </div>
 
-        {/* Progress bar */}
         <div className="w-full h-1.5 bg-white/10 rounded-full mb-8">
           <div
             className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all duration-300"
@@ -119,14 +137,15 @@ const MatricQuizPage = () => {
               {currentQuestion.options.map((option, idx) => {
                 let borderClass = 'border-white/[0.08] hover:border-white/20';
                 let bgClass = 'bg-white/[0.02] hover:bg-white/[0.06]';
+                const hasAnswerKey = currentQuestion.correctAnswer >= 0;
 
                 if (selectedAnswer !== null) {
-                  if (idx === currentQuestion.correctAnswer) {
+                  if (hasAnswerKey && idx === currentQuestion.correctAnswer) {
                     borderClass = 'border-emerald-500/50';
                     bgClass = 'bg-emerald-500/10';
                   } else if (idx === selectedAnswer) {
-                    borderClass = 'border-red-500/50';
-                    bgClass = 'bg-red-500/10';
+                    borderClass = hasAnswerKey ? 'border-red-500/50' : 'border-amber-500/40';
+                    bgClass = hasAnswerKey ? 'bg-red-500/10' : 'bg-amber-500/10';
                   }
                 }
 
@@ -141,10 +160,10 @@ const MatricQuizPage = () => {
                       {String.fromCharCode(65 + idx)}
                     </span>
                     <span className="text-white/80 text-sm">{option}</span>
-                    {selectedAnswer !== null && idx === currentQuestion.correctAnswer && (
+                    {selectedAnswer !== null && hasAnswerKey && idx === currentQuestion.correctAnswer && (
                       <CheckCircle2 className="h-5 w-5 text-emerald-400 ml-auto shrink-0" />
                     )}
-                    {selectedAnswer === idx && idx !== currentQuestion.correctAnswer && (
+                    {selectedAnswer === idx && hasAnswerKey && idx !== currentQuestion.correctAnswer && (
                       <XCircle className="h-5 w-5 text-red-400 ml-auto shrink-0" />
                     )}
                   </button>
@@ -157,10 +176,16 @@ const MatricQuizPage = () => {
         {showExplanation && (
           <Card className="bg-white/[0.04] backdrop-blur-xl border-white/[0.08] mb-6 animate-fade-in">
             <CardContent className="p-5">
-              <p className="text-emerald-300 text-sm font-medium mb-2">
-                Correct answer: {String.fromCharCode(65 + currentQuestion.correctAnswer)}.{" "}
-                {currentQuestion.options[currentQuestion.correctAnswer]}
-              </p>
+              {currentQuestion.correctAnswer >= 0 ? (
+                <p className="text-emerald-300 text-sm font-medium mb-2">
+                  Correct answer: {String.fromCharCode(65 + currentQuestion.correctAnswer)}.{' '}
+                  {currentQuestion.options[currentQuestion.correctAnswer]}
+                </p>
+              ) : (
+                <p className="text-amber-300 text-sm font-medium mb-2">
+                  Official answer key unavailable in the source.
+                </p>
+              )}
               <p className="text-white/70 text-sm">{currentQuestion.explanation}</p>
             </CardContent>
           </Card>
