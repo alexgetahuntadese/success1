@@ -30,14 +30,15 @@ export const grade11Subjects: Grade11Subject[] = [
     id: 'physics',
     name: 'Physics',
     icon: 'Atom',
-    description: 'Fundamental principles of physics including mechanics, waves, and electricity',
+    description: 'Kehulum-aligned Grade 11 Physics based on the Ethiopian new curriculum 7-unit structure',
     chapters: [
-      'Chapter 1: Mechanics',
-      'Chapter 2: Waves and Sound',
-      'Chapter 3: Heat and Thermodynamics',
-      'Chapter 4: Electricity and Magnetism',
-      'Chapter 5: Optics',
-      'Chapter 6: Modern Physics'
+      'Unit 1: Physics and Human Society',
+      'Unit 2: Vectors',
+      'Unit 3: Motion in One and Two Dimensions',
+      'Unit 4: Dynamics',
+      'Unit 5: Heat Conduction and Calorimetry',
+      'Unit 6: Electrostatics and Electric Circuit',
+      'Unit 7: Nuclear Physics'
     ],
     category: 'Natural Sciences'
   },
@@ -169,6 +170,21 @@ export const grade11Subjects: Grade11Subject[] = [
       'Unit 10: Artificial Intelligence'
     ],
     category: 'Languages'
+  },
+  {
+    id: 'information-technology',
+    name: 'Information Technology',
+    icon: 'Monitor',
+    description: 'Digital literacy, information systems, databases, web development, troubleshooting, and programming',
+    chapters: [
+      'Unit 1: Information Systems and Its Applications',
+      'Unit 2: Emerging Technologies',
+      'Unit 3: Database Management',
+      'Unit 4: Web Development',
+      'Unit 5: Hardware Troubleshooting and Preventive Maintenance',
+      'Unit 6: Fundamentals of Programming'
+    ],
+    category: 'Other'
   },
   {
     id: 'history',

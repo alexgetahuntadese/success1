@@ -1,1 +1,0 @@
-CREATE POLICY "Users can delete own attempts" ON public.quiz_attempts FOR DELETE TO authenticated USING (auth.uid() = user_id);

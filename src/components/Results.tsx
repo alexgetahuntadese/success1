@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { CheckCircle, XCircle, Clock, RotateCcw, ArrowLeft, BarChart3 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { saveQuizAttempt } from '@/lib/performanceUtils';
-import { saveQuizAttemptToDb } from '@/lib/dbPerformanceUtils';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 interface Question {
@@ -64,10 +63,7 @@ const Results = ({
       time_spent: timeTaken,
     };
 
-    // Save to localStorage (offline fallback)
     saveQuizAttempt(attemptData);
-    // Save to database (if authenticated)
-    saveQuizAttemptToDb(attemptData);
   }, []);
   
   const getScoreColor = (percentage: number) => {
@@ -101,7 +97,7 @@ const Results = ({
 
   return (
     <div className="space-y-6">
-      <Card className="bg-white/5 border-white/20 text-white">
+      <Card className="app-glass text-white">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold mb-4 text-white">{t('results.complete')}</CardTitle>
           <div className="space-y-4">
@@ -113,13 +109,13 @@ const Results = ({
             >
               {score} {t('results.outOf')} {totalQuestions} {t('results.correct').toLowerCase()}
             </Badge>
-            <p className="text-lg text-white/60">
+            <p className="text-lg text-white/80">
               {getPerformanceMessage(percentage)}
             </p>
           </div>
         </CardHeader>
         <CardContent className="text-center space-y-4">
-          <div className="flex items-center justify-center space-x-2 text-white/60">
+          <div className="flex items-center justify-center space-x-2 text-white/80">
             <Clock className="h-5 w-5" />
             <span>{t('results.timeTaken')}: {timeTaken}</span>
           </div>
@@ -157,7 +153,7 @@ const Results = ({
           const isCorrect = userAnswer === question.correct;
           
           return (
-            <Card key={question.id} className="bg-white/5 border-white/20 text-white">
+            <Card key={question.id} className="app-glass text-white">
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
                   <Badge variant="secondary" className="bg-white/[0.08] text-white">
@@ -182,7 +178,7 @@ const Results = ({
                   } else if (option === userAnswer && !isCorrect) {
                     buttonClass += "bg-red-600 border-red-500 text-white";
                   } else {
-                    buttonClass += "bg-white/[0.04] border-white/[0.08] text-white/60";
+                    buttonClass += "bg-white/[0.10] border-white/[0.16] text-white/85";
                   }
 
                   return (
@@ -201,9 +197,9 @@ const Results = ({
                 })}
                 
                 {question.explanation && (
-                  <div className="mt-4 p-4 bg-blue-900/30 border border-blue-500/30 rounded-lg">
+                  <div className="mt-4 rounded-lg border border-blue-400/30 bg-blue-950/45 p-4">
                     <h4 className="font-semibold text-blue-300 mb-2">{t('results.explanation')}:</h4>
-                    <p className="text-white/60">{question.explanation}</p>
+                    <p className="text-white/85">{question.explanation}</p>
                   </div>
                 )}
               </CardContent>

@@ -10,7 +10,7 @@ const GradeSelection = () => {
   const grades = [
     { number: 9, students: '5,200+', subjects: 10 },
     { number: 10, students: '6,100+', subjects: 10 },
-    { number: 11, students: '8,600+', subjects: 13 },
+    { number: 11, students: '8,600+', subjects: 12 },
     { number: 12, students: '8,300+', subjects: 14 },
   ];
 

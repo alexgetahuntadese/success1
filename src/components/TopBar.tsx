@@ -1,49 +1,34 @@
 import { useNavigate } from 'react-router-dom';
-import { User, LogOut, LogIn } from 'lucide-react';
+import { User, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { getPerformanceData } from '@/lib/performanceUtils';
 
 const TopBar = () => {
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
+  const studentName = getPerformanceData().profile.student_name || 'Profile';
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-end gap-1 px-4 py-2 bg-purple-950/80 backdrop-blur-md border-b border-white/[0.04]">
+    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-end gap-1 border-b border-white/[0.12] bg-purple-950/90 px-4 py-2 shadow-[0_10px_35px_rgba(10,10,30,0.35)] backdrop-blur-xl">
       <LanguageSwitcher />
-      {user ? (
-        <>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigate('/profile')}
-            className="text-white hover:text-white hover:bg-white/10 font-medium"
-          >
-            <User className="h-4 w-4 mr-1.5" />
-            <span className="max-w-[120px] truncate">
-              {user.user_metadata?.full_name || user.email?.split('@')[0]}
-            </span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={signOut}
-            className="text-white/50 hover:text-white hover:bg-white/10"
-          >
-            <LogOut className="h-4 w-4" />
-          </Button>
-        </>
-      ) : (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => navigate('/auth')}
-          className="text-white/70 hover:text-white hover:bg-white/10"
-        >
-          <LogIn className="h-4 w-4 mr-1" />
-          Sign In
-        </Button>
-      )}
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => navigate('/performance')}
+        className="text-white/85 hover:bg-white/12 hover:text-white"
+      >
+        <BarChart3 className="h-4 w-4 mr-1.5" />
+        Performance
+      </Button>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => navigate('/profile')}
+        className="font-medium text-white/95 hover:bg-white/12 hover:text-white"
+      >
+        <User className="h-4 w-4 mr-1.5" />
+        <span className="max-w-[120px] truncate">{studentName}</span>
+      </Button>
     </div>
   );
 };

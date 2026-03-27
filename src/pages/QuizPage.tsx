@@ -32,6 +32,9 @@ import { grade10EnglishQuestions } from '@/data/grade10EnglishQuestions';
 import { grade10CivicsQuestions } from '@/data/grade10CivicsQuestions';
 import { grade10GeographyQuestions } from '@/data/grade10GeographyQuestions';
 import { grade10EconomicsQuestions } from '@/data/grade10EconomicsQuestions';
+import { getGrade9Questions } from '@/data/grade9Questions';
+import { grade10HistoryQuestions } from '@/data/grade10HistoryQuestions';
+import { grade10AmharicQuestions } from '@/data/grade10AmharicQuestions';
 
 import QuestionCard from '@/components/QuestionCard';
 import Results from '@/components/Results';
@@ -57,12 +60,18 @@ const getQuestionsForSubject = (subject: string, chapter: string, difficulty: st
   console.log('Getting questions for:', { subject, chapter, difficulty, grade });
   
   try {
-    // Handle Grade 11 subjects
-    // Handle Grade 9 - no questions yet
+    // Handle Grade 9
     if (grade === '9') {
-      console.warn(`Grade 9 questions not yet available for ${subject}`);
-      return [];
+      return getGrade9Questions(subject, chapter, difficulty.toLowerCase() as 'easy' | 'medium' | 'hard', count).map(q => ({
+        id: q.id,
+        question: q.question,
+        options: q.options,
+        correct: q.correct,
+        explanation: q.explanation
+      }));
     }
+
+    // Handle Grade 11 subjects
 
     // Handle Grade 10
     if (grade === '10') {
@@ -84,6 +93,8 @@ const getQuestionsForSubject = (subject: string, chapter: string, difficulty: st
         'civics': grade10CivicsQuestions,
         'geography': grade10GeographyQuestions,
         'economics': grade10EconomicsQuestions,
+        'history': grade10HistoryQuestions,
+        'amharic': grade10AmharicQuestions,
       };
       
       const subjectQuestions = grade10DataMap[subjectLower];
@@ -495,7 +506,7 @@ const QuizPage = () => {
 
   if (isLoading) {
     return (
-    <div className="container mx-auto pt-14 px-4 pb-4 min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 overflow-hidden relative">
+    <div className="app-shell container mx-auto pt-14 px-4 pb-4">
       <StarField starCount={30} shootingCount={2} />
       <TopBar />
         <div className="flex items-center mb-6">
@@ -524,7 +535,7 @@ const QuizPage = () => {
 
   if (error) {
     return (
-    <div className="container mx-auto pt-14 px-4 pb-4 min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 overflow-hidden relative">
+    <div className="app-shell container mx-auto pt-14 px-4 pb-4">
       <StarField starCount={30} shootingCount={2} />
       <TopBar />
         <div className="flex items-center mb-6">
@@ -540,7 +551,7 @@ const QuizPage = () => {
             Quiz Error
           </h2>
         </div>
-        <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
+        <div className="rounded-lg border border-red-400/35 bg-red-950/45 p-6 shadow-xl">
           <p className="text-red-400 text-lg mb-4">{error}</p>
           <div className="space-x-4">
             <Button 
@@ -564,7 +575,7 @@ const QuizPage = () => {
 
   if (!subject || !chapterId || !difficulty) {
     return (
-    <div className="container mx-auto pt-14 px-4 pb-4 min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 overflow-hidden relative">
+    <div className="app-shell container mx-auto pt-14 px-4 pb-4">
       <StarField starCount={30} shootingCount={2} />
       <TopBar />
         <div className="flex items-center mb-6">
@@ -580,7 +591,7 @@ const QuizPage = () => {
             Invalid Quiz Parameters
           </h2>
         </div>
-        <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-6">
+        <div className="rounded-lg border border-yellow-400/35 bg-yellow-950/45 p-6 shadow-xl">
           <p className="text-yellow-400">Missing required parameters. Please navigate from the subjects page.</p>
         </div>
       </div>
@@ -589,7 +600,7 @@ const QuizPage = () => {
 
   if (questions.length === 0) {
     return (
-    <div className="container mx-auto pt-14 px-4 pb-4 min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 overflow-hidden relative">
+    <div className="app-shell container mx-auto pt-14 px-4 pb-4">
       <StarField starCount={30} shootingCount={2} />
       <TopBar />
         <div className="flex items-center mb-6">
@@ -605,7 +616,7 @@ const QuizPage = () => {
             {subject} - {chapterId} ({difficulty})
           </h2>
         </div>
-        <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-6">
+        <div className="rounded-lg border border-blue-400/35 bg-blue-950/45 p-6 shadow-xl">
           <p className="text-blue-400 text-lg mb-4">No questions available for this chapter and difficulty level.</p>
           <Button 
             variant="outline"
@@ -623,7 +634,7 @@ const QuizPage = () => {
 
   if (!currentQuestion) {
     return (
-    <div className="container mx-auto pt-14 px-4 pb-4 min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 overflow-hidden relative">
+    <div className="app-shell container mx-auto pt-14 px-4 pb-4">
       <StarField starCount={30} shootingCount={2} />
       <TopBar />
         <div className="flex items-center mb-6">
@@ -639,7 +650,7 @@ const QuizPage = () => {
             Quiz Error
           </h2>
         </div>
-        <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
+        <div className="rounded-lg border border-red-400/35 bg-red-950/45 p-6 shadow-xl">
           <p className="text-red-400">Unable to load the current question. Please try refreshing the page.</p>
           <Button 
             onClick={initializeQuestions}
@@ -653,14 +664,14 @@ const QuizPage = () => {
   }
 
   return (
-    <div className="container mx-auto pt-14 px-4 pb-4 min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 overflow-hidden relative">
+    <div className="app-shell container mx-auto pt-14 px-4 pb-4">
       <StarField starCount={30} shootingCount={2} />
       <TopBar />
       <div className="mb-6">
         <Button
           variant="ghost"
           onClick={handleBackToChapters}
-          className="text-white hover:bg-white/10 mb-2"
+          className="mb-2 text-white/90 hover:bg-white/12"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back
@@ -681,7 +692,7 @@ const QuizPage = () => {
         />
       ) : (
         <div className="space-y-6">
-          <p className="text-white/50 mb-2">
+          <p className="mb-2 text-white/80">
             Time Elapsed: <span className="font-bold text-white">{formatTime(elapsedTime)}</span>
           </p>
           
@@ -696,7 +707,7 @@ const QuizPage = () => {
           />
           
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-            <div className="text-sm text-white/40">
+            <div className="text-sm text-white/70">
               Question {currentQuestionIndex + 1} of {questions.length}
             </div>
             <div className="flex gap-3">

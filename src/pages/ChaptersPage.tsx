@@ -28,7 +28,9 @@ import { grade11HistoryQuestions } from '@/data/grade11HistoryQuestions';
 import { grade11AmharicQuestions } from '@/data/grade11AmharicQuestions';
 import { grade11CivicsQuestions } from '@/data/grade11CivicsQuestions';
 import { grade11Physics } from '@/data/grade11Physics';
+import { grade11Subjects } from '@/data/grade11Subjects';
 import { grade9Subjects } from '@/data/grade9Subjects';
+import { getGrade9ChapterQuestionCounts } from '@/data/grade9Questions';
 import { grade10Subjects } from '@/data/grade10Subjects';
 import { grade10Biology } from '@/data/grade10BiologyQuestions';
 import { grade10MathematicsQuestions } from '@/data/grade10MathematicsQuestions';
@@ -38,6 +40,8 @@ import { grade10EnglishQuestions } from '@/data/grade10EnglishQuestions';
 import { grade10CivicsQuestions } from '@/data/grade10CivicsQuestions';
 import { grade10GeographyQuestions } from '@/data/grade10GeographyQuestions';
 import { grade10EconomicsQuestions } from '@/data/grade10EconomicsQuestions';
+import { grade10HistoryQuestions } from '@/data/grade10HistoryQuestions';
+import { grade10AmharicQuestions } from '@/data/grade10AmharicQuestions';
 
 const ChaptersPage = () => {
   const navigate = useNavigate();
@@ -633,6 +637,23 @@ const ChaptersPage = () => {
         };
       });
     }
+
+    if (grade === '11') {
+      const subjectData = grade11Subjects.find((s) => s.name === decodedSubject);
+      if (subjectData) {
+        return subjectData.chapters.map((chapter, index) => ({
+          id: index + 1,
+          title: chapter,
+          description: `Grade 11 ${decodedSubject} - ${chapter}`,
+          duration: '20 min',
+          difficulty: 'Medium' as const,
+          progress: 0,
+          isCompleted: false,
+          questionsCount: 0,
+          difficultyBreakdown: { easy: 0, medium: 0, hard: 0 }
+        }));
+      }
+    }
     
     // Handle Grade 10 subjects with question data
     if (grade === '10') {
@@ -646,15 +667,17 @@ const ChaptersPage = () => {
         'Civic Education': grade10CivicsQuestions,
         'Geography': grade10GeographyQuestions,
         'Economics': grade10EconomicsQuestions,
+        'History': grade10HistoryQuestions,
+        'Amharic': grade10AmharicQuestions,
       };
 
       const questionData = grade10QuestionSets[decodedSubject];
       if (questionData) {
         return Object.keys(questionData).map((chapterName, index) => {
           const questions = questionData[chapterName];
-          const easyQuestions = questions.filter((q: any) => q.difficulty === 'Easy').length;
-          const mediumQuestions = questions.filter((q: any) => q.difficulty === 'Medium').length;
-          const hardQuestions = questions.filter((q: any) => q.difficulty === 'Hard').length;
+          const easyQuestions = questions.filter((q: any) => q.difficulty?.toLowerCase() === 'easy').length;
+          const mediumQuestions = questions.filter((q: any) => q.difficulty?.toLowerCase() === 'medium').length;
+          const hardQuestions = questions.filter((q: any) => q.difficulty?.toLowerCase() === 'hard').length;
           return {
             id: index + 1,
             title: chapterName,
@@ -686,11 +709,19 @@ const ChaptersPage = () => {
       }
     }
 
-    // Handle Grade 9 subjects (no question data yet)
+    // Handle Grade 9 subjects
     if (grade === '9') {
       const subjectData = grade9Subjects.find(s => s.name === decodedSubject);
       if (subjectData) {
         return subjectData.chapters.map((chapter, index) => ({
+          ...(() => {
+            const counts = getGrade9ChapterQuestionCounts(decodedSubject, chapter);
+            const total = counts.easy + counts.medium + counts.hard;
+            return {
+              questionsCount: total,
+              difficultyBreakdown: counts,
+            };
+          })(),
           id: index + 1,
           title: chapter,
           description: `Grade 9 ${decodedSubject} - ${chapter}`,
@@ -698,8 +729,6 @@ const ChaptersPage = () => {
           difficulty: 'Medium' as const,
           progress: 0,
           isCompleted: false,
-          questionsCount: 0,
-          difficultyBreakdown: { easy: 0, medium: 0, hard: 0 }
         }));
       }
     }
@@ -812,12 +841,13 @@ const ChaptersPage = () => {
 
   const getGrade11PhysicsChapterDescription = (chapterName: string) => {
     const descriptions: { [key: string]: string } = {
-      "Chapter 1: Mechanics": "Study motion, forces, work, energy, momentum, and the laws that govern moving objects",
-      "Chapter 2: Waves and Sound": "Explore wave properties, sound propagation, interference, resonance, and practical wave behavior",
-      "Chapter 3: Heat and Thermodynamics": "Learn temperature, heat transfer, gas laws, and the principles that connect heat and energy",
-      "Chapter 4: Electricity and Magnetism": "Understand electric charge, current, circuits, magnetic fields, and electromagnetic effects",
-      "Chapter 5: Optics": "Examine reflection, refraction, lenses, mirrors, image formation, and the behavior of light",
-      "Chapter 6: Modern Physics": "Explore relativity, atomic structure, radioactivity, quantum ideas, and other foundations of modern physics"
+      "Unit 1: Physics and Human Society": "Introduce physics as a human activity, its role in society, scientific inquiry, and physics-related careers",
+      "Unit 2: Vectors": "Build vector concepts, representation, components, and graphical and algebraic operations in two dimensions",
+      "Unit 3: Motion in One and Two Dimensions": "Study kinematics, graphs of motion, vertical motion, projectile motion, and circular motion",
+      "Unit 4: Dynamics": "Focus on forces, Newton's laws, friction, work, energy, impulse, momentum, and conservation ideas",
+      "Unit 5: Heat Conduction and Calorimetry": "Learn heat transfer, thermal properties of matter, calorimetry, and practical thermal applications",
+      "Unit 6: Electrostatics and Electric Circuit": "Study charge, electric field, potential difference, current, resistance, capacitors, and basic circuits",
+      "Unit 7: Nuclear Physics": "Explore atomic nuclei, radioactivity, nuclear reactions, energy release, uses, and safety considerations"
     };
     return descriptions[chapterName] || "Comprehensive study of Grade 11 Physics concepts and applications";
   };
@@ -1049,14 +1079,14 @@ const ChaptersPage = () => {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 md:p-8 md:pt-14 overflow-hidden relative">
+    <div className="app-shell pt-14 px-4 pb-4 md:p-8 md:pt-14">
       <StarField starCount={40} shootingCount={4} />
       <TopBar />
 
       <div className="max-w-6xl mx-auto relative z-10">
         <Button
           variant="ghost"
-          className="text-white/70 hover:text-white hover:bg-white/5 mb-8 transition-colors"
+          className="mb-8 text-white/85 transition-colors hover:bg-white/10 hover:text-white"
           onClick={() => navigate(`/grade/${grade}/subjects`)}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -1064,23 +1094,23 @@ const ChaptersPage = () => {
         </Button>
 
         <div className="text-center mb-12 opacity-0 animate-fade-in" style={{ animationFillMode: 'forwards' }}>
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm mb-6">
+          <div className="app-kicker mb-6">
             <GraduationCap className="h-4 w-4" />
             Grade {grade} • {decodedSubject}
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
             {decodedSubject} Chapters
           </h1>
-          <p className="text-lg text-white/50 max-w-md mx-auto mb-8">
+          <p className="mb-8 max-w-md mx-auto text-lg text-white/78">
             {isUnavailableGrade12QuizSubject
               ? 'This Grade 12 subject currently has notes, but not a full quiz bank.'
               : 'Choose a chapter to start your quiz'}
           </p>
 
           {!isUnavailableGrade12QuizSubject && chapters.length > 0 && (
-            <div className="max-w-sm mx-auto bg-white/[0.04] backdrop-blur-xl rounded-2xl p-5 border border-white/[0.08]">
+            <div className="app-glass max-w-sm mx-auto rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-white/70 font-medium text-sm">Overall Progress</span>
+                <span className="text-sm font-medium text-white/85">Overall Progress</span>
                 <span className={`font-bold text-sm ${getProgressColor(overallProgress)}`}>
                   {overallProgress}%
                 </span>
@@ -1096,9 +1126,9 @@ const ChaptersPage = () => {
         </div>
 
         {isUnavailableGrade12QuizSubject && (
-          <div className="max-w-2xl mx-auto bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8 text-center">
+          <div className="app-glass max-w-2xl mx-auto rounded-2xl p-8 text-center">
             <h2 className="text-2xl font-bold text-white mb-3">Quiz Bank Not Ready Yet</h2>
-            <p className="text-white/50 mb-6">
+            <p className="mb-6 text-white/78">
               Grade 12 {decodedSubject} is available in the notes flow, but its quiz chapters are still being rebuilt to match the current curriculum.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3">
@@ -1120,9 +1150,9 @@ const ChaptersPage = () => {
         )}
 
         {!isUnavailableGrade12QuizSubject && chapters.length === 0 && (
-          <div className="max-w-2xl mx-auto bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8 text-center">
+          <div className="app-glass max-w-2xl mx-auto rounded-2xl p-8 text-center">
             <h2 className="text-2xl font-bold text-white mb-3">No Quiz Chapters Found</h2>
-            <p className="text-white/50 mb-6">
+            <p className="mb-6 text-white/78">
               This quiz subject does not have chapter data available yet.
             </p>
             <Button
@@ -1146,7 +1176,7 @@ const ChaptersPage = () => {
               {/* Glow effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-2xl opacity-0 group-hover:opacity-15 blur-xl transition-opacity duration-500" />
 
-              <div className="relative bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-6 transition-all duration-500 group-hover:bg-white/[0.08] group-hover:border-white/[0.15] shadow-2xl h-full flex flex-col">
+              <div className="app-glass relative h-full rounded-2xl p-6 transition-all duration-500 group-hover:bg-white/[0.12] group-hover:border-white/[0.22] flex flex-col">
                 <Sparkles className="absolute top-4 right-4 h-4 w-4 text-white/10 group-hover:text-white/30 transition-colors duration-500" />
 
                 {/* Header */}
@@ -1166,10 +1196,10 @@ const ChaptersPage = () => {
                   {chapter.difficulty}
                 </Badge>
 
-                <p className="text-white/40 text-sm mb-4 flex-1">{chapter.description}</p>
+                <p className="mb-4 flex-1 text-sm text-white/75">{chapter.description}</p>
 
                 {/* Stats */}
-                <div className="flex items-center gap-4 text-white/40 text-xs mb-4">
+                <div className="mb-4 flex items-center gap-4 text-xs text-white/70">
                   <div className="flex items-center gap-1.5">
                     <Clock className="h-3.5 w-3.5" />
                     <span>{chapter.duration}</span>
@@ -1181,20 +1211,20 @@ const ChaptersPage = () => {
                 </div>
 
                 {/* Difficulty Breakdown */}
-                <div className="bg-white/[0.03] rounded-xl p-3 mb-4 border border-white/[0.05]">
-                  <h4 className="text-white/50 font-medium text-xs mb-2">Questions by Difficulty</h4>
+                <div className="mb-4 rounded-xl border border-white/[0.12] bg-white/[0.08] p-3">
+                  <h4 className="mb-2 text-xs font-medium text-white/80">Questions by Difficulty</h4>
                   <div className="grid grid-cols-3 gap-2 text-xs">
                     <div className="text-center">
                       <div className="text-emerald-400 font-bold">{chapter.difficultyBreakdown.easy}</div>
-                      <div className="text-white/30">Easy</div>
+                      <div className="text-white/65">Easy</div>
                     </div>
                     <div className="text-center">
                       <div className="text-amber-400 font-bold">{chapter.difficultyBreakdown.medium}</div>
-                      <div className="text-white/30">Medium</div>
+                      <div className="text-white/65">Medium</div>
                     </div>
                     <div className="text-center">
                       <div className="text-rose-400 font-bold">{chapter.difficultyBreakdown.hard}</div>
-                      <div className="text-white/30">Hard</div>
+                      <div className="text-white/65">Hard</div>
                     </div>
                   </div>
                 </div>
@@ -1203,7 +1233,7 @@ const ChaptersPage = () => {
                 {chapter.progress > 0 && (
                   <div className="mb-4">
                     <div className="flex items-center justify-between text-xs mb-1.5">
-                      <span className="text-white/40">Progress</span>
+                      <span className="text-white/70">Progress</span>
                       <span className={`font-medium ${getProgressColor(chapter.progress)}`}>
                         {chapter.progress}%
                       </span>
@@ -1219,7 +1249,7 @@ const ChaptersPage = () => {
 
                 {/* Difficulty Buttons */}
                 <div>
-                  <h4 className="text-white/50 font-medium text-xs mb-2">Choose Difficulty</h4>
+                  <h4 className="mb-2 text-xs font-medium text-white/80">Choose Difficulty</h4>
                   <div className="grid grid-cols-3 gap-2">
                     <Button
                       size="sm"

@@ -107,6 +107,76 @@ export const grade10GeographyQuestions = {
       correct: "Matching coastlines, fossil records, and rock formations across continents",
       explanation: "Continental drift evidence includes the jigsaw-fit of coastlines (especially Africa and South America), matching fossils (Mesosaurus), and similar geological formations across now-separated continents.",
       difficulty: "hard"
+    },
+    {
+      question: "Why do many African highlands support denser settlement than nearby lowland desert or swamp regions?",
+      options: ["They often combine cooler climate, better drainage, and fewer disease pressures", "They always contain more minerals", "They are easier places for ocean trade", "They receive no rainfall variability"],
+      correct: "They often combine cooler climate, better drainage, and fewer disease pressures",
+      explanation: "In several parts of Africa, uplands have historically offered more comfortable temperatures, lower disease burden, and productive farming conditions than neighboring harsh lowlands.",
+      difficulty: "hard"
+    },
+    {
+      question: "If a river cuts deeply through a plateau and forms waterfalls, what does this suggest about the plateau surface?",
+      options: ["It is resistant rock being dissected by vertical erosion", "It was formed entirely by glaciers", "It has no structural control", "It is a coastal plain below sea level"],
+      correct: "It is resistant rock being dissected by vertical erosion",
+      explanation: "Plateau rivers often flow over elevated, resistant rock and create steep drops and gorges as downcutting continues over long periods.",
+      difficulty: "hard"
+    },
+    {
+      question: "Why can rift valleys become important locations for lakes and sediment accumulation?",
+      options: ["Because faulting creates enclosed or down-dropped basins where water and sediments collect", "Because all rift valleys are volcanic cones", "Because they repel rivers", "Because they are always above surrounding land"],
+      correct: "Because faulting creates enclosed or down-dropped basins where water and sediments collect",
+      explanation: "A graben forms a depression, so drainage and sediments often gather there, producing lakes and thick sedimentary deposits.",
+      difficulty: "hard"
+    },
+    {
+      question: "How does the existence of escarpments along African rift systems help geographers infer tectonic history?",
+      options: ["They indicate blocks of crust were uplifted and displaced by faulting", "They prove glaciation was the only force involved", "They show the area has never moved tectonically", "They are created mainly by ocean waves"],
+      correct: "They indicate blocks of crust were uplifted and displaced by faulting",
+      explanation: "Escarpments are major fault-line slopes, so their presence helps reconstruct crustal movement and the geometry of rift formation.",
+      difficulty: "hard"
+    },
+    {
+      question: "Why are isolated volcanic mountains such as Kilimanjaro especially significant for regional geography?",
+      options: ["They shape climate, water catchment, biodiversity, and human settlement patterns around them", "They affect only mountaineers", "They have no influence beyond their summit", "They always prevent agriculture nearby"],
+      correct: "They shape climate, water catchment, biodiversity, and human settlement patterns around them",
+      explanation: "Large volcanic mountains influence rainfall, river sources, vegetation zones, tourism, and farming opportunities in surrounding areas.",
+      difficulty: "hard"
+    },
+    {
+      question: "What does the presence of extensive weathered surfaces and inselbergs imply about parts of Africa's geomorphic history?",
+      options: ["Long periods of denudation and erosion under relatively stable continental conditions", "Very recent mountain building only", "Complete absence of chemical weathering", "Permanent glacial cover"],
+      correct: "Long periods of denudation and erosion under relatively stable continental conditions",
+      explanation: "Old continental surfaces often experience prolonged weathering and erosion, leaving resistant remnants such as inselbergs behind.",
+      difficulty: "hard"
+    },
+    {
+      question: "Why is the Ethiopian Highlands sometimes called the 'water tower' of the region?",
+      options: ["Its elevated terrain captures moisture and feeds major rivers", "It stores all Africa's groundwater underground", "It receives no evaporation losses", "It is surrounded entirely by lakes"],
+      correct: "Its elevated terrain captures moisture and feeds major rivers",
+      explanation: "High relief and rainfall in the Ethiopian Highlands generate runoff for important river systems, making the area a crucial water source.",
+      difficulty: "hard"
+    },
+    {
+      question: "How can tectonic activity indirectly influence human geography in East Africa?",
+      options: ["By shaping soils, water sources, hazards, transport routes, and settlement opportunities", "It affects only deep underground rocks", "It removes all mineral resources", "It prevents every form of economic activity"],
+      correct: "By shaping soils, water sources, hazards, transport routes, and settlement opportunities",
+      explanation: "Tectonics influences landforms, volcanoes, lakes, geothermal resources, and earthquake risks, all of which affect human use of the landscape.",
+      difficulty: "hard"
+    },
+    {
+      question: "Why might two nearby places at similar latitude in Africa have very different landforms?",
+      options: ["Because structure, rock type, tectonic history, and erosion can vary greatly from place to place", "Latitude determines exactly the same landform everywhere", "Only rainfall matters in landform development", "Human beings create all major landforms"],
+      correct: "Because structure, rock type, tectonic history, and erosion can vary greatly from place to place",
+      explanation: "Landforms are shaped by multiple factors, so places sharing latitude can still differ sharply depending on geology and geomorphic history.",
+      difficulty: "hard"
+    },
+    {
+      question: "A geographer compares folded mountains and block mountains in Africa. What is the strongest conclusion?",
+      options: ["Different landforms record different crustal forces such as compression and faulting", "All mountains form in exactly the same way", "Mountains are created only by erosion", "Africa has no structural mountains"],
+      correct: "Different landforms record different crustal forces such as compression and faulting",
+      explanation: "Fold mountains reflect compressional tectonics, while block mountains reflect faulting and vertical displacement of crustal blocks.",
+      difficulty: "hard"
     }
   ],
   "Unit 2: Climate Of Africa": [
@@ -549,7 +619,7 @@ export const grade10GeographyQuestions = {
       difficulty: "hard"
     }
   ],
-  "Unit 6: Human – Natural Environment Interactions": [
+  "Unit 6: Human - Natural Environment Interactions": [
     // Easy
     {
       question: "What is deforestation?",

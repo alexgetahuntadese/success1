@@ -6,8 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, User, Save, Trash2, Mail } from 'lucide-react';
-import { getProfileFromDb, updateProfileInDb, getQuizAttemptsFromDb } from '@/lib/dbPerformanceUtils';
+import { ArrowLeft, User, Save, Trash2 } from 'lucide-react';
+import { clearPerformanceData, getPerformanceData, updateStudentName } from '@/lib/performanceUtils';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,42 +22,36 @@ import {
 import { toast } from 'sonner';
 import { useLanguage } from '@/i18n/LanguageContext';
 import TopBar from "@/components/TopBar";
-import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
-  const { user } = useAuth();
   const [name, setName] = useState('');
   const [quizCount, setQuizCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadProfile = async () => {
-      const profile = await getProfileFromDb();
-      if (profile) {
-        setName(profile.student_name || '');
-      }
-      const attempts = await getQuizAttemptsFromDb();
-      setQuizCount(attempts.length);
+    const loadProfile = () => {
+      const data = getPerformanceData();
+      setName(data.profile.student_name || '');
+      setQuizCount(data.attempts.length);
       setLoading(false);
     };
     loadProfile();
   }, []);
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (name.trim()) {
-      await updateProfileInDb({ student_name: name.trim() });
+      updateStudentName(name.trim());
       toast.success(t('profile.profileUpdated'));
     } else {
       toast.error(t('profile.enterValidName'));
     }
   };
 
-  const handleClearData = async () => {
-    if (!user) return;
-    await supabase.from('quiz_attempts').delete().eq('user_id', user.id);
+  const handleClearData = () => {
+    clearPerformanceData();
+    setName('');
     setQuizCount(0);
     toast.success(t('profile.dataCleared'));
   };
@@ -105,13 +99,6 @@ const ProfilePage = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
-            {user?.email && (
-              <div className="flex items-center gap-2 p-3 bg-white/[0.04] rounded-lg border border-white/[0.08]">
-                <Mail className="h-4 w-4 text-white/40" />
-                <span className="text-sm text-white/60">{user.email}</span>
-              </div>
-            )}
-            
             <div className="space-y-2">
               <Label htmlFor="name" className="text-white">{t('profile.studentName')}</Label>
               <Input

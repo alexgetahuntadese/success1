@@ -7,6 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, BookOpen, Clock, Target, Sparkles, GraduationCap } from 'lucide-react';
 import TopBar from "@/components/TopBar";
 import StarField from '@/components/StarField';
+import { grade9Subjects } from '@/data/grade9Subjects';
+import { grade10Subjects } from '@/data/grade10Subjects';
+import { grade11Subjects } from '@/data/grade11Subjects';
 import { 
   Calculator, 
   Atom, 
@@ -34,6 +37,8 @@ type SubjectCardData = {
   icon: ComponentType<{ className?: string }>;
   category: 'Natural Sciences' | 'Social Sciences' | 'Languages' | 'Mathematics' | 'Applied Sciences';
 };
+
+type CurriculumCategory = 'Natural Sciences' | 'Social Sciences' | 'Mathematics' | 'Languages' | 'Other';
 
 const categoryMeta = {
   'Mathematics': {
@@ -82,12 +87,56 @@ const SubjectsPage = () => {
     'Art': Palette,
     'Music': Music,
     'Physical Education': Heart,
+    'Health and Physical Education': Heart,
     'Civic Education': Users,
+    'Citizenship Education': Users,
     'Economics': Briefcase,
     'General Science': Atom,
     'Agriculture': Wheat,
     'Information Technology': Monitor,
   };
+
+  const normalizeCategory = (category: CurriculumCategory): SubjectCardData['category'] =>
+    category === 'Other' ? 'Applied Sciences' : category;
+
+  const buildGrade10Subjects = (): SubjectCardData[] =>
+    grade10Subjects.map((subject) => ({
+      name: subject.name,
+      description: subject.description,
+      chapters: subject.chapters.length,
+      estimatedTime: `${Math.max(subject.chapters.length * 3, 18)} hours`,
+      difficulty: subject.category === 'Mathematics' || subject.name === 'Physics' || subject.name === 'Chemistry'
+        ? 'Advanced'
+        : 'Intermediate',
+      icon: subjectIcons[subject.name as keyof typeof subjectIcons] || BookOpen,
+      category: normalizeCategory(subject.category as CurriculumCategory),
+    }));
+
+  const buildGrade11Subjects = (): SubjectCardData[] =>
+    grade11Subjects.map((subject) => ({
+      name: subject.name === 'Civics' ? 'Civic Education' : subject.name,
+      description: subject.description,
+      chapters: subject.chapters.length,
+      estimatedTime: `${Math.max(subject.chapters.length * 3, 18)} hours`,
+      difficulty: subject.category === 'Mathematics' || subject.name === 'Physics' || subject.name === 'Chemistry'
+        ? 'Advanced'
+        : 'Intermediate',
+      icon: subjectIcons[(subject.name === 'Civics' ? 'Civic Education' : subject.name) as keyof typeof subjectIcons] || BookOpen,
+      category: normalizeCategory(subject.category as CurriculumCategory),
+    }));
+
+  const buildGrade9Subjects = (): SubjectCardData[] =>
+    grade9Subjects.map((subject) => ({
+      name: subject.name,
+      description: subject.description,
+      chapters: subject.chapters.length,
+      estimatedTime: `${Math.max(subject.chapters.length * 3, 18)} hours`,
+      difficulty: subject.category === 'Mathematics' || subject.name === 'Physics' || subject.name === 'Chemistry'
+        ? 'Advanced'
+        : 'Intermediate',
+      icon: subjectIcons[subject.name as keyof typeof subjectIcons] || BookOpen,
+      category: normalizeCategory(subject.category as CurriculumCategory),
+    }));
 
   // Grade-specific subjects configuration
   const getSubjectsForGrade = (gradeNum: string): SubjectCardData[] => {
@@ -205,236 +254,14 @@ const SubjectsPage = () => {
     }
 
     if (gradeNum === '11') {
-      return [
-        {
-          name: 'Mathematics',
-          description: 'Relations, rational functions, matrices, determinants, vectors, transformations, statistics, and probability',
-          chapters: 8,
-          estimatedTime: '30 hours',
-          difficulty: 'Advanced',
-          icon: subjectIcons.Mathematics,
-          category: 'Mathematics',
-        },
-        {
-          name: 'Physics',
-          description: 'Mechanics, waves, thermodynamics, electricity, optics, and modern physics',
-          chapters: 6,
-          estimatedTime: '23 hours',
-          difficulty: 'Advanced',
-          icon: subjectIcons.Physics,
-          category: 'Natural Sciences',
-        },
-        {
-          name: 'Chemistry',
-          description: 'Atomic structure, bonding, states of matter, kinetics, equilibrium, and organic compounds',
-          chapters: 6,
-          estimatedTime: '23 hours',
-          difficulty: 'Advanced',
-          icon: subjectIcons.Chemistry,
-          category: 'Natural Sciences',
-        },
-        {
-          name: 'Biology',
-          description: 'Biology and technology, animals, enzymes, genetics, body systems, and population resources',
-          chapters: 6,
-          estimatedTime: '23 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.Biology,
-          category: 'Natural Sciences',
-        },
-        {
-          name: 'Geography',
-          description: 'Continents, climate regions, resources, population, development, environmental change, and geospatial data',
-          chapters: 8,
-          estimatedTime: '30 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.Geography,
-          category: 'Social Sciences',
-        },
-        {
-          name: 'History',
-          description: 'Human evolution, civilizations, Ethiopia and the Horn, Africa, and the age of revolutions',
-          chapters: 9,
-          estimatedTime: '34 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.History,
-          category: 'Social Sciences',
-        },
-        {
-          name: 'Civic Education',
-          description: 'Democracy, constitutionalism, ethics, patriotism, equality, peace building, and good governance',
-          chapters: 11,
-          estimatedTime: '35 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons['Civic Education'],
-          category: 'Social Sciences',
-        },
-        {
-          name: 'Economics',
-          description: 'Consumer behavior, firms, national income, investment, trade, development, and Ethiopian sectors',
-          chapters: 7,
-          estimatedTime: '27 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.Economics,
-          category: 'Social Sciences',
-        },
-        {
-          name: 'English',
-          description: 'Theme-based English covering hazards, civilization, accidents, resources, health, and artificial intelligence',
-          chapters: 10,
-          estimatedTime: '38 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.English,
-          category: 'Languages',
-        },
-        {
-          name: 'Amharic',
-          description: 'Amharic language, literature, poetry, heritage, patriotism, success, and art',
-          chapters: 10,
-          estimatedTime: '30 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.Amharic,
-          category: 'Languages',
-        },
-        {
-          name: 'Agriculture',
-          description: 'Crop production, farm animals, natural resources, biodiversity, climate adaptation, and nutrition',
-          chapters: 16,
-          estimatedTime: '50 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.Agriculture,
-          category: 'Applied Sciences',
-        },
-      ];
+      return buildGrade11Subjects();
     }
 
-    const baseSubjects: SubjectCardData[] = [
-      {
-        name: 'Mathematics',
-        description: 'Numbers, algebra, geometry, and problem solving',
-        chapters: 12,
-        estimatedTime: '45 hours',
-        difficulty: 'Advanced',
-        icon: subjectIcons.Mathematics,
-        category: 'Mathematics',
-      },
-      {
-        name: 'Physics',
-        description: 'Motion, forces, energy, and natural phenomena',
-        chapters: 5,
-        estimatedTime: '40 hours',
-        difficulty: 'Advanced',
-        icon: subjectIcons.Physics,
-        category: 'Natural Sciences',
-      },
-      {
-        name: 'Chemistry',
-        description: 'Atoms, molecules, reactions, and materials',
-        chapters: 9,
-        estimatedTime: '35 hours',
-        difficulty: 'Advanced',
-        icon: subjectIcons.Chemistry,
-        category: 'Natural Sciences',
-      },
-      {
-        name: 'Biology',
-        description: 'Living organisms, ecosystems, and life processes',
-        chapters: 11,
-        estimatedTime: '38 hours',
-        difficulty: 'Intermediate',
-        icon: subjectIcons.Biology,
-        category: 'Natural Sciences',
-      },
-      {
-        name: 'English',
-        description: 'Reading, writing, grammar, and literature',
-        chapters: 8,
-        estimatedTime: '30 hours',
-        difficulty: 'Intermediate',
-        icon: subjectIcons.English,
-        category: 'Languages',
-      },
-      {
-        name: 'Geography',
-        description: 'Earth science, maps, climate, and human geography',
-        chapters: 7,
-        estimatedTime: '25 hours',
-        difficulty: 'Intermediate',
-        icon: subjectIcons.Geography,
-        category: 'Social Sciences',
-      },
-      {
-        name: 'History',
-        description: 'Ethiopian and world history, civilizations, and cultural heritage',
-        chapters: 9,
-        estimatedTime: '32 hours',
-        difficulty: 'Intermediate',
-        icon: subjectIcons.History,
-        category: 'Social Sciences',
-      },
-      {
-        name: 'Civic Education',
-        description: 'Democracy, rights, responsibilities, justice, and ethical citizenship',
-        chapters: 11,
-        estimatedTime: '35 hours',
-        difficulty: 'Intermediate',
-        icon: subjectIcons['Civic Education'],
-        category: 'Social Sciences',
-      },
-    ];
-
-    // For grades 9 and 10, add Amharic
-    if (gradeNum === '9' || gradeNum === '10') {
-      baseSubjects.push(
-        {
-          name: 'Amharic',
-          description: 'Amharic language, grammar, literature, and composition',
-          chapters: gradeNum === '9' ? 6 : 6,
-          estimatedTime: '25 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.Amharic,
-          category: 'Languages',
-        }
-      );
-      if (gradeNum === '10') {
-        baseSubjects.push(
-          {
-            name: 'Economics',
-            description: 'Introduction to economics, markets, and the Ethiopian economy',
-            chapters: 7,
-            estimatedTime: '28 hours',
-            difficulty: 'Intermediate',
-            icon: subjectIcons.Economics,
-            category: 'Social Sciences',
-          }
-        );
-      }
+    if (gradeNum === '10') {
+      return buildGrade10Subjects();
     }
 
-    // Add grade-specific subjects
-    if (gradeNum === '11') {
-      baseSubjects.push(
-        {
-          name: 'Agriculture',
-          description: 'Crop production, livestock management, natural resources, and sustainable farming practices',
-          chapters: 16,
-          estimatedTime: '50 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.Agriculture,
-          category: 'Applied Sciences',
-        },
-        {
-          name: 'Amharic',
-          description: 'Amharic language, literature, poetry, and cultural heritage',
-          chapters: 10,
-          estimatedTime: '30 hours',
-          difficulty: 'Intermediate',
-          icon: subjectIcons.Amharic,
-          category: 'Languages',
-        }
-      );
-    }
-    return baseSubjects;
+    return buildGrade9Subjects();
   };
 
   const subjects = getSubjectsForGrade(grade || '12');

@@ -26,7 +26,7 @@ const gradeData = [
   },
   {
     number: 11,
-    subjects: 13,
+    subjects: 12,
     icon: BookOpen,
     accent: "from-violet-500 to-fuchsia-500",
     glow: "shadow-violet-500/30",
@@ -49,7 +49,7 @@ const GradesPage = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 md:p-8 md:pt-14 overflow-hidden relative">
+    <div className="app-shell pt-14 px-4 pb-4 md:p-8 md:pt-14">
       <StarField starCount={50} shootingCount={4} />
       <TopBar />
 
@@ -57,21 +57,21 @@ const GradesPage = () => {
         <Button
           variant="ghost"
           onClick={() => navigate("/")}
-          className="text-white/70 hover:text-white hover:bg-white/5 mb-8 transition-colors"
+          className="mb-8 text-white/85 transition-colors hover:bg-white/10 hover:text-white"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t('common.backToHome')}
         </Button>
 
         <div className="text-center mb-16 opacity-0 animate-fade-in" style={{ animationFillMode: 'forwards' }}>
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm mb-6">
+          <div className="app-kicker mb-6">
             <GraduationCap className="h-4 w-4" />
             Ethiopian Curriculum
           </div>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight">
             {t('grades.selectGrade')}
           </h1>
-          <p className="text-lg md:text-xl text-white/50 max-w-md mx-auto">
+          <p className="max-w-md mx-auto text-lg md:text-xl app-muted">
             {t('grades.chooseGrade')}
           </p>
         </div>
@@ -89,7 +89,7 @@ const GradesPage = () => {
                 {/* Glow effect behind card */}
                 <div className={`absolute -inset-1 bg-gradient-to-r ${grade.accent} rounded-3xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`} />
                 
-                <div className={`relative bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8 md:p-10 transition-all duration-500 group-hover:bg-white/[0.08] group-hover:border-white/[0.15] group-hover:scale-[1.02] group-hover:${grade.glow} shadow-2xl`}>
+                <div className={`app-glass relative rounded-2xl p-8 md:p-10 transition-all duration-500 group-hover:bg-white/[0.12] group-hover:border-white/[0.22] group-hover:scale-[1.02] group-hover:${grade.glow}`}>
                   {/* Sparkle decoration */}
                   <Sparkles className="absolute top-4 right-4 h-5 w-5 text-white/10 group-hover:text-white/30 transition-colors duration-500" />
                   
@@ -106,18 +106,18 @@ const GradesPage = () => {
                   </h2>
                   
                   {/* Description */}
-                  <p className="text-white/40 text-sm mb-6">{grade.description}</p>
+                  <p className="mb-6 text-sm text-white/72">{grade.description}</p>
 
                   {/* Stats row */}
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 text-white/50 text-sm">
+                    <div className="flex items-center gap-2 text-sm text-white/75">
                       <Icon className="h-4 w-4" />
                       <span>{grade.subjects} subjects</span>
                     </div>
                   </div>
 
                   {/* Bottom action hint */}
-                  <div className="mt-8 flex items-center text-white/30 group-hover:text-white/60 text-sm transition-colors duration-300">
+                  <div className="mt-8 flex items-center text-sm text-white/65 transition-colors duration-300 group-hover:text-white/90">
                     <span>Start learning</span>
                     <ArrowLeft className="ml-2 h-4 w-4 rotate-180 group-hover:translate-x-1 transition-transform duration-300" />
                   </div>

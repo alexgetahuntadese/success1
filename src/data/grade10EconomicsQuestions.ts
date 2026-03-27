@@ -107,6 +107,76 @@ export const grade10EconomicsQuestions: Record<string, any[]> = {
       correct: "It shifts outward parallel to the original line",
       explanation: "An increase in income shifts the budget line outward (away from the origin) while maintaining the same slope, since relative prices have not changed.",
       difficulty: "Hard"
+    },
+    {
+      question: "Why does the law of diminishing marginal utility help explain a downward-sloping demand curve?",
+      options: ["Because each extra unit gives less additional satisfaction, consumers buy more only at lower prices", "Because utility always rises at the same rate", "Because supply determines all consumer choices", "Because consumers never compare price and utility"],
+      correct: "Because each extra unit gives less additional satisfaction, consumers buy more only at lower prices",
+      explanation: "As marginal utility falls, consumers are willing to pay less for additional units, which helps explain why demand generally slopes downward.",
+      difficulty: "Hard"
+    },
+    {
+      question: "If the price of one good falls while income stays constant, why might the consumer buy both more of that good and less of another good?",
+      options: ["Because substitution and income effects can alter the consumption bundle", "Because preferences disappear", "Because all prices fall together automatically", "Because the budget line does not change"],
+      correct: "Because substitution and income effects can alter the consumption bundle",
+      explanation: "A lower price changes relative prices and real purchasing power, so consumers often substitute toward the cheaper good and adjust the whole bundle.",
+      difficulty: "Hard"
+    },
+    {
+      question: "What does a consumer's choice reveal if they stay on the same indifference curve after a price change?",
+      options: ["Their overall satisfaction level is unchanged even though the bundle may differ", "Their income must have doubled", "They are irrational", "The demand curve has disappeared"],
+      correct: "Their overall satisfaction level is unchanged even though the bundle may differ",
+      explanation: "An indifference curve represents equal satisfaction, so different bundles on the same curve are equally preferred by the consumer.",
+      difficulty: "Hard"
+    },
+    {
+      question: "Why are indifference curves usually convex to the origin?",
+      options: ["Because consumers are willing to give up less and less of one good as they get less of it", "Because prices are fixed by government", "Because marginal utility is always constant", "Because all goods are perfect substitutes"],
+      correct: "Because consumers are willing to give up less and less of one good as they get less of it",
+      explanation: "Convexity reflects diminishing marginal rate of substitution: the scarcer a good becomes in the bundle, the more valuable it becomes relative to the other good.",
+      difficulty: "Hard"
+    },
+    {
+      question: "A student's transport fare rises sharply, so they start walking and spend the saved money on lunch. Which idea best explains this behavior?",
+      options: ["Consumer choice adjusts to changing prices under a budget constraint", "Demand is unrelated to price", "Only producers respond to incentives", "Utility theory applies only to luxury goods"],
+      correct: "Consumer choice adjusts to changing prices under a budget constraint",
+      explanation: "Consumers reallocate spending when prices change, choosing combinations that still maximize satisfaction within limited income.",
+      difficulty: "Hard"
+    },
+    {
+      question: "Why can two consumers with the same income choose very different bundles of goods at the same prices?",
+      options: ["Because preferences differ even when budget constraints are identical", "Because income has no role in choice", "Because prices affect everyone identically in taste", "Because indifference analysis forbids different outcomes"],
+      correct: "Because preferences differ even when budget constraints are identical",
+      explanation: "The budget line may be the same, but the highest attainable indifference curve depends on each consumer's preferences and priorities.",
+      difficulty: "Hard"
+    },
+    {
+      question: "What is the strongest reason economists separate total utility from marginal utility?",
+      options: ["Because decision-making at the margin often explains actual consumer choices better", "Because total utility is never useful", "Because marginal utility measures production cost", "Because consumers maximize total spending rather than satisfaction"],
+      correct: "Because decision-making at the margin often explains actual consumer choices better",
+      explanation: "Consumers usually decide whether one more unit is worth buying, so marginal utility is central to understanding real choice behavior.",
+      difficulty: "Hard"
+    },
+    {
+      question: "If the price ratio changes but preferences do not, what must happen at the new consumer equilibrium in ordinal analysis?",
+      options: ["The tangency condition must adjust so MRS equals the new price ratio", "The consumer stays at the old equilibrium regardless", "The indifference curves change shape automatically", "Income becomes irrelevant"],
+      correct: "The tangency condition must adjust so MRS equals the new price ratio",
+      explanation: "At equilibrium, the slope of the highest attainable indifference curve must match the slope of the budget line, which is determined by relative prices.",
+      difficulty: "Hard"
+    },
+    {
+      question: "Why might a very poor household still buy a lower-quality staple when a preferred alternative exists?",
+      options: ["Because the budget constraint can dominate preference, forcing practical compromise", "Because poor households never have preferences", "Because cheaper goods always give more utility", "Because quality has no economic meaning"],
+      correct: "Because the budget constraint can dominate preference, forcing practical compromise",
+      explanation: "Consumer theory recognizes that people maximize satisfaction subject to income limits, so constrained households may choose affordable rather than ideal bundles.",
+      difficulty: "Hard"
+    },
+    {
+      question: "What insight does consumer equilibrium provide to businesses and policymakers?",
+      options: ["It helps explain how people respond to changes in prices and income", "It proves all consumers make the same decision", "It removes the need for market research", "It applies only in perfectly planned economies"],
+      correct: "It helps explain how people respond to changes in prices and income",
+      explanation: "Understanding equilibrium helps predict demand patterns, welfare effects, and how households adjust consumption when circumstances change.",
+      difficulty: "Hard"
     }
   ],
   "Unit 2: Theories of Demand and Supply": [

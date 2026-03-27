@@ -35,7 +35,7 @@ const QuestionCard = ({
   // Ensure we have valid question data
   if (!question || !question.question || !Array.isArray(question.options) || question.options.length < 2) {
     return (
-      <Card className="bg-red-900/20 border-red-500/30 text-white mb-6">
+      <Card className="mb-6 border-red-400/45 bg-red-950/45 text-white shadow-xl">
         <CardContent className="p-6">
           <p className="text-red-400">Invalid question data. Please try refreshing the quiz.</p>
         </CardContent>
@@ -44,14 +44,14 @@ const QuestionCard = ({
   }
 
   return (
-    <Card className="bg-white/5 border-white/20 text-white mb-6">
+    <Card className="app-glass mb-6 text-white">
       <CardHeader>
         <div className="flex items-center justify-between mb-2">
-          <Badge variant="secondary" className="bg-blue-500 text-white">
+          <Badge variant="secondary" className="border border-blue-300/30 bg-blue-500/90 text-white shadow-sm">
             Question {questionNumber} of {totalQuestions}
           </Badge>
         </div>
-        <CardTitle className="text-lg font-medium text-white leading-relaxed">
+        <CardTitle className="text-lg font-semibold text-white leading-relaxed">
           {question.question}
         </CardTitle>
       </CardHeader>
@@ -67,14 +67,14 @@ const QuestionCard = ({
               } else if (option === selectedAnswer && option !== question.correct) {
                 buttonClass += "bg-red-600 hover:bg-red-700 text-white border-red-600";
               } else {
-                buttonClass += "bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/30";
+                buttonClass += "bg-white/[0.12] border-white/[0.20] text-white hover:bg-white/[0.16] hover:border-white/[0.28]";
               }
             } else {
               // Normal state when answer is not revealed
               if (selectedAnswer === option) {
                 buttonClass += "bg-blue-600 hover:bg-blue-700 text-white border-blue-600";
               } else {
-                buttonClass += "bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/30";
+                buttonClass += "bg-white/[0.12] border-white/[0.20] text-white hover:bg-white/[0.16] hover:border-white/[0.28]";
               }
             }
 

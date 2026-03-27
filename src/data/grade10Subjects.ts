@@ -100,7 +100,7 @@ export const grade10Subjects: Grade10Subject[] = [
       'Unit 3: Natural Resource Base Of Africa',
       'Unit 4: Population of Africa',
       'Unit 5: Major Economic and Cultural Activities of Africa',
-      'Unit 6: Human – Natural Environment Interactions',
+      'Unit 6: Human - Natural Environment Interactions',
       'Unit 7: Geographic Issues And Public Concerns In Africa',
       'Unit 8: Geospatial Information And Data Processing'
     ],

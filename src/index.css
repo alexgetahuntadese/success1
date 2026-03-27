@@ -72,6 +72,34 @@
 }
 
 @layer utilities {
+  .app-shell {
+    @apply min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 overflow-hidden relative;
+  }
+
+  .app-glass {
+    @apply bg-white/[0.08] backdrop-blur-xl border border-white/[0.14] shadow-2xl;
+  }
+
+  .app-glass-strong {
+    @apply bg-white/[0.12] backdrop-blur-xl border border-white/[0.18] shadow-2xl;
+  }
+
+  .app-kicker {
+    @apply inline-flex items-center gap-2 rounded-full bg-white/[0.08] border border-white/[0.14] px-4 py-1.5 text-sm text-white/80;
+  }
+
+  .app-muted {
+    color: rgb(255 255 255 / 0.72);
+  }
+
+  .app-soft {
+    color: rgb(255 255 255 / 0.84);
+  }
+
+  .app-faint {
+    color: rgb(255 255 255 / 0.6);
+  }
+
   @keyframes fade-in {
     from {
       opacity: 0;
