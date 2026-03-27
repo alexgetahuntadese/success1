@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, BookOpen } from 'lucide-react';
-import { getMatricYears, getMatricSubjectsForYear } from '@/data/matricExams';
+import { getMatricStreamsForYear, getMatricYears } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
 
@@ -33,8 +33,11 @@ const MatricExamPage = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {years.map((year) => {
-            const subjects = getMatricSubjectsForYear(year);
-            const totalQuestions = subjects.reduce((sum, s) => sum + s.questions.length, 0);
+            const streams = getMatricStreamsForYear(year);
+            const totalQuestions = streams.reduce(
+              (sum, stream) => sum + stream.subjects.reduce((streamSum, subject) => streamSum + subject.questions.length, 0),
+              0,
+            );
 
             return (
               <Card
@@ -57,7 +60,7 @@ const MatricExamPage = () => {
                   <div className="flex items-center justify-between text-sm text-white/50">
                     <div className="flex items-center gap-1.5">
                       <BookOpen className="h-4 w-4" />
-                      <span>{subjects.length} subjects</span>
+                      <span>{streams.length} streams</span>
                     </div>
                     <span>{totalQuestions} questions</span>
                   </div>
@@ -68,7 +71,7 @@ const MatricExamPage = () => {
                       navigate(`/matric/${year}`);
                     }}
                   >
-                    View Subjects
+                    Choose Stream
                   </Button>
                 </CardContent>
               </Card>

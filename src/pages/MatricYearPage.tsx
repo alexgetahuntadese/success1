@@ -11,7 +11,10 @@ import {
   Dna,
   Languages,
   Landmark,
+  Globe2,
   GraduationCap,
+  ScrollText,
+  Banknote,
   type LucideIcon,
 } from 'lucide-react';
 import { getMatricSubjectsForYear } from '@/data/matricExams';
@@ -25,14 +28,19 @@ const subjectIcons: Record<string, LucideIcon> = {
   Biology: Dna,
   English: Languages,
   Civics: Landmark,
+  History: ScrollText,
+  Geography: Globe2,
+  Economics: Banknote,
   "Scholastic Aptitude Test": GraduationCap,
 };
 
 const MatricYearPage = () => {
-  const { year } = useParams<{ year: string }>();
+  const { year, stream } = useParams<{ year: string; stream: string }>();
   const navigate = useNavigate();
   const yearNum = Number(year);
-  const subjects = getMatricSubjectsForYear(yearNum);
+  const streamKey = stream ?? 'natural';
+  const streamLabel = streamKey === 'social' ? 'Social Science' : 'Natural Science';
+  const subjects = getMatricSubjectsForYear(yearNum, streamKey);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 md:p-8 md:pt-14 overflow-hidden relative">
@@ -44,13 +52,13 @@ const MatricYearPage = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate('/matric')}
+            onClick={() => navigate(`/matric/${yearNum}`)}
             className="text-white/60 hover:text-white hover:bg-white/10"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white">{yearNum} E.C. National Exam</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-white">{yearNum} E.C. {streamLabel}</h1>
             <p className="text-white/50 text-sm mt-1">Select a subject to start practicing</p>
           </div>
         </div>
@@ -68,7 +76,7 @@ const MatricYearPage = () => {
                     ? 'hover:bg-white/[0.08] hover:border-white/[0.15] cursor-pointer group'
                     : 'opacity-60'
                 }`}
-                onClick={() => hasQuestions && navigate(`/matric/${yearNum}/${subj.subject}`)}
+                onClick={() => hasQuestions && navigate(`/matric/${yearNum}/${streamKey}/${subj.subject}`)}
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-3">
@@ -87,7 +95,7 @@ const MatricYearPage = () => {
                       className="w-full bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600 text-white"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/matric/${yearNum}/${subj.subject}`);
+                        navigate(`/matric/${yearNum}/${streamKey}/${subj.subject}`);
                       }}
                     >
                       Start Exam

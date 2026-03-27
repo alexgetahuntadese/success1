@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,10 +8,12 @@ import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
 
 const MatricQuizPage = () => {
-  const { year, subject } = useParams<{ year: string; subject: string }>();
+  const { year, stream, subject } = useParams<{ year: string; stream: string; subject: string }>();
   const navigate = useNavigate();
   const yearNum = Number(year);
-  const questions = getMatricQuestions(yearNum, subject ?? '');
+  const streamKey = stream ?? 'natural';
+  const streamLabel = streamKey === 'social' ? 'Social Science' : 'Natural Science';
+  const questions = getMatricQuestions(yearNum, streamKey, subject ?? '');
   const scoreableQuestions = questions.filter((question) => question.correctAnswer >= 0).length;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,7 +29,7 @@ const MatricQuizPage = () => {
         <TopBar />
         <div className="text-center text-white relative z-10">
           <p className="text-xl mb-4">No questions available yet for {subject} ({yearNum} E.C.)</p>
-          <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => navigate(`/matric/${yearNum}`)}>
+          <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => navigate(`/matric/${yearNum}/${streamKey}`)}>
             Go Back
           </Button>
         </div>
@@ -36,6 +38,40 @@ const MatricQuizPage = () => {
   }
 
   const currentQuestion: MatricExamQuestion = questions[currentIndex];
+
+  const renderRichText = (text: string, keyPrefix: string) => {
+    const parts = text.split(/(\[Image:\s*[^\]]+\])/g).filter(Boolean);
+
+    return parts.map((part, index) => {
+      const match = part.match(/^\[Image:\s*([^\]]+)\]$/);
+      if (!match) {
+        return (
+          <span key={`${keyPrefix}-text-${index}`} className="whitespace-pre-line">
+            {part}
+          </span>
+        );
+      }
+
+      const source = match[1].trim();
+      if (!/^https?:\/\//i.test(source)) {
+        return (
+          <span key={`${keyPrefix}-placeholder-${index}`} className="text-white/45 text-sm italic">
+            {part}
+          </span>
+        );
+      }
+
+      return (
+        <img
+          key={`${keyPrefix}-image-${index}`}
+          src={source}
+          alt="Exam diagram"
+          loading="lazy"
+          className="w-full max-h-72 object-contain rounded-xl border border-white/10 bg-white p-2"
+        />
+      );
+    });
+  };
 
   const handleAnswer = (index: number) => {
     if (selectedAnswer !== null) return;
@@ -69,7 +105,7 @@ const MatricQuizPage = () => {
           <Card className="bg-white/[0.06] backdrop-blur-xl border-white/[0.1]">
             <CardContent className="p-8">
               <h2 className="text-3xl font-bold text-white mb-2">Exam Complete!</h2>
-              <p className="text-white/50 mb-6">{subject} - {yearNum} E.C.</p>
+              <p className="text-white/50 mb-6">{subject} - {streamLabel} - {yearNum} E.C.</p>
               <div className="text-6xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent mb-2">
                 {percentage}%
               </div>
@@ -81,7 +117,7 @@ const MatricQuizPage = () => {
               )}
               {scoreableQuestions > 0 && <div className="mb-8" />}
               <div className="flex gap-3 justify-center">
-                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => navigate(`/matric/${yearNum}`)}>
+                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => navigate(`/matric/${yearNum}/${streamKey}`)}>
                   Back to Subjects
                 </Button>
                 <Button
@@ -111,11 +147,11 @@ const MatricQuizPage = () => {
 
       <div className="max-w-2xl mx-auto relative z-10">
         <div className="flex items-center gap-4 mb-6">
-          <Button variant="ghost" size="icon" onClick={() => navigate(`/matric/${yearNum}`)} className="text-white/60 hover:text-white hover:bg-white/10">
+          <Button variant="ghost" size="icon" onClick={() => navigate(`/matric/${yearNum}/${streamKey}`)} className="text-white/60 hover:text-white hover:bg-white/10">
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-xl font-bold text-white">{subject} - {yearNum} E.C.</h1>
+            <h1 className="text-xl font-bold text-white">{subject} - {streamLabel} - {yearNum} E.C.</h1>
             <p className="text-white/40 text-sm">Question {currentIndex + 1} of {questions.length}</p>
           </div>
         </div>
@@ -129,10 +165,14 @@ const MatricQuizPage = () => {
 
         <Card className="bg-white/[0.04] backdrop-blur-xl border-white/[0.08] mb-6">
           <CardContent className="p-6">
-            <p className="text-white text-lg font-medium mb-6">
-              <span className="text-white/50 mr-2">{currentIndex + 1}.</span>
-              {currentQuestion.question}
-            </p>
+            <div className="text-white text-lg font-medium mb-6 space-y-3">
+              <div>
+                <span className="text-white/50 mr-2">{currentIndex + 1}.</span>
+                {renderRichText(currentQuestion.question, `question-${currentQuestion.id}`).map((node, index) => (
+                  <Fragment key={`question-fragment-${index}`}>{node}</Fragment>
+                ))}
+              </div>
+            </div>
             <div className="space-y-3">
               {currentQuestion.options.map((option, idx) => {
                 let borderClass = 'border-white/[0.08] hover:border-white/20';
@@ -159,7 +199,11 @@ const MatricQuizPage = () => {
                     <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white/60 text-sm font-medium shrink-0">
                       {String.fromCharCode(65 + idx)}
                     </span>
-                    <span className="text-white/80 text-sm">{option}</span>
+                    <div className="text-white/80 text-sm flex-1 space-y-2">
+                      {renderRichText(option, `option-${currentQuestion.id}-${idx}`).map((node, nodeIndex) => (
+                        <Fragment key={`option-fragment-${nodeIndex}`}>{node}</Fragment>
+                      ))}
+                    </div>
                     {selectedAnswer !== null && hasAnswerKey && idx === currentQuestion.correctAnswer && (
                       <CheckCircle2 className="h-5 w-5 text-emerald-400 ml-auto shrink-0" />
                     )}

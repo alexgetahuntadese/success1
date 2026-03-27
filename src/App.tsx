@@ -17,6 +17,7 @@ import PerformancePage from "./pages/PerformancePage";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 import MatricExamPage from "./pages/MatricExamPage";
+import MatricStreamPage from "./pages/MatricStreamPage";
 import MatricYearPage from "./pages/MatricYearPage";
 import MatricQuizPage from "./pages/MatricQuizPage";
 import NotesPage from "./pages/NotesPage";
@@ -48,8 +49,9 @@ const App = () => (
               <Route path="/performance" element={<PerformancePage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/matric" element={<MatricExamPage />} />
-              <Route path="/matric/:year" element={<MatricYearPage />} />
-              <Route path="/matric/:year/:subject" element={<MatricQuizPage />} />
+              <Route path="/matric/:year" element={<MatricStreamPage />} />
+              <Route path="/matric/:year/:stream" element={<MatricYearPage />} />
+              <Route path="/matric/:year/:stream/:subject" element={<MatricQuizPage />} />
               <Route path="/notes" element={<NotesPage />} />
               <Route path="/notes/:grade" element={<NotesSubjectsPage />} />
               <Route path="/notes/:grade/:subject" element={<NotesChaptersPage />} />
