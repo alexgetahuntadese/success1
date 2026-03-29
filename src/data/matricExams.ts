@@ -1,12 +1,24 @@
 import { matric2014MathQuestions } from "./matric2014MathQuestions";
 import { matric2014BiologyQuestions } from "./matric2014BiologyQuestions";
 import { matric2014ChemistryQuestions } from "./matric2014ChemistryQuestions";
+import { matric2014PhysicsQuestions } from "./matric2014PhysicsQuestions";
+import { matric2014EnglishQuestions } from "./matric2014EnglishQuestions";
+import { matric2014CivicsQuestions } from "./matric2014CivicsQuestions";
+import { matric2014SatQuestions } from "./matric2014SatQuestions";
+import { matric2014SocialCivicsQuestions } from "./matric2014SocialCivicsQuestions";
+import { matric2014SocialEnglishQuestions } from "./matric2014SocialEnglishQuestions";
+import { matric2014SocialGeographyQuestions } from "./matric2014SocialGeographyQuestions";
+import { matric2014SocialHistoryQuestions } from "./matric2014SocialHistoryQuestions";
+import { matric2014SocialMathQuestions } from "./matric2014SocialMathQuestions";
+import { matric2014SocialSatQuestions } from "./matric2014SocialSatQuestions";
 import { matric2015BiologyQuestions } from "./matric2015BiologyQuestions";
 import { matric2015ChemistryQuestions } from "./matric2015ChemistryQuestions";
 import { matric2015CivicsQuestions } from "./matric2015CivicsQuestions";
 import { matric2015EnglishQuestions } from "./matric2015EnglishQuestions";
 import { matric2015SocialEnglishQuestions } from "./matric2015SocialEnglishQuestions";
 import { matric2015SocialGeographyQuestions } from "./matric2015SocialGeographyQuestions";
+import { matric2015SocialHistoryQuestions } from "./matric2015SocialHistoryQuestions";
+import { matric2015SocialScholasticAptitudeQuestions } from "./matric2015SocialScholasticAptitudeQuestions";
 import { matric2015MathQuestions } from "./matric2015MathQuestions";
 import { matric2015PhysicsQuestions } from "./matric2015PhysicsQuestions";
 import { matric2016BiologyQuestions } from "./matric2016BiologyQuestions";
@@ -146,9 +158,10 @@ export const matricExams: MatricExamYear[] = [
           { subject: "Mathematics", questions: matric2015MathQuestions },
           { subject: "English", questions: matric2015SocialEnglishQuestions },
           { subject: "Civics", questions: matric2015CivicsQuestions },
-          { subject: "History", questions: [] },
+          { subject: "History", questions: matric2015SocialHistoryQuestions },
           { subject: "Geography", questions: matric2015SocialGeographyQuestions },
           { subject: "Economics", questions: [] },
+          { subject: "Scholastic Aptitude Test", questions: matric2015SocialScholasticAptitudeQuestions },
         ],
       },
     ],
@@ -161,23 +174,25 @@ export const matricExams: MatricExamYear[] = [
         label: "Natural Science",
         subjects: [
           { subject: "Mathematics", questions: matric2014MathQuestions },
-          { subject: "Physics", questions: [] },
+          { subject: "Physics", questions: matric2014PhysicsQuestions },
           { subject: "Chemistry", questions: matric2014ChemistryQuestions },
           { subject: "Biology", questions: matric2014BiologyQuestions },
-          { subject: "English", questions: [] },
-          { subject: "Civics", questions: [] },
+          { subject: "English", questions: matric2014EnglishQuestions },
+          { subject: "Civics", questions: matric2014CivicsQuestions },
+          { subject: "Scholastic Aptitude Test", questions: matric2014SatQuestions },
         ],
       },
       {
         key: "social",
         label: "Social Science",
         subjects: [
-          { subject: "Mathematics", questions: [] },
-          { subject: "English", questions: [] },
-          { subject: "Civics", questions: [] },
-          { subject: "History", questions: [] },
-          { subject: "Geography", questions: [] },
+          { subject: "Mathematics", questions: matric2014SocialMathQuestions },
+          { subject: "English", questions: matric2014SocialEnglishQuestions },
+          { subject: "Civics", questions: matric2014SocialCivicsQuestions },
+          { subject: "History", questions: matric2014SocialHistoryQuestions },
+          { subject: "Geography", questions: matric2014SocialGeographyQuestions },
           { subject: "Economics", questions: [] },
+          { subject: "Scholastic Aptitude Test", questions: matric2014SocialSatQuestions },
         ],
       },
     ],

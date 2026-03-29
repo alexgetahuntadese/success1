@@ -10,8 +10,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Omo-Ghibe lowlands",
       "Tekezze-Angereb lowlands"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-2",
@@ -22,8 +22,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "They are perennial with steady volume of water.",
       "They serve as domestic and international boundaries."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-3",
@@ -34,8 +34,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Its rivers join the Red sea during the summer season.",
       "It is the largest in terms of the discharge of water."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-4",
@@ -46,8 +46,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "There is little seasonal variation in the amount of rain in Ethiopia.",
       "The lowlands of Afar typically receive rain in summer."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-5",
@@ -58,8 +58,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It grows mainly along the river banks.",
       "It is found both in the highlands and lowlands."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-6",
@@ -70,8 +70,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "The Semien Highlands",
       "The Awash Park"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-7",
@@ -82,8 +82,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Game reserves",
       "Zoological gardens"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-8",
@@ -94,8 +94,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Check dams",
       "Shelter belts"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-9",
@@ -106,8 +106,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Marble",
       "Basalt"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-10",
@@ -118,8 +118,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Clay soils",
       "Sandy soils"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-11",
@@ -130,8 +130,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Natural causes are becoming the major causes of climate change.",
       "Ocean currents via releasing water vapor have a net cooling effect."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-12",
@@ -142,8 +142,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Daily range of temperature is the highest during winter season.",
       "Highlands exhibit the highest annual range of temperature."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-13",
@@ -154,8 +154,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Dega",
       "Wurch"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-14",
@@ -166,8 +166,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "practice of farm economic activity.",
       "existence of rugged topography."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-15",
@@ -178,8 +178,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Transhumance",
       "Refugee"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-16",
@@ -190,8 +190,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "North America is the most urbanized continent.",
       "There is a high level of urbanization in the developing world."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-17",
@@ -202,8 +202,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Urban settlements have planned streets.",
       "Urban areas have a low division of labor."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-18",
@@ -214,8 +214,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "fertile alluvial soil.",
       "natural beauty."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-19",
@@ -226,8 +226,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It nearly doubles the total size of North America.",
       "It is four times larger than the size of Antarctica."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-20",
@@ -238,8 +238,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Its unbroken coastline encourages external communications.",
       "Its compact shape relatively eases administration and defense."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-21",
@@ -250,8 +250,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Central Africa is the most sparsely populated.",
       "Northern Africa has the highest number of countries."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-22",
@@ -262,8 +262,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Western Africa",
       "Eastern Africa"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-23",
@@ -274,8 +274,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "The slow sinking and rising of landmass",
       "Transgression and regression of the sea"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-24",
@@ -286,8 +286,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Eastern Africa is largely areas of low plateaus.",
       "High plateaus are abundantly found in Northern and Western Africa."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-25",
@@ -298,8 +298,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Westerly winds",
       "Trade winds"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-26",
@@ -310,8 +310,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Southern Africa experiences low temperature from December to February.",
       "When the sun is overhead at the Tropic of Capricorn, northern parts of Africa experience the highest temperature."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-27",
@@ -322,8 +322,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It occupies the largest climatic region of Africa.",
       "It has a high rainfall and low air temperature."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-28",
@@ -334,8 +334,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "North of the tropics",
       "The Central Africa"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-29",
@@ -346,8 +346,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "The inland drainage system",
       "The Atlantic Ocean drainage system"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-30",
@@ -358,8 +358,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Tanganyika",
       "Turkana"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-31",
@@ -370,8 +370,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "By encouraging irrigation",
       "By facilitating water transport"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-32",
@@ -382,8 +382,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "White Nile is the largest supplier of water to the Nile River.",
       "Historically, Nile basin countries have been fairly utilizing the River water."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-33",
@@ -394,8 +394,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Moisture availability",
       "Environmental conditions"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-34",
@@ -406,8 +406,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Natural gas",
       "Coal"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-35",
@@ -418,8 +418,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Kerero",
       "Zigba"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-36",
@@ -430,8 +430,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Policy linked to water resources",
       "Policy allied to forest, woodland and tree resources"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-37",
@@ -442,8 +442,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Uranus",
       "Earth"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-38",
@@ -454,8 +454,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Its inner section is liquid.",
       "It accounts for the largest volume of the earth."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-39",
@@ -466,8 +466,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Gondwanaland was once a single super continent.",
       "The drifting of continents was centered upon Europe."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-40",
@@ -478,8 +478,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Anthroposphere",
       "Hydrosphere"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-41",
@@ -490,8 +490,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Tropical Savanna climate",
       "Equatorial climate"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-42",
@@ -502,8 +502,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Raising awareness of the community",
       "Regulating the practice of illegal hunting"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-43",
@@ -514,8 +514,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Lixisols",
       "Luvisols"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-44",
@@ -526,8 +526,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It is the least populated continent.",
       "It has a negative net migration rate."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-45",
@@ -538,8 +538,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Its practice has a short history in the continent.",
       "Currently, there is the highest number of immigrants to the continent."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-46",
@@ -550,8 +550,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It decreases pressure on natural resources",
       "It increases the rate of population growth"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-47",
@@ -562,8 +562,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Manufactured products dominated the export items of the continent.",
       "Most African countries exhibit a negative trade balance."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-48",
@@ -574,8 +574,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Dominant primary industries",
       "Labor-intensive investments"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-49",
@@ -586,8 +586,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It has a low potential to increase the momentum of population growth.",
       "There is a rapid socio-economic and technological development of the country."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-50",
@@ -598,8 +598,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "balance the number of male and female population",
       "raise the economic and social status of women"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-51",
@@ -610,8 +610,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "By stabilizing exchange rates",
       "By encouraging state ownership of enterprises"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-52",
@@ -622,8 +622,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It helps to exercise the western cultures.",
       "It encourages a high consumption of domestic products."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-53",
@@ -634,8 +634,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It is merely focused on the distribution of physical features.",
       "It emphasizes the physical arrangements of the universe."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-54",
@@ -646,8 +646,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "To enable geography to become law making science",
       "To use the language of literature instead of mathematical language"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-55",
@@ -658,8 +658,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "By investigating how different fields of study are interrelated",
       "By sharing methods and contents with different fields of studies"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-56",
@@ -670,8 +670,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Reverse drainage",
       "Wind gap"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-57",
@@ -682,8 +682,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Urban geography",
       "Cultural geography"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-58",
@@ -694,8 +694,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "When two plates move in parallel directions",
       "When two different forces act towards each other"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-59",
@@ -706,8 +706,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Wind erosion",
       "Stream erosion"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-60",
@@ -718,8 +718,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Barchan",
       "Sand dune"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-61",
@@ -730,8 +730,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Mesosphere",
       "Thermosphere"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-62",
@@ -742,8 +742,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Convection",
       "Conduction"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-63",
@@ -754,8 +754,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "They cover a wide area of the earth",
       "They are common along the coastal areas."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-64",
@@ -766,8 +766,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Cold ocean currents increase the temperature of the nearby areas.",
       "Warm ocean currents tend to reduce the surrounding temperature."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-65",
@@ -778,8 +778,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Recommendation of Manmade birth controls",
       "Rapid population growth leads to underdevelopment"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-66",
@@ -790,8 +790,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Peripheral areas are mainly associated with permanent settlement.",
       "Most highland areas in northern Ethiopia have temporary settlements."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-67",
@@ -802,8 +802,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Soil degradation",
       "Traffic congestion"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-68",
@@ -814,8 +814,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Malnutrition is a serious problem in urban areas than in rural areas.",
       "School dropouts are higher in urban areas than in rural areas."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-69",
@@ -826,8 +826,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Promoting import of luxury items",
       "Promoting diversification of export items"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-70",
@@ -838,8 +838,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Because of the recurrent flooding in the country",
       "Due to shortage of working labor force"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-71",
@@ -850,8 +850,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "When the sun is overhead at the Tropic of Cancer, pressure belts shift southward.",
       "When the sun is overhead at the Tropic of Capricorn, pressure belts shift southward."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-72",
@@ -862,8 +862,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "To be a region an area needs to be large.",
       "A region has a clear boundary."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-73",
@@ -874,8 +874,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It is characterized by low temperature year round.",
       "It is dominated by manufacturing economic activity."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-74",
@@ -886,8 +886,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It receives a long daily duration of sunlight in summer.",
       "It is inhabited by people whose life style is advanced."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-75",
@@ -898,8 +898,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Location of industries near resources and energy supplies",
       "Working for companies without physically being there"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-76",
@@ -910,8 +910,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Sample survey",
       "Census"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-77",
@@ -922,8 +922,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Northeastern North America",
       "Peninsular Europe"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-78",
@@ -934,8 +934,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Producing agricultural crops",
       "Processing raw materials"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-79",
@@ -946,8 +946,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "South Africa",
       "Egypt"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-80",
@@ -958,8 +958,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It is commonly practiced in areas situated far from river valleys.",
       "It is a process of extracting mineral deposits from excavated soils."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-81",
@@ -970,8 +970,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "If there is no need of hypothesis testing.",
       "If a given theory is to be verified."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-82",
@@ -982,8 +982,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Research method has a wider scope than research methodology.",
       "Research methodology guides to conduct scientific research."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-83",
@@ -994,8 +994,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Delineating the scope of the study",
       "Defining a sampling design"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-84",
@@ -1006,8 +1006,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "It is situated to the southeast of Asia.",
       "It is bordered by the Sudan in the southwest."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-85",
@@ -1018,8 +1018,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Difficulty of border control",
       "Varied agro-ecological zones"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-86",
@@ -1030,8 +1030,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Significant structural formation in the Horn",
       "A continued and massive orogenic movement"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-87",
@@ -1042,8 +1042,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Station IV",
       "Station II"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-88",
@@ -1054,8 +1054,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Xerophytes",
       "Alpine"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-89",
@@ -1066,8 +1066,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Deciduous forest",
       "Coniferous forest"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-90",
@@ -1078,8 +1078,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Station III",
       "Station IV"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-91",
@@ -1090,8 +1090,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "As compared to developing countries the region has higher percentage of old population.",
       "The region has higher number of female population than male."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-92",
@@ -1102,8 +1102,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "15/1000",
       "25/1000"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-93",
@@ -1114,8 +1114,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "1.74%",
       "1.14%"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-94",
@@ -1126,8 +1126,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "4/1000.",
       "3/1000."
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-95",
@@ -1138,8 +1138,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "33°42'0\"E 9°6'0\"S",
       "9°12'0\"N 33°36'0\"W"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-96",
@@ -1150,8 +1150,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "1452.5 m",
       "1447.5 m"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   },
   {
     "id": "m2015-social-geo-97",
@@ -1162,8 +1162,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Title of the map",
       "Year of publication"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 1,
+    "explanation": "Correct answer is option B."
   },
   {
     "id": "m2015-social-geo-98",
@@ -1174,8 +1174,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Convex",
       "Concave"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 2,
+    "explanation": "Correct answer is option C."
   },
   {
     "id": "m2015-social-geo-99",
@@ -1186,8 +1186,8 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "Pie chart",
       "Histogram"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 3,
+    "explanation": "Correct answer is option D."
   },
   {
     "id": "m2015-social-geo-100",
@@ -1198,7 +1198,7 @@ export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
       "1cm² to 2.3 km²",
       "1cm² to 4.5 km²"
     ],
-    "correctAnswer": -1,
-    "explanation": ""
+    "correctAnswer": 0,
+    "explanation": "Correct answer is option A."
   }
 ];
