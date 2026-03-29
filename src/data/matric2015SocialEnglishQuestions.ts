@@ -2,1010 +2,1287 @@ import { MatricExamQuestion } from "./matricExams";
 
 export const matric2015SocialEnglishQuestions: MatricExamQuestion[] = [
   {
-    id: "m2015-social-eng-1",
-    sectionGroupTitle: "I. Writing",
-    sectionTitle: "Section One: Paragraph Coherence",
-    sectionDirection:
-      "Questions 1 - 18 are related to different types of writing. Read each of them very carefully and choose the best answer from the given alternatives. Then, blacken the letter of your choice on the separate answer sheet.\n\nWhen you put in the correct order, sentences a-d in each of the questions from 1 - 4 make up a complete paragraph. From the alternatives given in each case, choose the one that contains the correct order of the sentences and blacken the letter of your choice on the separate answer sheet.",
-    question:
-      "a. As a result, the organization has lost sight of it to think strategically.\nb. As most member states do not settle their contribution in time, it has also made it difficult to run its day to day activities.\nc. One of the challenges of the African Union is the different conflicts that are ravaging the continent these days.\nd. Since its establishment in 2001, the African Union has had to grapple with lots of challenges.",
-    options: ["c b d a", "a c d b", "d c b a", "b d a c"],
-    correctAnswer: 3,
-    explanation: "The logical flow is that the African Union has had to grapple with challenges since its establishment, then naming one challenge and the financial problem before concluding.",
-  },
-  {
-    id: "m2015-social-eng-2",
-    sectionTitle: "Section One: Paragraph Coherence",
-    sectionDirection:
-      "When you put in the correct order, sentences a-d in each of the questions from 1 - 4 make up a complete paragraph. From the alternatives given in each case, choose the one that contains the correct order of the sentences and blacken the letter of your choice on the separate answer sheet.",
-    question:
-      "a. Schooling requires fulfilling the basic materials for learning.\nb. There are some reasons for students to drop out of school.\nc. Sickness could be the other reason for students to take a leave of school.\nd. One reason can be economic related cause.",
-    options: ["c b a d", "a d c b", "b d a c", "d c b a"],
-    correctAnswer: 3,
-    explanation: "The best paragraph order begins with the general reasons for dropping out and then gives sickness and economic factors.",
-  },
-  {
-    id: "m2015-social-eng-3",
-    sectionTitle: "Section One: Paragraph Coherence",
-    sectionDirection:
-      "When you put in the correct order, sentences a-d in each of the questions from 1 - 4 make up a complete paragraph. From the alternatives given in each case, choose the one that contains the correct order of the sentences and blacken the letter of your choice on the separate answer sheet.",
-    question:
-      "a. It is nearly over two decades since this great event began to take place.\nb. As of the past five years, this run has been taking place in some regional capitals too.\nc. The Great Ethiopian Run is among the ten great runs of our planet.\nd. People in hundreds of thousands are expected to take part for the times to come.",
-    options: ["c a b d", "d c b a", "b c a d", "a d b c"],
-    correctAnswer: 3,
-    explanation: "The best order starts with the general claim, then gives evidence and prediction of future participation.",
-  },
-  {
-    id: "m2015-social-eng-4",
-    sectionTitle: "Section One: Paragraph Coherence",
-    sectionDirection:
-      "When you put in the correct order, sentences a-d in each of the questions from 1 - 4 make up a complete paragraph. From the alternatives given in each case, choose the one that contains the correct order of the sentences and blacken the letter of your choice on the separate answer sheet.",
-    question:
-      "a. Once you feel relevant, gather ample information about the company.\nb. Looking carefully at the vacancy and deciding whether you could fit in or not is to be your priority.\nc. This would help you imagine how your expertise can bear fruit to the hiring body.\nd. If you want to succeed in a job interview, observing the points here after is so much helpful.",
-    options: ["c a b d", "a d b c", "b d a c", "d b a c"],
-    correctAnswer: 3,
-    explanation: "The passage flows from general advice to assessing the vacancy and then identifying the benefits of preparation in an interview.",
-  },
-  {
-    id: "m2015-social-eng-5",
-    sectionTitle: "Section Two: Jumbled Word",
-    sectionDirection:
-      "The words from the following questions are NOT in the right order. When put in the right order, they make correct English sentences. From the given alternatives A-D, choose the one that is correct and blacken the letter of your choice on the separate answer sheet.",
-    question: "Who a theory scientist Big-Bang Stephen Hawkings the world the to introduced prominent",
-    options: [
-      "Stephen Hawkings introduced the world to a Big Bang theory who was a prominent scientist.",
-      "The world scientist who introduced the Big-Bang theory was a prominent Stephen Hawkings.",
-      "Stephen Hawkings was a prominent scientist who introduced the world to the Big-Bang theory.",
-      "The prominent scientist who introduced a world to Big –Bang theory was Stephen Hawkings.",
+    "id": "m2015-social-eng-1",
+    "question": "Share Share This Question a. However, communal living can be a choice to reduce your rent. b. You can do that in two different ways: communally order or individually. c. If you don't have financial worries, you can opt for the individual one. d. That enables you enjoy more freedom with what to do in your own room.",
+    "options": [
+      "b c d a",
+      "a b c d",
+      "c d a b",
+      "d b c a"
     ],
-    correctAnswer: 3,
-    explanation: "This option makes a grammatical, clear statement about Stephen Hawkings introducing the Big Bang theory.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-6",
-    sectionTitle: "Section Two: Jumbled Word",
-    sectionDirection:
-      "The words from the following questions are NOT in the right order. When put in the right order, they make correct English sentences. From the given alternatives A-D, choose the one that is correct and blacken the letter of your choice on the separate answer sheet.",
-    question: "on have finished assignment your working project you?",
-    options: [
-      "Have you finished working on your project assignment?",
-      "Have you finished your assignment on working project?",
-      "Have you finished working on your assignment project?",
-      "Have you finished working on your assignment on project?",
+    "id": "m2015-social-eng-2",
+    "question": "Share Share This Question a. However, they may not detect incorrect or misused words. b. They may not also catch other language errors in our writing. c. Our computers are made to alert us when we make spelling mistakes. d. So, we don't have to hesitate to look up anything that we suspect is wrong.",
+    "options": [
+      "b c d a",
+      "a b c d",
+      "c a b d",
+      "d c a b"
     ],
-    correctAnswer: 3,
-    explanation: "The correct option rearranges the words into a natural question about finishing a project assignment.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-7",
-    sectionTitle: "Section Two: Jumbled Word",
-    sectionDirection:
-      "The words from the following questions are NOT in the right order. When put in the right order, they make correct English sentences. From the given alternatives A-D, choose the one that is correct and blacken the letter of your choice on the separate answer sheet.",
-    question: "were the is stage that it high she time on the stage.",
-    options: [
-      "It is high time that she were on the stage.",
-      "She is on high time that were it the stage.",
-      "It is the stage that she were on high time.",
-      "She is on high time that it were the stage.",
+    "id": "m2015-social-eng-3",
+    "question": "Share Share This Question a. A typical example is what happened in the late 1990s. b. Dependence on coffee has thrown a lot of nations into crisis. c. This usually happens when the world commodity price falls. d. Coffee farmers' unions should be set up to resist the problem.",
+    "options": [
+      "d b c a",
+      "b c d a",
+      "c d a b",
+      "a b d c"
     ],
-    correctAnswer: 3,
-    explanation: "This option is the most natural English formation of the scrambled sentence.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
-  // The following questions complete the 2015 Social Science English I. Writing section (Questions 8-18).
   {
-    id: "m2015-social-eng-8",
-    sectionTitle: "Section Three: Letter Writing",
-    sectionDirection:
-      "Item 8 - 10 are about letter writing. Choose the correct answer according to each question and blacken the letter of your choice on the separate answer sheet.",
-    question: "In a formal letter the recipient's address will be",
-    options: [
-      "below his or her name.",
-      "at the bottom of the letter.",
-      "in the top right hand corner.",
-      "below the sender's address.",
+    "id": "m2015-social-eng-4",
+    "question": "Share Share This Question a. Most of the rise occurred in the 1990s. b. There is a lot of evidence that the climate is changing. c. In many parts of the world temperatures have risen by 0.7°C. d. However, it is happening faster in some countries than in others.",
+    "options": [
+      "c b d a",
+      "c d b a",
+      "a c b d",
+      "b d c a"
     ],
-    correctAnswer: 3,
-    explanation: "In a formal letter, the recipient's address appears below the sender's address.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-9",
-    sectionTitle: "Section Three: Writing",
-    sectionDirection:
-      "Questions 8 - 10 are related to formal letter writing. Read each item carefully and choose the best answer from the given alternatives.",
-    question: "If you happen to read a formal letter having a salutation which reads as \"Dear Mrs. Petya,\" which one of the following could be the most appropriate closing?",
-    options: [
-      "Yours Truly",
-      "Yours Sincerely",
-      "Yours Obediently",
-      "Yours Faithfully",
+    "id": "m2015-social-eng-5",
+    "question": "Share Share This Question is their students like passing who actually failed in killing have a generation exams.",
+    "options": [
+      "Passing a generation is like killing students who have actually failed in their exams.",
+      "Passing students who have actually failed in their exams is like killing a generation.",
+      "Killing a generation is like passing students in their exams who have actually failed.",
+      "Passing students in their exams is like a generation who have actually failed killing."
     ],
-    correctAnswer: 1,
-    explanation: "When you know the addressee's name in a formal letter, 'Yours Sincerely' is the most appropriate closing.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-10",
-    sectionTitle: "Section Three: Writing",
-    sectionDirection:
-      "Questions 8 - 10 are related to formal letter writing. Read each item carefully and choose the best answer from the given alternatives.",
-    question: "In a formal letter which of the following could be optional?",
-    options: [
-      "The salutation line",
-      "The recipient's address",
-      "The subject heading",
-      "The date line",
+    "id": "m2015-social-eng-6",
+    "question": "Share Share This Question be who stories learn there about are to many couldn't how rich people.",
+    "options": [
+      "There are many stories about people who couldn't learn how to be rich.",
+      "Many rich people are there who couldn't learn about stories.",
+      "Stories are there about many rich people who couldn't learn how to be.",
+      "Stories about how many people are there who couldn't learn to be rich."
     ],
-    correctAnswer: 2,
-    explanation: "The subject heading is optional in many formal letter formats, while the other elements are usually required.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-11",
-    sectionTitle: "Section Four: Punctuation and Capitalization",
-    sectionDirection:
-      "Questions 11 - 14 are related to punctuation and capitalization. Read each of them carefully and choose the best answer from the given alternatives that is correctly punctuated and capitalized. Then, blacken the letter of your choice on the separate answer sheet.",
-    question: "Which of the following sentences is correctly punctuated?",
-    options: [
-      "My grandson lives on Derartu Tulu street.",
-      "My grandson lives on Derartu Tulu Street.",
-      "My Grandson lives on Derartu Tulu street.",
-      "My Grandson lives on Derartu Tulu Street.",
+    "id": "m2015-social-eng-7",
+    "question": "Share Share This Question the take Bikila first to Abebe gold ever an was Olympic home African",
+    "options": [
+      "The first African Abebe Bikila was ever to take home an Olympic gold medal.",
+      "Abebe Bikila ever take an Olympic gold medal to home was the first African.",
+      "Abebe Bikila was ever the first African gold to take home an Olympic medal.",
+      "Abebe Bikila was the first African to ever take home an Olympic gold medal."
     ],
-    correctAnswer: 1,
-    explanation: "Only option B correctly capitalizes the proper noun and the street name without unnecessary capitalization of 'grandson'.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-12",
-    sectionTitle: "Section Four: Punctuation and Capitalization",
-    sectionDirection:
-      "Questions 11 - 14 are related to punctuation and capitalization. Read each of them carefully and choose the best answer from the given alternatives that is correctly punctuated and capitalized. Then, blacken the letter of your choice on the separate answer sheet.",
-    question: "Which of the following sentences is correctly punctuated?",
-    options: [
-      "Ethiopia Nigeria South Africa, and Kenya are all members of the AU.",
-      "Ethiopia, Nigeria South Africa and Kenya are all members of the AU.",
-      "Ethiopia, Nigeria, South Africa and Kenya are all members of the AU.",
-      "Ethiopia Nigeria, South Africa, and Kenya, are all members of the AU.",
+    "id": "m2015-social-eng-8",
+    "question": "Share Share This Question What is your opening sentence in a formal letter supposed to do?",
+    "options": [
+      "Greet the person you are writing the letter to.",
+      "State clearly why you are writing the letter.",
+      "Make your address known to the person you are writing to.",
+      "Introduce yourself to the person you are writing to."
     ],
-    correctAnswer: 2,
-    explanation: "Option C correctly punctuates the list of countries without unnecessary commas.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-13",
-    sectionTitle: "Section Four: Punctuation and Capitalization",
-    sectionDirection:
-      "Questions 11 - 14 are related to punctuation and capitalization. Read each of them carefully and choose the best answer from the given alternatives that is correctly punctuated and capitalized. Then, blacken the letter of your choice on the separate answer sheet.",
-    question: "Which of the following sentences is correctly punctuated?",
-    options: [
-      "The bridge on the river was built by the C.B.R.C.",
-      "The bridge on the river was constructed by the CB.R.C.",
-      "The bridge on the river was built by the CBRC.",
-      "The bridge on the river was constructed by the CB.R.C.",
+    "id": "m2015-social-eng-9",
+    "question": "Share Share This Question When do we use \"Dear Sir/Madam\" in a formal letter?",
+    "options": [
+      "When we want to show respect to the person we are writing to.",
+      "When we want to write about something that is very serious.",
+      "When the person we are writing to is the head of an organization.",
+      "When we do not know the name of the person to whom we write."
     ],
-    correctAnswer: 0,
-    explanation: "Option A correctly uses periods in the abbreviation and the proper sentence structure.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-14",
-    sectionTitle: "Section Four: Punctuation and Capitalization",
-    sectionDirection:
-      "Questions 11 - 14 are related to punctuation and capitalization. Read each of them carefully and choose the best answer from the given alternatives that is correctly punctuated and capitalized. Then, blacken the letter of your choice on the separate answer sheet.",
-    question: "Which of the following sentences is correctly punctuated?",
-    options: [
-      "Fozan has left for, Jimma his sister has gone to Jigiga.",
-      "Fozan has left for Jimma; his sister has gone to Jigiga.",
-      "Fozan has left for Jimma his sister; has gone to Jigiga.",
-      "Fozan has left for Jimma his sister has gone to Jigiga.",
+    "id": "m2015-social-eng-10",
+    "question": "Share Share This Question Which of the following could be a typical ending to your letter of complaint to a company?",
+    "options": [
+      "Many thanks,",
+      "Yours truly,",
+      "Yours faithfully,",
+      "Kind regards,"
     ],
-    correctAnswer: 1,
-    explanation: "Option B correctly uses a semicolon to join two independent clauses.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-15",
-    sectionTitle: "Section Five: Spelling",
-    sectionDirection:
-      "For items 15 and 16, choose the word which is written in correct spelling and blacken the letter of your choice on the separate answer sheet provided.",
-    question: "Which of the following words is correctly spelt?",
-    options: [
-      "opinionated",
-      "courageous",
-      "resilent",
-      "desisive",
+    "id": "m2015-social-eng-11",
+    "question": "Share Share This Question",
+    "options": [
+      "We used to stay at the Hilton Hotel and dine at Kokeb restaurant.",
+      "We used to stay at the Hilton hotel and dine at Kokeb Restaurant.",
+      "We used to stay at the Hilton Hotel and dine at Kokeb Restaurant.",
+      "We used to stay at the Hilton hotel and dine at Kokeb restaurant."
     ],
-    correctAnswer: 0,
-    explanation: "'Opinionated' is correctly spelled (and is the intended answer for this spelling item).",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-16",
-    sectionTitle: "Section Five: Spelling",
-    sectionDirection:
-      "For items 15 and 16, choose the word which is written in correct spelling and blacken the letter of your choice on the separate answer sheet provided.",
-    question: "Which of the following words is correctly spelt?",
-    options: [
-      "Agressive",
-      "Charismatic",
-      "consultive",
-      "Participatry",
+    "id": "m2015-social-eng-12",
+    "question": "Share Share This Question",
+    "options": [
+      "We bought them blankets, bed sheets, cloths and some rice.",
+      "We bought them blankets, bed sheets, cloths and, some rice.",
+      "We bought them, blankets, bed sheets, cloths and some rice.",
+      "We bought them blankets, bed sheets, cloths, and some rice."
     ],
-    correctAnswer: 1,
-    explanation: "'Charismatic' is the only correctly spelled word in this list.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-17",
-    question:
-      "Mr. Solomon is the most dedicated teacher we have ever known for three major reasons. To begin with, he rarely comes to class without a thorough preparation on the day's lesson. Moreover, he is humorous while teaching which, in my view, a quality is that a good teacher is expected to have. The fact that he treats every student equally is the other feature of Mr. Solomon that we all admire.",
-    options: [
-      "No teacher has the qualities that match Mr. Solomon possesses.",
-      "Clearly speaking, the fact that he is impartial; every one of us like him very much.",
-      "To conclude, Mr. Solomon is greatly admired for his being the funniest teacher in class.",
-      "As a result every one of us in our class wants to emulate him when we become teachers.",
+    "id": "m2015-social-eng-13",
+    "question": "Share Share This Question",
+    "options": [
+      "At St. Paul Hospital, they train doctors in a variety of fields, e.g., cardiology, neurology, etc.",
+      "At St Paul Hospital, they train doctors in a variety of fields, e.g., cardiology, neurology, etc.",
+      "At St. Paul Hospital, they train doctors in a variety of fields, e.g., cardiology, neurology, etc.",
+      "At St. Paul Hospital, they train doctors in a variety of fields, e.g, cardiology, neurology, etc."
     ],
-    correctAnswer: 3,
-    explanation: "Option D best concludes the paragraph by showing the effect of Mr. Solomon's qualities on the students.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-18",
-    question:
-      "Sharing house chores between a husband and wife is becoming a necessity, not an option these days. The first and perhaps the most important reason is that it is through such modeling that children in the family would grow taking a good lesson from their parents on the importance of cooperation. The other pressing need is that most women these days, like their male counterparts, have got big responsibilities that stretch from home to office. Thus, sharing the burden on the men's part is quite indispensable. What could be more is, by sharing the burden, the husband and wife would get time to share love and warmth.",
-    options: [
-      "Wrapping it up, a husband and wife are responsible for shaping their children's future",
-      "In a nutshell, the present unlike the past, requires men's dedication in easing the burden of their wives.",
-      "a whole, sharing family burden is the source of warmth and comfort for the children.",
-      "As In conclusion, it can be said that as an apple does not fall far from its tree, so are children.",
+    "id": "m2015-social-eng-14",
+    "question": "Share Share This Question",
+    "options": [
+      "They donated money: gave out food, clothing and medication; and pledged a lot more.",
+      "They donated money; gave out food, clothing and medication; and pledged a lot more.",
+      "They donated money: gave out food, clothing; and medication; and pledged a lot more.",
+      "They donated money; gave out food, clothing; and medication; and pledged a lot more."
     ],
-    correctAnswer: 1,
-    explanation: "Option B most naturally concludes the paragraph by summarizing the present need for shared responsibility.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-19",
-    question: "One of my favorite sports is _______",
-    options: ["Swimming", "to swim", "for swimming", "swim"],
-    correctAnswer: 0,
-    explanation: "'Swimming' (gerund) fits as a noun naming a sport.",
-  },
-  {
-    id: "m2015-social-eng-20",
-    question:
-      "The number of students taking this year's national exam is _______ that of last year. The figure is constantly increasing every year.",
-    options: ["fewer than", "lesser than", "less than", "greater than"],
-    correctAnswer: 0,
-    explanation: "'Fewer than' is the preferred form when comparing countable nouns like 'students'.",
-  },
-  {
-    id: "m2015-social-eng-21",
-    question:
-      "__________ you stop your being promiscuous, your chance of being affected by sexually transmitted diseases will be so high.",
-    options: ["Unless", "If", "Could", "Should"],
-    correctAnswer: 0,
-    explanation: "'Unless' expresses the negative conditional appropriate here.",
-  },
-  {
-    id: "m2015-social-eng-22",
-    question: "The Wall of Harat _________ in 16th century",
-    options: ["were built", "has been built", "was being built", "was built"],
-    correctAnswer: 3,
-    explanation: "'was built' is the correct simple past passive for an action completed in the 16th century.",
-  },
-  {
-    id: "m2015-social-eng-23",
-    question: "Which of the following sentences is grammatically correct?",
-    options: [
-      "Mekonnen Bar who is found at Addis Ababa, is famous for its cake.",
-      "Any animal which lives in a jungle, does not have to be considered as dangerous.",
-      "AIDS, that is caused by a virus called HIV, has remained to be a fatal disorder for nearly three decades.",
-      "Nairobi whom is the capital of Kenya is the head for many international organizations.",
+    "id": "m2015-social-eng-15",
+    "question": "Share Share This Question",
+    "options": [
+      "consession",
+      "recession",
+      "compassion",
+      "division"
     ],
-    correctAnswer: 2,
-    explanation: "Option C is the most grammatically acceptable of the choices.",
+    "correctAnswer": -1,
+    "explanation": ""
   },
   {
-    id: "m2015-social-eng-24",
-    question:
-      "By this time next year, we _______ to university should we succeed in this exam.",
-    options: ["will be admitted", "will have been admitted", "will have admitted", "will be have admitted"],
-    correctAnswer: 0,
-    explanation: "'will be admitted' is the natural future passive here.",
-  },
-  {
-    id: "m2015-social-eng-25",
-    question:
-      "Scientists are expected to _______ research in the all-out effort of combating fatal diseases in the times to come.",
-    options: ["make", "have made", "have done", "do"],
-    correctAnswer: 3,
-    explanation: "'do research' is the idiomatic collocation.",
-  },
-  {
-    id: "m2015-social-eng-26",
-    question: "Any student _______ misbehaves in class should be penalized.",
-    options: ["which", "whom", "who", "who so ever"],
-    correctAnswer: 2,
-    explanation: "'who' is the correct relative pronoun for people performing the action.",
-  },
-  {
-    id: "m2015-social-eng-27",
-    question:
-      "If you have taken, in your previous institution, most of the courses that are given here you _______ be exempted from taking them again though I am not quite sure.",
-    options: ["should", "must", "could", "had better"],
-    correctAnswer: 0,
-    explanation: "'should be exempted' matches the tentative tone of the sentence.",
-  },
-  {
-    id: "m2015-social-eng-28",
-    question: "It was _______ marvelous time that we spent with the visiting team last Sunday.",
-    options: ["so a", "such a", "such", "so"],
-    correctAnswer: 1,
-    explanation: "'such a marvelous time' is the correct collocation.",
-  },
-  {
-    id: "m2015-social-eng-29",
-    question:
-      "I have prepared myself for this national exam. Thus, it is in my firm belief that I _________",
-    options: ["will be succeeding", "will succeed", "have succeeded", "am succeeding"],
-    correctAnswer: 1,
-    explanation: "'will succeed' states the speaker's belief about the future outcome.",
-  },
-  {
-    id: "m2015-social-eng-30",
-    question: "_________ countries were ranked 1-10 as the most peaceful?",
-    options: ["Whose", "In which", "Which", "What"],
-    correctAnswer: 2,
-    explanation: "'Which countries...' is the natural question form.",
-  },
-  {
-    id: "m2015-social-eng-31",
-    question:
-      "Had I studied very hard, I ________ last year's exam with ease.",
-    options: ["will have passed", "would pass", "would not have passed", "would have passed"],
-    correctAnswer: 3,
-    explanation: "This is a counterfactual past conditional: 'would have passed'.",
-  },
-  {
-    id: "m2015-social-eng-32",
-    question:
-      "Mekdes mostly finds it _______ to wake up early in the morning which leads her into unnecessary conflict with her school teachers.",
-    options: ["demotivating", "confusing", "crying", "tasking"],
-    correctAnswer: 0,
-    explanation: "'demotivating' best fits the intended meaning.",
-  },
-  {
-    id: "m2015-social-eng-33",
-    question:
-      "_________ her being late for the exam, the invigilator did not prevent her from taking it.",
-    options: ["Despite the fact that", "In spite of", "Even if", "Even though"],
-    correctAnswer: 1,
-    explanation: "'In spite of her being late' is the correct prepositional phrase here.",
-  },
-  {
-    id: "m2015-social-eng-34",
-    question:
-      "___________ my car had run out of petrol, I had to park it on the side road and go on foot.",
-    options: ["In spite of", "Even though", "Because", "Despite"],
-    correctAnswer: 2,
-    explanation: "'Because my car had run out of petrol' explains why the speaker had to go on foot.",
-  },
-  {
-    id: "m2015-social-eng-35",
-    question: "Zebiba has lived in Agaro _______ ten years.",
-    options: ["since", "for", "in", "_"],
-    correctAnswer: 1,
-    explanation: "Use 'for ten years' to indicate duration.",
-  },
-  {
-    id: "m2015-social-eng-36",
-    question:
-      "Unless a concerted effort is exerted in the fight against global warming, no _______ the most uncomfortable planet to live on.",
-    options: ["will be", "will have been", "could have been", "might be"],
-    correctAnswer: 3,
-    explanation: "'might be' expresses possibility in this warning statement.",
-  },
-  {
-    id: "m2015-social-eng-37",
-    question:
-      "By the time one of the strikers of the Ethiopian national football team scored the last goal in the penalty shoot-out, the cheers and applauds from the spectators _______ like thunder.",
-    options: ["felt", "heard", "looked", "sounded"],
-    correctAnswer: 3,
-    explanation: "'sounded like thunder' is the idiomatic expression.",
-  },
-  {
-    id: "m2015-social-eng-38",
-    question: "No one should abuse his/her power _______ corruption.",
-    options: ["for", "to", "could", "can"],
-    correctAnswer: 0,
-    explanation: "'for corruption' is the closest fit among the given options.",
-  },
-  {
-    id: "m2015-social-eng-39",
-    question:
-      "In his debut appearance to his club last week, Abdulkerim _______ two goals.",
-    options: ["was able to", "might be able", "could", "can"],
-    correctAnswer: 0,
-    explanation: "'was able to' correctly describes a past ability/action.",
-  },
-  {
-    id: "m2015-social-eng-40",
-    question:
-      "Oh ! The time is now just 3:00 pm and if you go now, you _______ her in the office.",
-    options: ["might meet", "would meet", "will meet", "could meet"],
-    correctAnswer: 2,
-    explanation: "'will meet' indicates the expected future outcome.",
-  },
-  {
-    id: "m2015-social-eng-41",
-    question:
-      "I have visited several countries in my twenty years of tenure as a civil servant. Nonetheless, no country have I come across like Ethiopia which has _______ hospitable climate of all.",
-    options: ["the best", "the most", "the most better", "the better"],
-    correctAnswer: 1,
-    explanation: "'the most hospitable' is the correct superlative form.",
-  },
-  {
-    id: "m2015-social-eng-42",
-    question:
-      "Ms. Adanech strictly warned her students that missing classes without having due reason will be costly. She is of the opinion that everybody _________ attend class regularly.",
-    options: ["should", "has to", "needs to", "must"],
-    correctAnswer: 0,
-    explanation: "'should attend' is a natural recommendation here.",
-  },
-  {
-    id: "m2015-social-eng-43",
-    question:
-      "It is now just 4:30 pm. Most likely, by now the exam _______ finalized.",
-    options: ["had been", "has been", "has", "is being"],
-    correctAnswer: 1,
-    explanation: "'has been finalized' indicates a completed action by now.",
-  },
-  {
-    id: "m2015-social-eng-44",
-    question:
-      "It was announced yesterday that there would be a staff meeting tomorrow at 9:00 am and we all have been urged that no one miss it. I think, we _______ attend.",
-    options: ["do not have to", "must", "should", "have to"],
-    correctAnswer: 1,
-    explanation: "'must attend' expresses the strong obligation implied by the announcement.",
-  },
-  {
-    id: "m2015-social-eng-45",
-    question:
-      "Mr. Gole looks usually presentable with his dressing style. As an instance, the white shirts he casually wears make him _______ gorgeous.",
-    options: ["quiet", "unlikely", "verily", "quite"],
-    correctAnswer: 3,
-    explanation: "'quite gorgeous' is the natural collocation.",
-  },
-  {
-    id: "m2015-social-eng-46",
-    question:
-      "The refugees from neighboring Somalia _______ temporarily _________ at Dollo-Ado refugee camp for a few months.",
-    options: ["were/sheltering", "had/been sheltering", "have/been sheltering", "are/sheltering"],
-    correctAnswer: 2,
-    explanation: "'have been sheltering' fits the present perfect continuous sense of temporary stay.",
-  },
-  {
-    id: "m2015-social-eng-47",
-    question:
-      "Last year at this time I _______ hard for the exam that I am taking right now.",
-    options: ["was studying", "studied", "study", "had studied"],
-    correctAnswer: 0,
-    explanation: "'was studying' is the correct past continuous reference.",
-  },
-  {
-    id: "m2015-social-eng-48",
-    question:
-      "Ms. Letay _______ with the Ministry of Revenue for the last ten years.",
-    options: ["had been", "has been", "was", "Dis"],
-    correctAnswer: 1,
-    explanation: "'has been' + for ten years is the present perfect continuous usage.",
-  },
-  {
-    id: "m2015-social-eng-49",
-    question:
-      "It was his endurance that _______ the famous athlete Haile Gebreselassie break over twenty five records in his middle and long distance running.",
-    options: ["allowed", "let", "made", "makes"],
-    correctAnswer: 0,
-    explanation: "'allowed' best conveys enabling effect in this context.",
-  },
-  {
-    id: "m2015-social-eng-50",
-    question:
-      "Zeineb had to leave the meeting early, _______ she had an already settled appointment with her physician.",
-    options: ["as", "despite", "so long as", "in fact"],
-    correctAnswer: 0,
-    explanation: "'as' introduces the reason for leaving early.",
-  },
-  {
-    id: "m2015-social-eng-51",
-    question:
-      "By the time the thunder exploded through the heavy rain, every one of us became _______ of it and tumbled out of our bed, trembled.",
-    options: ["afraid", "frightened", "shocked", "shaken"],
-    correctAnswer: 3,
-    explanation: "'shaken' describes the physical trembling effect.",
-  },
-  {
-    id: "m2015-social-eng-52",
-    question:
-      "People who are promiscuous must know that they are in trouble _________, What I want to advise them is that it is high time for them to drop such a bad habit.",
-    options: ["So that", "As", "So", "Because"],
-    correctAnswer: 1,
-    explanation: "'As' is used here to introduce the reason/explanation.",
-  },
-  {
-    id: "m2015-social-eng-53",
-    question:
-      "In which of the following sentences does the order in which the adjectives have to appear look appropriate?",
-    options: [
-      "The thin person, who is wearing a pair of jeans tattered trousers, is Mr. Degu.",
-      "The short, thin person, with a pair of tattered jeans trousers, is Mr. Degu.",
-      "Mr. Degu, wearing a tattered pair of jeans trousers, which are thin and short is a person.",
-      "The person, with a thin tattered jeans pair of trousers, who is short, is Mr. Degu.",
+    "id": "m2015-social-eng-16",
+    "question": "Share Share This Question",
+    "options": [
+      "thaught",
+      "tought",
+      "wrauht",
+      "sought"
     ],
-    correctAnswer: 1,
-    explanation: "Option B presents a natural adjective order.",
-  },
-  // Placeholder entries for Questions 54 - 120. Replace `question`/`options`/`explanation` with actual exam content as needed.
-
-  // Questions 54-120 (placeholders)
-  
-  {
-    id: "m2015-social-eng-54",
-    question: "[Placeholder] Question 54 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-55",
-    question: "[Placeholder] Question 55 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-56",
-    question: "[Placeholder] Question 56 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-57",
-    question: "[Placeholder] Question 57 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-58",
-    question: "[Placeholder] Question 58 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-59",
-    question: "[Placeholder] Question 59 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-60",
-    question: "[Placeholder] Question 60 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-61",
-    question: "[Placeholder] Question 61 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-62",
-    question: "[Placeholder] Question 62 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-63",
-    question: "[Placeholder] Question 63 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-64",
-    question: "[Placeholder] Question 64 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-65",
-    question: "[Placeholder] Question 65 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-66",
-    question: "[Placeholder] Question 66 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-67",
-    question: "[Placeholder] Question 67 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-68",
-    question: "[Placeholder] Question 68 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-69",
-    question: "[Placeholder] Question 69 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-70",
-    question: "[Placeholder] Question 70 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-71",
-    question: "[Placeholder] Question 71 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-72",
-    question: "[Placeholder] Question 72 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-73",
-    question: "[Placeholder] Question 73 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-74",
-    question: "[Placeholder] Question 74 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-75",
-    question: "[Placeholder] Question 75 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-76",
-    question: "[Placeholder] Question 76 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-77",
-    question: "[Placeholder] Question 77 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-78",
-    question: "[Placeholder] Question 78 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-79",
-    question: "[Placeholder] Question 79 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-80",
-    question: "[Placeholder] Question 80 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-81",
-    question: "[Placeholder] Question 81 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-82",
-    question: "[Placeholder] Question 82 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-83",
-    question: "[Placeholder] Question 83 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-84",
-    question: "[Placeholder] Question 84 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-85",
-    question: "[Placeholder] Question 85 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-86",
-    question: "[Placeholder] Question 86 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-87",
-    question: "[Placeholder] Question 87 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-88",
-    question: "[Placeholder] Question 88 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-89",
-    question: "[Placeholder] Question 89 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-90",
-    question: "[Placeholder] Question 90 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-91",
-    question: "[Placeholder] Question 91 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-92",
-    question: "[Placeholder] Question 92 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-93",
-    question: "[Placeholder] Question 93 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-94",
-    question: "[Placeholder] Question 94 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-95",
-    question: "[Placeholder] Question 95 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-96",
-    question: "[Placeholder] Question 96 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-97",
-    question: "[Placeholder] Question 97 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-98",
-    question: "[Placeholder] Question 98 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-99",
-    question: "[Placeholder] Question 99 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-100",
-    question: "[Placeholder] Question 100 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-101",
-    question: "[Placeholder] Question 101 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-102",
-    question: "[Placeholder] Question 102 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-103",
-    question: "[Placeholder] Question 103 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-104",
-    question: "[Placeholder] Question 104 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-105",
-    question: "[Placeholder] Question 105 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-106",
-    question: "[Placeholder] Question 106 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-107",
-    question: "[Placeholder] Question 107 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-108",
-    question: "[Placeholder] Question 108 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-109",
-    question: "[Placeholder] Question 109 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-110",
-    question: "[Placeholder] Question 110 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-111",
-    question: "[Placeholder] Question 111 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-112",
-    question: "[Placeholder] Question 112 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-113",
-    question: "[Placeholder] Question 113 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-114",
-    question: "[Placeholder] Question 114 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-115",
-    question: "[Placeholder] Question 115 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-116",
-    question: "[Placeholder] Question 116 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-117",
-    question: "[Placeholder] Question 117 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-118",
-    question: "[Placeholder] Question 118 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-119",
-    question: "[Placeholder] Question 119 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
-  {
-    id: "m2015-social-eng-120",
-    question: "[Placeholder] Question 120 text to be added",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    correctAnswer: -1,
-    explanation: "Placeholder — source not yet added.",
-  },
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-17",
+    "question": "Share Share This Question Which one of the following sentences is most likely taken from a descriptive paragraph?",
+    "options": [
+      "Paul was such a quiet chap who was always silent regardless of the bitter injustice.",
+      "Paul says injustice kills your work spirit and demoralizes those who work hard.",
+      "Paul understands that injustice is a practice that everybody should fight and eliminate.",
+      "Paul finally convinced himself that he should rebel and then went straight to his boss."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-18",
+    "question": "Share Share This Question Which one of the following sentences is most likely taken from a paragraph developed using cause-effect method?",
+    "options": [
+      "Whenever she gets nervous and depressed, I try to calm her down.",
+      "There are lots of things that make life in the area very difficult.",
+      "Every morning, we clean the compound and make everything very neat.",
+      "Robots are one of the most amazing inventions of the human mind."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-19",
+    "question": "Share Share This Question The more we help him, __________ sense of dependency he would develop. So, handle things cautiously.",
+    "options": [
+      "more",
+      "less",
+      "the most",
+      "the more"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-20",
+    "question": "Share Share This Question You don't seem to have ever seen the creature __________ I told you about. It looked nothing like a kangaroo except in the way it walked.",
+    "options": [
+      "one",
+      "who",
+      "whom",
+      "which"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-21",
+    "question": "Share Share This Question If one doesn't sleep for days in a row, _________ getting disturbed psychologically and may even die. Sleep is very important for normal functions of life.",
+    "options": [
+      "will start",
+      "starts",
+      "is going to start",
+      "may start"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-22",
+    "question": "Share Share This Question Mulugeta always adored the __________ Toyota car that his father drove at the beginning of the 80's.",
+    "options": [
+      "red ugly old small",
+      "old small red ugly",
+      "ugly old small red",
+      "small red ugly old"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-23",
+    "question": "Share Share This Question They asked us to __________ them a favour of disclosing the company's secret but that was unacceptable to us. We cannot compromise our integrity.",
+    "options": [
+      "bestow",
+      "give",
+      "make",
+      "do"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-24",
+    "question": "Share Share This Question __________ the pilot and his crew recognized the plane had a problem. However, they didn't say anything lest disturbing the passengers.",
+    "options": [
+      "Together",
+      "Either",
+      "All",
+      "Both"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-25",
+    "question": "Share Share This Question You've been coughing the whole afternoon __________?",
+    "options": [
+      "Is syrup good for that",
+      "Why do you do that",
+      "Why don't you see your doctor",
+      "to register with us and trek around the"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-26",
+    "question": "Share Share This Question If you enjoy ________, you can register with us and trek around the city every Sunday in the afternoon.",
+    "options": [
+      "walking",
+      "to walk",
+      "to have a walk",
+      "to be walking"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-27",
+    "question": "Share Share This Question We don't have to _______ them make off with such an irreplaceable heritage of the nation. They should be accountable for what they did.",
+    "options": [
+      "allow",
+      "let",
+      "concede",
+      "permit"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-28",
+    "question": "Share Share This Question They have been clearing the forest for three days. _________ intervened to stop them",
+    "options": [
+      "Someone need",
+      "I want someone",
+      "How about you",
+      "I wish someone"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-29",
+    "question": "Share Share This Question He has been paralyzed for months and was literally bed-ridden. Thanks God, he now is ____________ walk around in the house.",
+    "options": [
+      "interested to",
+      "able to",
+      "turning able to",
+      "feeling able to"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-30",
+    "question": "Share Share This Question There are thousands of displaced people in different parts of the country who have no proper shelter, food or cloth. Don't you think we ___________ help them?",
+    "options": [
+      "ought to",
+      "shall",
+      "could",
+      "might"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-31",
+    "question": "Share Share This Question ___________ gentleman we saw at the gate as we were coming in is the new school director. I heard he was a teacher at Burame Secondary School.",
+    "options": [
+      "Which",
+      "Some",
+      "The",
+      "A"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-32",
+    "question": "Share Share This Question _________ Berhe ________ Umod tampered with this computer. I haven't seen them around and I think they were out of office the whole day.",
+    "options": [
+      "Neither...nor",
+      "Either...or",
+      "Not only...but also",
+      "Both...and"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-33",
+    "question": "Share Share This Question When Debela arrived, she _______ doro wot. But he didn't have the time to wait and enjoy it.",
+    "options": [
+      "had been making",
+      "has been making",
+      "was making",
+      "is making"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-34",
+    "question": "Share Share This Question Their plane is expected to land slightly after 3:00 pm. _______ it gets late, give me a call and I'll see what I can do.",
+    "options": [
+      "Probably",
+      "But for",
+      "Unless",
+      "In case"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-35",
+    "question": "Share Share This Question When the police arrived, the burglars _______ away with the money. But there is hope that they would be caught.",
+    "options": [
+      "are already making",
+      "have been making",
+      "have already made",
+      "had already made"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-36",
+    "question": "Share Share This Question They took off early morning _______ they would be late. Otherwise, make it in time.",
+    "options": [
+      "in order that",
+      "so as to",
+      "with the intention of",
+      "in the interest of to"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-37",
+    "question": "Share Share This Question _________ prices are still on the rise, we hope they will come down in the near future.",
+    "options": [
+      "Although",
+      "Even if",
+      "Nevertheless",
+      "In contrast to"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-38",
+    "question": "Share Share This Question She was packing all morning as her flight was scheduled for the evening of that same day, _________ her husband was arranging stuff in his office.",
+    "options": [
+      "Contrarily",
+      "Meanwhile",
+      "What is more",
+      "Supposedly"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-39",
+    "question": "Share Share This Question ____________ it has drastically changed the cultures of many nations and created undisciplined citizens.",
+    "options": [
+      "However",
+      "In spite of",
+      "In comparison",
+      "Despite the fact that"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-40",
+    "question": "Share Share This Question Never borrow money from this group of loaners. They'll _______ you pay back double.",
+    "options": [
+      "make",
+      "do",
+      "force",
+      "let"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-41",
+    "question": "Share Share This Question You shouldn't expect us exactly at 6:00 pm. We _______ make it but if we happen to be a bit late, just take it easy and start the programme.",
+    "options": [
+      "shall",
+      "must",
+      "could",
+      "can"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-42",
+    "question": "Share Share This Question She was telling me the story of her ex-boyfriend who died in a car crash ten years ago. Then she _________ burst into tears and screams and I could never stop her.",
+    "options": [
+      "silently",
+      "suddenly",
+      "romantically",
+      "sensibly"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-43",
+    "question": "Share Share This Question It is a pity she didn't see her brother. Had she arrived a day earlier, she _______ met him and enjoyed a bit of time with him.",
+    "options": [
+      "will have",
+      "must have",
+      "could have",
+      "should have"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-44",
+    "question": "Share Share This Question Everybody understands that most of you worked very hard _______ you would pass this test. But you don't have to lose hope if the result happens to be against your expectation.",
+    "options": [
+      "so that",
+      "despite",
+      "as a result of which",
+      "which means"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-45",
+    "question": "Share Share This Question If what you are telling me is true, then I _______ straight away and register with them. I don't want to miss the opportunity.",
+    "options": [
+      "will go",
+      "must go",
+      "am going to go",
+      "am going"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-46",
+    "question": "Share Share This Question The house _______ into last night and they have already reported it to the police. I'll try to follow up the progress.",
+    "options": [
+      "was being broken",
+      "has been broken",
+      "has broken",
+      "was broken"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-47",
+    "question": "Share Share This Question The house _______ into last night and they have already reported it to the police. I'll try to follow up the progress.",
+    "options": [
+      "was being broken",
+      "has been broken",
+      "has broken",
+      "was broken"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-48",
+    "question": "Share Share This Question If it _______ for at least a month or so during the last three years, their cattle would have resisted the drought to a certain degree and perhaps survived in a better number.",
+    "options": [
+      "has rained",
+      "had rained",
+      "had been raining",
+      "did rain"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-49",
+    "question": "Share Share This Question Her father walks very _______ but she is like a tortoise. She saunters very slowly.",
+    "options": [
+      "urgently",
+      "quick",
+      "fast",
+      "fastly"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-50",
+    "question": "Share Share This Question I wish that we _______ today. It is really freezing and wet.",
+    "options": [
+      "didn't need to work",
+      "have not worked",
+      "will not need to work",
+      "are not working"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-51",
+    "question": "Share Share This Question I was offered _______ a reasonable fund for helping them organize the competition but I did not accept it because I just wanted to make my own contribution.",
+    "options": [
+      "much",
+      "the",
+      "an",
+      "a"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-52",
+    "question": "Share Share This Question _______ she came home, I made her coffee. Then we sat together and had hours of talk and talk.",
+    "options": [
+      "When",
+      "While",
+      "Prior",
+      "Suddenly"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-53",
+    "question": "Share Share This Question Can anyone tell me _______ book this is? It has been lying here for months.",
+    "options": [
+      "of who",
+      "which",
+      "what about",
+      "whose"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-54",
+    "question": "Share Share This Question She likes chatting with children and _______ playing with dogs. We actually have a lot in common but unlike her, I hate playing with dogs.",
+    "options": [
+      "so do I",
+      "I too like",
+      "also do I",
+      "also I like"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-55",
+    "question": "Share Share This Question The school director sent you a message but apparently, your sister _______ to tell you. You were supposed to report to his office this morning.",
+    "options": [
+      "is forgetting",
+      "has forgot",
+      "forgot",
+      "forgets"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-56",
+    "question": "Share Share This Question He was doing the washing up _______ she was cleaning the house. We like that they help one another.",
+    "options": [
+      "during",
+      "before",
+      "since",
+      "while"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-57",
+    "question": "Share Share This Question Chuchu: Your friend has got a good job, hasn't she? Meklit: _____________________________",
+    "options": [
+      "Yes, she's got a job. I heard it is out of town.",
+      "Getting a job is not very easy these days.",
+      "I feel that the offer is rather too low, but 2500 a month.",
+      "She graduated about five years back, you know."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-58",
+    "question": "Share Share This Question Eyob: What is your grandma like? Sisu: _______________________",
+    "options": [
+      "She's now been ill for a year.",
+      "She likes eating shiro wot.",
+      "She had a checkup yesterday. Right move!",
+      "She's very old and weak. She is 92."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-59",
+    "question": "Share Share This Question Teacher: Where is the boy sitting over there? Fola: _______________________",
+    "options": [
+      "He always fights with people and no one likes him.",
+      "He is locked up. What I mean is, he is jailed.",
+      "He is very intelligent. You don't know that, do you?",
+      "His name is Zekarias. I don't know his father's name."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-60",
+    "question": "Share Share This Question Telila: Why didn't you come to my party? Aster: _______________________",
+    "options": [
+      "Was it held at your home or ...?",
+      "Did everyone else come?",
+      "I apologize for that. I was on-duty.",
+      "I could imagine it was so lavish."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-61",
+    "question": "Share Share This Question Haji: Why don't we visit Chebera Churchura? Gorge: _______________________",
+    "options": [
+      "I think the biggest problem is where to stay. There is no hotel there.",
+      "Is the administration under the SNNPR or the federal government?",
+      "I've seen it on TV and they're now almost finishing it. Great achievement!",
+      "We have contributed money, though I don't know exactly how much."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-62",
+    "question": "Share Share This Question Mimi: I guess our driver was thrown out. Anyway, it was predictable. Kuku: _____________________",
+    "options": [
+      "I'm sorry I didn't follow what you said.",
+      "I don't understand what he threw out.",
+      "It was a serious accident and he lost a hand.",
+      "I think he and his boss were great friends."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-63",
+    "question": "Share Share This Question Oumer: Shall I pay you when I come back in June? Mensur: _____________________",
+    "options": [
+      "Never lend anyone your money. They don't pay you back.",
+      "No! I will have already left for Spain by the end of May.",
+      "Are you flying or taking a bus? How long will you be there?",
+      "I know you have hundreds and thousands in the bank. Bravo!"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-64",
+    "question": "Share Share This Question Tesfaye: What advantage do I have in joining the union? Bereketi: _____________________",
+    "options": [
+      "You're always against such new ideas, aren't you, brother?",
+      "Come on! Many of our close friends have joined it already.",
+      "Someone from the union was talking about its details yesterday.",
+      "Lots! For instance, you can get a loan of at least birr 50,000."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-65",
+    "question": "Share Share This Question Colleague: We're going out for dinner tonight, aren't we? You: _____________________",
+    "options": [
+      "I'm not coming, if you don't mind.",
+      "That restaurant is always busy.",
+      "Are you a member of the Social Committee?",
+      "How much money do we have for that?"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-66",
+    "question": "Share Share This Question Amesu: When is your sister going to the university? Yonas: _____________________",
+    "options": [
+      "Addis Ababa University is her favorite choice.",
+      "In my opinion, she is not going to do that. She is not interested.",
+      "None of the universities will start within a month. They are not ready.",
+      "She wants to go to Dubai and work. They have bought her a ticket."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-67",
+    "question": "Share Share This Question Journalist: Why is it that you always avoid coming out on mass media such as TV? Psychologist: _____________________",
+    "options": [
+      "In fact, mass media plays a big role in raising awareness on the issue.",
+      "The reason I don't want to do that is very personal. You know, ....",
+      "You know many people who call themselves elites like TVs and radios.",
+      "After all, mass media in this country should be doing their proper job."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-68",
+    "question": "Share Share This Question Christian: Sir! ____________________ Mr.Sharma: That is my field of studies, but basically it is ...",
+    "options": [
+      "Is it true that you have finished just on time. Good job!",
+      "Your presentation is something you have published over fifty one books so far.",
+      "Some people say you have something about Artificial Intelligence?",
+      "Would you like to talk about the cabinet but it didn't break."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-69",
+    "question": "Share Share This Question Almaz: This plate fell off the cabinet but it didn't break. Husband: _____________________",
+    "options": [
+      "Please, keep the plates in a safe place.",
+      "These days, plates are not like that.",
+      "You are being rather too careless these days.",
+      "How nice! It seems to be made of porcelain."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-70",
+    "question": "Share Share This Question Tesfaye: The security guard tells me his wife has been hospitalized. You: _____________________",
+    "options": [
+      "Really? Health care is very expensive these days.",
+      "You know, I have never met his wife, have you?",
+      "Perhaps we could contribute some money and help.",
+      "What a pity! Who takes care of the children then?"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-71",
+    "question": "Share Share This Question Woltaji: Where is the office of the National Farmers Union? Mbobo: _____________________",
+    "options": [
+      "I have been to that office only two days ago. It is on a beautiful building.",
+      "You don't need any bus or taxi for that. Are you a stranger around?",
+      "Office of the National Farmers Union? They're easing food prices in this country.",
+      "Up there. When you see a tall building with blue glasses, you should turn left."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-72",
+    "question": "Share Share This Question Director: We are going to suspend that student who broke the window. Unit Leader: _____________________",
+    "options": [
+      "I agree. That would be an essential measure.",
+      "Such misconducts are becoming a fashion.",
+      "Amazing! Why do some students like to misbehave?",
+      "Which section does he belong to? Section 4?"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-73",
+    "question": "Share Share This Question Shashe: I wanted to buy a TV but I couldn't decide the brand, Melat: _____________________",
+    "options": [
+      "Most TV programs are really boring.",
+      "The best these days is Sony T.C.",
+      "I know someone who sells electronics stuff.",
+      "Good TVs cost over 50,000 bir now."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-74",
+    "question": "Share Share This Question You: He wouldn't give me back my computer. What should I do? Sister: _____________________",
+    "options": [
+      "Is that the computer they gave you from your office?",
+      "Unless you pay him back his money, he won't do it.",
+      "It is very difficult to do assignments without a computer.",
+      "Doesn't he know that computers make life very easy?"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-75",
+    "question": "Share Share This Question Leu: I hear they have all been trapped in a tunnel. Brother: _____________________",
+    "options": [
+      "When do they come out, you think?",
+      "I know tunnels could be dangerous.",
+      "In fact, tunnels should have been out of use.",
+      "No, no! What can be done to save them?"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-76",
+    "question": "Share Share This Question Kebede: Do you think their plan is going to work out? Nigist: _____________________",
+    "options": [
+      "Who knows? Let's wait and see.",
+      "Good plans can sometimes fail.",
+      "By the way, who has masterminded it?",
+      "Plans should be carefully discussed."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-77",
+    "question": "Share Share This Question Interviewer: Was that your first time starring in a film? Bamlak: _____________________",
+    "options": [
+      "No, I don't remember the films I starred in.",
+      "No, I had acted in another film before that.",
+      "No, I acted in a film in English – No Good Death.",
+      "Never, I was involved in three films after that."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-78",
+    "question": "Share Share This Question Interviewer: __________________. Jorgie: Actually, my interest is in fashion designing",
+    "options": [
+      "Did I hear you like fashion designing?",
+      "Do you like fashion designing?",
+      "Why are you interested in fashion designing?",
+      "Could you tell me about your interest?"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-79",
+    "question": "Share Share This Question Driver: What do you mean? How can a robot replace me? You: _____________________",
+    "options": [
+      "To give you an idea, robots can do anything we do.",
+      "Robots are products of modern technology.",
+      "I have seen robots on TV and they are really very smart.",
+      "Haven't you seen robots helping people cross roads?"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-80",
+    "question": "Share Share This Question Farah: Is that boy Ali, your classmate? Nisra: _____________________",
+    "options": [
+      "I didn't know you knew Ali.",
+      "Ali is very gentle and polite.",
+      "No, Ali is not as tall as this one.",
+      "No, Ali is from around Babile."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-81",
+    "question": "Share Share This Question Student: Sir, We've won the inter-school competition. Our school stood first. Director: _____________________",
+    "options": [
+      "Wasn't the competition stiff as such?",
+      "This is our first time to participate.",
+      "What great news! I'm pleased to hear that.",
+      "Really? I actually knew two of the judges."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-82",
+    "question": "Share Share This Question Teacher: I always see Mimi and Bultum studying. They're working hard. Colleague: _____________________",
+    "options": [
+      "Bultum is one of the very hardworking students in class.",
+      "Maybe, they'll also need to do other things in between.",
+      "You know, I teach them two subjects - Biology and Chemistry.",
+      "Great! There is a good chance they'll pass the national exam."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-83",
+    "question": "Share Share This Question The rapid spread of HIV and AIDS is a consequence of mass denial and social disgrace of persons living with the virus.",
+    "options": [
+      "Denying the existence of HIV/AIDS leads to eventual disgrace of victims.",
+      "The main cause of HIV/AIDS is denial and social disgrace of people living with the virus.",
+      "The existence of HIV/AIDS and disgrace of people living with the virus aggravates the spread of the virus.",
+      "The spread of HIV/AIDS gets worse when people deny infection and also alienate victims."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-84",
+    "question": "Share Share This Question Abusing drugs can only provide a temporary escape from the world of reality.",
+    "options": [
+      "Drugs are used by people who live in an elusive world.",
+      "Drug abuse can effectively solve temporary problems.",
+      "Drug abuse is a means of avoiding unpleasant facts of life.",
+      "Drug abuse creates a world free of worries and sufferings."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-85",
+    "question": "Share Share This Question Why do adult learners writing better than younger students?",
+    "options": [
+      "Because their teachers preferred teaching to adult learners than they did the other skills.",
+      "Because they liked writing more than they did the other skills.",
+      "Because during their days, the system had even more emphasis to writing.",
+      "Because today's students attach more importance to leadership only."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-86",
+    "question": "Share Share This Question Why do university professors prefer teaching young people?",
+    "options": [
+      "Adult learners have a clear purpose for being on campus.",
+      "Eighteen year-olds join universities with fresh notions.",
+      "Adults work much harder than their younger counterparts.",
+      "Younger students are much more careless about their life."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-87",
+    "question": "Share Share This Question What makes adult students feel insecure?",
+    "options": [
+      "Friends and family members may dislike them.",
+      "Younger students sometimes swear at them.",
+      "Socially, it is hard to compete with younger students.",
+      "Some of the students may envy their performance."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-88",
+    "question": "Share Share This Question Comparatively, why do older students tend to get their work done earlier?",
+    "options": [
+      "Some of them have sick children whom they have to look after.",
+      "They do not want to be rushed up when it is too late.",
+      "It is to have time for unforeseen situations that may unexpectedly take them away.",
+      "The old school system shaped them in a way that does not procrastinate duties."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-89",
+    "question": "Share Share This Question What, according to Mike Rollo, was the problem at the University of Florida?",
+    "options": [
+      "Younger girls embarrass older women calling them 'mothers'.",
+      "Older students feel so unfit to the context.",
+      "Older students account for only about one-fifth of the student community.",
+      "The University administration is new to handling older students."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-90",
+    "question": "Share Share This Question \"I thought I left my mother at home\" (Paragraph 3). My mother in this sentence refers to:",
+    "options": [
+      "The speaker's mom",
+      "Women classmates",
+      "Older women in the group",
+      "Elderly women on campus"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-91",
+    "question": "Share Share This Question What does \"The feeling can be mutual\" mean (Paragraph 4)?",
+    "options": [
+      "Both the grownups and their roommates feel the same way.",
+      "Both groups think it is hard to live with the other.",
+      "Both the university and the youngsters think those grownups are unfit.",
+      "Both the university and the youngsters think the grownups are old."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-92",
+    "question": "Share Share This Question \"... because we're not used to dealing with them\" (Paragraph 3). What does the word them refer to?",
+    "options": [
+      "Younger students",
+      "Older students",
+      "The student community",
+      "Places like Florida"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-93",
+    "question": "Share Share This Question What is the central idea of the last paragraph?",
+    "options": [
+      "Youngsters do not like to see older students on university campus.",
+      "It is not very wise for older students to go back to university.",
+      "University is a place where distinctions should not be made because of age.",
+      "It is very hard to have young and old students together in a university."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-94",
+    "question": "Share Share This Question Why did Juliet Margolin eventually decide to evacuate her dorm?",
+    "options": [
+      "She wanted to live with someone more matured.",
+      "The little dorm mates made her feel very old.",
+      "She didn't like the way her dorm mates were using.",
+      "She couldn't bear the way her dorm mates behaved."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-95",
+    "question": "Share Share This Question Which one of the following is NOT a possible cause of cheating?",
+    "options": [
+      "The interest to score good grades",
+      "Recognition of the role of plagiarism",
+      "The fear to fail in a test one is taking",
+      "Lack of awareness that cheating is wrong"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-96",
+    "question": "Share Share This Question According to paragraph one, which one of the following is true about cheating?",
+    "options": [
+      "Recently, cheating has become part of every student's life in the US.",
+      "Almost 80% of college students in the US cheat in their exams.",
+      "Cheating is more severe among university students than high school students.",
+      "The statistics of 2018 show that cheating is very common among students."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-97",
+    "question": "Share Share This Question What do you think is the most important reason behind secondary school leavers' attempt to plagiarize in this exam?",
+    "options": [
+      "Laziness and making little effort",
+      "Lack of self-confidence",
+      "The feeling of dependence on others",
+      "The interest to score good grades"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-98",
+    "question": "Share Share This Question Which one of the following is NOT among the similarities between academic and non-academic plagiarism (Paragraph 2)?",
+    "options": [
+      "The way the act is committed",
+      "The actors of plagiarism",
+      "The specific interest behind the act",
+      "The anticipated rewards of the act"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-99",
+    "question": "Share Share This Question Which one of the following, in your opinion, belongs to non-academic cheating?",
+    "options": [
+      "Using fake signatures in applications for financial aid",
+      "Using others' lab reports for submission in a course",
+      "Stealing others' research plans and designs to write a thesis",
+      "Taking other students' statistics for report in assignments"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-100",
+    "question": "Share Share This Question What does the word they in \"... obviously, they will result in negative effects\" refer to (Paragraph 2)?",
+    "options": [
+      "Students behind the act of cheating",
+      "Reasons and methods of cheating",
+      "Both academic and non-academic cheating",
+      "Similarities between cheating"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-101",
+    "question": "Share Share This Question What is the main purpose of taking measures against cheaters in a university environment?",
+    "options": [
+      "To safeguard the academic community",
+      "To discourage undeserved merits",
+      "To protect students' safety and integrity",
+      "To teach new behaviors to the cheaters"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-102",
+    "question": "Share Share This Question What, according to Paragraph 3, is the most undesirable consequence of academic cheating?",
+    "options": [
+      "A disciplinary note recorded on and academic transcript",
+      "Suspension from the University for one or more terms",
+      "A five-year hold and pending remark on the cheater's records",
+      "The psychological and mental trauma inflicted on the cheater"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-103",
+    "question": "Share Share This Question If you send a plagiarist to jail for one-year service, the most likely, what is the consequence of the decision?",
+    "options": [
+      "Legal",
+      "Ethical",
+      "Professional",
+      "Personal"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-104",
+    "question": "Share Share This Question Which one of the following sentences is true about politicians in relation to plagiarism?",
+    "options": [
+      "Confirmed presentations tempt politicians and push them to plagiarize.",
+      "Politicians avoid plagiarism due to fear of pressure from the public.",
+      "Consequences of plagiarism could be comparatively less harsh on politicians.",
+      "Politicians may resort to plagiarism as a means of covering up their laziness."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-105",
+    "question": "Share Share This Question The main factor that led to the disbanding of the union is unfair distribution of income among members. Some of the leaders were absurdly egocenteric:",
+    "options": [
+      "direct",
+      "simple",
+      "best",
+      "principal"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-106",
+    "question": "Share Share This Question The disagreement between the warring parties should be solved amicably. That seems to be the only way that could lead to a win-win solution",
+    "options": [
+      "dispute",
+      "hatred",
+      "assault",
+      "success"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": "m2015-social-eng-107",
+    "question": "Share Share This Question There is a huge increase in the number of newly set up educational institutions during the last thirty years but we need to work on quality as well.",
+    "options": [
+      "massive",
+      "bulky",
+      "comprehensive",
+      "progressive"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  }
 ];
