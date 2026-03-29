@@ -5,6 +5,7 @@ import { matric2015BiologyQuestions } from "./matric2015BiologyQuestions";
 import { matric2015ChemistryQuestions } from "./matric2015ChemistryQuestions";
 import { matric2015CivicsQuestions } from "./matric2015CivicsQuestions";
 import { matric2015EnglishQuestions } from "./matric2015EnglishQuestions";
+import { matric2015SocialEnglishQuestions } from "./matric2015SocialEnglishQuestions";
 import { matric2015MathQuestions } from "./matric2015MathQuestions";
 import { matric2015PhysicsQuestions } from "./matric2015PhysicsQuestions";
 import { matric2016BiologyQuestions } from "./matric2016BiologyQuestions";
@@ -38,6 +39,9 @@ export interface MatricExamQuestion {
   options: string[];
   correctAnswer: number;
   explanation: string;
+  sectionGroupTitle?: string;
+  sectionTitle?: string;
+  sectionDirection?: string;
 }
 
 export interface MatricExamSubject {
@@ -138,9 +142,9 @@ export const matricExams: MatricExamYear[] = [
         key: "social",
         label: "Social Science",
         subjects: [
-          { subject: "Mathematics", questions: [] },
-          { subject: "English", questions: [] },
-          { subject: "Civics", questions: [] },
+          { subject: "Mathematics", questions: matric2015MathQuestions },
+          { subject: "English", questions: matric2015SocialEnglishQuestions },
+          { subject: "Civics", questions: matric2015CivicsQuestions },
           { subject: "History", questions: [] },
           { subject: "Geography", questions: [] },
           { subject: "Economics", questions: [] },

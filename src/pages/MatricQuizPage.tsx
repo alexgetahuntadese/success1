@@ -163,6 +163,20 @@ const MatricQuizPage = () => {
           />
         </div>
 
+        {(currentQuestion.sectionGroupTitle || currentQuestion.sectionTitle || currentQuestion.sectionDirection) && (
+          <div className="mb-6 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+            {currentQuestion.sectionGroupTitle && (
+              <div className="text-sm text-white/50 font-semibold mb-1">{currentQuestion.sectionGroupTitle}</div>
+            )}
+            {currentQuestion.sectionTitle && (
+              <div className="text-white font-bold text-lg mb-2">{currentQuestion.sectionTitle}</div>
+            )}
+            {currentQuestion.sectionDirection && (
+              <div className="text-white/60 text-sm whitespace-pre-line">{currentQuestion.sectionDirection}</div>
+            )}
+          </div>
+        )}
+
         <Card className="bg-white/[0.04] backdrop-blur-xl border-white/[0.08] mb-6">
           <CardContent className="p-6">
             <div className="text-white text-lg font-medium mb-6 space-y-3">
