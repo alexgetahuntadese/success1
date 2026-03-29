@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2015SocialCivicsQuestions: MatricExamQuestion[] = [
   {
     "id": "m2015-social-civics-1",
+    "sectionDirection": "Choose the correct answer.",
     "question": "Which one of the following is NOT a contribution of the Ethiopian victory over Italy at the Battle of Adwa during in 1896?",
     "options": [
       "It was the symbol of black consciousness and pride",

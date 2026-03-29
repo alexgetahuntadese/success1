@@ -587,7 +587,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "Reduction in the sea level and death of aquatic animals",
     ],
     correctAnswer: 3,
-    explanation: "The availability of prey, which are living organisms, is a biotic factor affecting carnivores' survival. • A. catastrophic factor o Catastrophic factors refer to sudden, large-scale events like natural disasters, not regular prey availability. • B. abiotic factor o Abiotic factors are non-living environmental components like temperature and water. • C. edaphic factor",
+    explanation: "The accumulation of carbon dioxide in the atmosphere leads to the greenhouse effect, which prevents certain amounts of heat from escaping back into space. This results in global warming and climate change.",
   },
   {
     id: "m2016-bio-50",
@@ -599,7 +599,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "Prohibition of developing countries from setting up big industries that could affect the climate",
     ],
     correctAnswer: 0,
-    explanation: "The pyramid of biomass represents the trophic levels with producers at the bottom and top predators at the top. Grass is a producer, crickets are primary consumers, lizards are secondary consumers, and chickens can be tertiary consumers. • [Link] two reverse processes that play a significant role in absorbing and releasing carbon dioxide, respectively are A. decomposition and respiration. B. combustion and photosynthesis. C. respiration and assimilation.",
+    explanation: "The main objective of the UNFCCC is to prevent dangerous man-made interference with the climate system. The convention aims to stabilize greenhouse gas concentrations in the atmosphere at a level that would prevent dangerous anthropogenic interference with the climate system.",
   },
   {
     id: "m2016-bio-51",
@@ -611,7 +611,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "biotic factor.",
     ],
     correctAnswer: 3,
-    explanation: "Photosynthesis absorbs carbon dioxide, while respiration releases it. • A. decomposition and respiration o Decomposition releases carbon dioxide; it doesn't absorb it. • B. combustion and photosynthesis o Combustion releases carbon dioxide, but it is not a biological process. • C. respiration and assimilation o Assimilation involves incorporating nutrients into body tissues, not directly absorbing carbon dioxide. [Link] one of the following adaptations is important for survival of polar bear in very cold environments? Having A. smaller size C. thick wrinkled ears B. blubbers under the skin D. fine silky fur •",
+    explanation: "The ability of carnivores to survive depends on biotic factors, specifically the availability of prey (living organisms). Biotic factors are living components of an ecosystem that affect other organisms.",
   },
   {
     id: "m2016-bio-52",
@@ -623,7 +623,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "Grass, Lizard, Cricket and Chicken",
     ],
     correctAnswer: 1,
-    explanation: "Polar bears have a thick layer of blubber under their skin to insulate them from the cold. • A. smaller size o Polar bears are actually large, which helps reduce heat loss. • C. thick wrinkled ears o Polar bears have small, rounded ears to minimize heat loss. • D. fine silky fur o Polar bears have thick, dense fur, not fine silky fur. • [Link] your friend has a blood type that has no antigen on his red blood cells but produces antibodies a and b, loses blood due to a car accident. If blood transfusion is necessary to save his life, your friend can receive blood from someone with A. blood type B B. blood type AB C. blood type O. D. blood type A.",
+    explanation: "In a pyramid of biomass, the correct order from bottom to top is: Grass (producer) → Cricket (primary consumer/herbivore) → Lizard (secondary consumer/carnivore) → Chicken (tertiary consumer). This follows the energy flow in a food chain.",
   },
   {
     id: "m2016-bio-53",
@@ -635,7 +635,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "photosynthesis and respiration.",
     ],
     correctAnswer: 2,
-    explanation: "Blood type O has no antigens on red blood cells and can be donated to any blood type. • A. blood type B o Type B blood has B antigens and would cause a reaction. • B. blood type AB o Type AB blood has both A and B antigens and would cause a reaction. • D. blood type A o Type A blood has A antigens and would cause a reaction. •",
+    explanation: "Photosynthesis absorbs carbon dioxide from the atmosphere, while respiration releases it. These are the two main biological processes that regulate atmospheric CO2 levels.",
   },
   {
     id: "m2016-bio-54",
@@ -647,7 +647,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "fine silky fur",
     ],
     correctAnswer: 1,
-    explanation: "Anaphase II in meiosis involves the separation of sister chromatids after the centromere divides. • A. reformed nuclear envelope and reappearance of nucleolus o This occurs during telophase. • C. one chromosome from each homologous pair at the poles o This describes anaphase I, not anaphase II. • D. crossing over between non-sister chromatids of homologous pairs o Crossing over occurs during prophase I. [Link] binomial system of naming developed by Linnaeus comprises two names. Which hierarchical groups are used? A. Kingdome and species C. Genus and species B. Order and family D. Kingdome and phylum the answer is: C. Genus and species. • Explanation: The binomial system uses the genus name followed by the species name. • A. Kingdom and species o Kingdom is a higher taxonomic rank, not part of the binomial system. Jion us on Telegram channel",
+    explanation: "Polar bears have a thick layer of blubber (fat) under their skin that insulates them from extreme cold. This adaptation helps them maintain body temperature in Arctic environments.",
   },
   {
     id: "m2016-bio-55",
@@ -659,7 +659,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "blood type A.",
     ],
     correctAnswer: 1,
-    explanation: "Members of kingdom Monera are prokaryotic, meaning they lack a true nucleus. • A. multicellular with cell walls o Monera are unicellular. • C. mainly autotrophic and saprophytic o Monera can be autotrophic or heterotrophic but are not primarily saprophytic. • D. reproduced by hypha formation o Hypha formation is characteristic of fungi, not Monera. [Link] alternative given below is comprised of harmful groups from the kingdom Monera, Protista and Fungi, respectively? A. Candidaalbicans, Mycobacterium tuberculosis and Trypanosoma B. Trypanosoma, Plasmodium falciparum and Haemophilus ducreyi C. Haemophilus ducreyi, Trypanosoma and Tinea pedis",
+    explanation: "Blood type O has no antigens and can be donated to any blood type (universal donor). A person with no antigens but antibodies A and B is blood type O and can only receive type O blood safely.",
   },
   {
     id: "m2016-bio-56",
@@ -671,7 +671,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "crossing over between non-sister chromatids of homologous pairs",
     ],
     correctAnswer: 2,
-    explanation: "Haemophilus ducreyi (Monera), Trypanosoma (Protista), and Tinea pedis (Fungi) are harmful organisms from their respective kingdoms. • A. Candida albicans, Mycobacterium tuberculosis and Trypanosoma o Candida albicans is a fungus, not a Monera. • B. Trypanosoma, Plasmodium falciparum and Haemophilus ducreyi o The order is incorrect for the specified kingdoms. • D. Trypanosoma, Plasmodium falciparum and Penicillium o Penicillium is not harmful; it is used to produce antibiotics. [Link] one of the following is a feature of Octopi and squid in phylum mollusca? They have A. well-developed brain. B. segmented body with head and thorax. C. lung as a breathing structure. D. hard muscular foot with a hard body.",
+    explanation: "Anaphase II is identified by observing divided centromeres and separated sister chromatids moving to opposite poles. This distinguishes it from Anaphase I where homologous chromosomes separate.",
   },
   {
     id: "m2016-bio-57",
@@ -682,8 +682,8 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "Genus and species",
       "Kingdome and phylum",
     ],
-    correctAnswer: 0,
-    explanation: "Octopi and squid have highly developed brains compared to other mollusks. • B. segmented body with head and thorax o This is characteristic of arthropods, not mollusks. • C. lung as a breathing structure o They use gills, not lungs. • D. hard muscular foot with a hard body o They have a soft body with a muscular foot, not hard.",
+    correctAnswer: 2,
+    explanation: "The binomial nomenclature system uses two names: Genus (capitalized) and species (lowercase). For example, Homo sapiens where Homo is the genus and sapiens is the species.",
   },
   {
     id: "m2016-bio-58",
@@ -694,8 +694,8 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "mainly autotrophic and saprophytic.",
       "reproduced by hyphia formation.",
     ],
-    correctAnswer: 3,
-    explanation: "The Armauer Hansen Research Institute focuses on research for infectious diseases such as leishmaniasis and tuberculosis. • A. Conserving the genes of endemic plants and animals o This activity is typically conducted by botanical gardens or conservation biology institutions. • B. Improving crop production through genetic engineering o This is typically done by agricultural research institutes. • C. Assessing the nutritional status of mothers and babies o This is usually conducted by public health organizations. [Link] one of the following alternatives contains only protein rich cereals? A. White kidney peas, red kidney peas and chickpea B. Red kidney peas, maize and white pea C. Barley, chickpea and groundnut D. Wheat, red kidney peas and sesame",
+    correctAnswer: 1,
+    explanation: "Members of kingdom Monera are prokaryotic organisms, meaning they are unicellular and lack a true nucleus (no membrane-bound organelles). They include bacteria and cyanobacteria.",
   },
   {
     id: "m2016-bio-59",
@@ -706,8 +706,8 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "Haemophilus ducreyi, Trypanosoma cruzi and Tinea pedis",
       "Trypanosoma, Plasmodium falciparum and Penicillium",
     ],
-    correctAnswer: 0,
-    explanation: "These legumes are known for being high in protein content. Jion us on Telegram channel",
+    correctAnswer: 2,
+    explanation: "Haemophilus ducreyi (Monera), Trypanosoma cruzi (Protista), and Tinea pedis (Fungi) are harmful organisms from their respective kingdoms. This alternative correctly orders the harmful organisms from each kingdom.",
   },
   {
     id: "m2016-bio-60",
@@ -718,8 +718,8 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "lung as a breathing structure.",
       "hard muscular foot with a hard body.",
     ],
-    correctAnswer: 1,
-    explanation: "Pepsin is an enzyme in the stomach that breaks down proteins into smaller peptides. • A. Lipase hydrolyzes fat molecules into fatty acid and glycerol. o This occurs in the small intestine, not the stomach. • C. Amylase hydrolyzes starch molecules into maltose. o This occurs in the mouth and small intestine, not the stomach. • D. Bile hydrolyzes bigger fat molecules into smaller droplets. o Bile emulsifies fats, it does not hydrolyze them. [Link] one of the following statements is correct bout the role of trypsin in digestion? It acts on A. maltose in the mouth C. starch in the stomach. B. lipids in the small intestine D. protein in the small intestine.",
+    correctAnswer: 0,
+    explanation: "Octopi and squid have highly developed brains compared to other mollusks, making them intelligent invertebrates capable of complex behaviors.",
   },
   {
     id: "m2016-bio-61",
@@ -731,7 +731,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "Developing drugs for leishmaniasis and tuberculosis",
     ],
     correctAnswer: 3,
-    explanation: "Trypsin is an enzyme that acts on proteins in the small intestine. • A. maltose in the mouth o Maltase acts on maltose, not trypsin. • B. lipids in the small intestine o Lipase acts on lipids, not trypsin. • C. starch in the stomach o Amylase acts on starch, not trypsin. [Link] one of the following descriptions about absorption of nutrients in the digestive system is correct? A. Amino acid molecules are directly absorbed from small intestine into the blood. B. Glycerol molecules are first absorbed into the hepatic portal vein and then to lacteal. C. Glucose molecules are first absorbed into the lacteal and then enter into the blood. D. Fatty acids molecules are absorbed from small intestine directly into the blood. •",
+    explanation: "The Armauer Hansen Research Institute focuses on research for infectious diseases such as leishmaniasis and tuberculosis.",
   },
   {
     id: "m2016-bio-62",
@@ -742,8 +742,8 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "Barley, chickpea and groundnut",
       "Wheat, red kidney peas and sesame",
     ],
-    correctAnswer: 0,
-    explanation: "Amino acids are absorbed directly into the bloodstream from the small intestine. • B. Glycerol molecules are first absorbed into the hepatic portal vein and then to lacteal. o Glycerol and fatty acids are absorbed into the lymphatic system via lacteals. • C. Glucose molecules are first absorbed into the lacteal and then enter into the blood. o Glucose is absorbed directly into the bloodstream. • D. Fatty acids molecules are absorbed from small intestine directly into the blood. o Fatty acids are absorbed into the lymphatic system via lacteals.",
+    correctAnswer: 1,
+    explanation: "White kidney peas, red kidney peas and chickpea are all legumes that are high in protein content. These are protein-rich cereals suitable for a protein-focused diet.",
   },
   {
     id: "m2016-bio-63",
@@ -754,8 +754,8 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "Amylase hydrolyzes starch molecules into maltose.",
       "Bile hydrolyzes bigger fat molecules into smaller droplets.",
     ],
-    correctAnswer: 2,
-    explanation: "Female genital mutilation (FGM) increases the risk of infections, among other health issues. • A. helps to deliver baby easily o FGM can actually complicate childbirth. • B. gives acceptance for marriage o This is a cultural belief, not a factual benefit. • D. keeps girls pure and honest o This is a cultural belief, not a factual benefit. [Link] that you have a friend who is HIV positive and you are familiar about the case. How can you you support your friend if she is injured and needs your help? A. Ignore your friend because of the virus B. Help your friend with precautions C. Call to other people to protect you from the virus D. Help your friend without any fear of the virus •",
+    correctAnswer: 1,
+    explanation: "Pepsin is the main enzyme in the stomach that breaks down proteins into smaller peptides. Lipase works in the small intestine, amylase works in the mouth and small intestine, and bile emulsifies fats but does not hydrolyze them.",
   },
   {
     id: "m2016-bio-64",
@@ -766,8 +766,8 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "starch in the stomach.",
       "protein in the small intestine.",
     ],
-    correctAnswer: 1,
-    explanation: "Helping an HIV-positive friend with precautions minimizes the risk of virus transmission. • A. Ignore your friend because of the virus EJEREE ACADEMY BOOKLET CODE:153 o Ignoring a friend in need is unethical and unnecessary. • C. Call to other people to protect you from the virus o This is not necessary if proper precautions are taken. • D. Help your friend without any fear of the virus o It's important to help but with appropriate precautions to ensure safety. • [Link] are root hairs efficient in uptake of water from the soil? Because they A. show positive hydrotropism. B. anchor the plant to the ground. C. keep turgidity of the cell. D. have high surface area to volume ratio. •",
+    correctAnswer: 3,
+    explanation: "Trypsin is an enzyme that acts on proteins in the small intestine, breaking them down into smaller peptides.",
   },
   {
     id: "m2016-bio-65",
@@ -778,8 +778,8 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "Glucose molecules are first absorbed into the lacteal and then enter into the blood.",
       "Fatty acids molecules are absorbed from small intestine directly into the blood.",
     ],
-    correctAnswer: 3,
-    explanation: "Root hairs increase the surface area for water and nutrient absorption. • A. show positive hydrotropism o While root hairs may exhibit hydrotropism, it is their surface area that makes them efficient. • B. anchor the plant to the ground o Root hairs do not primarily anchor the plant. • C. keep turgidity of the cell o Root hairs help with water absorption, but turgidity is not their main function. • [Link] will happen to a plant if the apical dominance is removed through repeated pruning? The A. plant elongates and bends to one direction. B. plant shades its leaves to withstand the condition. C. side shoots grow quickly and the plant becomes bushy. D. growth of the lateral shoots will be inhibited.",
+    correctAnswer: 0,
+    explanation: "Amino acids are directly absorbed from the small intestine into the bloodstream. They do not need further digestion and can be transported directly to cells throughout the body.",
   },
   {
     id: "m2016-bio-66",
@@ -791,7 +791,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "keeps girls pure and honest.",
     ],
     correctAnswer: 2,
-    explanation: "Removing apical dominance through pruning encourages the growth of lateral (side) shoots, making the plant bushier. • A. plant elongates and bends to one direction o Removing apical dominance typically prevents elongation in one direction. • B. plant shades its leaves to withstand the condition o This does not describe the effect of removing apical dominance. • D. growth of the lateral shoots will be inhibited o Pruning actually promotes the growth of lateral shoots. 70.A farmer sowed cotton seeds in a farmland which fulfills the optimum conditions for germination. After a few days, he observed the newly growing seedlings. Which of the following statements is correct about the farmer's observation? The A. remaining of the cotyledon below the ground B. growth of plumule without forming a hook growth of plumule above the soil surface D. hypogeal germination of the hypocotyl",
+    explanation: "Female genital mutilation (FGM) increases the risk of infections, among other health issues. It does not help deliver babies (it complicates childbirth), and claims about social acceptance or keeping girls pure are cultural beliefs, not factual benefits.",
   },
   {
     id: "m2016-bio-67",
@@ -802,8 +802,8 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
       "Call to other people to protect you from the virus",
       "Help your friend without any fear of the virus",
     ],
-    correctAnswer: 0,
-    explanation: "In hypogeal germination, the cotyledons remain below the ground. • B. growth of plumule without forming a hook o This is incorrect; the plumule typically forms a hook to protect itself as it emerges. • C. growth of plumule above the soil surface o This describes epigeal germination, not hypogeal. • D. hypogeal germination of the hypocotyl o Hypocotyl refers to the region of the seedling stem below the cotyledons. Hypogeal germination means the cotyledons remain underground.",
+    correctAnswer: 1,
+    explanation: "Helping an HIV-positive friend with appropriate precautions minimizes the risk of virus transmission while providing necessary support. This is the responsible and compassionate approach.",
   },
   {
     id: "m2016-bio-68",

@@ -5,9 +5,13 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
     "id": "m2014-nat-physics-1",
     "question": "Suppose a triangular object (O) is placed in front of a plane mirror and its image is observed at position (X). Which one of the following diagrams represents the image (I) formed by the mirror when it is observed from position (X)",
     "options": [
-      ],
+      "Virtual, erect and same size as object",
+      "Real, inverted and same size as object",
+      "Virtual, erect and smaller than object",
+      "Real, inverted and smaller than object"
+    ],
     "correctAnswer": 0,
-    "explanation": "Plane mirrors produce virtual images that are the same distance behind the mirror as the object is in front."
+    "explanation": "Plane mirrors produce virtual images that are erect (upright) and the same size as the object. The image is located behind the mirror at the same distance as the object is in front."
   },
   {
     "id": "m2014-nat-physics-2",
@@ -67,7 +71,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "the slope of displacement-time graph and the area of the region under acceleration-time graph are, respectively, the acceleration and velocity of the object."
     ],
     "correctAnswer": 2,
-    "explanation": "Accuracy refers to closeness to true value; precision refers to reproducibility of measurements."
+    "explanation": "For constant acceleration, velocity increases linearly with time, giving a straight line velocity-time graph with positive slope. Since acceleration is constant, the acceleration-time graph is a horizontal line (constant value)."
   },
   {
     "id": "m2014-nat-physics-7",
@@ -78,8 +82,8 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "For equal orbital radius, a satellite moving around the Earth has smaller speed than a satellite moving about Moon.",
       "A satellite closer to Earth is faster than a satellite farther from the Earth."
     ],
-    "correctAnswer": 0,
-    "explanation": "Dimensional analysis: [M][L]²[T]⁻² represents energy (kg·m²/s² = joules)."
+    "correctAnswer": 3,
+    "explanation": "According to Kepler's third law and orbital mechanics, satellites closer to Earth orbit faster than those farther away. This is because gravitational force is stronger at smaller distances, requiring higher orbital velocity to maintain orbit."
   },
   {
     "id": "m2014-nat-physics-8",
@@ -91,7 +95,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "μmg / (cosθ + sinθ)"
     ],
     "correctAnswer": 1,
-    "explanation": "Average speed = total distance/total time. With equal times at different speeds, average is the arithmetic mean."
+    "explanation": "The minimum force required to slide the block is μmg/(cosθ + μsinθ). This accounts for both the horizontal component of the applied force and the reduction in normal force due to the upward vertical component of the angled force."
   },
   {
     "id": "m2014-nat-physics-9",
@@ -103,7 +107,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "2mv/t sin θ"
     ],
     "correctAnswer": 2,
-    "explanation": "Displacement is the straight-line distance from start to finish, regardless of path taken."
+    "explanation": "The average force on the wall is 2mv/t sin θ. This comes from the change in momentum: the perpendicular component of velocity changes direction, giving a momentum change of 2mv sin θ. Dividing by contact time t gives the average force."
   },
   {
     "id": "m2014-nat-physics-10",
@@ -115,7 +119,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "work done by gravitational force on a satellite moving around the earth in a circular orbit is positive."
     ],
     "correctAnswer": 0,
-    "explanation": "From v² = u² + 2as, with u=0: v = √(2×9.8×20) = √392 ≈ 19.8 m/s."
+    "explanation": "According to the work-energy theorem, work done by gravity on an object thrown upward and moving upward is negative because gravity acts downward while displacement is upward (force and displacement are in opposite directions)."
   },
   {
     "id": "m2014-nat-physics-11",
@@ -127,7 +131,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "y1=A sin(kx-ωt), y2=A cos(kx+ωt), y=2A sin(kx-ωt)"
     ],
     "correctAnswer": 1,
-    "explanation": "F = ma. The force produces acceleration in the direction of the force, changing velocity."
+    "explanation": "Standing waves are formed by the superposition of two identical waves traveling in opposite directions. The correct combination is y1=A sin(kx-ωt) [traveling right], y2=A sin(kx+ωt) [traveling left], and the resultant y=2A sin(kx)cos(ωt) [standing wave pattern]."
   },
   {
     "id": "m2014-nat-physics-12",
@@ -139,7 +143,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "4.5 cm"
     ],
     "correctAnswer": 2,
-    "explanation": "Newton's first law: an object in motion stays in motion unless acted upon by an external force."
+    "explanation": "For double slit interference, the position of bright fringes is given by y = mλL/d. For the 4th bright fringe (m=4): y = 4 × 563×10⁻⁹ m × 1.2 m / (0.06×10⁻³ m) = 0.04504 m = 4.5 cm."
   },
   {
     "id": "m2014-nat-physics-13",
@@ -151,7 +155,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "It travels in the direction of the electric field."
     ],
     "correctAnswer": 0,
-    "explanation": "Frictional force opposes relative motion between surfaces in contact."
+    "explanation": "In a uniform electric field, a dipole experiences a torque that rotates it to align with the field. The field rotates the dipole in the direction of decreasing angle θ until the dipole becomes parallel to the field (minimum potential energy orientation)."
   },
   {
     "id": "m2014-nat-physics-14",
@@ -163,7 +167,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "-720 V."
     ],
     "correctAnswer": 1,
-    "explanation": "Work done against gravity = mgh. Power = work/time = mgh/t."
+    "explanation": "Electric potential V = kQ/r. For Q = -1.6×10⁻⁹ C at r = 0.02 m: V = (9×10⁹)(-1.6×10⁻⁹)/0.02 = -720 V. The negative sign indicates the potential due to a negative charge."
   },
   {
     "id": "m2014-nat-physics-15",
@@ -175,7 +179,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "4 V."
     ],
     "correctAnswer": 2,
-    "explanation": "Kinetic energy = ½mv². Doubling speed quadruples KE (2² = 4)."
+    "explanation": "For parallel combination of R1=1Ω and R2=4Ω: R_parallel = (1×4)/(1+4) = 0.8Ω. Total resistance = 0.8 + 2 = 2.8Ω. Total current I = 14/2.8 = 5A. Voltage across parallel combination = 5 × 0.8 = 4V. This is the voltage across R1."
   },
   {
     "id": "m2014-nat-physics-16",
@@ -186,8 +190,8 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "The magnetic field inside the solenoid is uniform and perpendicular to the axis of the solenoid.",
       "The magnetic field outside the solenoid is as strong as the field inside it."
     ],
-    "correctAnswer": 0,
-    "explanation": "Momentum = mv. In elastic collisions, both momentum and kinetic energy are conserved."
+    "correctAnswer": 1,
+    "explanation": "Inside a long solenoid, the magnetic field is uniform, constant, and parallel to the axis. The field outside is negligible compared to the strong field inside. The field strength inside is given by B = μ₀nI where n is turns per unit length."
   },
   {
     "id": "m2014-nat-physics-17",
@@ -198,18 +202,20 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "a constant magnetic flux crossing the surface of a circuit induced an emf in the circuit.",
       "an emf is induced in a circuit when a constant magnetic field crosses its surface."
     ],
-    "correctAnswer": 1,
-    "explanation": "Torque = force × perpendicular distance from pivot (lever arm)."
+    "correctAnswer": 0,
+    "explanation": "Faraday's law states that the induced emf is proportional to the rate of change of magnetic flux. The magnitude of emf equals the rate of change of flux through any surface bounded by the circuit."
   },
   {
     "id": "m2014-nat-physics-18",
     "question": "A resistor R, a capacitor C, and inductor L are connected in series to an AC voltage source that generates a sinusoidal voltage, V(t)=V p sin(ω t), with V p and ω being the peak voltage and angular frequency of the source. If X C , X L , and Z are capacitive reactance, inductive reactance, and impedance, respectively, I rms and V rms are the root-mean-square (rms) values of the current and voltage, the average power dissipated in series the RLC circuit is given by",
     "options": [
-      "I rms V rms",
-      "I rms 2 Z"
+      "I rms V rms cos φ",
+      "I rms² Z",
+      "I rms² R",
+      "V rms² / Z"
     ],
     "correctAnswer": 2,
-    "explanation": "Moment of inertia depends on mass distribution relative to the axis of rotation."
+    "explanation": "The average power in an RLC circuit is P = I²rms R, where R is the resistance. This can also be written as P = VrmsIrmscos(φ) where cos(φ) is the power factor."
   },
   {
     "id": "m2014-nat-physics-19",
@@ -220,8 +226,8 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "the more precisely we measure the position of a particle, we become less precise of its momentum and vice versa.",
       "we can measure both the position and momentum of a particle simultaneously with unlimited precision."
     ],
-    "correctAnswer": 0,
-    "explanation": "Angular momentum L = Iω is conserved when no external torque acts on the system."
+    "correctAnswer": 2,
+    "explanation": "Heisenberg's uncertainty principle states that the more precisely we measure position, the less precisely we can know momentum, and vice versa. This is a fundamental limit in quantum mechanics."
   },
   {
     "id": "m2014-nat-physics-20",
@@ -230,10 +236,10 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "Uranium (A = 235), which has larger binding energy than iron (A = 56), is more stable than iron.",
       "Nucleus with larger number of neutron is more stable than nucleus of the same atom with smaller number of neutron.",
       "For heavier nuclei (A > 56), the binding energy per nucleon decreases with the increase of mass number; implying that heavier atoms can increase their stability by increasing their protons' number.",
-      "For smaller atoms (A"
+      "For smaller atoms (A < 56), the binding energy per nucleon decreases with decreasing mass number."
     ],
-    "correctAnswer": 1,
-    "explanation": "Hooke's law: F = -kx, where k is spring constant and x is displacement from equilibrium."
+    "correctAnswer": 2,
+    "explanation": "For heavier nuclei (A > 56), binding energy per nucleon decreases with increasing mass number. This means heavier atoms are less stable per nucleon, and energy can be released by splitting them (fission)."
   },
   {
     "id": "m2014-nat-physics-21",
@@ -245,7 +251,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "Refraction of sound is the change in its direction as it travels through a medium having different densities."
     ],
     "correctAnswer": 2,
-    "explanation": "Simple harmonic motion: acceleration is proportional to displacement and directed toward equilibrium."
+    "explanation": "Statement C is NOT correct. Ultrasound (not reflection/refraction of audible sound) is used to detect flaws in metals and for parking assistance. Pre-natal scanning uses ultrasound waves, not audible sound reflection/refraction."
   },
   {
     "id": "m2014-nat-physics-22",
@@ -257,7 +263,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "TI"
     ],
     "correctAnswer": 0,
-    "explanation": "Period of pendulum T = 2π√(L/g). Increasing length increases period."
+    "explanation": "Work done by torque = T × θ (torque multiplied by angular displacement in radians). This is analogous to work = force × distance in linear motion."
   },
   {
     "id": "m2014-nat-physics-23",
@@ -269,7 +275,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "2.5 x 10 18 s."
     ],
     "correctAnswer": 1,
-    "explanation": "Wave speed v = fλ. Frequency and wavelength are inversely proportional at constant speed."
+    "explanation": "Using Kepler's third law: T² = (4π²/GM)r³. For a satellite at r = 4×10⁶ m from Earth's center, the period is approximately 3.7×10³ s (about 62 minutes)."
   },
   {
     "id": "m2014-nat-physics-24",
@@ -281,7 +287,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "When a plastic rod is rubbed with wool, the two objects acquire a net charge of the same sign."
     ],
     "correctAnswer": 2,
-    "explanation": "Sound is a longitudinal mechanical wave requiring a medium for propagation."
+    "explanation": "When a positively charged object touches a neutral sphere, electrons flow from the sphere to the object, leaving the sphere with a net positive charge. This is charging by contact/conduction."
   },
   {
     "id": "m2014-nat-physics-25",
@@ -292,8 +298,8 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "The electric field between the plates and the energy stored decrease.",
       "The capacitance remains the same and the electric field between the plates increases."
     ],
-    "correctAnswer": 0,
-    "explanation": "Doppler effect: frequency increases when source and observer approach each other."
+    "correctAnswer": 3,
+    "explanation": "When the battery is disconnected and a dielectric is inserted, the charge remains constant but capacitance increases. This decreases the electric field (E = Q/εA) and stored energy (U = Q²/2C)."
   },
   {
     "id": "m2014-nat-physics-26",
@@ -305,16 +311,19 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "The resistance of the conductor decreases as it is heated."
     ],
     "correctAnswer": 1,
-    "explanation": "Coulomb's law: F = kq₁q₂/r². Like charges repel, opposite charges attract."
+    "explanation": "Resistance R = ρL/A where ρ is resistivity, L is length, and A is cross-sectional area. Resistance increases with length (more scattering) and decreases with larger diameter (more area for current flow). Heating typically increases resistance in metals."
   },
   {
     "id": "m2014-nat-physics-27",
     "question": "A student wants to investigate Ohm's law using an ammeter (A) and a voltmeter (V) to measure current through and potential difference across a resistor R. Moreover, she employs a rheostat to vary the potential difference across the resistor. Which of the following connections is the correct set up of the circuit to perform the experiment?",
     "options": [
-      "student wants to investigate Ohm's law using an ammeter (",
-      ") and a voltmeter (V) to measure current through and potential difference across a resistor R. Moreover, she employs a rheostat to vary the potential difference across the resistor. Which of the following connections is the correct set up of the circuit to perform the experiment?"],
-    "correctAnswer": 2,
-    "explanation": "Electric field lines point away from positive charges and toward negative charges."
+      "Ammeter in series, voltmeter in parallel, rheostat in series with resistor",
+      "Ammeter in parallel, voltmeter in series, rheostat in parallel with resistor",
+      "Both meters in series with the resistor",
+      "Both meters in parallel with the resistor"
+    ],
+    "correctAnswer": 0,
+    "explanation": "The correct circuit setup for Ohm's law investigation requires the ammeter in series with the resistor and the voltmeter in parallel across the resistor. The rheostat is used to vary the current and voltage."
   },
   {
     "id": "m2014-nat-physics-28",
@@ -326,7 +335,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "q1 is positive, q2 is negative and |q1|>|q2|."
     ],
     "correctAnswer": 0,
-    "explanation": "Ohm's law: V = IR. Current is directly proportional to voltage at constant resistance."
+    "explanation": "The direction of circular motion in a magnetic field depends on charge sign (Fleming's left-hand rule). The radius r = mv/qB, so for the same speed and mass, smaller radius indicates larger charge magnitude."
   },
   {
     "id": "m2014-nat-physics-29",
@@ -338,7 +347,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "1320 V and 60"
     ],
     "correctAnswer": 1,
-    "explanation": "Resistors in series: R_total = R₁ + R₂ + ... + R_n."
+    "explanation": "For a transformer: V₂/V₁ = N₂/N₁. Secondary voltage = 220 × (1500/250) = 1320 V. Current ratio I₁/I₂ = N₂/N₁ = 6. Note: The given answer 1330 V appears to be a typo in the original; the correct value is 1320 V."
   },
   {
     "id": "m2014-nat-physics-30",
@@ -350,7 +359,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "allows current to pass through it either from cathode to anode or from anode to cathode."
     ],
     "correctAnswer": 2,
-    "explanation": "Kirchhoff's laws: junction rule (current) and loop rule (voltage) for circuit analysis."
+    "explanation": "A diode allows current to flow when its p-type (anode) is connected to positive and n-type (cathode) to negative. Connecting p-type to negative (reverse bias) blocks current flow in normal operation."
   },
   {
     "id": "m2014-nat-physics-31",
@@ -362,7 +371,7 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "14.1 N 45° above positive x-axis."
     ],
     "correctAnswer": 0,
-    "explanation": "Magnetic field strength is strongest near the poles of a magnet."
+    "explanation": "Resolving the three forces: F1x = 10cos(30°) = 8.66N, F1y = 10sin(30°) = 5N; F2x = -10cos(30°) = -8.66N, F2y = 10sin(30°) = 5N; F3x = 10N, F3y = 0. Sum: Rx = 8.66 - 8.66 + 10 = 10N, Ry = 5 + 5 = 10N. Resultant magnitude = √(10²+10²) = 14.1N at 45° above x-axis."
   },
   {
     "id": "m2014-nat-physics-32",
@@ -374,6 +383,6 @@ export const matric2014PhysicsQuestions: MatricExamQuestion[] = [
       "20 m and 10 m/s downward."
     ],
     "correctAnswer": 1,
-    "explanation": "Fleming's left-hand rule gives direction of force on current-carrying conductor in magnetic field."
+    "explanation": "Maximum height: h = v²/2g = (20)²/(2×9.8) = 20.4m ≈ 20m. After 3 seconds: v = u - gt = 20 - 9.8×3 = 20 - 29.4 = -9.4 m/s. The ball is falling downward at about 10 m/s."
   }
 ];

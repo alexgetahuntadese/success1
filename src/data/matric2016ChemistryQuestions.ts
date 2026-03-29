@@ -35,7 +35,7 @@ export const matric2016ChemistryQuestions: MatricExamQuestion[] = [
       "[Image: 2016 E.C (2023/2024) Chemistry EUEE Exam choice D]",
     ],
     correctAnswer: 3,
-    explanation: "Kerosene is one of the fractions obtained during fractional distillation of crude oil.",
+    explanation: "The benzene structure consists of a hexagonal ring with alternating double bonds (resonance structure) or a circle inside the hexagon representing delocalized π electrons. Option D shows the correct Kekulé or resonance structure of benzene.",
   },
   {
     id: "m2016-chem-4",
@@ -47,7 +47,7 @@ export const matric2016ChemistryQuestions: MatricExamQuestion[] = [
       "Kerosene",
     ],
     correctAnswer: 2,
-    explanation: "A saturated monocarboxylic acid with six carbons is hexanoic acid, which can be written as C5H11COOH.",
+    explanation: "Kerosene is one of the fractions obtained during fractional distillation of crude oil. Other products include gasoline, diesel, and lubricating oils.",
   },
   {
     id: "m2016-chem-5",

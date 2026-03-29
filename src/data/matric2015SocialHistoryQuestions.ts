@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2015SocialHistoryQuestions: MatricExamQuestion[] = [
   {
     "id": "m2015-social-hist-1",
+    "sectionDirection": "Choose the correct answer.",
     "question": "Which one of the following was a factor for the Oromo population movement of the 16 th century?",
     "options": [
       "The desire to expand Oromo religion",

@@ -2,6 +2,7 @@
 
 const raw2015ChemistryQuestions = [
   {
+    sectionDirection: "Choose the correct answer.",
     question: "In a kinetic experiment, a student placed crystals of iodine in a closed reaction vessel, introduced a given quantity of hydrogen gas, and collected data to calculate the rate of formation of hydrogen iodide. What would be the effect obtained on the rate of the reaction, if the student takes more amount of iodine from that used in the first experiment?",
     options: [
       "It speeds up the rate of the reaction.",

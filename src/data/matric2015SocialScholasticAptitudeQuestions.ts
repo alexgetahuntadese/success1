@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2015SocialScholasticAptitudeQuestions: MatricExamQuestion[] = [
   {
     "id": "m2015-social-sat-1",
+    "sectionDirection": "Choose the correct answer.",
     "question": "Devaluation",
     "options": [
       "Conversion",

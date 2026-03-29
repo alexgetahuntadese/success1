@@ -47,7 +47,7 @@ export const matric2016PhysicsQuestions: MatricExamQuestion[] = [
       "Orbital velocity depends on the mass of the earth, whereas scape velocity depends on the mass of the satellite.",
     ],
     correctAnswer: 2,
-    explanation: "An AC generator produces an emf that reverses direction periodically, while a DC generator gives a unidirectional output because of the commutator.",
+    explanation: "Orbital velocity is inversely proportional to the radius of the orbit (v ∝ 1/√r), while escape velocity is inversely proportional to the square root of the Earth's radius (ve ∝ 1/√R). This means closer satellites orbit faster.",
   },
   {
     id: "m2016-phys-5",

@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2015SocialGeographyQuestions: MatricExamQuestion[] = [
   {
     "id": "m2015-social-geo-1",
+    "sectionDirection": "Choose the correct answer.",
     "question": "Share Share This Question Which of the following is the southern limit of the Western lowlands?",
     "options": [
       "Baro-Akobo lowlands",

@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2015BiologyQuestions: MatricExamQuestion[] = [
   {
     id: "m2015-bio-1",
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following sentences is correct about the activities of the heart?",
     options: [
       "The noise of heartbeat one hears through a stethoscope is the sound of valves.",

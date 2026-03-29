@@ -2,6 +2,7 @@ import { MatricExamQuestion } from "./matricExams";
 
 const raw2015CivicsQuestions = [
   {
+    "sectionDirection": "Choose the correct answer.",
     "question": "Among the following one is a major feature of autocratic governments. Which one?",
     "options": [
       "Exercising unlimited power",
