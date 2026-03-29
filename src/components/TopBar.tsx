@@ -1,34 +1,73 @@
-import { useNavigate } from 'react-router-dom';
-import { User, BarChart3 } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { User, BarChart3, Home, GraduationCap, BookOpen, Briefcase, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { getPerformanceData } from '@/lib/performanceUtils';
 
 const TopBar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const studentName = getPerformanceData().profile.student_name || 'Profile';
 
+  const isActive = (path: string) => location.pathname === path;
+
+  const navItems = [
+    { path: '/', icon: Home, label: 'Home' },
+    { path: '/grades', icon: GraduationCap, label: 'Grades' },
+    { path: '/matric', icon: FileText, label: 'Matric' },
+    { path: '/notes', icon: BookOpen, label: 'Notes' },
+    { path: '/career-simulator', icon: Briefcase, label: 'Career' },
+  ];
+
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-end gap-1 border-b border-white/[0.12] bg-purple-950/90 px-4 py-2 shadow-[0_10px_35px_rgba(10,10,30,0.35)] backdrop-blur-xl">
-      <LanguageSwitcher />
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => navigate('/performance')}
-        className="text-white/85 hover:bg-white/12 hover:text-white"
-      >
-        <BarChart3 className="h-4 w-4 mr-1.5" />
-        Performance
-      </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => navigate('/profile')}
-        className="font-medium text-white/95 hover:bg-white/12 hover:text-white"
-      >
-        <User className="h-4 w-4 mr-1.5" />
-        <span className="max-w-[120px] truncate">{studentName}</span>
-      </Button>
+    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-white/[0.12] bg-purple-950/90 px-4 py-2 shadow-[0_10px_35px_rgba(10,10,30,0.35)] backdrop-blur-xl">
+      <div className="flex items-center gap-1">
+        {navItems.map((item) => (
+          <Button
+            key={item.path}
+            variant={isActive(item.path) ? 'secondary' : 'ghost'}
+            size="sm"
+            onClick={() => navigate(item.path)}
+            className={`${
+              isActive(item.path)
+                ? 'bg-white/20 text-white'
+                : 'text-white/85 hover:bg-white/12 hover:text-white'
+            }`}
+          >
+            <item.icon className="h-4 w-4 mr-1.5" />
+            {item.label}
+          </Button>
+        ))}
+      </div>
+      <div className="flex items-center gap-1">
+        <LanguageSwitcher />
+        <Button
+          variant={isActive('/performance') ? 'secondary' : 'ghost'}
+          size="sm"
+          onClick={() => navigate('/performance')}
+          className={`${
+            isActive('/performance')
+              ? 'bg-white/20 text-white'
+              : 'text-white/85 hover:bg-white/12 hover:text-white'
+          }`}
+        >
+          <BarChart3 className="h-4 w-4 mr-1.5" />
+          Performance
+        </Button>
+        <Button
+          variant={isActive('/profile') ? 'secondary' : 'ghost'}
+          size="sm"
+          onClick={() => navigate('/profile')}
+          className={`font-medium ${
+            isActive('/profile')
+              ? 'bg-white/20 text-white'
+              : 'text-white/95 hover:bg-white/12 hover:text-white'
+          }`}
+        >
+          <User className="h-4 w-4 mr-1.5" />
+          <span className="max-w-[120px] truncate">{studentName}</span>
+        </Button>
+      </div>
     </div>
   );
 };

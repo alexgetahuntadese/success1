@@ -70,8 +70,8 @@ export const matric2017MathQuestions: MatricExamQuestion[] = [
       "$y = \\csc x$",
       "$y = \\cos x$",
     ],
-    correctAnswer: -1,
-    explanation: "No explanation was provided in the source.",
+    correctAnswer: 3,
+    explanation: "The cosine function $y = \\cos x$ has a period of $2\\pi$ and starts at its maximum value (1) when $x = 0$. In the interval $-\\frac{\\pi}{2} \\leq x \\leq \\frac{5\\pi}{2}$, the cosine function completes one full cycle, starting at 0, reaching maximum at 0, crossing zero at $\\frac{\\pi}{2}$, reaching minimum at $\\pi$, and returning to maximum at $2\\pi$.",
   },
   {
     id: "m2017-math-7",
