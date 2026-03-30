@@ -45,6 +45,11 @@ import { matric2017SocialHistoryQuestions } from "./matric2017SocialHistoryQuest
 import { matric2017SocialMathQuestions } from "./matric2017SocialMathQuestions";
 import { matric2017SocialScholasticAptitudeQuestions } from "./matric2017SocialScholasticAptitudeQuestions";
 import { matric2017ScholasticAptitudeQuestions } from "./matric2017ScholasticAptitudeQuestions";
+import { matric2013MathQuestions } from "./matric2013MathQuestions";
+import { matric2013PhysicsQuestions } from "./matric2013PhysicsQuestions";
+import { matric2013ChemistryQuestions } from "./matric2013ChemistryQuestions";
+import { matric2013BiologyQuestions } from "./matric2013BiologyQuestions";
+import { matric2013EnglishQuestions } from "./matric2013EnglishQuestions";
 
 export interface MatricExamQuestion {
   id: string;
@@ -204,11 +209,11 @@ export const matricExams: MatricExamYear[] = [
         key: "natural",
         label: "Natural Science",
         subjects: [
-          { subject: "Mathematics", questions: [] },
-          { subject: "Physics", questions: [] },
-          { subject: "Chemistry", questions: [] },
-          { subject: "Biology", questions: [] },
-          { subject: "English", questions: [] },
+          { subject: "Mathematics", questions: matric2013MathQuestions },
+          { subject: "Physics", questions: matric2013PhysicsQuestions },
+          { subject: "Chemistry", questions: matric2013ChemistryQuestions },
+          { subject: "Biology", questions: matric2013BiologyQuestions },
+          { subject: "English", questions: matric2013EnglishQuestions },
           { subject: "Civics", questions: [] },
         ],
       },

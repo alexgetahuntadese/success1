@@ -23,6 +23,7 @@ import MatricQuizPage from "./pages/MatricQuizPage";
 import NotesPage from "./pages/NotesPage";
 import NotesSubjectsPage from "./pages/NotesSubjectsPage";
 import NotesChaptersPage from "./pages/NotesChaptersPage";
+import PaymentPage from "./pages/PaymentPage";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ const App = () => (
               <Route path="/notes" element={<NotesPage />} />
               <Route path="/notes/:grade" element={<NotesSubjectsPage />} />
               <Route path="/notes/:grade/:subject" element={<NotesChaptersPage />} />
+              <Route path="/payment" element={<PaymentPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

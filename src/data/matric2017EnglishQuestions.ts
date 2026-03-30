@@ -3,7 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   {
     id: "m2017-eng-1",
-    question: "Which one of the following statements is true according to paragraph 4?",
+    question: "Reading Passage I:\n\nHomeless people are everywhere-on the street, in public buildings, on the evening news and at the corner parking lot. You can hardly step out of your house these days without meeting some haggard character who asks you for a cigarette or begs for 'a little change'. The homeless are not just constant symbols of wasted lives and social programs-they have become a danger to public safety.\n\nWhat is the root of the homeless problem? Everyone seems to have a scapegoat. Advocates of the homeless blame government policy; politicians blame the legal system; the courts blame the bureaucratic infrastructure; the Democrats blame the Republicans and the Republicans blame the Democrats. The public also blames the economy, drugs, the 'poverty cycle', and 'the breakdown of society'. With all this finger-pointing, the group most responsible for the homeless being the way they are received the least blame. That group is the homeless themselves.\n\nHow can I say this? For the past two years I have worked with the homeless, volunteering at the Salvation Army and at a soup kitchen in Austin, Texas. I have led a weekly chapel service, served food, listened, counseled, given time and money, and shared their struggles. I have seen their response to troubles, and though I would rather report otherwise, many of them seem to have chosen the life styles they lead. They are unwilling to do the things necessary to overcome\n\nLet me qualify what I just said. Not everyone who finds himself out of a job and in the street is there because he/she wants to be. Some are victims of tragic circumstances. I met many exhausted, sensible people during my time working with Austin's homeless: the single father struggling to earn his working his Austin's homeless: the single father struggling to earn his bread and be a role model for his children; the woman who fled a good job in another city to escape an abusive husband; the well- educated young man who had his world turned upside down by divorce and a layoff. These people deserve every effort to help them back on their feet.\n\nBut they are not the real problem. They are usually off the streets and resuming normal lives within a period of weeks or months. Even while 'down on their luck', they are responsible citizens, working in the shelters and applying for jobs. They are homeless, true but only temporarily, because they are eager to reorganize their lives.\n\nFor every person temporarily homeless, though there are many who are chronically so. Whether because of mental illness, alcoholism, poor education, drug addiction, or simply laziness, these homeless are content to remain as they are. In many cases they choose the streets. They enjoy the freedom and consider begging a minor inconvenience. They know they can always get a job for a day or two for food, cigarettes and alcohol. The sophisticated among them have learned to use the system for what it is worth and figure out that a trip through the welfare line is less trouble than a steady job. In a society that has mastered a dodging responsibility, these homeless prefer a life of no responsibility at all.\n\n(Source: Critical Thinking, Thoughtful Writing: A Rhetoric with Readings by Chaffee, J. U.S.A (1999) (P.374-375).\n\nQuestion: Which one of the following statements is true according to paragraph 4?",
     options: [
       "Some homeless who are victims of circumstances deserve help to recognize their lives again.",
       "None of those in the street deserves any effort to help them back on their feet.",
@@ -15,7 +15,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-2",
-    question: "Which of the following best describes this passage writer's tone?",
+    question: "According to the passage, which of the following best describes this passage writer's tone?",
     options: [
       "Appreciation",
       "Praise",
@@ -27,7 +27,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-3",
-    question: "What does the expression 'I would rather report otherwise' indicate in the context it is used in paragraph 3?",
+    question: "According to Reading Passage I, what does the expression 'I would rather report otherwise' indicate in the context it is used in paragraph 3?",
     options: [
       "The need to tell the public about the homeless",
       "The fear to hide the true cause of homelessness",
@@ -39,7 +39,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-4",
-    question: "What purpose does the writer's reference to personal experience in paragraph 3 serve?",
+    question: "According to Reading Passage I, what purpose does the writer's reference to personal experience in paragraph 3 serve?",
     options: [
       "It served as evidence for political involvement.",
       "It clarified the actual cause of homelessness.",
@@ -51,7 +51,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-5",
-    question: "Which of the following words is closest in meaning to haggard as used in paragraph 1?",
+    question: "According to Reading Passage I, which of the following words is closest in meaning to haggard as used in paragraph 1?",
     options: [
       "a person who looks trustful",
       "a person who commits crime",
@@ -63,7 +63,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-6",
-    question: "Which of the following words can be synonymous with the word content as used in paragraph 6?",
+    question: "According to Reading Passage I, which of the following words can be synonymous with the word content as used in paragraph 6?",
     options: [
       "satisfied",
       "outrageous",
@@ -75,7 +75,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-7",
-    question: "What does the word there in paragraph 4, refer to?",
+    question: "According to Reading Passage I, what does the word there in paragraph 4, refer to?",
     options: [
       "at a soup kitchen",
       "at the Salvation Army",
@@ -87,7 +87,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-8",
-    question: "What does the word 'so' in paragraph 6, refer to?",
+    question: "According to Reading Passage I, what does the word 'so' in paragraph 6, refer to?",
     options: [
       "beggar",
       "drug addict",
@@ -111,7 +111,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-10",
-    question: "What does 'These' in paragraph 2 refer to?",
+    question: "Reading Passage II:\n\nThe prolonged erosion of the soil over the centuries has ruined whole regions. Crops have been destroyed and fertility of the lands lost. Not only has much good soil been washed away, but the eroded earth from the highlands has buried fertile lowlands and river valleys below. The covering of rich lowlands and the breaking up of terraces have destroyed good soil and added desolation to areas that used to be very productive.\n\nThe erosion has been aggravated by the destruction of forests in regions easily eroded. In many countries, preservation of forests leads to the reproduction of wildlife and reforestation leads to the regulation of rainfall and prevention of both floods and drought. Lack of soil conservation leads to loss of valuable nutrients found in the topsoil. Proper farming should make the problem of soil erosion less serious. But in the efforts of man to make his living, the soils are misused and modern methods of agriculture have not been applied. For example, the Native farmers cultivate hillsides where the soil is easily eroded. Because of the erosion of the earth, the earth in many areas is now too shallow to support long roots and some areas are too poor to produce trees for food, shelter and rainfall conservation.\n\nQuestion: What does 'These' in paragraph 2 refer to?",
     options: [
       "soil conservation",
       "preservation of forests",
@@ -123,7 +123,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-11",
-    question: "What does the word 'desolation' mean in paragraph 1?",
+    question: "According to Reading Passage II, what does the word 'desolation' mean in paragraph 1?",
     options: [
       "disappearance",
       "desertion",
@@ -135,7 +135,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-12",
-    question: "Which of the following best replaces the word 'aggravated' in paragraph 2?",
+    question: "According to Reading Passage II, which of the following best replaces the word 'aggravated' in paragraph 2?",
     options: [
       "worsened",
       "supplemented",
@@ -147,7 +147,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-13",
-    question: "The prolonged erosion of the soil is followed by",
+    question: "According to Reading Passage II, the prolonged erosion of the soil is followed by",
     options: [
       "rapid reproduction of wild animals.",
       "enrichment of the soil by various nutrients.",
@@ -159,7 +159,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-14",
-    question: "In highly eroded and desolated areas, trees fail to survive because",
+    question: "According to Reading Passage II, in highly eroded and desolated areas, trees fail to survive because",
     options: [
       "their roots are too short to suck up water from the ground.",
       "the sun will be too scorching for them to survive.",
@@ -171,7 +171,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-15",
-    question: "Which of the following, according to paragraph 1, is a result of preserving forest areas?",
+    question: "According to Reading Passage II, which of the following, according to paragraph 1, is a result of preserving forest areas?",
     options: [
       "Devastation of irreplaceable natural resources",
       "Ruins of the land through processes",
@@ -183,7 +183,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-16",
-    question: "Which of the following, according to paragraph 2, can be a cause of soil erosion?",
+    question: "According to Reading Passage II, which of the following, according to paragraph 2, can be a cause of soil erosion?",
     options: [
       "Planting trees and using modern farming",
       "Cultivating easily eroded hillsides",
@@ -195,7 +195,7 @@ export const matric2017EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-eng-17",
-    question: "According to paragraph 2, which of the following is true?",
+    question: "According to Reading Passage II, according to paragraph 2, which of the following is true?",
     options: [
       "Plants can be planted to suck up water and hold soil even if the earth is too shallow to support long roots.",
       "When the soil is washed away to neighboring countries, land productivity increases.",

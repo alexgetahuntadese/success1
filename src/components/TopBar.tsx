@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User, BarChart3, Home, GraduationCap, BookOpen, Briefcase, FileText, Menu, X } from 'lucide-react';
+import { User, BarChart3, Home, GraduationCap, BookOpen, Briefcase, FileText, Menu, X, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetClose } from '@/components/ui/sheet';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { getPerformanceData } from '@/lib/performanceUtils';
 
@@ -20,13 +20,60 @@ const TopBar = () => {
     { path: '/matric', icon: FileText, label: 'Matric' },
     { path: '/notes', icon: BookOpen, label: 'Notes' },
     { path: '/career-simulator', icon: Briefcase, label: 'Career' },
+    { path: '/payment', icon: CreditCard, label: 'Payment' },
   ];
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.12] bg-purple-950/90 px-4 py-2 shadow-[0_10px_35px_rgba(10,10,30,0.35)] backdrop-blur-xl">
       <div className="flex items-center justify-between">
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-1">
+        {/* Mobile Sheet Navigation */}
+        <div className="lg:hidden">
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white/85 hover:bg-white/12 hover:text-white"
+              >
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[280px] bg-purple-950 border-white/10 p-0">
+              <SheetHeader className="border-b border-white/10 p-4">
+                <SheetTitle className="text-white text-left">Menu</SheetTitle>
+                <SheetClose className="absolute right-4 top-4 text-white/70 hover:text-white">
+                  <X className="h-5 w-5" />
+                  <span className="sr-only">Close</span>
+                </SheetClose>
+              </SheetHeader>
+              <nav className="flex flex-col p-2">
+                {navItems.map((item) => (
+                  <Button
+                    key={item.path}
+                    variant={isActive(item.path) ? 'secondary' : 'ghost'}
+                    size="sm"
+                    onClick={() => {
+                      navigate(item.path);
+                      setIsOpen(false);
+                    }}
+                    className={`justify-start h-12 text-base ${
+                      isActive(item.path)
+                        ? 'bg-white/20 text-white'
+                        : 'text-white/85 hover:bg-white/12 hover:text-white'
+                    }`}
+                  >
+                    <item.icon className="h-5 w-5 mr-3" />
+                    {item.label}
+                  </Button>
+                ))}
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        {/* Desktop Navigation - only on large screens */}
+        <nav className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => (
             <Button
               key={item.path}
@@ -43,46 +90,7 @@ const TopBar = () => {
               {item.label}
             </Button>
           ))}
-        </div>
-
-        {/* Mobile Collapsible Menu */}
-        <div className="md:hidden">
-          <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-            <CollapsibleTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-white/85 hover:bg-white/12 hover:text-white"
-              >
-                {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-                <span className="ml-1.5">Menu</span>
-              </Button>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <div className="mt-2 flex flex-col gap-1 pb-2">
-                {navItems.map((item) => (
-                  <Button
-                    key={item.path}
-                    variant={isActive(item.path) ? 'secondary' : 'ghost'}
-                    size="sm"
-                    onClick={() => {
-                      navigate(item.path);
-                      setIsOpen(false);
-                    }}
-                    className={`justify-start ${
-                      isActive(item.path)
-                        ? 'bg-white/20 text-white'
-                        : 'text-white/85 hover:bg-white/12 hover:text-white'
-                    }`}
-                  >
-                    <item.icon className="h-4 w-4 mr-1.5" />
-                    {item.label}
-                  </Button>
-                ))}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
+        </nav>
         {/* Right side - Profile & Performance */}
         <div className="flex items-center gap-1">
           <LanguageSwitcher />
