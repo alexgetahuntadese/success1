@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   ArrowRight,
   BookOpenCheck,
@@ -143,6 +144,26 @@ const trustPoints = [
   "Designed for students, returners, and diaspora learners",
   "Balances reading, recall, and exam-focused preparation",
 ];
+
+// Animation variants
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5, ease: "easeOut" }
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const scaleOnHover = {
+  scale: 1.02,
+  transition: { duration: 0.2 }
+};
 
 const authInputClassName =
   "h-12 rounded-2xl border border-white/75 bg-white/96 pl-11 text-sky-950 shadow-[0_12px_30px_rgba(14,36,68,0.06)] placeholder:text-sky-700/70 focus-visible:border-cyan-400 focus-visible:ring-cyan-200/40 [&:-webkit-autofill]:[-webkit-text-fill-color:#082f49] [&:-webkit-autofill]:shadow-[inset_0_0_0px_1000px_rgba(255,255,255,0.96)]";
@@ -316,17 +337,21 @@ const Index = () => {
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-2rem)] max-w-7xl items-center pt-16 sm:min-h-[calc(100vh-3rem)] sm:pt-20">
         <div className="grid w-full gap-8 xl:grid-cols-[1.02fr_0.98fr] xl:gap-14">
           <section className="order-2 flex flex-col justify-center xl:order-1">
-            <div
-              className="mb-6 inline-flex w-fit items-center gap-3 rounded-full border border-white/15 bg-white/8 px-4 py-2 text-sm text-white/85 backdrop-blur-xl opacity-0 animate-fade-in"
-              style={{ animationFillMode: "forwards" }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-6 inline-flex w-fit items-center gap-3 rounded-full border border-white/15 bg-white/8 px-4 py-2 text-sm text-white/85 backdrop-blur-xl"
             >
               <AppLogo compact />
               <span>Global-ready Ethiopian study hub</span>
-            </div>
+            </motion.div>
 
-            <div
-              className="max-w-3xl opacity-0 animate-fade-in"
-              style={{ animationDelay: "0.08s", animationFillMode: "forwards" }}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="max-w-3xl"
             >
               <p className="mb-4 text-sm font-medium uppercase tracking-[0.28em] text-cyan-200/90">
                 International Student Experience
@@ -341,11 +366,13 @@ const Index = () => {
                 Simple Road is the landing place for studying, revising, reading, and preparing for exams,
                 built for learners in Ethiopia and beyond with a cleaner, more modern experience.
               </p>
-            </div>
+            </motion.div>
 
-            <div
-              className="mt-6 grid gap-3 sm:grid-cols-3 opacity-0 animate-fade-in"
-              style={{ animationDelay: "0.12s", animationFillMode: "forwards" }}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-6 grid gap-3 sm:grid-cols-3"
             >
               {globalSignals.map((item) => (
                 <div
@@ -356,11 +383,13 @@ const Index = () => {
                   <div className="mt-1 text-sm leading-6 text-white/62">{item.label}</div>
                 </div>
               ))}
-            </div>
+            </motion.div>
 
-            <div
-              className="mt-7 flex flex-wrap gap-3 opacity-0 animate-fade-in"
-              style={{ animationDelay: "0.16s", animationFillMode: "forwards" }}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-7 flex flex-wrap gap-3"
             >
               {studySignals.map((item) => (
                 <div
@@ -370,18 +399,24 @@ const Index = () => {
                   {item}
                 </div>
               ))}
-            </div>
+            </motion.div>
 
-            <div
-              className="mt-8 grid gap-4 md:grid-cols-3 opacity-0 animate-fade-in"
-              style={{ animationDelay: "0.24s", animationFillMode: "forwards" }}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-8 grid gap-4 md:grid-cols-3"
             >
-              {focusCards.map((item) => {
+              {focusCards.map((item, index) => {
                 const Icon = item.icon;
 
                 return (
-                  <div
+                  <motion.div
                     key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
                     className="rounded-[1.75rem] border border-white/14 bg-white/8 p-5 text-white shadow-[0_18px_60px_rgba(8,15,40,0.24)] backdrop-blur-xl"
                   >
                     <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400/20 to-amber-300/12 text-cyan-100 ring-1 ring-white/10">
@@ -389,36 +424,49 @@ const Index = () => {
                     </div>
                     <h2 className="text-lg font-semibold">{item.title}</h2>
                     <p className="mt-2 text-sm leading-6 text-white/66">{item.description}</p>
-                  </div>
+                  </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
 
-            <div
-              className="mt-8 grid gap-4 sm:grid-cols-2 opacity-0 animate-fade-in"
-              style={{ animationDelay: "0.28s", animationFillMode: "forwards" }}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="mt-8 grid gap-4 sm:grid-cols-2"
             >
-              {platformAreas.map((item) => (
-                <div
+              {platformAreas.map((item, index) => (
+                <motion.div
                   key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                  whileHover={{ scale: 1.02 }}
                   className="rounded-[1.6rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04))] p-5 text-white shadow-[0_16px_50px_rgba(8,15,40,0.14)] backdrop-blur-xl"
                 >
                   <div className="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/90">{item.title}</div>
                   <p className="mt-3 text-sm leading-6 text-white/66">{item.description}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <div
-              className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-2 opacity-0 animate-fade-in"
-              style={{ animationDelay: "0.34s", animationFillMode: "forwards" }}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-2"
             >
-              {quickLinks.map((item) => (
-                <button
+              {quickLinks.map((item, index) => (
+                <motion.button
                   key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  whileTap={{ scale: 0.98 }}
                   type="button"
                   onClick={() => navigate(item.route)}
-                  className="group rounded-[1.9rem] border border-white/16 bg-[linear-gradient(145deg,rgba(56,189,248,0.14),rgba(14,116,144,0.18))] p-5 text-left text-white shadow-[0_20px_70px_rgba(14,36,68,0.18)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-200/30 hover:bg-white/12"
+                  className="group rounded-[1.9rem] border border-white/16 bg-[linear-gradient(145deg,rgba(56,189,248,0.14),rgba(14,116,144,0.18))] p-5 text-left text-white shadow-[0_20px_70px_rgba(14,36,68,0.18)] backdrop-blur-2xl transition-all duration-300 hover:border-cyan-200/30 hover:bg-white/12"
                 >
                   <div className="mb-4 flex items-center gap-3">
                     <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/12 bg-white/8">
@@ -432,13 +480,15 @@ const Index = () => {
                     Continue
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </div>
-                </button>
+                </motion.button>
               ))}
-            </div>
+            </motion.div>
 
-            <div
-              className="mt-8 rounded-[2rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04))] p-5 shadow-[0_18px_60px_rgba(8,15,40,0.16)] backdrop-blur-2xl opacity-0 animate-fade-in"
-              style={{ animationDelay: "0.38s", animationFillMode: "forwards" }}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="mt-8 rounded-[2rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04))] p-5 shadow-[0_18px_60px_rgba(8,15,40,0.16)] backdrop-blur-2xl"
             >
               <div className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-200/90">
                 <Sparkles className="h-4 w-4" />
@@ -473,13 +523,17 @@ const Index = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </section>
 
           <section className="order-1 flex items-center justify-center xl:order-2">
-            <Card
-              className="relative w-full max-w-lg overflow-hidden rounded-[2rem] border-cyan-200/18 bg-[linear-gradient(180deg,rgba(18,64,105,0.86),rgba(21,84,124,0.78))] text-white shadow-[0_32px_100px_rgba(14,36,68,0.26)] backdrop-blur-2xl opacity-0 animate-fade-in"
-              style={{ animationDelay: "0.12s", animationFillMode: "forwards" }}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+            >
+              <Card
+                className="relative w-full max-w-lg overflow-hidden rounded-[2rem] border-cyan-200/18 bg-[linear-gradient(180deg,rgba(18,64,105,0.86),rgba(21,84,124,0.78))] text-white shadow-[0_32px_100px_rgba(14,36,68,0.26)] backdrop-blur-2xl"
             >
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-300 via-sky-400 to-amber-300" />
               <div className="pointer-events-none absolute right-0 top-0 h-40 w-40 rounded-full bg-cyan-300/10 blur-3xl" />
@@ -760,6 +814,7 @@ const Index = () => {
                 </>
               )}
             </Card>
+            </motion.div>
           </section>
         </div>
       </div>

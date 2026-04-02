@@ -315,7 +315,7 @@ const PaymentPage = () => {
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Payment Verification</h1>
           <p className="text-white/70 max-w-2xl mx-auto">
-            Receipts are uploaded to Supabase Storage, reviewed by an admin, and then linked to your account for real premium access across devices.
+            Upload your payment receipt for admin review. Once verified, premium access will be activated on your account.
           </p>
         </div>
 
@@ -542,7 +542,7 @@ const PaymentPage = () => {
               <CardHeader>
                 <CardTitle className="text-xl">Your Payment History</CardTitle>
                 <CardDescription className="text-white/70">
-                  Stored in Supabase and synced to your signed-in account.
+                  Stored locally and linked to your account for premium access.
                 </CardDescription>
               </CardHeader>
               <CardContent>
