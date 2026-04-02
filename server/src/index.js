@@ -1,9 +1,8 @@
 import "dotenv/config";
 
-import bcrypt from "bcryptjs";
 import cors from "cors";
 import express from "express";
-import jwt from "jsonwebtoken";
+import authRouter from './auth/index.js'
 import pg from "pg";
 
 const { Pool } = pg;
@@ -47,127 +46,8 @@ app.use(
 );
 app.use(express.json());
 
-const TOKEN_TTL_SECONDS = 60 * 60 * 24 * 7;
-
-const normalizePhoneNumber = (value = "") => {
-  const compact = String(value).replace(/[^\d+]/g, "");
-
-  if (!compact) {
-    return "";
-  }
-
-  if (compact.startsWith("+")) {
-    return compact;
-  }
-
-  if (compact.startsWith("251")) {
-    return `+${compact}`;
-  }
-
-  if (compact.startsWith("0")) {
-    return `+251${compact.slice(1)}`;
-  }
-
-  return compact;
-};
-
-const buildUser = (row) => ({
-  id: String(row.id),
-  phone: row.phone,
-  email: row.email ?? null,
-  user_metadata: {
-    name: row.name ?? null,
-    mobile: row.phone,
-  },
-});
-
-const buildProfile = (row) => ({
-  id: String(row.id),
-  auth_id: String(row.id),
-  name: row.name ?? null,
-  mobile: row.phone,
-  email: row.email ?? null,
-  phone: row.phone,
-  grade: null,
-  school: null,
-  profile_image_url: null,
-  date_of_birth: null,
-  gender: null,
-  preferences:
-    row.preferences && typeof row.preferences === "object"
-      ? row.preferences
-      : { role: "student" },
-  is_active: Boolean(row.is_active),
-  created_at: row.created_at ? new Date(row.created_at).toISOString() : new Date().toISOString(),
-  updated_at: row.updated_at ? new Date(row.updated_at).toISOString() : new Date().toISOString(),
-  last_login: row.last_login ? new Date(row.last_login).toISOString() : null,
-});
-
-const buildAuthResponse = (row) => {
-  const expiresAt = new Date(Date.now() + TOKEN_TTL_SECONDS * 1000).toISOString();
-  const token = jwt.sign(
-    {
-      sub: String(row.id),
-      phone: row.phone,
-    },
-    JWT_SECRET,
-    {
-      expiresIn: TOKEN_TTL_SECONDS,
-    },
-  );
-
-  return {
-    token,
-    session: {
-      accessToken: token,
-      expiresAt,
-      user: buildUser(row),
-    },
-    profile: buildProfile(row),
-  };
-};
-
-const getBearerToken = (request) => {
-  const header = request.headers.authorization ?? "";
-
-  if (!header.toLowerCase().startsWith("bearer ")) {
-    return "";
-  }
-
-  return header.slice(7).trim();
-};
-
-const requireAuth = async (request, response, next) => {
-  const token = getBearerToken(request);
-
-  if (!token) {
-    response.status(401).json({ message: "Authentication required." });
-    return;
-  }
-
-  try {
-    const payload = jwt.verify(token, JWT_SECRET);
-    const userId = Number(payload.sub);
-
-    if (!Number.isInteger(userId)) {
-      response.status(401).json({ message: "Invalid authentication token." });
-      return;
-    }
-
-    const result = await pool.query("SELECT * FROM users WHERE id = $1 LIMIT 1", [userId]);
-    const user = result.rows[0];
-
-    if (!user) {
-      response.status(401).json({ message: "User account not found." });
-      return;
-    }
-
-    request.authUser = user;
-    next();
-  } catch (error) {
-    response.status(401).json({ message: "Your session is no longer valid. Sign in again." });
-  }
-};
+// Mount auth routes implemented in server/src/auth
+app.use('/api/auth', authRouter)
 
 app.get("/api/health", async (_request, response) => {
   try {
