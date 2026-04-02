@@ -77,6 +77,13 @@ export const formatAuthError = (error: unknown) => {
   if (normalized.includes("failed to fetch")) {
     return `Supabase could not be reached at ${supabaseUrl}. Check your internet connection, DNS, and project URL, then try again.`;
   }
+  if (
+    normalized.includes("email rate limit exceeded") ||
+    normalized.includes("rate limit exceeded") ||
+    normalized.includes("over_email_send_rate_limit")
+  ) {
+    return "Too many auth emails were requested from Supabase. Wait a bit before trying again. If this keeps happening, the project owner needs to configure custom SMTP because Supabase's default email service has very low sending limits.";
+  }
   if (normalized.includes("invalid login credentials")) {
     return "Incorrect email or password. Please try again.";
   }
