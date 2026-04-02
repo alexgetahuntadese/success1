@@ -1,11 +1,16 @@
 import { createContext } from "react";
-import type { User } from "@supabase/supabase-js";
 
-import type { AppSession, UserProfile } from "@/lib/supabase/types";
+import type {
+  AppSession,
+  AuthUser,
+  RegisterInput,
+  UpdateProfileInput,
+  UserProfile,
+} from "@/lib/auth/types";
 
 export type AuthContextValue = {
   session: AppSession | null;
-  user: User | null;
+  user: AuthUser | null;
   profile: UserProfile | null;
   isAuthenticated: boolean;
   isAdmin: boolean;
@@ -14,6 +19,9 @@ export type AuthContextValue = {
   isLoading: boolean;
   displayName: string;
   refreshProfile: () => Promise<UserProfile | null>;
+  signIn: (phone: string, password: string) => Promise<UserProfile | null>;
+  register: (input: RegisterInput) => Promise<UserProfile | null>;
+  updateProfile: (input: UpdateProfileInput) => Promise<UserProfile | null>;
   signOut: () => Promise<void>;
 };
 

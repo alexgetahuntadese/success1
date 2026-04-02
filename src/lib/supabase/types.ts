@@ -16,7 +16,6 @@ export type QuestionDataPayload = {
 
 export type StudentSignUpInput = {
   fullName: string;
-  email: string;
+  phone: string;
   password: string;
-  mobile?: string;
 };

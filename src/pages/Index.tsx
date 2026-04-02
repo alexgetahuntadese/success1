@@ -12,7 +12,6 @@ import {
   LibraryBig,
   Loader2,
   LockKeyhole,
-  Mail,
   NotebookPen,
   Phone,
   Rocket,
@@ -30,19 +29,9 @@ import {
   AUTH_REQUIRED_NOTICE_KEY,
   INACTIVE_ACCOUNT_NOTICE_KEY,
 } from "@/lib/authStorage";
-import {
-  isSupabaseConfigured,
-  supabaseConfigError,
-} from "@/lib/supabaseConfig";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  authService,
-  formatAuthError,
-  normalizePhoneNumber,
-  userProfileService,
-} from "@/services/supabaseServiceFixed";
 
 const focusCards = [
   {
@@ -164,11 +153,17 @@ type AuthMode = "signin" | "signup";
 
 const Index = () => {
   const navigate = useNavigate();
-  const { displayName, isAuthenticated, isLoading: isCheckingSession, refreshProfile } = useAuth();
+  const {
+    displayName,
+    isAuthenticated,
+    isLoading: isCheckingSession,
+    refreshProfile,
+    register,
+    signIn,
+  } = useAuth();
   const [authMode, setAuthMode] = useState<AuthMode>("signin");
   const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [mobile, setMobile] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -200,10 +195,10 @@ const Index = () => {
 
   const helperText = useMemo(() => {
     if (authMode === "signin") {
-      return "Use your Supabase account email and password to continue your study progress.";
+      return "Use your phone number and password to continue your study progress.";
     }
 
-    return "Create your student account with Supabase email sign-up, then keep your name and mobile number in your study profile.";
+    return "Create your account with your phone number and a password, then come straight back into your study flow.";
   }, [authMode]);
 
   const resetMessages = () => {
@@ -216,38 +211,18 @@ const Index = () => {
     resetMessages();
   };
 
-  const handleForgotPassword = async () => {
-    resetMessages();
-
-    if (!email.trim()) {
-      setAuthError("Enter your account email first so we can send a reset link.");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      await authService.sendPasswordReset(email.trim());
-      setAuthNotice("Password reset email sent. Check your inbox and spam folder.");
-    } catch (error) {
-      setAuthError(formatAuthError(error));
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const handleSignIn = async () => {
     resetMessages();
 
-    if (!email.trim() || !password.trim()) {
-      setAuthError("Enter your email and password to sign in.");
+    if (!phone.trim() || !password.trim()) {
+      setAuthError("Enter your phone number and password to sign in.");
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      await authService.signInWithPassword(email.trim(), password);
+      await signIn(phone.trim(), password);
 
       const profile = await refreshProfile();
       if (profile?.is_active === false) {
@@ -255,10 +230,9 @@ const Index = () => {
         return;
       }
 
-      await userProfileService.updateLastLogin();
       navigate("/grades");
     } catch (error) {
-      setAuthError(formatAuthError(error));
+      setAuthError(error instanceof Error ? error.message : "Could not sign you in right now.");
     } finally {
       setIsSubmitting(false);
     }

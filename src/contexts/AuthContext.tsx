@@ -5,7 +5,6 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { User } from "@supabase/supabase-js";
 
 import { AuthContext, type AuthContextValue } from "@/contexts/auth-context";
 import {
@@ -13,29 +12,30 @@ import {
   hasPremiumPreferences,
   isAdminPreferences,
 } from "@/lib/authRoles";
-import {
-  isSupabaseConfigured,
-  supabaseConfigError,
-} from "@/lib/supabaseConfig";
-import type { AppSession } from "@/lib/supabase/types";
-import { updateStudentName } from "@/lib/performanceUtils";
-import {
-  authService,
-  userProfileService,
-  userService,
-  type UserProfile,
-} from "@/services/supabaseServiceFixed";
 import { INACTIVE_ACCOUNT_NOTICE_KEY } from "@/lib/authStorage";
+import { backendAuthService } from "@/lib/backendAuth";
+import type {
+  AppSession,
+  AuthSessionResponse,
+  AuthUser,
+  RegisterInput,
+  UpdateProfileInput,
+  UserProfile,
+} from "@/lib/auth/types";
+import { updateStudentName } from "@/lib/performanceUtils";
 
 const getStringValue = (value: unknown) =>
   typeof value === "string" ? value.trim() : "";
 
-const deriveDisplayName = (user: User | null, profile: UserProfile | null) => {
+const deriveDisplayName = (user: AuthUser | null, profile: UserProfile | null) => {
   const profileName = getStringValue(profile?.name);
   if (profileName) return profileName;
 
   const metadataName = getStringValue(user?.user_metadata?.name);
   if (metadataName) return metadataName;
+
+  const phone = getStringValue(user?.phone);
+  if (phone) return phone;
 
   const email = getStringValue(user?.email);
   if (email) return email.split("@")[0];
@@ -45,73 +45,88 @@ const deriveDisplayName = (user: User | null, profile: UserProfile | null) => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<AppSession | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const syncPerformanceName = useCallback((nextUser: User | null, nextProfile: UserProfile | null) => {
+  const syncPerformanceName = useCallback((nextUser: AuthUser | null, nextProfile: UserProfile | null) => {
     const nextName = deriveDisplayName(nextUser, nextProfile);
     if (nextName && nextName !== "Student") {
       updateStudentName(nextName);
     }
   }, []);
 
-  const loadProfile = useCallback(async (nextUser: User | null) => {
-    if (!nextUser) {
-      setProfile(null);
-      return null;
-    }
+  const clearAuthState = useCallback(() => {
+    setSession(null);
+    setUser(null);
+    setProfile(null);
+  }, []);
 
-    const nextProfile = await userProfileService.ensureCurrentUserProfile({
-      name: getStringValue(nextUser.user_metadata?.name) || undefined,
-      email: nextUser.email,
-      mobile: getStringValue(nextUser.user_metadata?.mobile) || undefined,
-      is_active: true,
-    });
+  const applySnapshot = useCallback((payload: AuthSessionResponse) => {
+    const nextSession = payload.session;
+    const nextUser = payload.session?.user ?? null;
+    const nextProfile = payload.profile;
 
-    if (nextProfile?.is_active === false) {
+    setSession(nextSession);
+    setUser(nextUser);
+    setProfile(nextProfile);
+    syncPerformanceName(nextUser, nextProfile);
+
+    return nextProfile;
+  }, [syncPerformanceName]);
+
+  const enforceActiveProfile = useCallback(async (payload: AuthSessionResponse) => {
+    if (payload.profile?.is_active === false) {
       sessionStorage.setItem(
         INACTIVE_ACCOUNT_NOTICE_KEY,
         "Your account is currently inactive. Contact the administrator.",
       );
-      await userService.signOut();
-      setProfile(null);
+      await backendAuthService.signOut();
+      clearAuthState();
       return null;
     }
 
-    setProfile(nextProfile);
-    syncPerformanceName(nextUser, nextProfile);
-    return nextProfile;
-  }, [syncPerformanceName]);
+    return applySnapshot(payload);
+  }, [applySnapshot, clearAuthState]);
+
+  const refreshProfile = useCallback(async () => {
+    try {
+      const payload = await backendAuthService.getSession();
+      if (!payload.session || !payload.profile) {
+        clearAuthState();
+        return null;
+      }
+
+      return await enforceActiveProfile(payload);
+    } catch (error) {
+      console.error("Error refreshing auth session:", error);
+      clearAuthState();
+      return null;
+    }
+  }, [clearAuthState, enforceActiveProfile]);
 
   useEffect(() => {
     let active = true;
 
-    if (!isSupabaseConfigured) {
-      console.warn(supabaseConfigError);
-      setIsLoading(false);
-
-      return () => {
-        active = false;
-      };
-    }
-
     const bootstrap = async () => {
-      let nextSession: AppSession | null = null;
-
       try {
-        nextSession = await authService.getSession();
+        const payload = await backendAuthService.getSession();
+
+        if (!active) {
+          return;
+        }
+
+        if (payload.session && payload.profile) {
+          await enforceActiveProfile(payload);
+        } else {
+          clearAuthState();
+        }
       } catch (error) {
         console.error("Error loading auth session:", error);
+        if (active) {
+          clearAuthState();
+        }
       }
-
-      if (!active) return;
-
-      const nextUser = nextSession?.user ?? null;
-
-      setSession(nextSession);
-      setUser(nextUser);
-      await loadProfile(nextUser);
 
       if (active) {
         setIsLoading(false);
@@ -120,21 +135,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     void bootstrap();
 
-    const {
-      data: { subscription },
-    } = authService.onAuthStateChange((_event, nextSession) => {
-      const nextUser = nextSession?.user ?? null;
-      setSession(nextSession);
-      setUser(nextUser);
-      setIsLoading(false);
-      void loadProfile(nextUser);
-    });
-
     return () => {
       active = false;
-      subscription.unsubscribe();
     };
-  }, [loadProfile]);
+  }, [clearAuthState, enforceActiveProfile]);
 
   const value = useMemo<AuthContextValue>(() => ({
     session,
@@ -146,12 +150,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     paymentStatus: getPaymentStatus(profile?.preferences),
     isLoading,
     displayName: deriveDisplayName(user, profile),
-    refreshProfile: async () => loadProfile(user),
-    signOut: async () => {
-      await userService.signOut();
-      setProfile(null);
+    refreshProfile,
+    signIn: async (phone, password) => {
+      const payload = await backendAuthService.signIn({ phone, password });
+      return await enforceActiveProfile(payload);
     },
-  }), [isLoading, loadProfile, profile, session, user]);
+    register: async (input: RegisterInput) => {
+      const payload = await backendAuthService.register(input);
+      return await enforceActiveProfile(payload);
+    },
+    updateProfile: async (input: UpdateProfileInput) => {
+      const payload = await backendAuthService.updateProfile(input);
+      return await enforceActiveProfile(payload);
+    },
+    signOut: async () => {
+      clearAuthState();
+      await backendAuthService.signOut();
+    },
+  }), [clearAuthState, enforceActiveProfile, isLoading, profile, refreshProfile, session, user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
