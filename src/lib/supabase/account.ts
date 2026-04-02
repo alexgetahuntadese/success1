@@ -68,6 +68,9 @@ export const formatAuthError = (error: unknown) => {
   if (normalized.includes("missing supabase environment variables")) {
     return rawMessage;
   }
+  if (normalized.includes("received http 401")) {
+    return `Supabase rejected the project key for ${supabaseUrl}. Make sure VITE_SUPABASE_URL and the publishable or anon key belong to the same Supabase project.`;
+  }
   if (normalized.includes("supabase health check failed")) {
     return rawMessage;
   }
@@ -129,6 +132,7 @@ const assertSupabaseReachable = async () => {
         method: "GET",
         headers: {
           apikey: supabasePublishableKey,
+          Authorization: `Bearer ${supabasePublishableKey}`,
         },
       }),
       8000,
