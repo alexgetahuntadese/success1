@@ -34,14 +34,8 @@ const allowedOrigins = CLIENT_ORIGIN.split(",")
 
 app.use(
   cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-        return;
-      }
-
-      callback(new Error("Origin is not allowed for this API."));
-    },
+    origin: true,
+    credentials: true,
   }),
 );
 app.use(express.json());
