@@ -40,9 +40,5 @@ export const getTrialDaysRemaining = (trial: TrialAccess | null) => {
   return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
 };
 
-export const hasSubmittedPayment = () => {
-  return false;
-};
-
 export const isFreeChapter = (chapterIndex: number) => chapterIndex < FREE_CHAPTER_LIMIT;
 export const isFreeMatricSubject = (subjectIndex: number) => subjectIndex < FREE_MATRIC_SUBJECT_LIMIT;

@@ -6,18 +6,20 @@ import { ArrowLeft, CheckCircle2, XCircle, ChevronRight } from 'lucide-react';
 import { getMatricQuestions, getMatricSubjectsForYear, MatricExamQuestion } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
-import { hasPremiumAccess, isFreeMatricSubject } from '@/lib/paymentAccess';
+import { useAuth } from "@/hooks/useAuth";
+import { isFreeMatricSubject } from '@/lib/paymentAccess';
 import PaymentPrompt from '@/components/PaymentPrompt';
 
 const MatricQuizPage = () => {
   const { year, stream, subject } = useParams<{ year: string; stream: string; subject: string }>();
   const navigate = useNavigate();
+  const { hasPremiumAccess: premiumAccess } = useAuth();
   const yearNum = Number(year);
   const streamKey = stream ?? 'natural';
   const streamLabel = streamKey === 'social' ? 'Social Science' : 'Natural Science';
   const subjects = getMatricSubjectsForYear(yearNum, streamKey);
   const subjectIndex = subjects.findIndex((item) => item.subject === (subject ?? ''));
-  const locked = subjectIndex >= 0 && !hasPremiumAccess() && !isFreeMatricSubject(subjectIndex);
+  const locked = subjectIndex >= 0 && !premiumAccess && !isFreeMatricSubject(subjectIndex);
   const questions = getMatricQuestions(yearNum, streamKey, subject ?? '');
   const scoreableQuestions = questions.filter((question) => question.correctAnswer >= 0).length;
 

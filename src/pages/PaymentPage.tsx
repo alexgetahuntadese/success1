@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   AlertCircle,
@@ -76,7 +76,7 @@ const paymentMethods: Array<{ id: PaymentMethod, label: string, icon: typeof Lan
 
 const PaymentPage = () => {
   const navigate = useNavigate();
-  const { displayName, hasPremiumAccess, paymentStatus } = useAuth();
+  const { displayName, hasPremiumAccess, paymentStatus, refreshProfile } = useAuth();
 
   const [amount, setAmount] = useState("");
   const [bankName, setBankName] = useState("");
@@ -94,8 +94,20 @@ const PaymentPage = () => {
     setIsLoading(true);
 
     try {
-      const data = await paymentService.listOwnSubmissions();
-      setSubmissions(data);
+      const [submissionResult, profileRefreshResult] = await Promise.allSettled([
+        paymentService.listOwnSubmissions(),
+        refreshProfile(),
+      ]);
+
+      if (profileRefreshResult.status === "rejected") {
+        console.error("Error refreshing profile payment status:", profileRefreshResult.reason);
+      }
+
+      if (submissionResult.status === "rejected") {
+        throw submissionResult.reason;
+      }
+
+      setSubmissions(submissionResult.value);
     } catch (error) {
       console.error("Error loading payment submissions:", error);
       toast.error(
@@ -134,7 +146,7 @@ const PaymentPage = () => {
     setReceiptPreviewUrl(null);
   };
 
-  const handleReceiptSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleReceiptSelect = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
       return;
@@ -160,7 +172,7 @@ const PaymentPage = () => {
     setReceiptPreviewUrl(URL.createObjectURL(file));
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     const parsedAmount = Number(amount);
@@ -171,6 +183,11 @@ const PaymentPage = () => {
 
     if (!bankName.trim() || !accountNumber.trim() || !transactionRef.trim()) {
       toast.error("Complete the bank name, account number, and transaction reference.");
+      return;
+    }
+
+    if (!receiptFile) {
+      toast.error("Upload your payment receipt image before submitting.");
       return;
     }
 
@@ -187,6 +204,7 @@ const PaymentPage = () => {
       });
 
       setSubmissions((current) => [created, ...current]);
+      await refreshProfile();
       resetForm();
       toast.success("Payment submitted. Your receipt is now waiting for admin review.");
     } catch (error) {
@@ -231,6 +249,10 @@ const PaymentPage = () => {
 
     if (paymentStatus === "pending" || pendingCount > 0) {
       return "Your latest payment submission is waiting for admin review. Access will unlock after verification.";
+    }
+
+    if (paymentStatus === "rejected") {
+      return "A payment submission was rejected. Review the admin note below, then submit a clearer receipt or corrected transaction details.";
     }
 
     if (trialActive && trialAccess) {

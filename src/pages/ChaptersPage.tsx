@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Play, CheckCircle, Clock, BookOpen, Target, Sparkles, GraduationCap, Lock, CreditCard } from 'lucide-react';
 import TopBar from "@/components/TopBar";
 import StarField from '@/components/StarField';
+import { useAuth } from "@/hooks/useAuth";
 import { grade12Mathematics } from '@/data/grade12Mathematics';
 import { grade12BiologyQuestions } from '@/data/grade12BiologyQuestions';
 import { grade12ChemistryQuestions } from '@/data/grade12ChemistryQuestions';
@@ -42,10 +43,11 @@ import { grade10GeographyQuestions } from '@/data/grade10GeographyQuestions';
 import { grade10EconomicsQuestions } from '@/data/grade10EconomicsQuestions';
 import { grade10HistoryQuestions } from '@/data/grade10HistoryQuestions';
 import { grade10AmharicQuestions } from '@/data/grade10AmharicQuestions';
-import { FREE_CHAPTER_LIMIT, hasPremiumAccess, isFreeChapter } from '@/lib/paymentAccess';
+import { FREE_CHAPTER_LIMIT, isFreeChapter } from '@/lib/paymentAccess';
 
 const ChaptersPage = () => {
   const navigate = useNavigate();
+  const { hasPremiumAccess: premiumAccess } = useAuth();
   const { grade, subject } = useParams();
   const decodedSubject = decodeURIComponent(subject || '');
   const isUnavailableGrade12QuizSubject =
@@ -1054,7 +1056,6 @@ const ChaptersPage = () => {
   };
 
   const chapters = getChaptersForSubject();
-  const premiumAccess = hasPremiumAccess();
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {

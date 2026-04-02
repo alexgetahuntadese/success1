@@ -22,7 +22,8 @@ import {
 import { getMatricSubjectsForYear } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
-import { FREE_MATRIC_SUBJECT_LIMIT, hasPremiumAccess, isFreeMatricSubject } from '@/lib/paymentAccess';
+import { useAuth } from "@/hooks/useAuth";
+import { FREE_MATRIC_SUBJECT_LIMIT, isFreeMatricSubject } from '@/lib/paymentAccess';
 
 const subjectIcons: Record<string, LucideIcon> = {
   Mathematics: Calculator,
@@ -40,11 +41,11 @@ const subjectIcons: Record<string, LucideIcon> = {
 const MatricYearPage = () => {
   const { year, stream } = useParams<{ year: string; stream: string }>();
   const navigate = useNavigate();
+  const { hasPremiumAccess: premiumAccess } = useAuth();
   const yearNum = Number(year);
   const streamKey = stream ?? 'natural';
   const streamLabel = streamKey === 'social' ? 'Social Science' : 'Natural Science';
   const subjects = getMatricSubjectsForYear(yearNum, streamKey);
-  const premiumAccess = hasPremiumAccess();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 md:p-8 md:pt-14 overflow-hidden relative">

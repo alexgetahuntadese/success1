@@ -45,8 +45,9 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, Eye } from 'lucide-react';
 import TopBar from "@/components/TopBar";
+import { useAuth } from "@/hooks/useAuth";
 import PaymentPrompt from "@/components/PaymentPrompt";
-import { hasPremiumAccess, isFreeChapter } from '@/lib/paymentAccess';
+import { isFreeChapter } from '@/lib/paymentAccess';
 
 interface Question {
   id: string;
@@ -442,6 +443,7 @@ const getQuestionsForSubject = (subject: string, chapter: string, difficulty: st
 const QuizPage = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const { hasPremiumAccess: premiumAccess } = useAuth();
   const subject = params.subject;
   const chapterId = params.chapterId ? decodeURIComponent(params.chapterId) : null;
   const difficulty = params.difficulty;
@@ -703,7 +705,7 @@ const QuizPage = () => {
   const chapterTitles = getQuizChapterTitles(subject ?? '', grade ?? '');
   const normalizedChapterId = decodeURIComponent(chapterId ?? '');
   const chapterIndex = chapterTitles.findIndex((title) => title === normalizedChapterId);
-  const lockedChapter = chapterIndex >= 0 && !hasPremiumAccess() && !isFreeChapter(chapterIndex);
+  const lockedChapter = chapterIndex >= 0 && !premiumAccess && !isFreeChapter(chapterIndex);
 
   if (lockedChapter) {
     return <Navigate to="/payment" replace />;

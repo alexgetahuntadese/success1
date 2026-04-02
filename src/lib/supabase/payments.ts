@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase/client";
-import { authService } from "@/lib/supabase/account";
-import type { PaymentSubmission, UserProfile } from "@/lib/supabase/types";
-import { setPremiumAccess } from "@/lib/authRoles";
+import { authService, userProfileService } from "@/lib/supabase/account";
+import type { PaymentSubmission } from "@/lib/supabase/types";
+import { hasPremiumPreferences, setPremiumAccess } from "@/lib/authRoles";
 
 const PAYMENT_RECEIPT_BUCKET = "payment-receipts";
 
@@ -18,14 +18,7 @@ export type CreatePaymentSubmissionInput = {
   accountNumber: string,
   paymentMethod: PaymentMethod,
   transactionRef: string,
-  receiptFile?: File | null,
-};
-
-type ReviewPaymentSubmissionInput = {
-  submission: PaymentSubmission,
-  status: PaymentSubmissionStatus,
-  reviewerNotes?: string,
-  targetProfile: UserProfile | null,
+  receiptFile: File,
 };
 
 const sanitizeFileName = (value: string) =>
@@ -113,34 +106,63 @@ export const paymentService = {
       throw new Error("User not authenticated");
     }
 
-    const uploadedReceipt = input.receiptFile
-      ? await uploadReceipt(input.receiptFile)
-      : {
-          receiptPath: null,
-          receiptContentType: null,
-          receiptSizeBytes: null,
-        };
+    const uploadedReceipt = await uploadReceipt(input.receiptFile);
 
-    const { data, error } = await supabase
-      .from("payment_submissions")
-      .insert({
-        user_id: user.id,
-        amount: input.amount,
-        bank_name: input.bankName.trim(),
-        account_number: input.accountNumber.trim(),
-        payment_method: input.paymentMethod,
-        transaction_ref: input.transactionRef.trim(),
-        receipt_path: uploadedReceipt.receiptPath,
-        receipt_content_type: uploadedReceipt.receiptContentType,
-        receipt_size_bytes: uploadedReceipt.receiptSizeBytes,
-        status: "pending",
-      })
-      .select("*")
-      .single();
+    let data: PaymentSubmission | null = null;
 
-    if (error) {
-      console.error("Error submitting payment:", error);
-      throw new Error("Could not save this payment submission.");
+    try {
+      const { data: createdSubmission, error } = await supabase.rpc("create_payment_submission", {
+        p_amount: input.amount,
+        p_bank_name: input.bankName.trim(),
+        p_account_number: input.accountNumber.trim(),
+        p_payment_method: input.paymentMethod,
+        p_transaction_ref: input.transactionRef.trim(),
+        p_receipt_path: uploadedReceipt.receiptPath,
+        p_receipt_content_type: uploadedReceipt.receiptContentType,
+        p_receipt_size_bytes: uploadedReceipt.receiptSizeBytes,
+      });
+
+      if (error) {
+        console.error("Error submitting payment:", error);
+        throw new Error("Could not save this payment submission.");
+      }
+
+      data = createdSubmission;
+    } catch (error) {
+      const { error: cleanupError } = await supabase.storage
+        .from(PAYMENT_RECEIPT_BUCKET)
+        .remove([uploadedReceipt.receiptPath]);
+
+      if (cleanupError) {
+        console.error("Error cleaning up uploaded receipt after payment failure:", cleanupError);
+      }
+
+      throw error;
+    }
+
+    if (!data) {
+      throw new Error("Payment submission was created, but the response could not be loaded.");
+    }
+
+    const currentProfile = await userProfileService.getUserProfile();
+    if (currentProfile && !hasPremiumPreferences(currentProfile.preferences)) {
+      const nextPreferences = setPremiumAccess(currentProfile.preferences, {
+        premium: false,
+        paymentStatus: "pending",
+        paymentSubmissionId: data.id,
+      });
+
+      const { error: profileError } = await supabase
+        .from("users")
+        .update({
+          preferences: nextPreferences,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", currentProfile.id);
+
+      if (profileError) {
+        console.error("Error syncing pending payment status to profile:", profileError);
+      }
     }
 
     return {
@@ -165,56 +187,24 @@ export const paymentAdminService = {
     return withReceiptUrls(data ?? []);
   },
 
-  async reviewSubmission({
-    submission,
-    status,
-    reviewerNotes,
-    targetProfile,
-  }: ReviewPaymentSubmissionInput): Promise<PaymentSubmissionWithReceiptUrl> {
-    const user = await authService.getCurrentUser();
-    if (!user) {
-      throw new Error("User not authenticated");
-    }
-
-    const verifiedAt = status === "verified" ? new Date().toISOString() : null;
-
-    const { data, error } = await supabase
-      .from("payment_submissions")
-      .update({
-        status,
-        reviewer_notes: reviewerNotes?.trim() || null,
-        verified_at: verifiedAt,
-        verified_by: status === "verified" ? user.id : null,
-      })
-      .eq("id", submission.id)
-      .select("*")
-      .single();
+  async reviewSubmission(input: {
+    submission: PaymentSubmission,
+    status: PaymentSubmissionStatus,
+    reviewerNotes?: string,
+  }): Promise<PaymentSubmissionWithReceiptUrl> {
+    const { data, error } = await supabase.rpc("review_payment_submission", {
+      p_submission_id: input.submission.id,
+      p_status: input.status,
+      p_reviewer_notes: input.reviewerNotes?.trim() || null,
+    });
 
     if (error) {
       console.error("Error reviewing payment submission:", error);
       throw new Error("Could not update this payment submission.");
     }
 
-    if (status === "verified" && targetProfile) {
-      const nextPreferences = setPremiumAccess(targetProfile.preferences, {
-        premium: true,
-        paymentStatus: "verified",
-        paidAt: verifiedAt,
-        paymentSubmissionId: submission.id,
-      });
-
-      const { error: profileError } = await supabase
-        .from("users")
-        .update({
-          preferences: nextPreferences,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", targetProfile.id);
-
-      if (profileError) {
-        console.error("Error updating verified premium access:", profileError);
-        throw new Error("Payment marked as verified, but premium access could not be granted.");
-      }
+    if (!data) {
+      throw new Error("Payment review was saved, but the updated submission could not be loaded.");
     }
 
     return {

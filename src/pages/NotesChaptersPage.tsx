@@ -5,11 +5,12 @@ import TopBar from "@/components/TopBar";
 import StarField from "@/components/StarField";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/hooks/useAuth";
 import { getChapterNote, getNotesSubject } from "@/lib/notesData";
 import { getGrade12MathNotesByChapter } from "@/data/grade12MathematicsNotes";
 import { getGrade11MathNotesByChapter } from "@/data/grade11MathematicsNotes";
 import { getGrade12QuickNotesBySubject } from "@/data/grade12QuickNotes";
-import { FREE_CHAPTER_LIMIT, hasPremiumAccess, isFreeChapter } from "@/lib/paymentAccess";
+import { FREE_CHAPTER_LIMIT, isFreeChapter } from "@/lib/paymentAccess";
 
 type NoteSection = {
   title: string;
@@ -140,11 +141,11 @@ const toBulletItems = (content: string) => {
 
 const NotesChaptersPage = () => {
   const navigate = useNavigate();
+  const { hasPremiumAccess: premiumAccess } = useAuth();
   const { grade, subject } = useParams();
   const gradeNumber = Number(grade);
   const decodedSubject = decodeURIComponent(subject || "");
   const subjectData = getNotesSubject(gradeNumber, decodedSubject);
-  const premiumAccess = hasPremiumAccess();
   const [expandedChapters, setExpandedChapters] = useState<Record<string, boolean>>({});
   const [quickMode, setQuickMode] = useState(false);
   const [revealedAnswers, setRevealedAnswers] = useState<Record<string, boolean>>({});
