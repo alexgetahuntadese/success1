@@ -1,0 +1,58 @@
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const keys = path.join(__dirname, "keys");
+
+const chemFirst31 = [
+  0, 2, 1, 1, 2, 3, 3, 3, 2, 0, 0, 2, 3, 0, 1, 1, 2, 3, 2, 3, 1, 0, 2, 2, 3, 3, 3, 1, 3, 1, 2,
+];
+const chem33to80 = {
+  33: 3, 34: 3, 35: 1, 36: 2, 37: 2, 38: 1, 39: 0, 40: 0, 41: 3, 42: 0, 43: 2, 44: 3, 45: 0, 46: 2,
+  47: 1, 48: 3, 49: 2, 50: 0, 51: 3, 52: 0, 53: 1, 54: 3, 55: 0, 56: 1, 57: 3, 58: 1, 59: 3, 60: 3,
+  61: 1, 62: 2, 63: 1, 64: 2, 65: 3, 66: 0, 67: 1, 68: 2, 69: 0, 70: 2, 71: 1, 72: 2, 73: 3, 74: 2,
+  75: 2, 76: 1, 77: 3, 78: 2, 79: 0, 80: 2,
+};
+const chemIds = [...Array.from({ length: 31 }, (_, i) => i + 1), ...Array.from({ length: 48 }, (_, i) => i + 33)];
+const chemOrder = [...chemFirst31, ...Array.from({ length: 48 }, (_, i) => chem33to80[i + 33])];
+if (chemFirst31.length !== 31) throw new Error("chem31");
+if (chemOrder.length !== 79 || chemIds.length !== 79) {
+  throw new Error(`chem len ${chemOrder.length} ids ${chemIds.length}`);
+}
+const chem = Object.fromEntries(chemIds.map((id, i) => [String(id), chemOrder[i]]));
+
+const english = {
+  1: 1, 2: 2, 3: 3, 4: 3, 5: 3, 6: 2, 7: 1, 8: 3, 9: 2, 10: 3, 11: 0, 12: 3, 13: 1, 14: 0, 15: 2,
+  18: 3, 19: 2, 20: 1, 21: 3, 22: 1, 23: 2, 24: 1, 25: 1, 26: 2, 27: 3, 28: 2, 29: 3, 30: 2, 31: 2, 32: 3,
+  33: 1, 34: 3, 35: 2, 36: 1, 37: 1, 38: 0, 39: 0, 40: 0, 41: 0, 42: 3, 43: 3, 44: 1, 45: 0,
+  46: 2, 47: 0, 48: 1, 49: 3, 50: 1, 51: 3, 52: 0, 53: 2, 54: 2, 55: 1, 56: 1, 57: 3, 58: 2, 59: 0, 60: 0,
+  61: 2, 62: 2, 63: 3, 64: 3, 65: 2, 66: 0, 67: 2, 68: 3, 69: 2, 70: 1, 71: 3, 72: 2, 73: 2, 74: 3, 75: 0,
+  76: 3, 77: 2, 78: 3, 79: 3, 80: 0, 81: 1, 82: 1, 83: 0, 84: 2, 85: 3, 86: 1, 87: 3, 88: 0, 89: 1, 90: 0,
+  91: 1, 92: 1, 93: 2, 94: 3, 95: 1, 96: 1, 97: 1, 98: 3, 99: 0, 100: 0, 101: 1, 102: 2, 103: 0, 104: 3,
+  105: 1, 106: 1, 107: 0, 108: 0, 109: 3, 110: 1, 111: 2, 112: 3, 113: 3, 114: 1, 115: 2, 116: 2, 117: 2,
+  118: 1, 119: 0,
+};
+
+const math = [
+  3, 1, 2, 0, 2, 0, 3, 1, 0, 2, 2, 0, 2, 3, 2, 1, 3, 2, 2, 3, 1, 2, 2, 3, 3, 1, 2, 1, 3, 2, 3, 3, 3, 1, 1, 2, 1, 2, 1, 1, 3, 2, 2, 1, 1, 2, 3, 1, 1, 1, 0, 3, 2, 1, 3, 2, 2, 1, 2, 1, 2, 1, 1, 1,
+];
+
+const physics = [
+  1, 2, 0, 3, 2, 1, 0, 2, 3, 1, 2, 0, 1, 3, 2, 0, 1, 2, 3, 1, 2, 0, 3, 1, 2, 0, 1, 3, 2, 1, 0, 2, 3, 1, 2, 0, 1, 3, 2, 0, 1, 2, 3, 1, 2, 0, 3, 1, 2, 0, 1,
+];
+
+const socMath = [
+  2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2,
+];
+
+if (math.length !== 64) throw new Error(`math ${math.length}`);
+if (physics.length !== 51) throw new Error(`physics ${physics.length}`);
+if (socMath.length !== 53) throw new Error(`socMath ${socMath.length}`);
+
+fs.writeFileSync(path.join(keys, "matric2013Chem.json"), JSON.stringify(chem));
+fs.writeFileSync(path.join(keys, "matric2013English.json"), JSON.stringify(english));
+fs.writeFileSync(path.join(keys, "matric2013Math.json"), JSON.stringify(math));
+fs.writeFileSync(path.join(keys, "matric2013Physics.json"), JSON.stringify(physics));
+fs.writeFileSync(path.join(keys, "matric2013SocMath.json"), JSON.stringify(socMath));
+console.log("OK");

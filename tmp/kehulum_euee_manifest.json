@@ -1,0 +1,422 @@
+[
+  {
+    "stream": "natural",
+    "year": 2017,
+    "slug": "biology-403",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2017/biology-403"
+  },
+  {
+    "stream": "natural",
+    "year": 2017,
+    "slug": "chemistry-394",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2017/chemistry-394"
+  },
+  {
+    "stream": "natural",
+    "year": 2017,
+    "slug": "english-402",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2017/english-402"
+  },
+  {
+    "stream": "natural",
+    "year": 2017,
+    "slug": "mathematics-401",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2017/mathematics-401"
+  },
+  {
+    "stream": "natural",
+    "year": 2017,
+    "slug": "physics-400",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2017/physics-400"
+  },
+  {
+    "stream": "natural",
+    "year": 2017,
+    "slug": "scholastic-aptitude-test-395",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2017/scholastic-aptitude-test-395"
+  },
+  {
+    "stream": "social",
+    "year": 2017,
+    "slug": "economics-398",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2017/economics-398"
+  },
+  {
+    "stream": "social",
+    "year": 2017,
+    "slug": "english-402",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2017/english-402"
+  },
+  {
+    "stream": "social",
+    "year": 2017,
+    "slug": "geography-397",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2017/geography-397"
+  },
+  {
+    "stream": "social",
+    "year": 2017,
+    "slug": "history-396",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2017/history-396"
+  },
+  {
+    "stream": "social",
+    "year": 2017,
+    "slug": "mathematics-399",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2017/mathematics-399"
+  },
+  {
+    "stream": "social",
+    "year": 2017,
+    "slug": "scholastic-aptitude-test-395",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2017/scholastic-aptitude-test-395"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "biology-182",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/biology-182"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "chemistry-183",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/chemistry-183"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "english-186",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/english-186"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "mathematics-185",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/mathematics-185"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "physics-184",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/physics-184"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "scholastic-aptitude-test-175",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/scholastic-aptitude-test-175"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "tigray-region-biology-206",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/tigray-region-biology-206"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "tigray-region-chemistry-207",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/tigray-region-chemistry-207"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "tigray-region-civics-208",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/tigray-region-civics-208"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "tigray-region-english-209",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/tigray-region-english-209"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "tigray-region-mathematics-210",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/tigray-region-mathematics-210"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "tigray-region-physics-211",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/tigray-region-physics-211"
+  },
+  {
+    "stream": "natural",
+    "year": 2016,
+    "slug": "tigray-region-scholastic-aptitude-test-205",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2016/tigray-region-scholastic-aptitude-test-205"
+  },
+  {
+    "stream": "social",
+    "year": 2016,
+    "slug": "economics-177",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2016/economics-177"
+  },
+  {
+    "stream": "social",
+    "year": 2016,
+    "slug": "english-180",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2016/english-180"
+  },
+  {
+    "stream": "social",
+    "year": 2016,
+    "slug": "geography-179",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2016/geography-179"
+  },
+  {
+    "stream": "social",
+    "year": 2016,
+    "slug": "history-178",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2016/history-178"
+  },
+  {
+    "stream": "social",
+    "year": 2016,
+    "slug": "mathematics-181",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2016/mathematics-181"
+  },
+  {
+    "stream": "social",
+    "year": 2016,
+    "slug": "scholastic-aptitude-test-176",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2016/scholastic-aptitude-test-176"
+  },
+  {
+    "stream": "social",
+    "year": 2016,
+    "slug": "tigray-region-civics-208",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2016/tigray-region-civics-208"
+  },
+  {
+    "stream": "social",
+    "year": 2016,
+    "slug": "tigray-region-english-209",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2016/tigray-region-english-209"
+  },
+  {
+    "stream": "social",
+    "year": 2016,
+    "slug": "tigray-region-scholastic-aptitude-test-205",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2016/tigray-region-scholastic-aptitude-test-205"
+  },
+  {
+    "stream": "natural",
+    "year": 2015,
+    "slug": "biology-189",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2015/biology-189"
+  },
+  {
+    "stream": "natural",
+    "year": 2015,
+    "slug": "chemistry-190",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2015/chemistry-190"
+  },
+  {
+    "stream": "natural",
+    "year": 2015,
+    "slug": "civics-and-ethical-education-192",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2015/civics-and-ethical-education-192"
+  },
+  {
+    "stream": "natural",
+    "year": 2015,
+    "slug": "english-187",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2015/english-187"
+  },
+  {
+    "stream": "natural",
+    "year": 2015,
+    "slug": "mathematics-173",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2015/mathematics-173"
+  },
+  {
+    "stream": "natural",
+    "year": 2015,
+    "slug": "physics-191",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2015/physics-191"
+  },
+  {
+    "stream": "natural",
+    "year": 2015,
+    "slug": "scholastic-aptitude-test-188",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2015/scholastic-aptitude-test-188"
+  },
+  {
+    "stream": "social",
+    "year": 2015,
+    "slug": "civics-and-ethical-education-194",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2015/civics-and-ethical-education-194"
+  },
+  {
+    "stream": "social",
+    "year": 2015,
+    "slug": "english-197",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2015/english-197"
+  },
+  {
+    "stream": "social",
+    "year": 2015,
+    "slug": "geography-195",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2015/geography-195"
+  },
+  {
+    "stream": "social",
+    "year": 2015,
+    "slug": "history-193",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2015/history-193"
+  },
+  {
+    "stream": "social",
+    "year": 2015,
+    "slug": "mathematics-174",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2015/mathematics-174"
+  },
+  {
+    "stream": "social",
+    "year": 2015,
+    "slug": "scholastic-aptitude-test-196",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2015/scholastic-aptitude-test-196"
+  },
+  {
+    "stream": "natural",
+    "year": 2014,
+    "slug": "biology-155",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2014/biology-155"
+  },
+  {
+    "stream": "natural",
+    "year": 2014,
+    "slug": "chemistry-161",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2014/chemistry-161"
+  },
+  {
+    "stream": "natural",
+    "year": 2014,
+    "slug": "civics-and-ethical-education-157",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2014/civics-and-ethical-education-157"
+  },
+  {
+    "stream": "natural",
+    "year": 2014,
+    "slug": "english-160",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2014/english-160"
+  },
+  {
+    "stream": "natural",
+    "year": 2014,
+    "slug": "mathematics-156",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2014/mathematics-156"
+  },
+  {
+    "stream": "natural",
+    "year": 2014,
+    "slug": "physics-159",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2014/physics-159"
+  },
+  {
+    "stream": "natural",
+    "year": 2014,
+    "slug": "scholastic-aptitude-test-146",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2014/scholastic-aptitude-test-146"
+  },
+  {
+    "stream": "natural",
+    "year": 2014,
+    "slug": "scholastic-aptitude-test-158",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2014/scholastic-aptitude-test-158"
+  },
+  {
+    "stream": "social",
+    "year": 2014,
+    "slug": "civics-and-ethical-education-165",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2014/civics-and-ethical-education-165"
+  },
+  {
+    "stream": "social",
+    "year": 2014,
+    "slug": "english-163",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2014/english-163"
+  },
+  {
+    "stream": "social",
+    "year": 2014,
+    "slug": "geography-164",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2014/geography-164"
+  },
+  {
+    "stream": "social",
+    "year": 2014,
+    "slug": "history-162",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2014/history-162"
+  },
+  {
+    "stream": "social",
+    "year": 2014,
+    "slug": "mathematics-167",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2014/mathematics-167"
+  },
+  {
+    "stream": "social",
+    "year": 2014,
+    "slug": "scholastic-aptitude-test-166",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2014/scholastic-aptitude-test-166"
+  },
+  {
+    "stream": "natural",
+    "year": 2013,
+    "slug": "biology-148",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2013/biology-148"
+  },
+  {
+    "stream": "natural",
+    "year": 2013,
+    "slug": "chemistry-154",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2013/chemistry-154"
+  },
+  {
+    "stream": "natural",
+    "year": 2013,
+    "slug": "civics-and-ethical-education-171",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2013/civics-and-ethical-education-171"
+  },
+  {
+    "stream": "natural",
+    "year": 2013,
+    "slug": "english-169",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2013/english-169"
+  },
+  {
+    "stream": "natural",
+    "year": 2013,
+    "slug": "mathematics-198",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2013/mathematics-198"
+  },
+  {
+    "stream": "natural",
+    "year": 2013,
+    "slug": "physics-172",
+    "baseUrl": "https://kehulum.com/entrance-exam/natural-science/2013/physics-172"
+  },
+  {
+    "stream": "social",
+    "year": 2013,
+    "slug": "civics-and-ethical-education-171",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2013/civics-and-ethical-education-171"
+  },
+  {
+    "stream": "social",
+    "year": 2013,
+    "slug": "english-169",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2013/english-169"
+  },
+  {
+    "stream": "social",
+    "year": 2013,
+    "slug": "mathematics-199",
+    "baseUrl": "https://kehulum.com/entrance-exam/social-science/2013/mathematics-199"
+  }
+]
