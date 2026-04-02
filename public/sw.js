@@ -1,5 +1,5 @@
-const STATIC_CACHE = 'ethioquiz-static-v3';
-const RUNTIME_CACHE = 'ethioquiz-runtime-v3';
+const STATIC_CACHE = 'ethioquiz-static-v4';
+const RUNTIME_CACHE = 'ethioquiz-runtime-v4';
 const APP_SHELL = ['/', '/index.html', '/favicon.ico', '/placeholder.svg', '/robots.txt'];
 
 self.addEventListener('install', (event) => {
