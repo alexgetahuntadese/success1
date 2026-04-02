@@ -39,7 +39,7 @@ app.use(
     credentials: true,
   }),
 );
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 // Mount auth routes implemented in server/src/auth
 app.use('/api/auth', authRouter)

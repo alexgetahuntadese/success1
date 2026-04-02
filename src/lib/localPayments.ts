@@ -5,6 +5,17 @@ const API_BASE = '/api/payments';
 
 const getStoredToken = () => window.localStorage.getItem('studyAppAuthToken');
 
+const authHeaders = () => {
+  const token = getStoredToken();
+  if (!token) {
+    throw new Error('Please sign in first to submit a payment.');
+  }
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`,
+  };
+};
+
 export const localPaymentService = {
   // Submit payment with receipt (userId from JWT token)
   async submitPayment(data: {
@@ -23,10 +34,7 @@ export const localPaymentService = {
 
     const response = await fetch(`${API_BASE}/submit`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getStoredToken()}`,
-      },
+      headers: authHeaders(),
       body: JSON.stringify({
         amount: data.amount,
         bankName: data.bankName,
@@ -49,7 +57,7 @@ export const localPaymentService = {
   async listOwnSubmissions() {
     const response = await fetch(`${API_BASE}/submissions`, {
       headers: {
-        'Authorization': `Bearer ${getStoredToken()}`,
+        'Authorization': `Bearer ${getStoredToken() || ''}`,
       },
     });
 
@@ -64,7 +72,7 @@ export const localPaymentService = {
   async listAllSubmissions() {
     const response = await fetch(`${API_BASE}/admin/submissions`, {
       headers: {
-        'Authorization': `Bearer ${getStoredToken()}`,
+        'Authorization': `Bearer ${getStoredToken() || ''}`,
       },
     });
 
@@ -79,10 +87,7 @@ export const localPaymentService = {
   async verifyPayment(submissionId: string, status: 'verified' | 'rejected', reviewerNotes?: string) {
     const response = await fetch(`${API_BASE}/verify/${submissionId}`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getStoredToken()}`,
-      },
+      headers: authHeaders(),
       body: JSON.stringify({ status, reviewerNotes }),
     });
 
@@ -96,7 +101,7 @@ export const localPaymentService = {
   async getPaymentStatus() {
     const response = await fetch(`${API_BASE}/status`, {
       headers: {
-        'Authorization': `Bearer ${getStoredToken()}`,
+        'Authorization': `Bearer ${getStoredToken() || ''}`,
       },
     });
 

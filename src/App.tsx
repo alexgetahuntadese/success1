@@ -30,6 +30,7 @@ import PaymentPage from "./pages/PaymentPage";
 import BooksPage from "./pages/BooksPage";
 import BookSubjectsPage from "./pages/BookSubjectsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
+import AdminPaymentsPage from "./pages/AdminPaymentsPage";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,7 @@ const App = () => (
                 </Route>
                 <Route element={<RequireAdmin />}>
                   <Route path="/dashboard" element={<AdminDashboardPage />} />
+                  <Route path="/admin/payments" element={<AdminPaymentsPage />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
               </Routes>

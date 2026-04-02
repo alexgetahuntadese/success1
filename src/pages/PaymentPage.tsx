@@ -29,16 +29,24 @@ import {
   isTrialExpired,
   type TrialAccess,
 } from "@/lib/paymentAccess";
-import {
-  paymentService,
-} from "@/services/supabaseServiceFixed";
-import type {
-  PaymentMethod,
-  PaymentSubmissionWithReceiptUrl,
-} from "@/lib/supabase/payments";
 import { toast } from "sonner";
+import { localPaymentService } from "@/lib/localPayments";
 
-const TRIAL_LENGTH_DAYS = 7;
+type PaymentMethod = "cbe" | "telebirr";
+
+interface PaymentSubmission {
+  id: string;
+  amount: number;
+  bank_name: string;
+  account_number: string;
+  transaction_ref: string;
+  payment_method: PaymentMethod;
+  status: "verified" | "pending" | "rejected";
+  receiptUrl?: string;
+  submitted_at: string;
+  verified_at?: string;
+  reviewer_notes?: string;
+}
 const MAX_RECEIPT_SIZE_BYTES = 5 * 1024 * 1024;
 
 const addTrialWindow = (startAt: string) => {
@@ -47,7 +55,9 @@ const addTrialWindow = (startAt: string) => {
   return endDate.toISOString();
 };
 
-const getStatusIcon = (status: PaymentSubmissionWithReceiptUrl["status"]) => {
+const TRIAL_LENGTH_DAYS = 7;
+
+const getStatusIcon = (status: PaymentSubmission["status"]) => {
   switch (status) {
     case "verified":
       return <CheckCircle2 className="h-4 w-4 text-emerald-400" />;
@@ -58,7 +68,7 @@ const getStatusIcon = (status: PaymentSubmissionWithReceiptUrl["status"]) => {
   }
 };
 
-const getStatusLabel = (status: PaymentSubmissionWithReceiptUrl["status"]) => {
+const getStatusLabel = (status: PaymentSubmission["status"]) => {
   switch (status) {
     case "verified":
       return "Verified";
@@ -85,7 +95,7 @@ const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cbe");
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [receiptPreviewUrl, setReceiptPreviewUrl] = useState<string | null>(null);
-  const [submissions, setSubmissions] = useState<PaymentSubmissionWithReceiptUrl[]>([]);
+  const [submissions, setSubmissions] = useState<PaymentSubmission[]>([]);
   const [trialAccess, setTrialAccess] = useState<TrialAccess | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -95,7 +105,7 @@ const PaymentPage = () => {
 
     try {
       const [submissionResult, profileRefreshResult] = await Promise.allSettled([
-        paymentService.listOwnSubmissions(),
+        localPaymentService.listOwnSubmissions(),
         refreshProfile(),
       ]);
 
@@ -194,8 +204,8 @@ const PaymentPage = () => {
     setIsSubmitting(true);
 
     try {
-      const created = await paymentService.submitPayment({
-        amount: parsedAmount,
+      const created = await localPaymentService.submitPayment({
+        amount: String(parsedAmount),
         bankName,
         accountNumber,
         paymentMethod,
