@@ -1,83 +1,45 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Landmark, Smartphone, Upload, Download, Database, AlertCircle, Shield, CheckCircle, Clock, Gift } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import TopBar from '@/components/TopBar';
-import StarField from '@/components/StarField';
-import { getPerformanceData } from '@/lib/performanceUtils';
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  AlertCircle,
+  ArrowLeft,
+  CheckCircle2,
+  Clock,
+  CreditCard,
+  Gift,
+  Landmark,
+  Loader2,
+  RefreshCcw,
+  Smartphone,
+  UploadCloud,
+} from "lucide-react";
 
-interface PaymentSubmission {
-  id: string;
-  amount: string;
-  bankName: string;
-  accountNumber: string;
-  paymentMethod: 'cbe' | 'telebirr';
-  transactionRef: string;
-  receiptImage: string | null;
-  status: 'pending' | 'verified' | 'rejected';
-  submittedAt: string;
-  lastModified: string;
-  backupCount: number;
-}
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import TopBar from "@/components/TopBar";
+import StarField from "@/components/StarField";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  TRIAL_STORAGE_KEY,
+  getTrialAccess,
+  getTrialDaysRemaining,
+  isTrialExpired,
+  type TrialAccess,
+} from "@/lib/paymentAccess";
+import {
+  paymentService,
+} from "@/services/supabaseServiceFixed";
+import type {
+  PaymentMethod,
+  PaymentSubmissionWithReceiptUrl,
+} from "@/lib/supabase/payments";
+import { toast } from "sonner";
 
-interface StorageBackup {
-  timestamp: string;
-  data: PaymentSubmission[];
-  checksum: string;
-}
-
-interface TrialAccess {
-  studentName: string;
-  startedAt: string;
-  endsAt: string;
-  used: boolean;
-}
-
-const TRIAL_STORAGE_KEY = 'studentTrialAccess';
 const TRIAL_LENGTH_DAYS = 7;
-
-// Safe localStorage with error handling
-const safeStorage = {
-  get: (key: string): any => {
-    try {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : null;
-    } catch (e) {
-      console.error(`Failed to read ${key} from localStorage:`, e);
-      return null;
-    }
-  },
-  set: (key: string, value: any): boolean => {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-      return true;
-    } catch (e) {
-      console.error(`Failed to write ${key} to localStorage:`, e);
-      if (e instanceof Error && e.name === 'QuotaExceededError') {
-        console.warn('Storage quota exceeded');
-      }
-      return false;
-    }
-  },
-  remove: (key: string): boolean => {
-    try {
-      localStorage.removeItem(key);
-      return true;
-    } catch (e) {
-      console.error(`Failed to remove ${key} from localStorage:`, e);
-      return false;
-    }
-  }
-};
-
-// Generate checksum for data integrity
-const generateChecksum = (data: any): string => {
-  return btoa(JSON.stringify(data)).slice(0, 32);
-};
+const MAX_RECEIPT_SIZE_BYTES = 5 * 1024 * 1024;
 
 const addTrialWindow = (startAt: string) => {
   const endDate = new Date(startAt);
@@ -85,401 +47,288 @@ const addTrialWindow = (startAt: string) => {
   return endDate.toISOString();
 };
 
-const getTrialDaysRemaining = (trial: TrialAccess | null) => {
-  if (!trial) return 0;
-  const diff = new Date(trial.endsAt).getTime() - Date.now();
-  return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+const getStatusIcon = (status: PaymentSubmissionWithReceiptUrl["status"]) => {
+  switch (status) {
+    case "verified":
+      return <CheckCircle2 className="h-4 w-4 text-emerald-400" />;
+    case "pending":
+      return <Clock className="h-4 w-4 text-amber-300" />;
+    default:
+      return <AlertCircle className="h-4 w-4 text-rose-300" />;
+  }
 };
 
-const isTrialExpired = (trial: TrialAccess | null) => {
-  if (!trial) return false;
-  return new Date(trial.endsAt).getTime() < Date.now();
+const getStatusLabel = (status: PaymentSubmissionWithReceiptUrl["status"]) => {
+  switch (status) {
+    case "verified":
+      return "Verified";
+    case "pending":
+      return "Pending review";
+    default:
+      return "Rejected";
+  }
 };
 
-// Compress image before storing
-const compressImage = (dataUrl: string, maxWidth = 1200, quality = 0.7): Promise<string> => {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      
-      // Calculate new dimensions
-      let { width, height } = img;
-      if (width > maxWidth) {
-        height = (height * maxWidth) / width;
-        width = maxWidth;
-      }
-      
-      canvas.width = width;
-      canvas.height = height;
-      
-      // Draw and compress
-      ctx?.drawImage(img, 0, 0, width, height);
-      resolve(canvas.toDataURL('image/jpeg', quality));
-    };
-    img.src = dataUrl;
-  });
-};
+const paymentMethods: Array<{ id: PaymentMethod, label: string, icon: typeof Landmark }> = [
+  { id: "cbe", label: "CBE", icon: Landmark },
+  { id: "telebirr", label: "Telebirr", icon: Smartphone },
+];
 
 const PaymentPage = () => {
   const navigate = useNavigate();
-  const [amount, setAmount] = useState('');
-  const [bankName, setBankName] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [transactionRef, setTransactionRef] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<'cbe' | 'telebirr'>('cbe');
-  const [receiptImage, setReceiptImage] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissions, setSubmissions] = useState<PaymentSubmission[]>([]);
-  const [storageStats, setStorageStats] = useState({ used: 0, total: 0, items: 0 });
-  const [isStorageFull, setIsStorageFull] = useState(false);
+  const { displayName, hasPremiumAccess, paymentStatus } = useAuth();
+
+  const [amount, setAmount] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [transactionRef, setTransactionRef] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cbe");
+  const [receiptFile, setReceiptFile] = useState<File | null>(null);
+  const [receiptPreviewUrl, setReceiptPreviewUrl] = useState<string | null>(null);
+  const [submissions, setSubmissions] = useState<PaymentSubmissionWithReceiptUrl[]>([]);
   const [trialAccess, setTrialAccess] = useState<TrialAccess | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const studentName = getPerformanceData().profile.student_name || 'Student';
+  const loadSubmissions = async () => {
+    setIsLoading(true);
 
-  // Load submissions on mount
+    try {
+      const data = await paymentService.listOwnSubmissions();
+      setSubmissions(data);
+    } catch (error) {
+      console.error("Error loading payment submissions:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Could not load your payment submissions.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loaded = safeStorage.get('paymentSubmissions');
-    if (loaded && Array.isArray(loaded)) {
-      setSubmissions(loaded);
-    }
-    const storedTrial = safeStorage.get(TRIAL_STORAGE_KEY) as TrialAccess | null;
-    if (storedTrial) {
-      setTrialAccess(storedTrial);
-    }
-    updateStorageStats();
+    setTrialAccess(getTrialAccess());
+    void loadSubmissions();
   }, []);
 
-  // Calculate storage usage
-  const updateStorageStats = () => {
-    let used = 0;
-    let items = 0;
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key) {
-        const value = localStorage.getItem(key) || '';
-        used += key.length + value.length;
-        items++;
+  useEffect(() => {
+    return () => {
+      if (receiptPreviewUrl?.startsWith("blob:")) {
+        URL.revokeObjectURL(receiptPreviewUrl);
       }
-    }
-    const total = 5 * 1024 * 1024; // 5MB approximate limit
-    setStorageStats({ used, total, items });
-    setIsStorageFull(used > total * 0.9);
-  };
-
-  // Create backup before any major operation
-  const createBackup = (data: PaymentSubmission[]) => {
-    const backup: StorageBackup = {
-      timestamp: new Date().toISOString(),
-      data,
-      checksum: generateChecksum(data)
     };
-    safeStorage.set('paymentSubmissions_backup', backup);
-    safeStorage.set('paymentBackup_timestamp', new Date().toISOString());
+  }, [receiptPreviewUrl]);
+
+  const resetForm = () => {
+    setAmount("");
+    setBankName("");
+    setAccountNumber("");
+    setTransactionRef("");
+    setPaymentMethod("cbe");
+    setReceiptFile(null);
+    if (receiptPreviewUrl?.startsWith("blob:")) {
+      URL.revokeObjectURL(receiptPreviewUrl);
+    }
+    setReceiptPreviewUrl(null);
   };
 
-  // Validate submission
-  const validateSubmission = (submission: PaymentSubmission): string[] => {
-    const errors = [];
-    if (!submission.amount) errors.push('Amount is required');
-    if (!submission.bankName) errors.push('Bank name is required');
-    if (!submission.accountNumber) errors.push('Account number is required');
-    if (!submission.transactionRef) errors.push('Transaction reference is required');
-    return errors;
-  };
-
-  // Handle image selection with compression
-  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    
-    // Check file size (5MB limit)
-    if (file.size > 5 * 1024 * 1024) {
-      alert('File size must be less than 5MB');
+  const handleReceiptSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
       return;
     }
-    
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const compressed = await compressImage(reader.result as string);
-      setReceiptImage(compressed);
-    };
-    reader.readAsDataURL(file);
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Choose an image file for the receipt.");
+      event.target.value = "";
+      return;
+    }
+
+    if (file.size > MAX_RECEIPT_SIZE_BYTES) {
+      toast.error("Receipt image must be smaller than 5MB.");
+      event.target.value = "";
+      return;
+    }
+
+    if (receiptPreviewUrl?.startsWith("blob:")) {
+      URL.revokeObjectURL(receiptPreviewUrl);
+    }
+
+    setReceiptFile(file);
+    setReceiptPreviewUrl(URL.createObjectURL(file));
   };
 
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!amount || !bankName || !accountNumber || !transactionRef) {
-      alert('Please fill in all required fields.');
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const parsedAmount = Number(amount);
+    if (!parsedAmount || parsedAmount <= 0) {
+      toast.error("Enter a valid payment amount.");
+      return;
+    }
+
+    if (!bankName.trim() || !accountNumber.trim() || !transactionRef.trim()) {
+      toast.error("Complete the bank name, account number, and transaction reference.");
       return;
     }
 
     setIsSubmitting(true);
 
-    // Create backup before submission
-    createBackup(submissions);
+    try {
+      const created = await paymentService.submitPayment({
+        amount: parsedAmount,
+        bankName,
+        accountNumber,
+        paymentMethod,
+        transactionRef,
+        receiptFile,
+      });
 
-    const newSubmission: PaymentSubmission = {
-      id: Date.now().toString(),
-      amount,
-      bankName,
-      accountNumber,
-      paymentMethod,
-      transactionRef,
-      receiptImage,
-      status: 'pending',
-      submittedAt: new Date().toISOString(),
-      lastModified: new Date().toISOString(),
-      backupCount: 0,
-    };
-
-    // Validate submission
-    const errors = validateSubmission(newSubmission);
-    if (errors.length > 0) {
-      alert(errors.join(', '));
+      setSubmissions((current) => [created, ...current]);
+      resetForm();
+      toast.success("Payment submitted. Your receipt is now waiting for admin review.");
+    } catch (error) {
+      console.error("Error submitting payment:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Could not submit this payment.",
+      );
+    } finally {
       setIsSubmitting(false);
-      return;
-    }
-
-    const updatedSubmissions = [newSubmission, ...submissions];
-    
-    // Try to save with retry logic
-    let saved = false;
-    let retries = 0;
-    const maxRetries = 3;
-    
-    while (!saved && retries < maxRetries) {
-      saved = safeStorage.set('paymentSubmissions', updatedSubmissions);
-      if (!saved) {
-        retries++;
-        await new Promise(resolve => setTimeout(resolve, 500));
-      }
-    }
-
-    if (saved) {
-      // Create backup after successful save
-      createBackup(updatedSubmissions);
-      
-      // Also save to sessionStorage as extra backup
-      try {
-        sessionStorage.setItem('paymentSubmissions_temp', JSON.stringify(updatedSubmissions));
-      } catch (e) {
-        console.log('sessionStorage backup failed (non-critical)');
-      }
-
-      setSubmissions(updatedSubmissions);
-      updateStorageStats();
-      
-      alert('Payment submitted successfully! Your receipt has been securely saved.');
-
-      // Reset form
-      setAmount('');
-      setBankName('');
-      setAccountNumber('');
-      setTransactionRef('');
-      setReceiptImage(null);
-      const fileInput = document.getElementById('receipt') as HTMLInputElement;
-      if (fileInput) fileInput.value = '';
-    } else {
-      alert('Failed to save your submission. Storage may be full. Please export your data.');
-    }
-
-    setIsSubmitting(false);
-  };
-
-  // Export data
-  const handleExport = () => {
-    const exportData = {
-      version: '1.0',
-      exportedAt: new Date().toISOString(),
-      submissions,
-      checksum: generateChecksum(submissions),
-    };
-    
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `payment-receipts-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    alert('Your receipts have been downloaded as a backup file.');
-  };
-
-  // Import data
-  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      try {
-        const importData = JSON.parse(reader.result as string);
-        if (importData.submissions && Array.isArray(importData.submissions)) {
-          const existingIds = new Set(submissions.map(s => s.id));
-          const newItems = importData.submissions.filter((s: PaymentSubmission) => !existingIds.has(s.id));
-          const merged = [...submissions, ...newItems];
-          
-          if (safeStorage.set('paymentSubmissions', merged)) {
-            setSubmissions(merged);
-            createBackup(merged);
-            updateStorageStats();
-            alert(`Imported ${newItems.length} new receipts.`);
-          } else {
-            throw new Error('Failed to save imported data');
-          }
-        } else {
-          throw new Error('Invalid file format');
-        }
-      } catch (error) {
-        alert('Could not parse the backup file.');
-      }
-    };
-    reader.readAsText(file);
-    e.target.value = '';
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'verified':
-        return <CheckCircle className="h-4 w-4 text-emerald-400" />;
-      case 'pending':
-        return <Clock className="h-4 w-4 text-amber-400" />;
-      default:
-        return <AlertCircle className="h-4 w-4 text-red-400" />;
-    }
-  };
-
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'verified':
-        return 'Verified';
-      case 'pending':
-        return 'Pending Verification';
-      default:
-        return 'Rejected';
     }
   };
 
   const handleStartTrial = () => {
     if (trialAccess?.used) {
-      alert('The 7-day free trial has already been used on this device.');
+      toast.error("This 7-day free trial has already been used on this device.");
       return;
     }
 
     const startedAt = new Date().toISOString();
-    const trial: TrialAccess = {
-      studentName,
+    const nextTrial: TrialAccess = {
+      studentName: displayName || "Student",
       startedAt,
       endsAt: addTrialWindow(startedAt),
       used: true,
     };
 
-    safeStorage.set(TRIAL_STORAGE_KEY, trial);
-    setTrialAccess(trial);
-    alert('Your 7-day free trial is now active.');
+    localStorage.setItem(TRIAL_STORAGE_KEY, JSON.stringify(nextTrial));
+    setTrialAccess(nextTrial);
+    toast.success("Your 7-day free trial is now active on this device.");
   };
 
-  const trialActive = trialAccess && !isTrialExpired(trialAccess);
-  const trialExpired = trialAccess && isTrialExpired(trialAccess);
+  const trialActive = Boolean(trialAccess) && !isTrialExpired(trialAccess);
+  const trialExpired = Boolean(trialAccess) && isTrialExpired(trialAccess);
   const trialDaysRemaining = getTrialDaysRemaining(trialAccess);
+  const verifiedCount = submissions.filter((submission) => submission.status === "verified").length;
+  const pendingCount = submissions.filter((submission) => submission.status === "pending").length;
+
+  const statusMessage = useMemo(() => {
+    if (hasPremiumAccess) {
+      return "Premium access is active on this account. Your locked subjects and chapters should now be open.";
+    }
+
+    if (paymentStatus === "pending" || pendingCount > 0) {
+      return "Your latest payment submission is waiting for admin review. Access will unlock after verification.";
+    }
+
+    if (trialActive && trialAccess) {
+      return `Your free trial is active for ${trialDaysRemaining} more day${trialDaysRemaining === 1 ? "" : "s"}.`;
+    }
+
+    if (trialExpired && trialAccess) {
+      return `Your free trial ended on ${new Date(trialAccess.endsAt).toLocaleDateString()}. Submit payment to continue with full access.`;
+    }
+
+    return "Use the free trial or submit a payment receipt to unlock premium access after admin verification.";
+  }, [
+    hasPremiumAccess,
+    paymentStatus,
+    pendingCount,
+    trialAccess,
+    trialActive,
+    trialDaysRemaining,
+    trialExpired,
+  ]);
 
   return (
     <div className="app-shell pt-14 px-4 pb-4 md:p-8 md:pt-14">
       <TopBar />
       <StarField starCount={60} shootingCount={4} />
 
-      <div className="max-w-4xl mx-auto relative z-10">
-        <Button
-          variant="ghost"
-          onClick={() => navigate(-1)}
-          className="mb-4 text-white/85 hover:bg-white/12 hover:text-white"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
-        </Button>
+      <div className="max-w-5xl mx-auto relative z-10">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <Button
+            variant="ghost"
+            onClick={() => navigate(-1)}
+            className="text-white/85 hover:bg-white/12 hover:text-white"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => void loadSubmissions()}
+            className="border-white/15 bg-white/6 text-white hover:bg-white/10"
+          >
+            <RefreshCcw className="mr-2 h-4 w-4" />
+            Refresh Status
+          </Button>
+        </div>
 
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 shadow-lg mb-4">
             <CreditCard className="h-8 w-8 text-white" />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Payment Verification</h1>
-          <p className="text-white/70 max-w-lg mx-auto">
-            Upload your bank transfer receipt. Data is securely saved with automatic backups.
+          <p className="text-white/70 max-w-2xl mx-auto">
+            Receipts are uploaded to Supabase Storage, reviewed by an admin, and then linked to your account for real premium access across devices.
           </p>
         </div>
 
-        <div className="mb-6 rounded-2xl border border-amber-400/30 bg-gradient-to-r from-amber-500/15 to-orange-500/10 p-5 text-white">
+        <div className="mb-6 rounded-2xl border border-emerald-400/25 bg-emerald-500/10 p-5 text-white">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-amber-300/20 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-amber-100">
+              <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-emerald-100">
                 <Gift className="h-3.5 w-3.5" />
-                7-Day Free Trial
+                Access Status
               </div>
-              <h2 className="text-xl font-bold text-white">Try Simple Road before you pay</h2>
-              <p className="mt-1 max-w-2xl text-sm text-white/75">
-                Every student gets one 7-day free trial for full access before upgrading to a paid plan.
-              </p>
-              {trialActive && (
-                <p className="mt-3 text-sm text-emerald-200">
-                  Active for {studentName}. {trialDaysRemaining} day{trialDaysRemaining === 1 ? '' : 's'} remaining until {new Date(trialAccess.endsAt).toLocaleDateString()}.
-                </p>
-              )}
-              {trialExpired && (
-                <p className="mt-3 text-sm text-rose-200">
-                  Your free trial ended on {new Date(trialAccess.endsAt).toLocaleDateString()}. Continue by submitting a payment below.
-                </p>
-              )}
+              <h2 className="text-xl font-bold text-white">
+                {hasPremiumAccess ? "Premium access active" : "Premium access not active yet"}
+              </h2>
+              <p className="mt-1 max-w-2xl text-sm text-white/75">{statusMessage}</p>
+              <div className="mt-3 flex flex-wrap gap-2 text-xs text-white/70">
+                <span className="rounded-full border border-white/15 bg-white/8 px-3 py-1">
+                  Verified payments: {verifiedCount}
+                </span>
+                <span className="rounded-full border border-white/15 bg-white/8 px-3 py-1">
+                  Pending reviews: {pendingCount}
+                </span>
+              </div>
             </div>
             <Button
               onClick={handleStartTrial}
-              disabled={Boolean(trialAccess?.used)}
+              disabled={Boolean(trialAccess?.used) || hasPremiumAccess}
               className="bg-white text-slate-950 hover:bg-white/90 disabled:bg-white/30 disabled:text-white/60"
             >
-              {trialActive ? 'Trial Active' : trialExpired ? 'Trial Used' : 'Start Free Trial'}
+              {hasPremiumAccess
+                ? "Premium Active"
+                : trialActive
+                  ? "Trial Active"
+                  : trialExpired
+                    ? "Trial Used"
+                    : "Start Free Trial"}
             </Button>
           </div>
         </div>
 
-        {/* Storage Warning */}
-        {isStorageFull && (
-          <div className="mb-6 p-4 rounded-xl bg-red-500/20 border border-red-500/40 text-white">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-red-400" />
-              <span className="font-semibold">Storage Almost Full ({Math.round((storageStats.used / storageStats.total) * 100)}%)</span>
-            </div>
-            <p className="text-sm mt-1 text-white/80">
-              Please export your data to prevent loss. Images are automatically compressed.
-            </p>
-          </div>
-        )}
-
-        {/* Data Protection Banner */}
-        <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-white">
-          <div className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-emerald-400" />
-            <span className="font-semibold">Data Protection Active</span>
-          </div>
-          <p className="text-sm mt-1 text-white/70">
-            • Auto-saved drafts • Automatic backups • Export/import support • Compressed images
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Payment Form */}
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.05fr_0.95fr]">
           <Card className="bg-white/[0.08] border-white/[0.14] text-white">
             <CardHeader>
               <CardTitle className="text-xl">Submit Payment</CardTitle>
               <CardDescription className="text-white/70">
-                {trialActive
-                  ? `Your trial is active. Upgrade any time to keep access after ${new Date(trialAccess.endsAt).toLocaleDateString()}.`
-                  : 'Fill in your payment details'}
+                Fill in the transfer details and upload your receipt for admin review.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -489,9 +338,11 @@ const PaymentPage = () => {
                   <Input
                     id="amount"
                     type="number"
+                    min="1"
+                    step="0.01"
                     placeholder="Enter amount"
                     value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={(event) => setAmount(event.target.value)}
                     className="bg-white/[0.08] border-white/[0.14] text-white placeholder:text-white/50"
                     required
                   />
@@ -503,19 +354,19 @@ const PaymentPage = () => {
                     id="bank"
                     placeholder="Your bank name"
                     value={bankName}
-                    onChange={(e) => setBankName(e.target.value)}
+                    onChange={(event) => setBankName(event.target.value)}
                     className="bg-white/[0.08] border-white/[0.14] text-white placeholder:text-white/50"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="account" className="text-white">Account Number</Label>
+                  <Label htmlFor="account" className="text-white">Sender Account / Wallet Number</Label>
                   <Input
                     id="account"
-                    placeholder="Your account number"
+                    placeholder="The number used to send payment"
                     value={accountNumber}
-                    onChange={(e) => setAccountNumber(e.target.value)}
+                    onChange={(event) => setAccountNumber(event.target.value)}
                     className="bg-white/[0.08] border-white/[0.14] text-white placeholder:text-white/50"
                     required
                   />
@@ -527,7 +378,7 @@ const PaymentPage = () => {
                     id="reference"
                     placeholder="Transaction ID or reference number"
                     value={transactionRef}
-                    onChange={(e) => setTransactionRef(e.target.value)}
+                    onChange={(event) => setTransactionRef(event.target.value)}
                     className="bg-white/[0.08] border-white/[0.14] text-white placeholder:text-white/50"
                     required
                   />
@@ -536,18 +387,15 @@ const PaymentPage = () => {
                 <div className="space-y-2">
                   <Label className="text-white">Payment Method Used</Label>
                   <div className="grid grid-cols-2 gap-2">
-                    {[
-                      { id: 'cbe', label: 'CBE', icon: Landmark },
-                      { id: 'telebirr', label: 'Telebirr', icon: Smartphone },
-                    ].map((method) => (
+                    {paymentMethods.map((method) => (
                       <button
                         key={method.id}
                         type="button"
-                        onClick={() => setPaymentMethod(method.id as any)}
-                        className={`p-2 rounded-lg border text-xs flex flex-col items-center gap-1 transition-colors ${
+                        onClick={() => setPaymentMethod(method.id)}
+                        className={`p-3 rounded-lg border text-xs flex flex-col items-center gap-1 transition-colors ${
                           paymentMethod === method.id
-                            ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400'
-                            : 'bg-white/[0.08] border-white/[0.14] text-white/70 hover:bg-white/[0.12]'
+                            ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300"
+                            : "bg-white/[0.08] border-white/[0.14] text-white/70 hover:bg-white/[0.12]"
                         }`}
                       >
                         <method.icon className="h-4 w-4" />
@@ -557,30 +405,33 @@ const PaymentPage = () => {
                   </div>
                 </div>
 
-                {/* Receipt Upload */}
                 <div className="space-y-2">
                   <Label className="text-white">Receipt Screenshot</Label>
-                  <div
-                    onClick={() => document.getElementById('receipt')?.click()}
-                    className="border-2 border-dashed border-white/30 rounded-xl p-6 text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+                  <label
+                    htmlFor="receipt"
+                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/30 p-6 text-center transition-colors hover:bg-white/[0.04]"
                   >
-                    {receiptImage ? (
-                      <img src={receiptImage} alt="Receipt preview" className="max-h-40 mx-auto rounded-lg" />
+                    {receiptPreviewUrl ? (
+                      <img
+                        src={receiptPreviewUrl}
+                        alt="Receipt preview"
+                        className="max-h-56 rounded-lg object-contain"
+                      />
                     ) : (
                       <div className="flex flex-col items-center">
-                        <Upload className="h-10 w-10 text-white/50 mb-2" />
-                        <p className="text-sm text-white/70">Click to upload receipt</p>
-                        <p className="text-xs text-white/50 mt-1">JPG, PNG (auto-compressed)</p>
+                        <UploadCloud className="h-10 w-10 text-white/50 mb-2" />
+                        <p className="text-sm text-white/75">Click to upload receipt</p>
+                        <p className="text-xs text-white/50 mt-1">PNG, JPG, or WEBP up to 5MB</p>
                       </div>
                     )}
                     <input
                       id="receipt"
                       type="file"
-                      accept="image/*"
-                      onChange={handleImageSelect}
+                      accept="image/png,image/jpeg,image/webp"
+                      onChange={handleReceiptSelect}
                       className="hidden"
                     />
-                  </div>
+                  </label>
                 </div>
 
                 <Button
@@ -588,24 +439,29 @@ const PaymentPage = () => {
                   disabled={isSubmitting}
                   className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white"
                 >
-                  {isSubmitting ? 'Submitting...' : 'Submit Payment'}
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit Payment"
+                  )}
                 </Button>
               </form>
             </CardContent>
           </Card>
 
-          {/* Bank Details & History */}
           <div className="space-y-6">
-            {/* Payment Methods Tabs */}
             <Card className="bg-white/[0.08] border-white/[0.14] text-white">
               <CardHeader>
                 <CardTitle className="text-xl">Payment Methods</CardTitle>
                 <CardDescription className="text-white/70">
-                  Choose your preferred payment method
+                  Send payment first, then upload the receipt using the form.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Tabs value={paymentMethod} onValueChange={(v) => setPaymentMethod(v as any)} className="w-full">
+                <Tabs value={paymentMethod} onValueChange={(value) => setPaymentMethod(value as PaymentMethod)} className="w-full">
                   <TabsList className="grid grid-cols-2 bg-white/[0.08] mb-4">
                     <TabsTrigger value="cbe" className="text-white data-[state=active]:bg-white/20">
                       <Landmark className="h-4 w-4 mr-1" />
@@ -642,101 +498,78 @@ const PaymentPage = () => {
                       <p className="font-semibold">0992010092</p>
                     </div>
                     <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
-                      <p className="text-xs text-emerald-400">Telebirr</p>
-                      <p className="font-semibold text-emerald-400">Send payment to 0992010092</p>
+                      <p className="text-xs text-emerald-300">Telebirr</p>
+                      <p className="font-semibold text-emerald-200">Send payment to 0992010092</p>
                     </div>
                   </TabsContent>
-
                 </Tabs>
-                <p className="text-xs text-white/50 text-center mt-4">
-                  After payment, submit the receipt/screenshot using the form
-                </p>
               </CardContent>
             </Card>
 
-            {/* Data Management */}
             <Card className="bg-white/[0.08] border-white/[0.14] text-white">
               <CardHeader>
-                <CardTitle className="text-xl flex items-center gap-2">
-                  <Database className="h-5 w-5" />
-                  Data Management
-                </CardTitle>
+                <CardTitle className="text-xl">Your Payment History</CardTitle>
                 <CardDescription className="text-white/70">
-                  Storage: {Math.round((storageStats.used / storageStats.total) * 100)}% used ({(storageStats.used / 1024).toFixed(1)}KB / ~5MB)
+                  Stored in Supabase and synced to your signed-in account.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <Button
-                  onClick={handleExport}
-                  variant="outline"
-                  className="w-full border-white/20 text-white hover:bg-white/10"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Export All Receipts (Backup)
-                </Button>
-                <div className="relative z-10">
-                  <input
-                    type="file"
-                    accept=".json"
-                    onChange={handleImport}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
-                  />
-                  <Button
-                    variant="outline"
-                    className="w-full border-white/20 text-white hover:bg-white/10 relative z-10"
-                  >
-                    <Upload className="h-4 w-4 mr-2" />
-                    Import from Backup
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Submission History */}
-            {submissions.length > 0 && (
-              <Card className="bg-white/[0.08] border-white/[0.14] text-white">
-                <CardHeader>
-                  <CardTitle className="text-xl">Your Submissions ({submissions.length})</CardTitle>
-                  <CardDescription className="text-white/70">
-                    All receipts are backed up automatically
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3 max-h-96 overflow-y-auto">
-                    {submissions.map((sub) => (
+              <CardContent>
+                {isLoading ? (
+                  <div className="flex items-center justify-center rounded-xl border border-white/10 bg-white/6 px-4 py-10 text-white/65">
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Loading submissions...
+                  </div>
+                ) : submissions.length === 0 ? (
+                  <div className="rounded-xl border border-dashed border-white/15 px-4 py-8 text-center text-white/60">
+                    No payment submissions yet.
+                  </div>
+                ) : (
+                  <div className="space-y-3 max-h-[34rem] overflow-y-auto pr-1">
+                    {submissions.map((submission) => (
                       <div
-                        key={sub.id}
-                        className="p-3 rounded-xl bg-white/[0.08] border border-white/[0.14]"
+                        key={submission.id}
+                        className="rounded-xl border border-white/[0.14] bg-white/[0.06] p-4"
                       >
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-semibold text-white">{sub.amount} ETB</span>
-                          <div className="flex items-center gap-1">
-                            {getStatusIcon(sub.status)}
-                            <span className={`text-xs ${
-                              sub.status === 'verified' ? 'text-emerald-400' :
-                              sub.status === 'pending' ? 'text-amber-400' : 'text-red-400'
-                            }`}>
-                              {getStatusText(sub.status)}
-                            </span>
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <div className="font-semibold text-white">{submission.amount} ETB</div>
+                            <div className="text-xs text-white/60">
+                              {submission.bank_name} • {submission.payment_method.toUpperCase()}
+                            </div>
+                          </div>
+                          <div className="inline-flex items-center gap-1 rounded-full border border-white/12 bg-white/8 px-2.5 py-1 text-xs text-white/75">
+                            {getStatusIcon(submission.status)}
+                            {getStatusLabel(submission.status)}
                           </div>
                         </div>
-                        <p className="text-xs text-white/70">{sub.bankName}</p>
-                        <p className="text-xs text-white/50">
-                          {sub.paymentMethod?.toUpperCase()} • {new Date(sub.submittedAt).toLocaleDateString()}
-                        </p>
-                        {sub.receiptImage && (
+
+                        <div className="mt-3 grid gap-2 text-xs text-white/65">
+                          <div>Reference: {submission.transaction_ref}</div>
+                          <div>Sender Number: {submission.account_number}</div>
+                          <div>Submitted: {new Date(submission.submitted_at).toLocaleString()}</div>
+                          {submission.verified_at ? (
+                            <div>Reviewed: {new Date(submission.verified_at).toLocaleString()}</div>
+                          ) : null}
+                          {submission.reviewer_notes ? (
+                            <div className="rounded-lg border border-white/10 bg-white/6 px-3 py-2 text-white/75">
+                              Admin note: {submission.reviewer_notes}
+                            </div>
+                          ) : null}
+                        </div>
+
+                        {submission.receiptUrl ? (
                           <img
-                            src={sub.receiptImage}
+                            src={submission.receiptUrl}
                             alt="Receipt"
-                            className="mt-2 max-h-24 rounded-lg"
+                            className="mt-3 max-h-40 rounded-lg border border-white/10 object-contain"
                           />
-                        )}
+                        ) : null}
                       </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
-            )}
+                )}
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
