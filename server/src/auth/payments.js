@@ -3,29 +3,72 @@ import express from 'express'
 import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import jwt from 'jsonwebtoken'
+import Database from 'better-sqlite3'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-change-in-production'
 
 // Ensure uploads directory exists
 const uploadsDir = path.resolve(__dirname, '..', '..', 'uploads', 'receipts')
 await fs.mkdir(uploadsDir, { recursive: true })
 
+// Connect to same SQLite DB as auth
+const dbPath = path.resolve(__dirname, '..', '..', 'auth.db')
+const db = new Database(dbPath)
+
+// Create payments table
+db.exec(`
+  CREATE TABLE IF NOT EXISTS payments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    amount REAL NOT NULL,
+    bank_name TEXT NOT NULL,
+    account_number TEXT NOT NULL,
+    transaction_ref TEXT NOT NULL,
+    payment_method TEXT NOT NULL,
+    receipt_path TEXT,
+    receipt_url TEXT,
+    status TEXT NOT NULL DEFAULT 'pending',
+    submitted_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    verified_at TEXT,
+    reviewer_notes TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  );
+  CREATE INDEX IF NOT EXISTS idx_payments_user ON payments(user_id);
+  CREATE INDEX IF NOT EXISTS idx_payments_status ON payments(status);
+`)
+
 export const uploadRouter = express.Router()
 
-// In-memory store for payment submissions (replace with SQLite table for production)
-const submissions = []
-let submissionId = 1
+// JWT middleware for payments
+const requireAuth = (req, res, next) => {
+  const header = req.headers.authorization || ''
+  const token = header.toLowerCase().startsWith('bearer ') ? header.slice(7).trim() : ''
+  
+  if (!token) {
+    return res.status(401).json({ message: 'Authentication required.' })
+  }
+  
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET)
+    req.userId = decoded.sub
+    next()
+  } catch (err) {
+    return res.status(401).json({ message: 'Invalid or expired token.' })
+  }
+}
 
-// Middleware to parse multipart/form-data for file uploads
 uploadRouter.use(express.json({ limit: '10mb' }))
 
-// POST /api/payments/submit - Submit payment with receipt
-uploadRouter.post('/submit', async (req, res) => {
+// POST /api/payments/submit - Submit payment with receipt (authenticated)
+uploadRouter.post('/submit', requireAuth, async (req, res) => {
   try {
-    const { userId, amount, bankName, accountNumber, transactionRef, paymentMethod, receiptBase64 } = req.body
+    const userId = req.userId
+    const { amount, bankName, accountNumber, transactionRef, paymentMethod, receiptBase64 } = req.body
 
     // Validation
-    if (!userId || !amount || !bankName || !accountNumber || !transactionRef || !paymentMethod) {
+    if (!amount || !bankName || !accountNumber || !transactionRef || !paymentMethod) {
       return res.status(400).json({ message: 'Missing required fields' })
     }
 
@@ -52,24 +95,24 @@ uploadRouter.post('/submit', async (req, res) => {
       receiptUrl = `/uploads/receipts/${filename}`
     }
 
-    // Create submission record
-    const submission = {
-      id: String(submissionId++),
-      user_id: userId,
-      amount: parseFloat(amount),
-      bank_name: bankName,
-      account_number: accountNumber,
-      transaction_ref: transactionRef,
-      payment_method: paymentMethod,
-      receipt_path: receiptPath,
-      receipt_url: receiptUrl,
-      status: 'pending',
-      submitted_at: new Date().toISOString(),
-      verified_at: null,
-      reviewer_notes: null,
-    }
+    // Insert into database
+    const insert = db.prepare(`
+      INSERT INTO payments (user_id, amount, bank_name, account_number, transaction_ref, payment_method, receipt_path, receipt_url, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+    `)
+    
+    const result = insert.run(
+      userId,
+      parseFloat(amount),
+      bankName,
+      accountNumber,
+      transactionRef,
+      paymentMethod,
+      receiptPath,
+      receiptUrl
+    )
 
-    submissions.push(submission)
+    const submission = db.prepare('SELECT * FROM payments WHERE id = ?').get(result.lastInsertRowid)
 
     res.status(201).json({
       ...submission,
@@ -81,36 +124,53 @@ uploadRouter.post('/submit', async (req, res) => {
   }
 })
 
-// GET /api/payments/submissions/:userId - Get user's submissions
-uploadRouter.get('/submissions/:userId', (req, res) => {
-  const userSubmissions = submissions.filter(s => s.user_id === req.params.userId)
-  res.json(userSubmissions.map(s => ({
-    ...s,
-    receiptUrl: s.receipt_url ? `http://localhost:5000${s.receipt_url}` : null,
-  })))
-})
-
-// GET /api/payments/admin/submissions - Get all submissions (admin)
-uploadRouter.get('/admin/submissions', (req, res) => {
-  // TODO: Add admin auth check
+// GET /api/payments/submissions - Get authenticated user's submissions
+uploadRouter.get('/submissions', requireAuth, (req, res) => {
+  const userId = req.userId
+  const submissions = db.prepare('SELECT * FROM payments WHERE user_id = ? ORDER BY submitted_at DESC').all(userId)
+  
   res.json(submissions.map(s => ({
     ...s,
     receiptUrl: s.receipt_url ? `http://localhost:5000${s.receipt_url}` : null,
   })))
 })
 
-// PATCH /api/payments/verify/:submissionId - Verify/reject payment (admin)
-uploadRouter.patch('/verify/:submissionId', (req, res) => {
+// GET /api/payments/admin/submissions - Get all submissions (admin only)
+uploadRouter.get('/admin/submissions', requireAuth, (req, res) => {
+  // TODO: Check if user is admin
+  const submissions = db.prepare(`
+    SELECT p.*, u.phone, u.name as user_name 
+    FROM payments p 
+    LEFT JOIN users u ON p.user_id = u.id 
+    ORDER BY p.submitted_at DESC
+  `).all()
+  
+  res.json(submissions.map(s => ({
+    ...s,
+    receiptUrl: s.receipt_url ? `http://localhost:5000${s.receipt_url}` : null,
+  })))
+})
+
+// PATCH /api/payments/verify/:submissionId - Verify/reject payment (admin only)
+uploadRouter.patch('/verify/:submissionId', requireAuth, (req, res) => {
   const { status, reviewerNotes } = req.body
-  const submission = submissions.find(s => s.id === req.params.submissionId)
+  const submissionId = req.params.submissionId
+  
+  // TODO: Check if user is admin
+  
+  const update = db.prepare(`
+    UPDATE payments 
+    SET status = ?, reviewer_notes = ?, verified_at = CURRENT_TIMESTAMP 
+    WHERE id = ?
+  `)
+  
+  update.run(status, reviewerNotes || null, submissionId)
+  
+  const submission = db.prepare('SELECT * FROM payments WHERE id = ?').get(submissionId)
   
   if (!submission) {
     return res.status(404).json({ message: 'Submission not found' })
   }
-
-  submission.status = status // 'verified' or 'rejected'
-  submission.reviewer_notes = reviewerNotes || null
-  submission.verified_at = new Date().toISOString()
 
   res.json({
     ...submission,
@@ -119,4 +179,28 @@ uploadRouter.patch('/verify/:submissionId', (req, res) => {
 })
 
 // Static file serving for uploaded receipts
+// GET /api/payments/status - Get user's payment status (for premium access check)
+uploadRouter.get('/status', requireAuth, (req, res) => {
+  const userId = req.userId
+  
+  const result = db.prepare(`
+    SELECT 
+      COUNT(CASE WHEN status = 'verified' THEN 1 END) as verified_count,
+      COUNT(CASE WHEN status = 'pending' THEN 1 END) as pending_count,
+      MAX(CASE WHEN status = 'verified' THEN verified_at END) as last_verified
+    FROM payments 
+    WHERE user_id = ?
+  `).get(userId)
+  
+  const hasPremium = result.verified_count > 0
+  
+  res.json({
+    hasPremiumAccess: hasPremium,
+    verifiedPayments: result.verified_count,
+    pendingPayments: result.pending_count,
+    lastVerifiedAt: result.last_verified,
+    status: hasPremium ? 'verified' : (result.pending_count > 0 ? 'pending' : 'none')
+  })
+})
+
 export const receiptStaticPath = uploadsDir

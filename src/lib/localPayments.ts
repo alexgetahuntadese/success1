@@ -6,7 +6,7 @@ const API_BASE = '/api/payments';
 const getStoredToken = () => window.localStorage.getItem('studyAppAuthToken');
 
 export const localPaymentService = {
-  // Submit payment with receipt
+  // Submit payment with receipt (userId from JWT token)
   async submitPayment(data: {
     amount: string;
     bankName: string;
@@ -14,7 +14,6 @@ export const localPaymentService = {
     transactionRef: string;
     paymentMethod: 'cbe' | 'telebirr';
     receiptFile: File | null;
-    userId: string;
   }) {
     // Convert file to base64 if present
     let receiptBase64: string | null = null;
@@ -29,7 +28,6 @@ export const localPaymentService = {
         'Authorization': `Bearer ${getStoredToken()}`,
       },
       body: JSON.stringify({
-        userId: data.userId,
         amount: data.amount,
         bankName: data.bankName,
         accountNumber: data.accountNumber,
@@ -47,9 +45,9 @@ export const localPaymentService = {
     return response.json();
   },
 
-  // Get user's submissions
-  async listOwnSubmissions(userId: string) {
-    const response = await fetch(`${API_BASE}/submissions/${userId}`, {
+  // Get authenticated user's submissions
+  async listOwnSubmissions() {
+    const response = await fetch(`${API_BASE}/submissions`, {
       headers: {
         'Authorization': `Bearer ${getStoredToken()}`,
       },
@@ -90,6 +88,20 @@ export const localPaymentService = {
 
     if (!response.ok) {
       throw new Error('Failed to update payment status');
+    }
+
+    return response.json();
+  },
+  // Get user's payment status (for premium access)
+  async getPaymentStatus() {
+    const response = await fetch(`${API_BASE}/status`, {
+      headers: {
+        'Authorization': `Bearer ${getStoredToken()}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get payment status');
     }
 
     return response.json();
