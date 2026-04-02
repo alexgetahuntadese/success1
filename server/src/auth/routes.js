@@ -105,8 +105,8 @@ router.post('/register', async (req, res) => {
 
     return res.status(201).json(buildAuthResponse(insertResult.rows[0]))
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({ message: 'Server error' })
+    console.error('REGISTER ERROR:', err.message, err.stack)
+    return res.status(500).json({ message: 'Server error: ' + err.message })
   }
 })
 
