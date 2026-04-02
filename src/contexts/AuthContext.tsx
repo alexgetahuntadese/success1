@@ -8,7 +8,11 @@ import {
 import type { User } from "@supabase/supabase-js";
 
 import { AuthContext, type AuthContextValue } from "@/contexts/auth-context";
-import { isAdminPreferences } from "@/lib/authRoles";
+import {
+  getPaymentStatus,
+  hasPremiumPreferences,
+  isAdminPreferences,
+} from "@/lib/authRoles";
 import {
   isSupabaseConfigured,
   supabaseConfigError,
@@ -138,6 +142,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     profile,
     isAuthenticated: Boolean(session?.user),
     isAdmin: isAdminPreferences(profile?.preferences),
+    hasPremiumAccess: hasPremiumPreferences(profile?.preferences),
+    paymentStatus: getPaymentStatus(profile?.preferences),
     isLoading,
     displayName: deriveDisplayName(user, profile),
     refreshProfile: async () => loadProfile(user),

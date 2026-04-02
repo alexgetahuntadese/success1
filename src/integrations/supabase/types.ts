@@ -12,6 +12,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      payment_submissions: {
+        Row: {
+          account_number: string
+          amount: number
+          bank_name: string
+          created_at: string
+          id: string
+          payment_method: string
+          receipt_content_type: string | null
+          receipt_path: string | null
+          receipt_size_bytes: number | null
+          reviewer_notes: string | null
+          status: string
+          submitted_at: string
+          transaction_ref: string
+          updated_at: string
+          user_id: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          account_number: string
+          amount: number
+          bank_name: string
+          created_at?: string
+          id?: string
+          payment_method: string
+          receipt_content_type?: string | null
+          receipt_path?: string | null
+          receipt_size_bytes?: number | null
+          reviewer_notes?: string | null
+          status?: string
+          submitted_at?: string
+          transaction_ref: string
+          updated_at?: string
+          user_id: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          account_number?: string
+          amount?: number
+          bank_name?: string
+          created_at?: string
+          id?: string
+          payment_method?: string
+          receipt_content_type?: string | null
+          receipt_path?: string | null
+          receipt_size_bytes?: number | null
+          reviewer_notes?: string | null
+          status?: string
+          submitted_at?: string
+          transaction_ref?: string
+          updated_at?: string
+          user_id?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       saved_questions: {
         Row: {
           created_at: string

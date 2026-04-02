@@ -41,29 +41,8 @@ export const getTrialDaysRemaining = (trial: TrialAccess | null) => {
 };
 
 export const hasSubmittedPayment = () => {
-  try {
-    const raw = localStorage.getItem("paymentSubmissions");
-    if (!raw) {
-      return false;
-    }
-
-    const submissions = JSON.parse(raw);
-    return (
-      Array.isArray(submissions) &&
-      submissions.some(
-        (submission) =>
-          submission &&
-          typeof submission === "object" &&
-          submission.status === "verified",
-      )
-    );
-  } catch (error) {
-    console.error("Failed to read payment submissions:", error);
-    return false;
-  }
+  return false;
 };
-
-export const hasPremiumAccess = () => hasSubmittedPayment();
 
 export const isFreeChapter = (chapterIndex: number) => chapterIndex < FREE_CHAPTER_LIMIT;
 export const isFreeMatricSubject = (subjectIndex: number) => subjectIndex < FREE_MATRIC_SUBJECT_LIMIT;
