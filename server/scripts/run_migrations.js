@@ -3,10 +3,27 @@ import { Pool } from 'pg'
 import fs from 'fs/promises'
 import path from 'path'
 
-const { DATABASE_URL, NODE_ENV } = process.env
+// Allow passing DATABASE_URL via --db or -d CLI flag as a fallback when .env is not present
+const argv = process.argv.slice(2)
+let cliDb = null
+for (let i = 0; i < argv.length; i++) {
+  const a = argv[i]
+  if (a.startsWith('--db=')) {
+    cliDb = a.split('=')[1]
+    break
+  }
+  if (a === '--db' || a === '-d') {
+    cliDb = argv[i + 1]
+    break
+  }
+}
+
+const { NODE_ENV } = process.env
+const DATABASE_URL = cliDb || process.env.DATABASE_URL
 
 if (!DATABASE_URL) {
-  console.error('Missing DATABASE_URL in environment')
+  console.error('Missing DATABASE_URL in environment. Provide it via .env or with --db <url>.')
+  console.error('Example: node scripts/run_migrations.js --db "postgres://user:pass@localhost:5432/dbname"')
   process.exit(1)
 }
 

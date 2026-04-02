@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "migrate": "node scripts/run_migrations.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
