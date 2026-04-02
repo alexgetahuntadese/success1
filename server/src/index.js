@@ -3,6 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 import authRouter from './auth/sqliteRoutes.js'
+import { uploadRouter, receiptStaticPath } from './auth/payments.js'
 import pg from "pg";
 
 const { Pool } = pg;
@@ -42,6 +43,12 @@ app.use(express.json());
 
 // Mount auth routes implemented in server/src/auth
 app.use('/api/auth', authRouter)
+
+// Mount payment routes
+app.use('/api/payments', uploadRouter)
+
+// Serve uploaded receipts statically
+app.use('/uploads/receipts', express.static(receiptStaticPath))
 
 app.get("/api/health", async (_request, response) => {
   try {
