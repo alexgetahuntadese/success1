@@ -38,7 +38,7 @@ const RequireAdmin = () => {
             </div>
             <h1 className="text-3xl font-bold">Admin access only</h1>
             <p className="mt-3 text-sm leading-7 text-white/68">
-              This dashboard now uses Supabase account roles. Your current signed-in account is not marked as an admin.
+              This dashboard requires admin privileges. Your current signed-in account is not marked as an admin.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Button

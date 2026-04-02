@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, Mail, Phone, Save, Trash2, User } from 'lucide-react';
+import { ArrowLeft, Mail, Save, Trash2, User } from 'lucide-react';
 import { clearPerformanceData, getPerformanceData, updateStudentName } from '@/lib/performanceUtils';
 import {
   AlertDialog,
@@ -23,14 +23,13 @@ import { toast } from 'sonner';
 import { useLanguage } from '@/i18n/LanguageContext';
 import TopBar from "@/components/TopBar";
 import { useAuth } from '@/hooks/useAuth';
-import { userProfileService } from '@/services/supabaseServiceFixed';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
-  const { isAuthenticated, isLoading: isAuthLoading, profile, refreshProfile, user } = useAuth();
+  const { isAuthenticated, isLoading: isAuthLoading, profile, refreshProfile, user, updateProfile } = useAuth();
   const [name, setName] = useState('');
-  const [mobile, setMobile] = useState('');
+  const [email, setEmail] = useState('');
   const [quizCount, setQuizCount] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -42,12 +41,12 @@ const ProfilePage = () => {
     const loadProfile = () => {
       const data = getPerformanceData();
       setName(profile?.name || user?.user_metadata?.name || data.profile.student_name || '');
-      setMobile(profile?.mobile || '');
+      setEmail(profile?.email || user?.email || '');
       setQuizCount(data.attempts.length);
     };
 
     loadProfile();
-  }, [isAuthenticated, profile?.mobile, profile?.name, user?.user_metadata?.name]);
+  }, [isAuthenticated, profile?.email, profile?.name, user?.email, user?.user_metadata?.name]);
 
   const handleSave = async () => {
     if (!name.trim()) {
@@ -58,11 +57,9 @@ const ProfilePage = () => {
     setIsSaving(true);
 
     try {
-      await userProfileService.upsertProfile({
+      await updateProfile({
         name: name.trim(),
-        email: user?.email,
-        mobile: mobile.trim() || undefined,
-        is_active: profile?.is_active ?? true,
+        email: email?.trim() || null,
       });
       updateStudentName(name.trim());
       await refreshProfile();
@@ -146,22 +143,9 @@ const ProfilePage = () => {
                 <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/35" />
                 <Input
                   id="email"
-                  value={user?.email || profile?.email || ''}
-                  readOnly
-                  className="bg-white/[0.04] border-white/[0.08] pl-10 text-white/70"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="mobile" className="text-white">Mobile number</Label>
-              <div className="relative">
-                <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/35" />
-                <Input
-                  id="mobile"
-                  value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
-                  placeholder="09XXXXXXXX"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email address"
                   className="bg-white/[0.04] border-white/[0.08] pl-10 text-white placeholder:text-white/30"
                 />
               </div>

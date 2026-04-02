@@ -211,6 +211,10 @@ const Index = () => {
     resetMessages();
   };
 
+  const handleForgotPassword = () => {
+    setAuthNotice("Password reset feature coming soon. Contact support if needed.");
+  };
+
   const handleSignIn = async () => {
     resetMessages();
 
@@ -246,38 +250,33 @@ const Index = () => {
       return;
     }
 
-    if (!email.trim() || !password.trim()) {
-      setAuthError("Enter your email and password to create an account.");
+    if (!phone.trim() || !password.trim()) {
+      setAuthError("Enter your phone number and password to create an account.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setAuthError("Use a password with at least 6 characters.");
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const data = await authService.signUpStudent({
-        fullName,
-        email,
+      const profile = await register({
+        fullName: fullName.trim(),
+        phone: phone.trim(),
         password,
-        mobile,
       });
 
-      if (data.session) {
-        await userProfileService.upsertProfile({
-          name: fullName.trim(),
-          email: email.trim(),
-          mobile: mobile.trim() ? normalizePhoneNumber(mobile.trim()) : undefined,
-          is_active: true,
-        });
-
-        await refreshProfile();
-        navigate("/grades");
+      if (profile?.is_active === false) {
+        setAuthError("Your account is currently inactive. Contact the administrator.");
         return;
       }
 
-      setAuthNotice("Account created. Check your email to confirm your account, then sign in.");
-      setAuthMode("signin");
+      navigate("/grades");
     } catch (error) {
-      setAuthError(formatAuthError(error));
+      setAuthError(error instanceof Error ? error.message : "Could not create your account right now.");
     } finally {
       setIsSubmitting(false);
     }
@@ -659,14 +658,6 @@ const Index = () => {
                       </p>
                     </div>
 
-                    {!isSupabaseConfigured ? (
-                      <div className="rounded-2xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
-                        {supabaseConfigError}
-                        {" "}
-                        Add the same `VITE_SUPABASE_*` values from your local `.env` into Vercel Project Settings, then redeploy.
-                      </div>
-                    ) : null}
-
                     <div className="space-y-4">
                       {isSignUp && (
                         <div className="space-y-2">
@@ -684,33 +675,17 @@ const Index = () => {
                       )}
 
                       <div className="space-y-2">
-                        <label className="text-sm font-medium text-white/80">Email address</label>
+                        <label className="text-sm font-medium text-white/80">Phone number</label>
                         <div className="relative">
-                          <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-sky-600/80" />
+                          <Phone className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-sky-600/80" />
                           <Input
-                            type="email"
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
-                            placeholder="student@school.com"
+                            value={phone}
+                            onChange={(event) => setPhone(event.target.value)}
+                            placeholder="09xx xxx xxx"
                             className={authInputClassName}
                           />
                         </div>
                       </div>
-
-                      {isSignUp && (
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium text-white/80">Mobile number</label>
-                          <div className="relative">
-                            <Phone className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-sky-600/80" />
-                            <Input
-                              value={mobile}
-                              onChange={(event) => setMobile(event.target.value)}
-                              placeholder="09xx xxx xxx"
-                              className={authInputClassName}
-                            />
-                          </div>
-                        </div>
-                      )}
 
                       <div className="space-y-2">
                         <div className="flex items-center justify-between gap-3">
@@ -719,7 +694,7 @@ const Index = () => {
                             <button
                               type="button"
                               onClick={handleForgotPassword}
-                              disabled={!isSupabaseConfigured || isSubmitting}
+                              disabled={isSubmitting}
                               className="text-xs text-cyan-200 transition-colors hover:text-cyan-100"
                             >
                               Forgot password?
@@ -766,7 +741,7 @@ const Index = () => {
                     <div className="grid gap-3">
                       <Button
                         onClick={() => void handlePrimaryAction()}
-                        disabled={isSubmitting || !isSupabaseConfigured}
+                        disabled={isSubmitting}
                         className="h-12 w-full bg-gradient-to-r from-cyan-300 via-sky-300 to-amber-200 text-base font-semibold text-sky-950 shadow-[0_14px_34px_rgba(56,189,248,0.18)] hover:from-cyan-200 hover:via-sky-200 hover:to-amber-100"
                       >
                         {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
