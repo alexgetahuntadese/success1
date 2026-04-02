@@ -30,6 +30,10 @@ import {
   AUTH_REQUIRED_NOTICE_KEY,
   INACTIVE_ACCOUNT_NOTICE_KEY,
 } from "@/lib/authStorage";
+import {
+  isSupabaseConfigured,
+  supabaseConfigError,
+} from "@/lib/supabaseConfig";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -681,6 +685,14 @@ const Index = () => {
                       </p>
                     </div>
 
+                    {!isSupabaseConfigured ? (
+                      <div className="rounded-2xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
+                        {supabaseConfigError}
+                        {" "}
+                        Add the same `VITE_SUPABASE_*` values from your local `.env` into Vercel Project Settings, then redeploy.
+                      </div>
+                    ) : null}
+
                     <div className="space-y-4">
                       {isSignUp && (
                         <div className="space-y-2">
@@ -733,6 +745,7 @@ const Index = () => {
                             <button
                               type="button"
                               onClick={handleForgotPassword}
+                              disabled={!isSupabaseConfigured || isSubmitting}
                               className="text-xs text-cyan-200 transition-colors hover:text-cyan-100"
                             >
                               Forgot password?
@@ -779,7 +792,7 @@ const Index = () => {
                     <div className="grid gap-3">
                       <Button
                         onClick={() => void handlePrimaryAction()}
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || !isSupabaseConfigured}
                         className="h-12 w-full bg-gradient-to-r from-cyan-300 via-sky-300 to-amber-200 text-base font-semibold text-sky-950 shadow-[0_14px_34px_rgba(56,189,248,0.18)] hover:from-cyan-200 hover:via-sky-200 hover:to-amber-100"
                       >
                         {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}

@@ -3,6 +3,10 @@ import { Loader2 } from "lucide-react";
 
 import { useAuth } from "@/hooks/useAuth";
 import { AUTH_REQUIRED_NOTICE_KEY } from "@/lib/authStorage";
+import {
+  isSupabaseConfigured,
+  supabaseConfigError,
+} from "@/lib/supabaseConfig";
 
 const RequireAuth = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -21,7 +25,9 @@ const RequireAuth = () => {
   if (!isAuthenticated) {
     sessionStorage.setItem(
       AUTH_REQUIRED_NOTICE_KEY,
-      "Sign in first to continue into the student portal.",
+      isSupabaseConfigured
+        ? "Sign in first to continue into the student portal."
+        : supabaseConfigError || "Missing Supabase environment variables.",
     );
     return <Navigate to="/" replace />;
   }

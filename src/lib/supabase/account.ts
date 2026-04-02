@@ -2,6 +2,8 @@ import type { AuthError, Session, User } from "@supabase/supabase-js";
 
 import { supabase } from "@/lib/supabase/client";
 import {
+  isSupabaseConfigured,
+  supabaseConfigError,
   supabaseProjectId,
   supabasePublishableKey,
   supabaseUrl,
@@ -10,6 +12,23 @@ import type { StudentSignUpInput, UserProfile } from "@/lib/supabase/types";
 
 const getStringValue = (value: unknown) =>
   typeof value === "string" ? value.trim() : "";
+
+const noopAuthSubscription = {
+  data: {
+    subscription: {
+      unsubscribe() {},
+    },
+  },
+} as ReturnType<typeof supabase.auth.onAuthStateChange>;
+
+const assertSupabaseConfigured = () => {
+  if (!isSupabaseConfigured) {
+    throw new Error(
+      supabaseConfigError ||
+        "Missing Supabase environment variables. Add the Vercel env vars and redeploy.",
+    );
+  }
+};
 
 export const normalizePhoneNumber = (value: string) => {
   const compact = value.replace(/[^\d+]/g, "");
@@ -45,6 +64,9 @@ export const formatAuthError = (error: unknown) => {
 
   if (normalized.includes("networkerror")) {
     return `Supabase could not be reached at ${supabaseUrl}. Check that the project URL and network access are working, then try again.`;
+  }
+  if (normalized.includes("missing supabase environment variables")) {
+    return rawMessage;
   }
   if (normalized.includes("supabase health check failed")) {
     return rawMessage;
@@ -97,6 +119,8 @@ const runWithTimeout = async <T>(operation: Promise<T>, timeoutMs: number) => {
 };
 
 const assertSupabaseReachable = async () => {
+  assertSupabaseConfigured();
+
   const healthUrl = `${supabaseUrl}/auth/v1/settings`;
 
   try {
@@ -142,18 +166,30 @@ const buildProfileSeed = (
 
 export const authService = {
   async getSession(): Promise<Session | null> {
+    if (!isSupabaseConfigured) {
+      return null;
+    }
+
     const { data, error } = await supabase.auth.getSession();
     throwAuthError(error);
     return data.session ?? null;
   },
 
   async getCurrentUser(): Promise<User | null> {
+    if (!isSupabaseConfigured) {
+      return null;
+    }
+
     const { data, error } = await supabase.auth.getUser();
     throwAuthError(error);
     return data.user ?? null;
   },
 
   onAuthStateChange(callback: Parameters<typeof supabase.auth.onAuthStateChange>[0]) {
+    if (!isSupabaseConfigured) {
+      return noopAuthSubscription;
+    }
+
     return supabase.auth.onAuthStateChange(callback);
   },
 
@@ -196,6 +232,10 @@ export const authService = {
   },
 
   async signOut() {
+    if (!isSupabaseConfigured) {
+      return;
+    }
+
     const { error } = await supabase.auth.signOut();
     throwAuthError(error);
   },

@@ -1,5 +1,5 @@
-const STATIC_CACHE = 'ethioquiz-static-v2';
-const RUNTIME_CACHE = 'ethioquiz-runtime-v2';
+const STATIC_CACHE = 'ethioquiz-static-v3';
+const RUNTIME_CACHE = 'ethioquiz-runtime-v3';
 const APP_SHELL = ['/', '/index.html', '/favicon.ico', '/placeholder.svg', '/robots.txt'];
 
 self.addEventListener('install', (event) => {
@@ -49,8 +49,10 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          const copy = response.clone();
-          caches.open(RUNTIME_CACHE).then((cache) => cache.put('/index.html', copy));
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(RUNTIME_CACHE).then((cache) => cache.put('/index.html', copy));
+          }
           return response;
         })
         .catch(async () => {
@@ -72,8 +74,10 @@ self.addEventListener('fetch', (event) => {
       }
 
       return fetch(request).then((response) => {
-        const copy = response.clone();
-        caches.open(RUNTIME_CACHE).then((cache) => cache.put(request, copy));
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(RUNTIME_CACHE).then((cache) => cache.put(request, copy));
+        }
         return response;
       });
     }),

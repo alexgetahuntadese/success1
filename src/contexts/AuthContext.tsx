@@ -9,6 +9,10 @@ import type { User } from "@supabase/supabase-js";
 
 import { AuthContext, type AuthContextValue } from "@/contexts/auth-context";
 import { isAdminPreferences } from "@/lib/authRoles";
+import {
+  isSupabaseConfigured,
+  supabaseConfigError,
+} from "@/lib/supabaseConfig";
 import type { AppSession } from "@/lib/supabase/types";
 import { updateStudentName } from "@/lib/performanceUtils";
 import {
@@ -78,6 +82,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     let active = true;
+
+    if (!isSupabaseConfigured) {
+      console.warn(supabaseConfigError);
+      setIsLoading(false);
+
+      return () => {
+        active = false;
+      };
+    }
 
     const bootstrap = async () => {
       let nextSession: AppSession | null = null;
