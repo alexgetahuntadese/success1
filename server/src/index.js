@@ -2,7 +2,7 @@ import "dotenv/config";
 
 import cors from "cors";
 import express from "express";
-import authRouter from './auth/index.js'
+import authRouter from './auth/sqliteRoutes.js'
 import pg from "pg";
 
 const { Pool } = pg;
