@@ -76,7 +76,12 @@ const parseApiError = async (response: Response) => {
 
 const requestJson = async <T>(path: string, init: RequestInit = {}) => {
   const token = getStoredToken();
-  const response = await fetch(`${getApiBaseUrl()}${path}`, {
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}${path}`;
+  
+  console.log(`[API] ${init.method || 'GET'} ${url}`);
+  
+  const response = await fetch(url, {
     ...init,
     headers: {
       "Content-Type": "application/json",
@@ -85,8 +90,24 @@ const requestJson = async <T>(path: string, init: RequestInit = {}) => {
     },
   });
 
+  console.log(`[API] Response status: ${response.status} ${response.statusText}`);
+
   if (!response.ok) {
     throw new Error(await parseApiError(response));
+  }
+
+  // Check if response has content
+  const contentType = response.headers.get('content-type');
+  const contentLength = response.headers.get('content-length');
+  
+  if (!contentType?.includes('application/json')) {
+    const text = await response.text();
+    console.error(`[API] Expected JSON but got: ${contentType}`, text.substring(0, 200));
+    throw new Error(`Server returned non-JSON response. Check if API server is running at ${baseUrl}`);
+  }
+  
+  if (contentLength === '0' || !response.body) {
+    throw new Error('Server returned empty response');
   }
 
   return (await response.json()) as T;

@@ -255,7 +255,7 @@ const Index = () => {
         return;
       }
 
-      navigate("/grades");
+      navigate("/");
     } catch (error) {
       setAuthError(error instanceof Error ? error.message : "Could not sign you in right now.");
     } finally {
@@ -295,7 +295,7 @@ const Index = () => {
         return;
       }
 
-      navigate("/grades");
+      navigate("/");
     } catch (error) {
       setAuthError(error instanceof Error ? error.message : "Could not create your account right now.");
     } finally {

@@ -31,6 +31,7 @@ import BooksPage from "./pages/BooksPage";
 import BookSubjectsPage from "./pages/BookSubjectsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import AdminPaymentsPage from "./pages/AdminPaymentsPage";
+import DashboardPage from "./pages/DashboardPage";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route element={<RequireAuth />}>
+                  <Route path="/dashboard" element={<DashboardPage />} />
                   <Route path="/grades" element={<GradesPage />} />
                   <Route path="/grade/:grade" element={<GradeSelection />} />
                   <Route path="/grade/:grade/subjects" element={<SubjectsPage />} />
@@ -70,7 +72,8 @@ const App = () => (
                   <Route path="/payment" element={<PaymentPage />} />
                 </Route>
                 <Route element={<RequireAdmin />}>
-                  <Route path="/dashboard" element={<AdminDashboardPage />} />
+                  <Route path="/admin" element={<AdminDashboardPage />} />
+                  <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
                   <Route path="/admin/payments" element={<AdminPaymentsPage />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
