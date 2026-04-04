@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Sparkles, TrendingUp, Award, Target, Zap, Shield, Crown, Diamond, Star, GraduationCap } from "lucide-react";
+import { Sparkles, TrendingUp, Award, Target, Zap, Shield, Crown, Star, GraduationCap } from "lucide-react";
 
 const Index = () => {
   return (
@@ -41,11 +41,11 @@ const Index = () => {
             className="mb-6"
           >
             <div className="flex items-center justify-center gap-3 mb-4">
-              <Diamond className="w-8 h-8 text-amber-400" />
+              <img src="/logo.svg" alt="Simple Road" className="w-12 h-12 md:w-16 md:h-16" />
               <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400 bg-clip-text text-transparent">
                 Simple Road
               </h1>
-              <Diamond className="w-8 h-8 text-amber-400" />
+              <img src="/logo.svg" alt="Simple Road" className="w-12 h-12 md:w-16 md:h-16" />
             </div>
             <div className="flex items-center justify-center gap-2 mb-6">
               <Sparkles className="w-6 h-6 text-amber-300" />
@@ -244,11 +244,11 @@ const Index = () => {
             className="text-center mb-16"
           >
             <div className="flex items-center justify-center gap-3 mb-4">
-              <Diamond className="w-8 h-8 text-amber-400" />
+              <img src="/logo.svg" alt="Simple Road" className="w-8 h-8" />
               <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
                 Elite Portfolio
               </h2>
-              <Diamond className="w-8 h-8 text-amber-400" />
+              <img src="/logo.svg" alt="Simple Road" className="w-8 h-8" />
             </div>
             <p className="text-xl text-amber-100/60 max-w-3xl mx-auto">
               Explore our comprehensive suite of premium educational services
@@ -363,16 +363,24 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-center md:text-left">
               <p className="text-amber-100/80 text-sm mb-2">
-                Created by <span className="text-amber-300 font-semibold">Milkesa Comm.</span> & <span className="text-amber-300 font-semibold">Getahun Tadese</span>
+                Created by <span className="text-amber-300 font-semibold">Milkesa Comm.</span> <span className="text-amber-300 font-semibold">Getahun Tadese</span>
               </p>
-              <p className="text-amber-100/60 text-xs">
-                © 2024 Simple Road. All rights reserved.
+              <p className="text-amber-100/60 text-xs mb-2">
+                © 2026 Simple Road. All rights reserved.
               </p>
+              <div className="flex flex-col gap-1 text-amber-100/60 text-xs">
+                <p className="flex items-center gap-2">
+                  <span className="text-amber-400">📱</span>
+                  <span>0992010092 / 0950502881</span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <span className="text-amber-400">✉️</span>
+                  <span>alexgetahuntadese@gmail.com</span>
+                </p>
+              </div>
             </div>
             <div className="flex items-center gap-2">
-              <Crown className="w-5 h-5 text-amber-400" />
-              <span className="text-amber-200 font-semibold">Simple Road</span>
-              <Star className="w-4 h-4 text-amber-400" />
+              <img src="/logo.svg" alt="Simple Road" className="w-16 h-16" />
             </div>
           </div>
         </div>
