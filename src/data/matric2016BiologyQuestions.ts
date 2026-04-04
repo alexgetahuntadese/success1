@@ -68,6 +68,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2016-bio-6",
+    sectionDirection: "Choose the correct answer.",
     question: "Gene flow is the movement of genetic material",
     options: [
       "that drives a population towards perfection.",

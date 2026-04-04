@@ -68,6 +68,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-phys-6",
+    sectionDirection: "Choose the correct answer.",
     question: "The magnetic field created by a long straight current-carrying wire",
     options: [
       "is directed in the same direction as the current.",

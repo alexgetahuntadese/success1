@@ -68,6 +68,7 @@ export const matric2017ChemistryQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-chem-6",
+    sectionDirection: "Choose the correct answer.",
     question: "What is the electron configuration of $O_2^-$ molecule as per the molecular orbital model? (Atomic number of $O = 8$)",
     options: [
       "σ₁s² σ₁s*² σ₂s² σ₂s*² σ₂px² (π₂py² = π₂pz²) (π*₂py¹ = π*₂pz¹)",
