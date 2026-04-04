@@ -25,21 +25,8 @@ const PaymentPrompt = ({ context, className = "" }: PaymentPromptProps) => {
 
   const statusText = "All chapters and subjects are unlocked! Start learning immediately.";
 
-  const statusIcon = hasPremiumAccess
-    ? <CheckCircle2 className="h-3.5 w-3.5" />
-    : paymentStatus === "pending"
-      ? <Clock className="h-3.5 w-3.5" />
-      : paymentStatus === "rejected"
-        ? <AlertCircle className="h-3.5 w-3.5" />
-        : <Gift className="h-3.5 w-3.5" />;
-
-  const statusLabel = hasPremiumAccess
-    ? "Premium Active"
-    : paymentStatus === "pending"
-      ? "Pending Review"
-      : paymentStatus === "rejected"
-        ? "Needs Resubmission"
-        : "Payment And Trial";
+  const statusIcon = <CheckCircle2 className="h-3.5 w-3.5" />;
+  const statusLabel = "All Unlocked";
 
   return (
     <div className={`rounded-3xl border border-emerald-400/25 bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-cyan-500/10 p-5 text-white shadow-xl backdrop-blur-xl ${className}`}>
