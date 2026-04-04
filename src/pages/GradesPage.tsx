@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
 import TopBar from "@/components/TopBar";
 import StarField from '@/components/StarField';
-import PaymentPrompt from "@/components/PaymentPrompt";
 
 const gradeData = [
   {
@@ -75,8 +74,6 @@ const GradesPage = () => {
             Choose your grade and start learning - All chapters and subjects are unlocked!
           </p>
         </div>
-
-        <PaymentPrompt context="grades" className="mb-10" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
           {gradeData.map((grade, index) => {

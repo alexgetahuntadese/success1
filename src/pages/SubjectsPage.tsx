@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, BookOpen, Clock, Target, Sparkles, GraduationCap } from 'lucide-react';
 import TopBar from "@/components/TopBar";
 import StarField from '@/components/StarField';
-import PaymentPrompt from "@/components/PaymentPrompt";
 import { grade9Subjects } from '@/data/grade9Subjects';
 import { grade10Subjects } from '@/data/grade10Subjects';
 import { grade11Subjects } from '@/data/grade11Subjects';
@@ -313,8 +312,6 @@ const SubjectsPage = () => {
             Quiz chapters live here. Notes stay in the separate notes section.
           </p>
         </div>
-
-        <PaymentPrompt context={`Grade ${grade} subjects`} className="mb-10" />
 
         <div className="space-y-10">
           {groupedSubjects.map((group, groupIndex) => (
