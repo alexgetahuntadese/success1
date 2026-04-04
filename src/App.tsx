@@ -5,6 +5,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import AuthProvider from "@/contexts/AuthContextFree";
 import Index from "./pages/Index";
@@ -37,6 +39,8 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <Analytics />
+              <SpeedInsights />
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/grades" element={<GradesPage />} />
