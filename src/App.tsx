@@ -16,7 +16,6 @@ import QuizPage from "./pages/QuizPage";
 import CareerSimulatorPage from "./pages/CareerSimulatorPage";
 import PerformancePage from "./pages/PerformancePage";
 import ProfilePage from "./pages/ProfilePage";
-import NotFound from "./pages/NotFound";
 import MatricExamPage from "./pages/MatricExamPage";
 import MatricStreamPage from "./pages/MatricStreamPage";
 import MatricYearPage from "./pages/MatricYearPage";
@@ -26,8 +25,6 @@ import NotesSubjectsPage from "./pages/NotesSubjectsPage";
 import NotesChaptersPage from "./pages/NotesChaptersPage";
 import BooksPage from "./pages/BooksPage";
 import BookSubjectsPage from "./pages/BookSubjectsPage";
-import AdminDashboardPage from "./pages/AdminDashboardPage";
-import AdminPaymentsPage from "./pages/AdminPaymentsPage";
 
 const queryClient = new QueryClient();
 
@@ -63,10 +60,6 @@ const App = () => (
                 <Route path="/notes/:grade/:subject" element={<NotesChaptersPage />} />
                 <Route path="/books" element={<BooksPage />} />
                 <Route path="/books/:grade" element={<BookSubjectsPage />} />
-                <Route path="/admin" element={<AdminDashboardPage />} />
-                <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-                <Route path="/admin/payments" element={<AdminPaymentsPage />} />
-                <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
           </TooltipProvider>

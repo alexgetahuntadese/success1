@@ -68,7 +68,7 @@ const MatricYearPage = () => {
           </div>
         </div>
 
-        {!premiumAccess && subjects.length > 0 && (
+        {/* All subjects are now free - no payment restrictions */}
           <div className="mb-8 rounded-2xl border border-amber-400/30 bg-amber-500/10 p-5 text-white">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
@@ -86,12 +86,10 @@ const MatricYearPage = () => {
               </Button>
             </div>
           </div>
-        )}
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {subjects.map((subj, index) => {
             const hasQuestions = subj.questions.length > 0;
-            const locked = !premiumAccess && !isFreeMatricSubject(index);
+            const locked = false; // All subjects unlocked
             const SubjectIcon = subjectIcons[subj.subject] ?? BookOpen;
 
             return (
@@ -119,9 +117,7 @@ const MatricYearPage = () => {
                   <div className="flex items-center gap-3">
                     <SubjectIcon className="h-6 w-6 text-white/70" />
                     <CardTitle className="text-white text-lg">{subj.subject}</CardTitle>
-                    {locked && (
-                      <Lock className="h-4 w-4 text-amber-200 shrink-0" />
-                    )}
+                    {/* Lock icon removed - all subjects unlocked */}
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -129,7 +125,7 @@ const MatricYearPage = () => {
                     <BookOpen className="h-4 w-4" />
                     <span>{subj.questions.length} questions</span>
                   </div>
-                  {hasQuestions && !locked ? (
+                  {hasQuestions ? (
                     <Button
                       size="sm"
                       className="w-full bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600 text-white"
