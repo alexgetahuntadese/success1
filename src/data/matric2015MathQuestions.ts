@@ -16,6 +16,7 @@ export const matric2015MathQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-math-2",
+    sectionDirection: "Choose the correct answer.",
     question: "The solution set of the inequality (2x - 3)(x + 5) \\leq 0 is",
     options: [
       "\\left(5,-\\frac{3}{2}\\right)",

@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2016BiologyQuestions: MatricExamQuestion[] = [
   {
     id: "m2016-bio-1",
+    sectionDirection: "Choose the correct answer.",
     question: "A transgenic organism is an organism that:",
     options: [
       "can undergo chromosomal non-disjunction",
@@ -15,6 +16,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2016-bio-2",
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the following explains how biology takes part in biosensor technology? Using microorganism to",
     options: [
       "develop vaccines",
@@ -27,6 +29,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2016-bio-3",
+    sectionDirection: "Choose the correct answer.",
     question: "In a textile industry, microorganism's commercial products play a significant role in removing stains like grease by changing:",
     options: [
       "the temperature of insoluble large stain molecules",
@@ -39,6 +42,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2016-bio-4",
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statements is correct about application of bio-pesticide in agriculture? It",
     options: [
       "breakdowns glyphosate by an enzyme introduced into plant cell culture.",
@@ -51,6 +55,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2016-bio-5",
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statements correctly describes bacteria?",
     options: [
       "They are single celled prokaryotic organisms.",

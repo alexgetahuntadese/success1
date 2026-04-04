@@ -16,6 +16,7 @@ export const matric2015BiologyQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-bio-2",
+    sectionDirection: "Choose the correct answer.",
     question: "During culturing micro-organisms, all of the following activities are important EXCEPT",
     options: [
       "tilting the lid of the Petri dish during inoculation.",

@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2016MathQuestions: MatricExamQuestion[] = [
   {
     id: "m2016-math-1",
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is true about the Range and Interquartile Range of a given data?",
     options: [
       "Both are measures of the variability of each item in the data.",
