@@ -13,18 +13,18 @@ import { grade12CivicsQuestions } from '@/data/grade12CivicsQuestions';
 import { grade12HistoryQuestions } from '@/data/grade12HistoryQuestions';
 import { grade12ITQuestions } from '@/data/grade12ITQuestions';
 import { grade12GeographyQuestions, getGrade12GeographyDisplayTitle, getGrade12GeographyQuestions, normalizeGrade12GeographyUnit } from '@/data/grade12GeographyQuestions';
-import { getGrade11BiologyQuestions } from '@/data/grade11Biology';
-import { getGrade11PhysicsQuestions } from '@/data/grade11Physics';
-import { getGrade11ChemistryQuestions } from '@/data/grade11Chemistry';
-import { getGrade11AgricultureQuestions } from '@/data/grade11AgricultureQuestions';
-import { getGrade11MathematicsQuestions } from '@/data/grade11MathematicsQuestions';
+import { grade11Biology, getGrade11BiologyQuestions } from '@/data/grade11Biology';
+import { grade11Physics, getGrade11PhysicsQuestions } from '@/data/grade11Physics';
+import { grade11Chemistry, getGrade11ChemistryQuestions } from '@/data/grade11Chemistry';
+import { grade11AgricultureQuestions, getGrade11AgricultureQuestions } from '@/data/grade11AgricultureQuestions';
+import { grade11MathematicsQuestions, getGrade11MathematicsQuestions } from '@/data/grade11MathematicsQuestions';
 import { grade11CivicsQuestions } from '@/data/grade11CivicsQuestions';
 import { grade11EconomicsQuestions } from '@/data/grade11EconomicsQuestions';
 import { grade11EnglishQuestions } from '@/data/grade11EnglishQuestions';
 import { grade11HistoryQuestions } from '@/data/grade11HistoryQuestions';
 import { grade11GeographyQuestions } from '@/data/grade11GeographyQuestions';
 import { grade11AmharicQuestions } from '@/data/grade11AmharicQuestions';
-import { getGrade10BiologyQuestions } from '@/data/grade10BiologyQuestions';
+import { grade10Biology, getGrade10BiologyQuestions } from '@/data/grade10BiologyQuestions';
 import { grade10MathematicsQuestions } from '@/data/grade10MathematicsQuestions';
 import { grade10PhysicsQuestions } from '@/data/grade10PhysicsQuestions';
 import { grade10ChemistryQuestions } from '@/data/grade10ChemistryQuestions';
@@ -82,9 +82,9 @@ const getQuizChapterTitles = (subject: string, grade: string) => {
 
   if (grade === '11') {
     const grade11Map: Record<string, string[]> = {
-      Biology: Object.keys(grade11BiologyQuestions),
-      Physics: Object.keys(grade11PhysicsQuestions),
-      Chemistry: Object.keys(grade11ChemistryQuestions),
+      Biology: Object.keys(grade11Biology),
+      Physics: Object.keys(grade11Physics),
+      Chemistry: Object.keys(grade11Chemistry),
       Agriculture: Object.keys(grade11AgricultureQuestions),
       Mathematics: Object.keys(grade11MathematicsQuestions),
       Economics: Object.keys(grade11EconomicsQuestions),
@@ -101,7 +101,7 @@ const getQuizChapterTitles = (subject: string, grade: string) => {
 
   if (grade === '10') {
     const grade10Map: Record<string, string[]> = {
-      Biology: Object.keys(grade10BiologyQuestions),
+      Biology: Object.keys(grade10Biology),
       Mathematics: Object.keys(grade10MathematicsQuestions),
       Physics: Object.keys(grade10PhysicsQuestions),
       Chemistry: Object.keys(grade10ChemistryQuestions),
@@ -277,10 +277,10 @@ const getQuestionsForSubject = (subject: string, chapter: string, difficulty: st
             .filter(q => q.difficulty.toLowerCase() === difficultyLevel)
             .slice(0, count)
             .map(q => ({
-              id: q.id,
+              id: q.question,
               question: q.question,
               options: q.options,
-              correct: q.correct,
+              correct: q.correctAnswer,
               explanation: q.explanation
             }));
 
