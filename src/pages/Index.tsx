@@ -375,7 +375,7 @@ const Index = () => {
                 </p>
                 <p className="flex items-center gap-2">
                   <span className="text-amber-400">✉️</span>
-                  <span> alexgetahuntadese@gmail.com</span>
+                  <span>alexgetahuntadese@gmail.com</span>
                 </p>
               </div>
             </div>
