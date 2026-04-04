@@ -6,9 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/i18n/LanguageContext";
-import { AuthProvider } from "@/contexts/AuthContext";
-import RequireAuth from "@/components/auth/RequireAuth";
-import RequireAdmin from "@/components/auth/RequireAdmin";
+import AuthProvider from "@/contexts/AuthContextDisabled";
 import Index from "./pages/Index";
 import GradeSelection from "./pages/GradeSelection";
 import GradesPage from "./pages/GradesPage";
@@ -26,12 +24,10 @@ import MatricQuizPage from "./pages/MatricQuizPage";
 import NotesPage from "./pages/NotesPage";
 import NotesSubjectsPage from "./pages/NotesSubjectsPage";
 import NotesChaptersPage from "./pages/NotesChaptersPage";
-import PaymentPage from "./pages/PaymentPage";
 import BooksPage from "./pages/BooksPage";
 import BookSubjectsPage from "./pages/BookSubjectsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import AdminPaymentsPage from "./pages/AdminPaymentsPage";
-import DashboardPage from "./pages/DashboardPage";
 
 const queryClient = new QueryClient();
 
@@ -46,36 +42,30 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route element={<RequireAuth />}>
-                  <Route path="/dashboard" element={<DashboardPage />} />
-                  <Route path="/grades" element={<GradesPage />} />
-                  <Route path="/grade/:grade" element={<GradeSelection />} />
-                  <Route path="/grade/:grade/subjects" element={<SubjectsPage />} />
-                  <Route
-                    path="/grade/:grade/subject/:subject"
-                    element={<Navigate to="chapters" replace />}
-                  />
-                  <Route path="/grade/:grade/subject/:subject/chapters" element={<ChaptersPage />} />
-                  <Route path="/grade/:grade/subject/:subject/chapter/:chapterId/difficulty/:difficulty/quiz" element={<QuizPage />} />
-                  <Route path="/career-simulator" element={<CareerSimulatorPage />} />
-                  <Route path="/performance" element={<PerformancePage />} />
-                  <Route path="/profile" element={<ProfilePage />} />
-                  <Route path="/matric" element={<MatricExamPage />} />
-                  <Route path="/matric/:year" element={<MatricStreamPage />} />
-                  <Route path="/matric/:year/:stream" element={<MatricYearPage />} />
-                  <Route path="/matric/:year/:stream/:subject" element={<MatricQuizPage />} />
-                  <Route path="/notes" element={<NotesPage />} />
-                  <Route path="/notes/:grade" element={<NotesSubjectsPage />} />
-                  <Route path="/notes/:grade/:subject" element={<NotesChaptersPage />} />
-                  <Route path="/books" element={<BooksPage />} />
-                  <Route path="/books/:grade" element={<BookSubjectsPage />} />
-                  <Route path="/payment" element={<PaymentPage />} />
-                </Route>
-                <Route element={<RequireAdmin />}>
-                  <Route path="/admin" element={<AdminDashboardPage />} />
-                  <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-                  <Route path="/admin/payments" element={<AdminPaymentsPage />} />
-                </Route>
+                <Route path="/grades" element={<GradesPage />} />
+                <Route path="/grade/:grade" element={<GradeSelection />} />
+                <Route path="/grade/:grade/subjects" element={<SubjectsPage />} />
+                <Route
+                  path="/grade/:grade/subject/:subject"
+                  element={<Navigate to="chapters" replace />}
+                />
+                <Route path="/grade/:grade/subject/:subject/chapters" element={<ChaptersPage />} />
+                <Route path="/grade/:grade/subject/:subject/chapter/:chapterId/difficulty/:difficulty/quiz" element={<QuizPage />} />
+                <Route path="/career-simulator" element={<CareerSimulatorPage />} />
+                <Route path="/performance" element={<PerformancePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/matric" element={<MatricExamPage />} />
+                <Route path="/matric/:year" element={<MatricStreamPage />} />
+                <Route path="/matric/:year/:stream" element={<MatricYearPage />} />
+                <Route path="/matric/:year/:stream/:subject" element={<MatricQuizPage />} />
+                <Route path="/notes" element={<NotesPage />} />
+                <Route path="/notes/:grade" element={<NotesSubjectsPage />} />
+                <Route path="/notes/:grade/:subject" element={<NotesChaptersPage />} />
+                <Route path="/books" element={<BooksPage />} />
+                <Route path="/books/:grade" element={<BookSubjectsPage />} />
+                <Route path="/admin" element={<AdminDashboardPage />} />
+                <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+                <Route path="/admin/payments" element={<AdminPaymentsPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
