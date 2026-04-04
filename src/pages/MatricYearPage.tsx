@@ -16,14 +16,12 @@ import {
   ScrollText,
   Banknote,
   Lock,
-  CreditCard,
   type LucideIcon,
 } from 'lucide-react';
 import { getMatricSubjectsForYear } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
 import { useAuth } from "@/hooks/useAuth";
-import { FREE_MATRIC_SUBJECT_LIMIT, isFreeMatricSubject } from '@/lib/paymentAccess';
 
 const subjectIcons: Record<string, LucideIcon> = {
   Mathematics: Calculator,
@@ -68,24 +66,6 @@ const MatricYearPage = () => {
           </div>
         </div>
 
-        {/* All subjects are now free - no payment restrictions */}
-          <div className="mb-8 rounded-2xl border border-amber-400/30 bg-amber-500/10 p-5 text-white">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-lg font-bold">Only the first {FREE_MATRIC_SUBJECT_LIMIT} matric subjects are free</h2>
-                <p className="mt-1 text-sm text-white/75">
-                  For each year and stream, only the first {FREE_MATRIC_SUBJECT_LIMIT} subjects are open. The rest are locked until payment is verified.
-                </p>
-              </div>
-              <Button
-                onClick={() => navigate("/payment")}
-                className="bg-white text-slate-950 hover:bg-white/90"
-              >
-                <CreditCard className="mr-2 h-4 w-4" />
-                Unlock All Matric Subjects
-              </Button>
-            </div>
-          </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {subjects.map((subj, index) => {
             const hasQuestions = subj.questions.length > 0;

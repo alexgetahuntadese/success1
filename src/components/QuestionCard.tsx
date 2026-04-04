@@ -51,7 +51,7 @@ const QuestionCard = ({
             Question {questionNumber} of {totalQuestions}
           </Badge>
         </div>
-        <CardTitle className="text-lg font-semibold text-white leading-relaxed">
+        <CardTitle className="text-lg font-semibold text-white leading-relaxed break-words whitespace-normal">
           {question.question}
         </CardTitle>
       </CardHeader>
@@ -89,7 +89,7 @@ const QuestionCard = ({
                 <span className="mr-3 font-semibold flex-shrink-0">
                   {String.fromCharCode(65 + index)}.
                 </span>
-                <span className="flex-1">{option}</span>
+                <span className="flex-1 break-words whitespace-normal">{option}</span>
               </Button>
             );
           })}

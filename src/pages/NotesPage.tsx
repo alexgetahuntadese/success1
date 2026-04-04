@@ -4,7 +4,6 @@ import TopBar from "@/components/TopBar";
 import StarField from "@/components/StarField";
 import { Button } from "@/components/ui/button";
 import { notesByGrade } from "@/lib/notesData";
-import PaymentPrompt from "@/components/PaymentPrompt";
 
 const NotesPage = () => {
   const navigate = useNavigate();
@@ -35,8 +34,6 @@ const NotesPage = () => {
             This area is for notes only. Choose a grade, then open any subject to read short chapter focus notes on dedicated pages.
           </p>
         </div>
-
-        <PaymentPrompt context="notes" className="mb-10" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {notesByGrade.map((grade, index) => (

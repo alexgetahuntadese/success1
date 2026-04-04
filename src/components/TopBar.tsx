@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User, BarChart3, Home, GraduationCap, BookOpen, Briefcase, FileText, Menu, X, CreditCard, Download, LogOut, LogIn, ChevronDown } from 'lucide-react';
+import { User, Home, GraduationCap, BookOpen, Briefcase, FileText, Menu, X, CreditCard, Download, LogOut, LogIn, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -38,7 +38,6 @@ const TopBar = () => {
 
   const mobileAccountItems = [
     ...(isAuthenticated ? [{ path: '/profile', icon: User, label: 'Profile' }] : []),
-    { path: '/performance', icon: BarChart3, label: 'Performance' },
   ];
 
   const handleSignOut = async () => {
@@ -180,10 +179,10 @@ const TopBar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
-                  variant={isActive('/profile') || isActive('/performance') ? 'secondary' : 'ghost'}
+                  variant={isActive('/profile') ? 'secondary' : 'ghost'}
                   size="sm"
                   className={`max-w-[220px] font-medium ${
-                    isActive('/profile') || isActive('/performance')
+                    isActive('/profile')
                       ? 'bg-white/20 text-white'
                       : 'text-white/95 hover:bg-white/12 hover:text-white'
                   } px-2 sm:px-3`}
@@ -203,13 +202,6 @@ const TopBar = () => {
                   {displayName}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-white/10" />
-                <DropdownMenuItem
-                  onClick={() => navigate('/performance')}
-                  className="cursor-pointer text-white/85 focus:bg-white/12 focus:text-white"
-                >
-                  <BarChart3 className="mr-2 h-4 w-4" />
-                  Performance
-                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => navigate('/profile')}
                   className="cursor-pointer text-white/85 focus:bg-white/12 focus:text-white"
