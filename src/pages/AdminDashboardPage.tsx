@@ -311,32 +311,10 @@ const AdminDashboardPage = () => {
     toast.success(role === "admin" ? "Admin access granted." : "Admin access removed.");
   };
 
-  const reviewPayment = async (
-    submission: PaymentSubmissionWithReceiptUrl,
-    status: "verified" | "rejected",
-  ) => {
-    setIsReviewingPaymentId(submission.id);
-
-    try {
-      await paymentAdminService.reviewSubmission({
-        submission,
-        status,
-        reviewerNotes,
-      });
-      toast.success(
-        status === "verified"
-          ? "Payment verified and premium access granted."
-          : "Payment marked as rejected.",
-      );
-      refreshDashboard();
-    } catch (error) {
-      console.error("Error reviewing payment:", error);
-      toast.error(
-        error instanceof Error ? error.message : "Could not update this payment submission.",
-      );
-    } finally {
-      setIsReviewingPaymentId(null);
-    }
+  const reviewPayment = async (submission: PaymentSubmissionWithReceiptUrl) => {
+    // Payment review functionality removed
+    toast.success("Payment review functionality has been disabled.");
+    refreshDashboard();
   };
 
   return (
@@ -371,9 +349,9 @@ const AdminDashboardPage = () => {
               <ShieldCheck className="h-4 w-4" />
               Simple Road Admin
             </div>
-            <h1 className="mb-2 text-3xl font-bold text-white md:text-5xl">User and payment management</h1>
+            <h1 className="mb-2 text-3xl font-bold text-white md:text-5xl">User management</h1>
             <p className="max-w-2xl text-sm text-white/72 md:text-base">
-              Review student profiles from Supabase, search by identity details, control account access, and verify payment receipts before premium access is granted.
+              Review student profiles from Supabase, search by identity details, and control account access.
             </p>
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-4 py-2 text-sm text-white/72">
               Signed in as {displayName}
@@ -419,10 +397,10 @@ const AdminDashboardPage = () => {
               <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500">
                 <UserMinus className="h-6 w-6 text-white" />
               </div>
-              <div className="text-sm text-white/70">Inactive / Payment Queue</div>
+              <div className="text-sm text-white/70">Inactive Users</div>
               <div className="mt-2 text-3xl font-black text-white">{inactiveUsersCount}</div>
               <div className="mt-2 text-xs text-white/50">
-                {usersWithEmailCount} profiles include email • {pendingPaymentsCount} payments pending review
+                {usersWithEmailCount} profiles include email
               </div>
             </CardContent>
           </Card>
@@ -518,7 +496,7 @@ const AdminDashboardPage = () => {
             <CardHeader>
               <CardTitle>{selectedUser ? selectedUser.name || "Unnamed user" : "No user selected"}</CardTitle>
               <CardDescription className="text-white/60">
-                Review profile details, manage account access, and inspect the latest payment state.
+                Review profile details and manage account access.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">

@@ -23,17 +23,7 @@ const PaymentPrompt = ({ context, className = "" }: PaymentPromptProps) => {
   const trialExpired = trialAccess && isTrialExpired(trialAccess);
   const daysRemaining = getTrialDaysRemaining(trialAccess);
 
-  const statusText = hasPremiumAccess
-    ? "Premium access is active on this account, so your locked chapters and subjects should already be open."
-    : paymentStatus === "pending"
-      ? "Your payment receipt is waiting for admin verification. Open the payment page to check the latest review status."
-      : paymentStatus === "rejected"
-        ? "A payment submission was rejected. Open the payment page, check the review note, and upload a clearer receipt."
-        : trialActive
-          ? `Your 7-day free trial is active with ${daysRemaining} day${daysRemaining === 1 ? "" : "s"} remaining.`
-          : trialExpired
-            ? "Your free trial has ended. Upgrade now to keep uninterrupted access."
-            : "Start with the free trial or submit payment to keep access on the pages that matter most.";
+  const statusText = "All chapters and subjects are unlocked! Start learning immediately.";
 
   const statusIcon = hasPremiumAccess
     ? <CheckCircle2 className="h-3.5 w-3.5" />

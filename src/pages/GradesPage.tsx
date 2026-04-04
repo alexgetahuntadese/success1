@@ -63,7 +63,7 @@ const GradesPage = () => {
           {t('common.home')}
         </Button>
 
-        <div className="text-center mb-16 opacity-0 animate-fade-in" style={{ animationFillMode: 'forwards' }}>
+        <div className="mb-8 text-center opacity-0 animate-fade-in" style={{ animationFillMode: 'forwards' }}>
           <div className="app-kicker mb-6">
             <GraduationCap className="h-4 w-4" />
             Ethiopian Curriculum
@@ -72,7 +72,7 @@ const GradesPage = () => {
             {t('grades.selectGrade')}
           </h1>
           <p className="max-w-md mx-auto text-lg md:text-xl app-muted">
-            {t('grades.chooseGrade')}
+            Choose your grade and start learning - All chapters and subjects are unlocked!
           </p>
         </div>
 

@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/i18n/LanguageContext";
-import AuthProvider from "@/contexts/AuthContextDisabled";
+import AuthProvider from "@/contexts/AuthContextFree";
 import Index from "./pages/Index";
 import GradeSelection from "./pages/GradeSelection";
 import GradesPage from "./pages/GradesPage";

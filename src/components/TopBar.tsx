@@ -33,7 +33,6 @@ const TopBar = () => {
     { path: '/notes', icon: BookOpen, label: 'Notes' },
     { path: '/books', icon: Download, label: 'Books' },
     { path: '/career-simulator', icon: Briefcase, label: 'Career' },
-    { path: '/payment', icon: CreditCard, label: 'Payment' },
     ...(isAdmin ? [{ path: '/dashboard', icon: User, label: 'Dashboard' }] : []),
   ];
 
