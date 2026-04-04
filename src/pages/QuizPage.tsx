@@ -623,7 +623,27 @@ const QuizPage = () => {
           </h2>
         </div>
         <div className="rounded-lg border border-red-400/35 bg-red-950/45 p-6 shadow-xl">
-          <p className="text-red-400 text-lg mb-4">{error}</p>
+          <p className="text-red-400 text-lg mb-4">
+            {error.includes('Unable to load the current question') ? (
+              <>
+                Unable to load the current question. 
+                Please try refreshing the page.
+              </>
+            ) : (
+              <>
+                {error.includes('No questions available') ? (
+                  <>
+                    No questions available for this chapter and difficulty level. 
+                    Please try a different difficulty level or chapter.
+                  </>
+                ) : (
+                  <>
+                    {error}
+                  </>
+                )}
+              </>
+            )}
+          </p>
           <div className="space-x-4">
             <Button 
               onClick={initializeQuestions}
@@ -663,7 +683,11 @@ const QuizPage = () => {
           </h2>
         </div>
         <div className="rounded-lg border border-yellow-400/35 bg-yellow-950/45 p-6 shadow-xl">
-          <p className="text-yellow-400">Missing required parameters. Please navigate from the subjects page.</p>
+          <p className="text-yellow-400">
+            Missing required parameters. 
+            <br />
+            <span className="text-sm">Please navigate from the subjects page.</span>
+          </p>
         </div>
       </div>
     );
@@ -688,14 +712,11 @@ const QuizPage = () => {
           </h2>
         </div>
         <div className="rounded-lg border border-blue-400/35 bg-blue-950/45 p-6 shadow-xl">
-          <p className="text-blue-400 text-lg mb-4">No questions available for this chapter and difficulty level.</p>
-          <Button 
-            variant="outline"
-            onClick={handleBackToChapters}
-            className="border-white/[0.08] text-white hover:bg-white/10"
-          >
-            Choose Different Chapter
-          </Button>
+          <p className="text-blue-400 text-lg mb-4">
+            No questions available for this chapter and difficulty level.
+            <br />
+            <span className="text-sm">Please try a different difficulty level or chapter.</span>
+          </p>
         </div>
       </div>
     );
@@ -756,7 +777,7 @@ const QuizPage = () => {
           Back
         </Button>
         <h2 className="text-lg sm:text-2xl font-semibold text-white">
-          Grade {grade} {subject} - {chapterId} ({difficulty})
+          <span>Grade {grade} {subject} - {chapterId} ({difficulty})</span>
         </h2>
       </div>
 

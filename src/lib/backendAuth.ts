@@ -67,6 +67,10 @@ const parseApiError = async (response: Response) => {
     return "The auth server route could not be found.";
   }
 
+  if (response.status === 500) {
+    return "Server error (500). The authentication service is temporarily unavailable. Please try again later or contact support.";
+  }
+
   if (response.status >= 500) {
     return "The auth server had a problem. Try again in a moment.";
   }
