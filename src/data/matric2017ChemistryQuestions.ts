@@ -81,6 +81,7 @@ export const matric2017ChemistryQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-chem-7",
+    sectionDirection: "Choose the correct answer.",
     question: "At a particular temperature, the equilibrium constant, Kc = 0.36 for the reaction SO$_3$(g) ⇌ SO$_2$(g) + O$_2$(g). Which of the following predictions can be drawn from the given data?",
     options: [
       "It is not possible to predict the direction of the reaction.",

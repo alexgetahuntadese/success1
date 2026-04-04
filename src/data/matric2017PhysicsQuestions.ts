@@ -81,6 +81,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-phys-7",
+    sectionDirection: "Choose the correct answer.",
     question: "What will happen to a pure semiconductor when it is doped by a group III element?",
     options: [
       "It becomes P-type semiconductor.",
@@ -93,6 +94,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-phys-8",
+    sectionDirection: "Choose the correct answer.",
     question: "We usually use plastic materials to cover metallic wires that carry electricity to protect living things from danger. Which of the following statements correctly describes the nature of the plastic to use for this purpose?",
     options: [
       "Since every electron in plastic is slightly bound to the parent atom, it becomes a poor conductor.",
@@ -104,6 +106,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
     explanation: "Since every electron in plastic is tightly bound to the parent atom, it becomes a poor conductor.",
   },
   {
+    sectionDirection: "Choose the correct answer.",
     id: "m2017-phys-9",
     question: "Which one of the following statements is correct about the current-voltage (I-V) characteristics of a typical semiconductor diode?",
     options: [
@@ -115,7 +118,8 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
     correctAnswer: 0,
     explanation: "The region of the I-V curve that rises very rapidly after the voltage exceeds the cut-in voltage is the forward bias region.",
   },
-  {
+  {sectionDirection: "Choose the correct answer.",
+    
     id: "m2017-phys-10",
     question: "Consider a circuit containing a diode and load resistor (R L ) connected to an AC voltage source. If initially, polarity of 'a' is positive while 'b' is negative,\n[Image: exam question image]",
     options: [

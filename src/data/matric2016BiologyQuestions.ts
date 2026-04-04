@@ -81,6 +81,7 @@ export const matric2016BiologyQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2016-bio-7",
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following options is a constituent of peripheral nervous system?",
     options: [
       "Somatic sensory nerves, spinal cord and efferent nerves",
