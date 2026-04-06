@@ -1,15 +1,13 @@
 import React from 'react';
-import { ChevronLeftIcon, ChevronRightIcon, RotateCcwIcon } from 'lucide-react';
+import { ChevronRightIcon, RotateCcwIcon } from 'lucide-react';
 
 interface QuizNavigationProps {
   currentIndex: number;
   totalQuestions: number;
-  onPrevious: () => void;
   onNext: () => void;
   onRestart: () => void;
   onPEV?: () => void;
   canGoNext: boolean;
-  canGoPrevious: boolean;
   isCompleted: boolean;
   showPEV?: boolean;
 }
@@ -17,12 +15,10 @@ interface QuizNavigationProps {
 export const QuizNavigation: React.FC<QuizNavigationProps> = ({
   currentIndex,
   totalQuestions,
-  onPrevious,
   onNext,
   onRestart,
   onPEV,
   canGoNext,
-  canGoPrevious,
   isCompleted,
   showPEV = false
 }) => {
@@ -47,20 +43,6 @@ export const QuizNavigation: React.FC<QuizNavigationProps> = ({
 
       {/* Navigation Buttons */}
       <div className="flex items-center space-x-3">
-        <button
-          onClick={onPrevious}
-          disabled={!canGoPrevious}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all border-2 border-gray-400 shadow-md ${
-            canGoPrevious
-              ? 'bg-green-600 hover:bg-green-700 text-white border-green-600'
-              : 'bg-gray-200 text-gray-500 cursor-not-allowed border-gray-300'
-          }`}
-          style={{ opacity: 1, visibility: 'visible', display: 'flex' }}
-        >
-          <span>Previous</span>
-          <ChevronLeftIcon className="w-4 h-4" />
-        </button>
-
         <button
           onClick={onNext}
           disabled={!canGoNext}

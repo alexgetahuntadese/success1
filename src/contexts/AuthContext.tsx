@@ -13,7 +13,7 @@ import {
   isAdminPreferences,
 } from "@/lib/authRoles";
 import { INACTIVE_ACCOUNT_NOTICE_KEY } from "@/lib/authStorage";
-import { backendAuthService } from "@/lib/backendAuth";
+import { parseAuthService } from "@/integrations/parse/parseAuth";
 import type {
   AuthUser,
   RegisterInput,
@@ -72,7 +72,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const bootstrap = async () => {
       try {
-        const session = await backendAuthService.getSession();
+        const session = await parseAuthService.getSession();
         
         if (!active) {
           return;
@@ -111,7 +111,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     displayName: deriveDisplayName(user, profile),
     refreshProfile: async () => {
       try {
-        const session = await backendAuthService.getSession();
+        const session = await parseAuthService.getSession();
         if (session?.profile) {
           return await applyUserData(session.user, session.profile);
         }
@@ -123,7 +123,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     signIn: async (phone: string, password: string) => {
       try {
-        const session = await backendAuthService.signIn({ phone, password });
+        const session = await parseAuthService.signIn({ phone, password });
         if (session?.session?.user && session?.session?.profile) {
           const userProfile = await applyUserData(session.session.user, session.session.profile);
           checkInactiveAccount(userProfile);
@@ -137,7 +137,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     register: async (input: RegisterInput) => {
       try {
-        const session = await backendAuthService.register(input);
+        const session = await parseAuthService.register(input);
         if (session?.session?.user && session?.session?.profile) {
           const userProfile = await applyUserData(session.session.user, session.session.profile);
           checkInactiveAccount(userProfile);
@@ -151,7 +151,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     updateProfile: async (input: UpdateProfileInput) => {
       try {
-        const session = await backendAuthService.updateProfile(input);
+        const session = await parseAuthService.updateProfile(input);
         if (session?.profile) {
           const userProfile = await applyUserData(session.user, session.profile);
           return userProfile;
@@ -164,7 +164,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     signOut: async () => {
       try {
-        await backendAuthService.signOut();
+        await parseAuthService.signOut();
         clearAuthState();
       } catch (error) {
         console.error("Sign out error:", error);

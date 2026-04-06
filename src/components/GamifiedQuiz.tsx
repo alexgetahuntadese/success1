@@ -265,12 +265,10 @@ export const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
       <QuizNavigation
         currentIndex={currentQuestionIndex}
         totalQuestions={questions.length}
-        onPrevious={handlePrevious}
         onNext={handleNext}
         onRestart={handleRestart}
         onPEV={onPEV}
         canGoNext={canGoNext}
-        canGoPrevious={canGoPrevious}
         isCompleted={isCompleted}
         showPEV={showPEVButton}
       />
