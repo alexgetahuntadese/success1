@@ -43,7 +43,9 @@ import QuestionCard from '@/components/QuestionCard';
 import Results from '@/components/Results';
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, Eye } from 'lucide-react';
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Eye, Clock, Target, Brain, CheckCircle2, RotateCcw } from 'lucide-react';
 import TopBar from "@/components/TopBar";
 import { useAuth } from "@/hooks/useAuth";
 import { isFreeChapter } from '@/lib/paymentAccess';
@@ -770,14 +772,56 @@ const QuizPage = () => {
         <Button
           variant="ghost"
           onClick={handleBackToChapters}
-          className="mb-2 text-white/90 hover:bg-white/12"
+          className="mb-4 text-white/90 hover:bg-white/12 transition-all duration-200"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back
         </Button>
-        <h2 className="text-lg sm:text-2xl font-semibold text-white break-words whitespace-normal">
-          <span>Grade {grade} {subject} - {chapterId} ({difficulty})</span>
-        </h2>
+        
+        <div className="bg-white/[0.06] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.1]">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg">
+              <Brain className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h1 className="text-xl sm:text-2xl font-bold text-white break-words whitespace-normal">
+                Grade {grade} {subject} - {chapterId}
+              </h1>
+              <div className="flex items-center gap-3 mt-2">
+                <Badge variant="outline" className="border-white/20 text-white/60 text-sm">
+                  {difficulty} level
+                </Badge>
+                <div className="flex items-center gap-1.5 text-white/50 text-sm">
+                  <Clock className="h-4 w-4" />
+                  <span>{formatTime(elapsedTime)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="space-y-3">
+            <div className="flex items-center justify-between text-white/60 text-sm">
+              <div className="flex items-center gap-2">
+                <Target className="h-4 w-4" />
+                <span>Progress</span>
+              </div>
+              <span>{Math.round(((currentQuestionIndex + 1) / questions.length) * 100)}%</span>
+            </div>
+            <Progress 
+              value={((currentQuestionIndex + 1) / questions.length) * 100} 
+              className="h-3 bg-white/10"
+              // @ts-ignore
+              indicatorClassName="bg-gradient-to-r from-violet-500 to-fuchsia-500"
+            />
+            <div className="flex items-center justify-between text-white/60 text-sm">
+              <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4" />
+                <span>{Object.keys(selectedAnswers).length} answered</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {showResults ? (
@@ -791,9 +835,32 @@ const QuizPage = () => {
         />
       ) : (
         <div className="space-y-6">
-          <p className="mb-2 text-white/80">
-            Time Elapsed: <span className="font-bold text-white">{formatTime(elapsedTime)}</span>
-          </p>
+          <div className="flex items-center justify-center gap-2">
+            {Array.from({ length: Math.min(questions.length, 10) }, (_, i) => {
+              const questionIndex = Math.floor(currentQuestionIndex / 10) * 10 + i;
+              if (questionIndex >= questions.length) return null;
+              const isAnswered = selectedAnswers[questionIndex] !== undefined;
+              const isCurrent = questionIndex === currentQuestionIndex;
+              
+              return (
+                <button
+                  key={questionIndex}
+                  onClick={() => {
+                    setCurrentQuestionIndex(questionIndex);
+                  }}
+                  className={`w-8 h-8 rounded-full text-xs font-medium transition-all duration-200 ${
+                    isCurrent
+                      ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white scale-110 shadow-lg'
+                      : isAnswered
+                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30'
+                      : 'bg-white/10 text-white/50 border border-white/20 hover:bg-white/20'
+                  }`}
+                >
+                  {questionIndex + 1}
+                </button>
+              );
+            })}
+          </div>
           
           <QuestionCard
             question={currentQuestion}
@@ -805,9 +872,21 @@ const QuizPage = () => {
             userAnswer={selectedAnswers[currentQuestionIndex]}
           />
           
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-            <div className="text-sm text-white/70">
-              Question {currentQuestionIndex + 1} of {questions.length}
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
+                disabled={currentQuestionIndex === 0}
+                className="border-white/20 text-white hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ArrowLeft className="mr-1 h-4 w-4" />
+                Previous
+              </Button>
+              <div className="text-sm text-white/70">
+                {currentQuestionIndex + 1} / {questions.length}
+              </div>
             </div>
             <div className="flex gap-3">
               {!revealedAnswers.has(currentQuestionIndex) && (
@@ -815,19 +894,47 @@ const QuizPage = () => {
                   onClick={handleShowAnswer}
                   variant="outline"
                   size="sm"
-                  className="border-yellow-500/50 text-yellow-400 hover:bg-yellow-500/10 hover:border-yellow-400"
+                  className="border-amber-500/50 text-amber-400 hover:bg-amber-500/10 hover:border-amber-400 transition-all duration-200"
                 >
                   <Eye className="mr-1 h-4 w-4" />
                   Show Answer
+                </Button>
+              )}
+              {revealedAnswers.has(currentQuestionIndex) && (
+                <Button
+                  onClick={() => {
+                    setShowAnswerForQuestion(null);
+                    setSelectedAnswers(prev => {
+                      const newAnswers = { ...prev };
+                      delete newAnswers[currentQuestionIndex];
+                      return newAnswers;
+                    });
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className="border-blue-500/50 text-blue-400 hover:bg-blue-500/10 hover:border-blue-400 transition-all duration-200"
+                >
+                  <RotateCcw className="mr-1 h-4 w-4" />
+                  Reset Answer
                 </Button>
               )}
               <Button 
                 onClick={handleNextQuestion} 
                 disabled={!selectedAnswers[currentQuestionIndex]}
                 size="sm"
-                className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white disabled:opacity-50"
+                className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white disabled:opacity-50 shadow-lg hover:shadow-violet-500/30 transition-all duration-300"
               >
-                {currentQuestionIndex === questions.length - 1 ? 'Finish' : 'Next Question'}
+                {currentQuestionIndex === questions.length - 1 ? (
+                  <>
+                    <CheckCircle2 className="mr-1 h-4 w-4" />
+                    Finish Quiz
+                  </>
+                ) : (
+                  <>
+                    Next
+                    <ArrowLeft className="ml-1 h-4 w-4 rotate-180" />
+                  </>
+                )}
               </Button>
             </div>
           </div>

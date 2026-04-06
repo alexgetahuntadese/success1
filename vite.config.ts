@@ -30,4 +30,25 @@ export default defineConfig(({ mode }) => ({
       ),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-select', 'class-variance-authority', 'clsx', 'tailwind-merge'],
+          charts: ['recharts', 'framer-motion'],
+          supabase: ['@supabase/supabase-js', '@supabase/ssr'],
+          utils: ['date-fns', 'zod', 'cmdk'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+    sourcemap: mode === 'development',
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query'],
+  },
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(mode),
+  },
 }));
