@@ -3,6 +3,8 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   {
     id: "m2015-eng-1",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Sentence Ordering",
     sectionDirection: "Choose the correct sentence ordering.",
     question: "a. However, communal living can be a choice to reduce your rent.\nb. You can do that in two different ways: communally order or individually.\nc. If you don't have financial worries, you can opt for the individual one.\nd. That enables you enjoy more freedom with what to do in your own room.",
     options: [
@@ -16,6 +18,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-2",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Paragraph Coherence",
+    sectionDirection: "Choose the correct sentence ordering.",
     question: "a. However, they may not detect incorrect or misused words.\nb. They may not also catch other language errors in our writing.\nc. Our computers are made to alert us when we make spelling mistakes.\nd. So, we don't have to hesitate to look up anything that we suspect is wrong.",
     options: [
       "b c d a",
@@ -28,6 +33,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-3",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Paragraph Coherence",
+    sectionDirection: "Choose the correct sentence ordering.",
     question: "a. A typical example is what happened in the late 1990s.\nb. Dependence on coffee has thrown a lot of nations into crisis.\nc. This usually happens when the world commodity price falls.\nd. Coffee farmers' unions should be set up to resist the problem.",
     options: [
       "d b c a",
@@ -40,6 +48,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-4",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Paragraph Coherence",
+    sectionDirection: "Choose the correct sentence ordering.",
     question: "a. Most of the rise occurred in the 1990s.\nb. There is a lot of evidence that the climate is changing.\nc. In many parts of the world temperatures have risen by 0.7°C.\nd. However, it is happening faster in some countries than in others.",
     options: [
       "c b d a",
@@ -52,6 +63,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-5",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Jumbled Word",
+    sectionDirection: "Choose the correct sentence arrangement.",
     question: "is their students like passing who actually failed in killing have a generation exams.",
     options: [
       "Passing a generation is like killing students who have actually failed in their exams.",
@@ -64,6 +78,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-6",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Jumbled Word",
+    sectionDirection: "Choose the correct sentence arrangement.",
     question: "be who stories learn there about are to many couldn't how rich people.",
     options: [
       "There are many stories about people who couldn't learn how to be rich.",
@@ -76,6 +93,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-7",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Jumbled Word",
+    sectionDirection: "Choose the correct sentence arrangement.",
     question: "the take Bikila first to Abebe gold ever an was Olympic home African",
     options: [
       "The first African Abebe Bikila was ever to take home an Olympic gold medal.",
@@ -88,6 +108,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-8",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Letter Writing",
+    sectionDirection: "Choose the correct answer.",
     question: "What is your opening sentence in a formal letter supposed to do?",
     options: [
       "Greet the person you are writing the letter to.",
@@ -100,6 +123,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-9",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Letter Writing",
+    sectionDirection: "Choose the correct answer.",
     question: "When do we use \"Dear Sir/Madam\" in a formal letter?",
     options: [
       "When we want to show respect to the person we are writing to.",
@@ -112,6 +138,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-10",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Letter Writing",
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the following could be a typical ending to your letter of complaint to a company?",
     options: [
       "Many thanks,",
@@ -124,6 +153,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-11",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Punctuation and Capitalization",
+    sectionDirection: "Choose the correct answer.",
     question: "",
     options: [
       "We used to stay at the Hilton Hotel and dine at Kokeb restaurant.",
@@ -136,6 +168,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-12",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Punctuation and Capitalization",
+    sectionDirection: "Choose the correct answer.",
     question: "",
     options: [
       "We bought them blankets, bed sheets, cloths and some rice.",
@@ -148,6 +183,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-13",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Punctuation and Capitalization",
+    sectionDirection: "Choose the correct answer.",
     question: "",
     options: [
       "At St. Paul Hospital, they train doctors in a variety of fields, e.g., cardiology, neurology, etc.",
@@ -160,6 +198,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-14",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Vocabulary",
+    sectionDirection: "Choose the correct answer.",
     question: "",
     options: [
       "They donated money: gave out food, clothing and medication; and pledged a lot more.",
@@ -172,6 +213,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-15",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Vocabulary",
+    sectionDirection: "Choose the correct answer.",
     question: "",
     options: [
       "consession",
@@ -184,6 +228,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-16",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Vocabulary",
+    sectionDirection: "Choose the correct answer.",
     question: "",
     options: [
       "thaught",
@@ -196,6 +243,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-17",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Conclusion of a Paragraph",
+    sectionDirection: "Choose the sentence that best concludes the paragraph.",
     question: "Which one of the following sentences is most likely taken from a descriptive paragraph?",
     options: [
       "Paul was such a quiet chap who was always silent regardless of the bitter injustice.",
@@ -208,6 +258,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-18",
+    sectionGroupTitle: "Part A: Writing",
+    sectionTitle: "Conclusion of a Paragraph",
+    sectionDirection: "Choose the sentence that best concludes the paragraph.",
     question: "Which one of the following sentences is most likely taken from a paragraph developed using cause-effect method?",
     options: [
       "Whenever she gets nervous and depressed, I try to calm her down.",
@@ -220,6 +273,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-19",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "The more we help him, __________ sense of dependency he would develop. So, handle things cautiously.",
     options: [
       "more",
@@ -232,6 +288,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-20",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "You don't seem to have ever seen the creature __________ I told you about. It looked nothing like a kangaroo except in the way it walked.",
     options: [
       "one",
@@ -244,6 +303,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-21",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "If one doesn't sleep for days in a row, _________ getting disturbed psychologically and may even die. Sleep is very important for normal functions of life.",
     options: [
       "will start",
@@ -256,6 +318,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-22",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "Mulugeta always adored the __________ Toyota car that his father drove at the beginning of the 80's.",
     options: [
       "red ugly old small",
@@ -268,6 +333,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-23",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "They asked us to __________ them a favour of disclosing the company's secret but that was unacceptable to us. We cannot compromise our integrity.",
     options: [
       "bestow",
@@ -280,6 +348,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-24",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "__________ the pilot and his crew recognized the plane had a problem. However, they didn't say anything lest disturbing the passengers.",
     options: [
       "Together",
@@ -292,6 +363,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-25",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "You've been coughing the whole afternoon __________?",
     options: [
       "Is syrup good for that",
@@ -304,6 +378,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-26",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "If you enjoy ________, you can register with us and trek around the city every Sunday in the afternoon.",
     options: [
       "walking",
@@ -316,6 +393,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-27",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "We don't have to _______ them make off with such an irreplaceable heritage of the nation. They should be accountable for what they did.",
     options: [
       "allow",
@@ -328,6 +408,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-28",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "They have been clearing the forest for three days. _________ intervened to stop them",
     options: [
       "Someone need",
@@ -340,6 +423,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-29",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "He has been paralyzed for months and was literally bed-ridden. Thanks God, he now is ____________ walk around in the house.",
     options: [
       "interested to",
@@ -352,6 +438,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-30",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "There are thousands of displaced people in different parts of the country who have no proper shelter, food or cloth. Don't you think we ___________ help them?",
     options: [
       "ought to",
@@ -364,6 +453,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-31",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "___________ gentleman we saw at the gate as we were coming in is the new school director. I heard he was a teacher at Burame Secondary School.",
     options: [
       "Which",
@@ -376,6 +468,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-32",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "_________ Berhe ________ Umod tampered with this computer. I haven't seen them around and I think they were out of office the whole day.",
     options: [
       "Neither...nor",
@@ -388,6 +483,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-33",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "When Debela arrived, she _______ doro wot. But he didn't have the time to wait and enjoy it.",
     options: [
       "had been making",
@@ -400,6 +498,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-34",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Vocabulary",
+    sectionDirection: "Choose the correct answer.",
     question: "Their plane is expected to land slightly after 3:00 pm. _______ it gets late, give me a call and I'll see what I can do.",
     options: [
       "Probably",
@@ -412,6 +513,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-35",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Vocabulary",
+    sectionDirection: "Choose the correct answer.",
     question: "When the police arrived, the burglars _______ away with the money. But there is hope that they would be caught.",
     options: [
       "are already making",
@@ -424,6 +528,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-36",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Vocabulary",
+    sectionDirection: "Choose the correct answer.",
     question: "They took off early morning _______ they would be late. Otherwise, make it in time.",
     options: [
       "in order that",
@@ -436,6 +543,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-37",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Vocabulary",
+    sectionDirection: "Choose the correct answer.",
     question: "_________ prices are still on the rise, we hope they will come down in the near future.",
     options: [
       "Although",
@@ -448,6 +558,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-38",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Vocabulary",
+    sectionDirection: "Choose the correct answer.",
     question: "She was packing all morning as her flight was scheduled for the evening of that same day, _________ her husband was arranging stuff in his office.",
     options: [
       "Contrarily",
@@ -460,6 +573,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-39",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Vocabulary",
+    sectionDirection: "Choose the correct answer.",
     question: "____________ it has drastically changed the cultures of many nations and created undisciplined citizens.",
     options: [
       "However",
@@ -472,6 +588,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-40",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Vocabulary",
+    sectionDirection: "Choose the correct answer.",
     question: "Never borrow money from this group of loaners. They'll _______ you pay back double.",
     options: [
       "make",
@@ -484,6 +603,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-41",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "You shouldn't expect us exactly at 6:00 pm. We _______ make it but if we happen to be a bit late, just take it easy and start the programme.",
     options: [
       "shall",
@@ -496,6 +618,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-42",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "She was telling me the story of her ex-boyfriend who died in a car crash ten years ago. Then she _________ burst into tears and screams and I could never stop her.",
     options: [
       "silently",
@@ -508,6 +633,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-43",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "It is a pity she didn't see her brother. Had she arrived a day earlier, she _______ met him and enjoyed a bit of time with him.",
     options: [
       "will have",
@@ -520,6 +648,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-44",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "Everybody understands that most of you worked very hard _______ you would pass this test. But you don't have to lose hope if the result happens to be against your expectation.",
     options: [
       "so that",
@@ -532,6 +663,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-45",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "If what you are telling me is true, then I _______ straight away and register with them. I don't want to miss the opportunity.",
     options: [
       "will go",
@@ -544,6 +678,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-46",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "The house _______ into last night and they have already reported it to the police. I'll try to follow up the progress.",
     options: [
       "was being broken",
@@ -556,6 +693,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-47",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "The house _______ into last night and they have already reported it to the police. I'll try to follow up the progress.",
     options: [
       "was being broken",
@@ -568,6 +708,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-48",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "If it _______ for at least a month or so during the last three years, their cattle would have resisted the drought to a certain degree and perhaps survived in a better number.",
     options: [
       "has rained",
@@ -580,6 +723,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-49",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "Her father walks very _______ but she is like a tortoise. She saunters very slowly.",
     options: [
       "urgently",
@@ -592,6 +738,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-50",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "I wish that we _______ today. It is really freezing and wet.",
     options: [
       "didn't need to work",
@@ -604,6 +753,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-51",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "I was offered _______ a reasonable fund for helping them organize the competition but I did not accept it because I just wanted to make my own contribution.",
     options: [
       "much",
@@ -616,6 +768,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-52",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "_______ she came home, I made her coffee. Then we sat together and had hours of talk and talk.",
     options: [
       "When",
@@ -628,6 +783,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-53",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "Can anyone tell me _______ book this is? It has been lying here for months.",
     options: [
       "of who",
@@ -640,6 +798,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-54",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "She likes chatting with children and _______ playing with dogs. We actually have a lot in common but unlike her, I hate playing with dogs.",
     options: [
       "so do I",
@@ -652,6 +813,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-55",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "The school director sent you a message but apparently, your sister _______ to tell you. You were supposed to report to his office this morning.",
     options: [
       "is forgetting",
@@ -664,6 +828,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-56",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Grammar",
+    sectionDirection: "Choose the correct answer.",
     question: "He was doing the washing up _______ she was cleaning the house. We like that they help one another.",
     options: [
       "during",
@@ -676,6 +843,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-57",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Dialogue",
+    sectionDirection: "Choose the correct answer.",
     question: "Chuchu: Your friend has got a good job, hasn't she?\nMeklit: _____________________________",
     options: [
       "Yes, she's got a job. I heard it is out of town.",
@@ -688,6 +858,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-58",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Dialogue",
+    sectionDirection: "Choose the correct answer.",
     question: "Eyob: What is your grandma like?\nSisu: _______________________",
     options: [
       "She's now been ill for a year.",
@@ -700,6 +873,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-59",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Dialogue",
+    sectionDirection: "Choose the correct answer.",
     question: "Teacher: Where is the boy sitting over there?\nFola: _______________________",
     options: [
       "He always fights with people and no one likes him.",
@@ -712,6 +888,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-60",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Dialogue",
+    sectionDirection: "Choose the correct answer.",
     question: "Telila: Why didn't you come to my party?\nAster: _______________________",
     options: [
       "Was it held at your home or ...?",
@@ -724,6 +903,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-61",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Dialogue",
+    sectionDirection: "Choose the correct answer.",
     question: "Haji: Why don't we visit Chebera Churchura?\nGorge: _______________________",
     options: [
       "I think the biggest problem is where to stay. There is no hotel there.",
@@ -736,6 +918,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-62",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Dialogue",
+    sectionDirection: "Choose the correct answer.",
     question: "Mimi: I guess our driver was thrown out. Anyway, it was predictable.\nKuku: _____________________",
     options: [
       "I'm sorry I didn't follow what you said.",
@@ -748,6 +933,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-63",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Dialogue",
+    sectionDirection: "Choose the correct answer.",
     question: "Oumer: Shall I pay you when I come back in June?\nMensur: _____________________",
     options: [
       "Never lend anyone your money. They don't pay you back.",
@@ -760,6 +948,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-64",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Dialogue",
+    sectionDirection: "Choose the correct answer.",
     question: "Tesfaye: What advantage do I have in joining the union?\nBereketi: _____________________",
     options: [
       "You're always against such new ideas, aren't you, brother?",
@@ -772,6 +963,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-65",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Dialogue",
+    sectionDirection: "Choose the correct answer.",
     question: "Colleague: We're going out for dinner tonight, aren't we?\nYou: _____________________",
     options: [
       "I'm not coming, if you don't mind.",
@@ -784,6 +978,9 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-66",
+    sectionGroupTitle: "Part B: Reading",
+    sectionTitle: "Dialogue",
+    sectionDirection: "Choose the correct answer.",
     question: "Amesu: When is your sister going to the university?\nYonas: _____________________",
     options: [
       "Addis Ababa University is her favorite choice.",
