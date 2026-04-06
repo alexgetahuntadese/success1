@@ -20,8 +20,8 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
     id: "m2015-eng-2",
     sectionGroupTitle: "I. Writing",
     sectionTitle: "Paragraph Coherence",
-    sectionDirection: "Section One: Paragraph Coherence",
-    question: "a. Schooling requires fulfilling the basic materials for learning.\nb. There are some reasons for students to drop out of school.\nc. Sickness could be the other reason for students to take a leave of school.\nd. One reason can be economic related cause.",
+    sectionDirection: "Direction: Questions 1 - 18 are related to different types of writing. Read each of them very carefully and choose the best answer from the given alternatives. Then, blacken the letter of your choice on the separate answer sheet.\n\nSection One: Paragraph Coherence\n\nDirection: When you put in the correct order, sentences a-d in each of the questions from 1 - 4 make up a complete paragraph. From the alternatives given in each case, choose the one that contains the correct order of the sentences and blacken the letter of your choice on the separate answer sheet.",
+    question: "a. Schooling requires fulfilling of basic materials for learning.\nb. There are some reasons for students to drop out of school.\nc. Sickness could be other reason for students to take a leave of school.\nd. One reason can be economic related cause.",
     options: [
       "c b a d",
       "a d c b",
@@ -78,7 +78,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-6",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Jumbled Word",
     sectionDirection: "Choose the correct sentence arrangement.",
     question: "be who stories learn there about are to many couldn't how rich people.",
@@ -93,7 +93,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-7",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Jumbled Word",
     sectionDirection: "Choose the correct sentence arrangement.",
     question: "the take Bikila first to Abebe gold ever an was Olympic home African",
@@ -108,7 +108,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-8",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Letter Writing",
     sectionDirection: "Choose the correct answer.",
     question: "What is your opening sentence in a formal letter supposed to do?",
@@ -123,7 +123,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-9",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Letter Writing",
     sectionDirection: "Choose the correct answer.",
     question: "When do we use \"Dear Sir/Madam\" in a formal letter?",
@@ -138,7 +138,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-10",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Letter Writing",
     sectionDirection: "Choose the correct answer.",
     question: "Which of the following could be a typical ending to your letter of complaint to a company?",
@@ -153,7 +153,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-11",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Punctuation and Capitalization",
     sectionDirection: "Choose the correct answer.",
     question: "Which sentence is correctly capitalized and punctuated?",
@@ -168,7 +168,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-12",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Punctuation and Capitalization",
     sectionDirection: "Choose the correct answer.",
     question: "Which sentence uses correct punctuation for a list?",
@@ -183,7 +183,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-13",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Punctuation and Capitalization",
     sectionDirection: "Choose the correct answer.",
     question: "Which sentence is correctly punctuated with abbreviations?",
@@ -198,7 +198,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-14",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Vocabulary",
     sectionDirection: "Choose the correct answer.",
     question: "Which sentence uses correct punctuation for a complex list?",
@@ -213,7 +213,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-15",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Vocabulary",
     sectionDirection: "Choose the correct answer.",
     question: "Which word is spelled correctly?",
@@ -228,7 +228,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-16",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Vocabulary",
     sectionDirection: "Choose the correct answer.",
     question: "Which word is spelled correctly?",
@@ -243,7 +243,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-17",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Conclusion of a Paragraph",
     sectionDirection: "Choose the sentence that best concludes the paragraph.",
     question: "Which one of the following sentences is most likely taken from a descriptive paragraph?",
@@ -258,7 +258,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2015-eng-18",
-    sectionGroupTitle: "Part A: Writing",
+    sectionGroupTitle: "I. Writing",
     sectionTitle: "Conclusion of a Paragraph",
     sectionDirection: "Choose the sentence that best concludes the paragraph.",
     question: "Which one of the following sentences is most likely taken from a paragraph developed using cause-effect method?",
