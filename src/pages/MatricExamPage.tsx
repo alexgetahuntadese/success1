@@ -5,7 +5,6 @@ import { ArrowLeft, Calendar, BookOpen } from 'lucide-react';
 import { getMatricStreamsForYear, getMatricYears } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
-import PaymentPrompt from '@/components/PaymentPrompt';
 
 const MatricExamPage = () => {
   const navigate = useNavigate();
@@ -31,8 +30,6 @@ const MatricExamPage = () => {
             <p className="text-white/50 text-sm mt-1">Practice with real past exam questions by year</p>
           </div>
         </div>
-
-        <PaymentPrompt context="matric exams" className="mb-8" />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {years.map((year) => {

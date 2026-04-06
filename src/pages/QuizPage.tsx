@@ -46,7 +46,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, Eye } from 'lucide-react';
 import TopBar from "@/components/TopBar";
 import { useAuth } from "@/hooks/useAuth";
-import PaymentPrompt from "@/components/PaymentPrompt";
 import { isFreeChapter } from '@/lib/paymentAccess';
 
 interface Question {
@@ -776,12 +775,10 @@ const QuizPage = () => {
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back
         </Button>
-        <h2 className="text-lg sm:text-2xl font-semibold text-white">
+        <h2 className="text-lg sm:text-2xl font-semibold text-white break-words whitespace-normal">
           <span>Grade {grade} {subject} - {chapterId} ({difficulty})</span>
         </h2>
       </div>
-
-      <PaymentPrompt context={`${subject} quiz`} className="mb-6" />
 
       {showResults ? (
         <Results 

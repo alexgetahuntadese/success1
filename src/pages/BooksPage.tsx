@@ -4,7 +4,6 @@ import TopBar from "@/components/TopBar";
 import StarField from "@/components/StarField";
 import { Button } from "@/components/ui/button";
 import { booksByGrade } from "@/lib/booksData";
-import PaymentPrompt from "@/components/PaymentPrompt";
 
 const BooksPage = () => {
   const navigate = useNavigate();
@@ -35,8 +34,6 @@ const BooksPage = () => {
             Choose a grade first, then open a dedicated subject page with cover preview and direct PDF download.
           </p>
         </div>
-
-        <PaymentPrompt context="books" className="mb-10" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {booksByGrade.map((grade, index) => (
