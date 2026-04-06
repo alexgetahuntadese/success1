@@ -14,6 +14,7 @@ import {
   updateProgress, 
   getRandomEncouragement 
 } from '../data/grade9Gamification';
+import { QuizNavigation, QuestionCard, QuizProgress } from './QuizNavigation';
 
 interface GamifiedQuizProps {
   questions: Grade9Question[];
@@ -86,18 +87,42 @@ export const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
     }
   };
 
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(prev => prev - 1);
+      setSelectedAnswer('');
+      setShowHint(false);
+      setIsAnswered(false);
+      setTimeRemaining(questions[currentQuestionIndex - 1]?.timeLimit || 60);
+      setStartTime(Date.now());
+    }
+  };
+
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
       setSelectedAnswer('');
       setShowHint(false);
       setIsAnswered(false);
-      setTimeRemaining(currentQuestion.timeLimit || 60);
+      setTimeRemaining(questions[currentQuestionIndex + 1]?.timeLimit || 60);
       setStartTime(Date.now());
     } else {
       onComplete(gameProgress);
     }
   };
+
+  const handleRestart = () => {
+    setCurrentQuestionIndex(0);
+    setSelectedAnswer('');
+    setShowHint(false);
+    setIsAnswered(false);
+    setTimeRemaining(questions[0]?.timeLimit || 60);
+    setStartTime(Date.now());
+  };
+
+  const canGoPrevious = currentQuestionIndex > 0;
+  const canGoNext = isAnswered && currentQuestionIndex < questions.length - 1;
+  const isCompleted = isAnswered && currentQuestionIndex === questions.length - 1;
 
   const handleHint = () => {
     if (currentQuestion.hints && currentQuestion.hints.length > 0 && !showHint) {
@@ -232,71 +257,55 @@ export const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      {/* Header with Game Stats */}
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center space-x-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">{gameProgress.totalPoints}</div>
-              <div className="text-sm text-gray-600">Points</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">{gameProgress.streak}</div>
-              <div className="text-sm text-gray-600">Streak</div>
-            </div>
-            <div className="text-center">
-              <div className="text-xl font-bold text-green-600">Level {currentLevel.level}</div>
-              <div className="text-sm text-gray-600">{currentLevel.name}</div>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2">
-            {gameProgress.badges.map(badge => (
-              <div key={badge} className="text-2xl" title={badge}>
-                {BADGES.find(b => b.id === badge)?.icon || '🏆'}
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        {/* Progress Bar */}
-        <div className="w-full bg-gray-200 rounded-full h-3">
-          <div 
-            className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500"
-            style={{ 
-              width: `${((gameProgress.totalPoints - currentLevel.minPoints) / (currentLevel.maxPoints - currentLevel.minPoints)) * 100}%` 
-            }}
-          />
-        </div>
-      </div>
+      {/* Navigation */}
+      <QuizNavigation
+        currentIndex={currentQuestionIndex}
+        totalQuestions={questions.length}
+        onPrevious={handlePrevious}
+        onNext={handleNext}
+        onRestart={handleRestart}
+        canGoNext={canGoNext}
+        canGoPrevious={canGoPrevious}
+        isCompleted={isCompleted}
+      />
 
-      {/* Achievement Popup */}
-      {showAchievement && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-8 max-w-md text-center animate-bounce">
-            <div className="text-6xl mb-4">{showAchievement.icon}</div>
-            <h3 className="text-2xl font-bold text-green-600 mb-2">Achievement Unlocked!</h3>
-            <h4 className="text-xl font-semibold mb-2">{showAchievement.name}</h4>
-            <p className="text-gray-600 mb-4">{showAchievement.description}</p>
-            <div className="text-lg font-bold text-blue-600">+{showAchievement.points} points</div>
-          </div>
-        </div>
-      )}
+      {/* Progress */}
+      <QuizProgress
+        current={currentQuestionIndex}
+        total={questions.length}
+        answered={gameProgress.completedQuestions.map(id => 
+          questions.findIndex(q => q.id === id)
+        ).filter(i => i >= 0)}
+        correct={gameProgress.completedQuestions.map(id => 
+          questions.findIndex(q => q.id === id)
+        ).filter(i => i >= 0 && questions[i]?.correct === selectedAnswer)}
+        timeRemaining={timeRemaining}
+        totalTime={currentQuestion.timeLimit}
+      />
 
       {/* Question Card */}
-      <div className="bg-white rounded-xl shadow-lg p-8 mb-6">
+      <QuestionCard
+        questionNumber={currentQuestionIndex + 1}
+        totalQuestions={questions.length}
+        category={currentQuestion.questionType || 'Multiple Choice'}
+        difficulty={currentQuestion.difficulty}
+      >
         {/* Question Header */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center space-x-4">
-            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
-              {currentQuestion.questionType || 'Multiple Choice'}
-            </span>
-            <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
-              {currentQuestion.difficulty}
-            </span>
             {currentQuestion.badges && currentQuestion.badges.length > 0 && (
               <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold">
                 🏆 {currentQuestion.badges[0]}
               </span>
+            )}
+            {currentQuestion.hints && currentQuestion.hints.length > 0 && (
+              <button
+                onClick={handleHint}
+                disabled={showHint}
+                className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 disabled:opacity-50"
+              >
+                💡 Hint (-5 pts)
+              </button>
             )}
           </div>
           <div className="flex items-center space-x-4">
@@ -308,15 +317,6 @@ export const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               </div>
               <div className="text-sm text-gray-600">Time</div>
             </div>
-            {currentQuestion.hints && currentQuestion.hints.length > 0 && (
-              <button
-                onClick={handleHint}
-                disabled={showHint}
-                className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 disabled:opacity-50"
-              >
-                💡 Hint (-5 pts)
-              </button>
-            )}
           </div>
         </div>
 
@@ -379,22 +379,7 @@ export const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
             )}
           </div>
         )}
-
-        {/* Navigation */}
-        <div className="flex justify-between">
-          <div className="text-sm text-gray-600">
-            Question {currentQuestionIndex + 1} of {questions.length}
-          </div>
-          {isAnswered && (
-            <button
-              onClick={handleNext}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
-            >
-              {currentQuestionIndex < questions.length - 1 ? 'Next Question' : 'Complete Quiz'}
-            </button>
-          )}
-        </div>
-      </div>
+      </QuestionCard>
     </div>
   );
 };

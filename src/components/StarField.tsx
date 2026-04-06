@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, memo } from 'react';
 
 const generateStars = (count: number) =>
   Array.from({ length: count }, (_, i) => ({
@@ -20,7 +20,7 @@ const generateShootingStars = (count: number) =>
     totalDelay: Math.random() * 12 + i * 5,
   }));
 
-const StarField = ({ starCount = 50, shootingCount = 3 }: { starCount?: number; shootingCount?: number }) => {
+const StarField = memo(({ starCount = 50, shootingCount = 3 }: { starCount?: number; shootingCount?: number }) => {
   const stars = useMemo(() => generateStars(starCount), [starCount]);
   const shootingStars = useMemo(() => generateShootingStars(shootingCount), [shootingCount]);
 
@@ -97,4 +97,4 @@ const StarField = ({ starCount = 50, shootingCount = 3 }: { starCount?: number; 
   );
 };
 
-export default StarField;
+export default memo(StarField);
