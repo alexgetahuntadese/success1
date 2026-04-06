@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2014MathQuestions: MatricExamQuestion[] = [
   {
     id: "m2014-math-1",
+    sectionDirection: "Choose the correct answer.",
     question: "What is the locus all points in the plane in which the sum of the distances from two fixed points is constant?",
     options: [
       "Hyperbola",
@@ -15,6 +16,7 @@ export const matric2014MathQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2014-math-2",
+    sectionDirection: "Choose the correct answer.",
     question: "The radian measure of an angle of 120° is equal to:",
     options: [
       "\\frac{2\\pi}{3}",

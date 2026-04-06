@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   {
     id: "m2017-phys-1",
+    sectionDirection: "Choose the correct answer.",
     question: "A force that is exerted on a simple machine in order to produce input work is called",
     options: [
       "friction.",
@@ -15,6 +16,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-phys-2",
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statements is correct about transverse and longitudinal waves?",
     options: [
       "The directions of wave motion and vibration of the particles are parallel for transverse waves and perpendicular for longitudinal waves.",
@@ -27,6 +29,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-phys-3",
+    sectionDirection: "Choose the correct answer.",
     question: "An object that is partially or fully submerged in a fluid experiences an upward force from the fluid. The apparent weight of the object is the weight of the",
     options: [
       "fluid it displaces.",
@@ -39,6 +42,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-phys-4",
+    sectionDirection: "Choose the correct answer.",
     question: "A wheel and axle of radii 40 cm and 8 cm, respectively, is used to lift a bucket of 6 kg of water from a well by applying an effort of 20 N on the wheel. The percentage efficiency of this simple machine is",
     options: [
       "60%",
@@ -51,6 +55,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-phys-5",
+    sectionDirection: "Choose the correct answer.",
     question: "Block A of mass m$_1$ = 8.0 kg travelling initially at u$_1$ = 6 m/s in the positive x-direction collides with block B of mass m$_2$ = 12 kg moving in the same direction at u$_2$ = 3 m/s. If the velocity of block A, immediately after the collision, is v$_1$ = 4 m/s to the positive x-axis, what is the velocity of block B, immediately after the collision?",
     options: [
       "4.33 m/s to the negative x-axis",
@@ -63,6 +68,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-phys-6",
+    sectionDirection: "Choose the correct answer.",
     question: "The magnetic field created by a long straight current-carrying wire",
     options: [
       "is directed in the same direction as the current.",
@@ -75,6 +81,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-phys-7",
+    sectionDirection: "Choose the correct answer.",
     question: "What will happen to a pure semiconductor when it is doped by a group III element?",
     options: [
       "It becomes P-type semiconductor.",
@@ -87,6 +94,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-phys-8",
+    sectionDirection: "Choose the correct answer.",
     question: "We usually use plastic materials to cover metallic wires that carry electricity to protect living things from danger. Which of the following statements correctly describes the nature of the plastic to use for this purpose?",
     options: [
       "Since every electron in plastic is slightly bound to the parent atom, it becomes a poor conductor.",
@@ -98,6 +106,7 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
     explanation: "Since every electron in plastic is tightly bound to the parent atom, it becomes a poor conductor.",
   },
   {
+    sectionDirection: "Choose the correct answer.",
     id: "m2017-phys-9",
     question: "Which one of the following statements is correct about the current-voltage (I-V) characteristics of a typical semiconductor diode?",
     options: [
@@ -109,7 +118,8 @@ export const matric2017PhysicsQuestions: MatricExamQuestion[] = [
     correctAnswer: 0,
     explanation: "The region of the I-V curve that rises very rapidly after the voltage exceeds the cut-in voltage is the forward bias region.",
   },
-  {
+  {sectionDirection: "Choose the correct answer.",
+    
     id: "m2017-phys-10",
     question: "Consider a circuit containing a diode and load resistor (R L ) connected to an AC voltage source. If initially, polarity of 'a' is positive while 'b' is negative,\n[Image: exam question image]",
     options: [

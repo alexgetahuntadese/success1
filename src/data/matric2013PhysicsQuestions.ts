@@ -15,6 +15,7 @@ export const matric2013PhysicsQuestions: MatricExamQuestion[] = [
   },
   {
     "id": "m2013-phys-2",
+    "sectionDirection": "Choose the correct answer.",
     "question": "Which one of the following statement is NOT correct about the magnetic properties of matter?",
     "options": [
       "There is a tendency to oppose the applied magnetic field in a diamagnetic substance.",

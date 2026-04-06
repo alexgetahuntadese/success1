@@ -12,6 +12,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the following CORRECTLY relates the vapor pressure of a liquid with its boiling point? Boiling point is",
     options: [
       "the temperature at which all the three physical state co-exist.",
@@ -21,6 +22,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Consider this equilibrium system: CO (g) + Fe 3 O 4 (s) ⇌ CO 2 (g) + 3FeO(s) Which of the following disturbances shift the equilibrium position to the right?",
     options: [
       "Removing CO 2 (g)",
@@ -30,6 +32,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following resulted from interaction of the atomic orbitals of bonding atoms to produce new electron distribution associated with the entire molecule?",
     options: [
       "Hybrid orbital",
@@ -39,6 +42,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which type of organic substances would be produced by heating a mixture of a carboxylic acid and an alcohol in the presence of H 2 SO 4 ?",
     options: [
       "Ketones",
@@ -48,6 +52,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is the reducing agent in the following reaction? 8NH 3 (g) + 6NO 2 (g) → 7N 2 (g) + 12H 2 O (l)",
     options: [
       "NO 2",
@@ -57,6 +62,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Carbon forms two stable compounds with oxygen, namely, carbon monoxide and carbon dioxide. For a fixed mass of carbon, the ratio of oxygen in carbon monoxide to oxygen in carbon dioxide is 1:2. This result is consistent with the law of",
     options: [
       "definite proportion",
@@ -66,6 +72,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "When a system at equilibrium is disturbed by a change of variable, the system shifts the equilibrium position in a way that tends to counteract this change of variable. This is a statement for",
     options: [
       "Pauli's exclusion principle",
@@ -75,6 +82,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following graphs illustrates the rate change in terms of a change in reactant concentration with time?",
     options: [
       " [Image: exam choice image]",
@@ -84,6 +92,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The pH of a 0.1 M solution of formic acid (HCOOH) is 3. What is the Ka of the acid?",
     options: [
       "1.01 x 10 -5",
@@ -93,6 +102,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A system does 15 J of work and no other changes take place. Which of the following function has fallen by 15 J?",
     options: [
       "Internal energy",
@@ -102,6 +112,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following gas laws states the volume of a fixed amount of gas maintained at constant pressure is directly proportional to the absolute temperature of the gas?",
     options: [
       "Charles' law",
@@ -111,6 +122,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the following is CORRECTLY stated about the spontaneity of a reaction?",
     options: [
       "For an endothermic reaction with negative reaction entropy, the reaction is spontaneous at all temperature.",
@@ -120,6 +132,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "In thermodynamics: solutions in a beaker, a gas in a cylinder, a reaction vessel, a biological cell are examples of a",
     options: [
       "thermodynamic variables",
@@ -129,6 +142,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Given the following: bond energies (kJ/mol) H-H 436 N-N 193 N=N 409 N≡N 942 and the enthalpy for the reaction 1 / 2 N 2 (g) + 3 / 2 H 2 (g) →NH 3 (g); ΔH=-45 kJ/mol What is the bond energy for NH 3 ?",
     options: [
       "1125",
@@ -138,6 +152,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The rate law for: (CH 3 )-C-Br (aq) + H 2 O (l) → (CH 3 )-C-OH (aq) + H + + Br¯ (aq) is rate= k [(CH 3 )-C-Br (aq) + H 2 O (l)]. The accepted mechanism for the reaction is: I. (CH 3 )-C-Br(aq) → (CH 3 )-C¯(aq) + Br¯(aq) [slow] II. (CH 3 )-C¯(aq) + H 2 O(l) → (CH 3 )-C-OH¯(aq) [fast] III. (CH 3 )-C-OH¯(aq) → (CH 3 )-C-OH(aq) + H¯ [fast] Why DOES NOT H 2 O appear in the rate law? Because",
     options: [
       "water is a catalyst in the reaction.",
@@ -147,6 +162,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which type of substances has the following general formula? (R 1 , R 2 and R 3 are hydrocarbon groups.) [Image: exam question image]",
     options: [
       "Carboxylic acids",
@@ -156,6 +172,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The rate law for this reaction CO (g) + NO 2 (g) → CO 2 (g) + NO (g) is rate = k [NO 2 ] p [CO] q . Which one of the following could be a plausible mechanism for the reaction?",
     options: [
       "NO 2 (g) + NO 2 (g) -> NO 3 (g) + NO(g) [slow] NO 3 (g) + CO(g) -> NO 2 (g) + CO 2 (g) [fast]",
@@ -165,6 +182,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The speed with which a solute goes into solution is",
     options: [
       "degree of solvation",
@@ -174,6 +192,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following explains how 2 L of 1 M NaOH aqueous stock solution is converted into a 0.25 M NaOH solution?",
     options: [
       "Adding 6 L water to the stock solution",
@@ -183,6 +202,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following IS TRUE about isotopes?",
     options: [
       "Isotopes of an element are atoms that have different number of electrons and protons.",
@@ -192,6 +212,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following describes the quantum mechanical model?",
     options: [
       "The locations of electrons in an atom are described in terms of probability.",
@@ -201,6 +222,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is the diagrammatic representation of 35 31 Cl?",
     options: [
       " [Image: exam choice image]",
@@ -210,6 +232,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is an ionic compound?",
     options: [
       "CaCl 2",
@@ -219,6 +242,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "An element is located in Group VIIA and 3 rd period of the modern periodic table. On the basis of this the element:",
     options: [
       "generally forms an ion with -2 charges.",
@@ -228,6 +252,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the properties of solvents WOULD NOT be affected by the formation of a solution with a non-volatile solute?",
     options: [
       "Boiling Point",
@@ -237,6 +262,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The partial pressure of acetylene, C 2 H 2 , in a container is 10 atm at 25°C. What is the solubility in molarity of C 2 H 2 , assume that C 2 H 2 obeys Henry's law? (K H = 1.04 mol/L atm)",
     options: [
       "9.62",
@@ -246,6 +272,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "What is the normality of a solution that contains 19.6 g of H 2 SO 4 in 20 mL of the solution?",
     options: [
       "0.02",
@@ -255,6 +282,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following illustrates an extensive property?",
     options: [
       "The electrode potential at standard condition for the half-reaction 2Cu 2+ + 4e − →2Cu is the same as for Cu 2+ + 2e − →Cu.",
@@ -264,6 +292,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The point in a titration at which the number of moles of OH - ions added to a solution is equal to the number of moles of H + ions originally present is",
     options: [
       "Zero point",
@@ -273,6 +302,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is TRUE about the electrolysis of a molten hypothetical electrolyte, MX?",
     options: [
       "X is produced at the negative electrode.",
@@ -282,6 +312,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "During the extraction of an unknown metal, the metallic discharge was fused with NaOH in air and then dissolved in water to obtain the soluble unknown metal containing species. Reduction with carbon is followed as the solution is treated with HCl. Finally the obtained oxide is reduced to its metallic form by aluminum. The most probable unknown metal would be",
     options: [
       "Ca",
@@ -291,6 +322,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Why tin does NOT react with cold water but calcium reacts with cold water quite readily?",
     options: [
       "Due to its less reactive nature.",
@@ -300,6 +332,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Why is vulcanization performed in natural rubber?",
     options: [
       "To convert the monomer unit in natural rubber in to polymer.",
@@ -309,6 +342,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following explains the determination of the cell potential of Zn-Cu cell using voltmeter?",
     options: [
       "In the Cu half-cell, Cu metal will be dipped in ZnSO4 solution.",
@@ -318,6 +352,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is an example of molecular crystals?",
     options: [
       "Diamond",
@@ -327,6 +362,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following COULD NOT be considered as factor influencing the rate of chemical reaction?",
     options: [
       "Presence of catalyst",
@@ -336,6 +372,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following shows the hybridization scheme of the central atom in H 2 O?",
     options: [
       " [Image: exam choice image]",
@@ -345,6 +382,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "In which of the following order of a reaction, a plot of ln [A] t versus time is a straight line whose slope is -k?",
     options: [
       "First",
@@ -354,6 +392,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A forward and reverse reaction continues to take place at equal rate in microscopic level. This statement is the definition of",
     options: [
       "Chemical kinetics",
@@ -363,6 +402,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The heat change at constant pressure that results when 1 mole of a compound is formed from its elements in their standard states is",
     options: [
       "standard entropy of reaction",
@@ -372,6 +412,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "What is a redox reaction? It is a reaction in which",
     options: [
       "two insoluble ions in compounds form an insoluble products.",
@@ -381,6 +422,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following explains how electroplating takes place?",
     options: [
       "The electrolyte is an aqueous solution of a salt of the plated metal.",
@@ -390,6 +432,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the following statements describes chemical industries? It is",
     options: [
       "an area of chemistry concerned with the speeds, or rates, at which chemical reactions occur.",
@@ -399,6 +442,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "What will be the product if phosphorus reacts with excess amount of oxygen?",
     options: [
       "H 3 PO 3",
@@ -408,6 +452,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "One of the basic differences between metallic conduction and electrolytic conduction is:",
     options: [
       "The conduction of electricity is due to the movement of ions in an electrolytic conduction while the flow of mobile electrons in metallic conduction.",
@@ -417,6 +462,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following gases is released from combustion of a fuel in an industrial machinery causing global warming?",
     options: [
       "CO",
@@ -426,6 +472,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The number of digits to the right of the decimal point denotes:",
     options: [
       "Significant figures",
@@ -435,6 +482,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the following would occur during the formation of ions?",
     options: [
       "Inner most shell electrons are involved.",
@@ -444,6 +492,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "In order to illustrate the structure and properties of a solid, a student put hundred marble balls in to a box that representing metal cations and the empty space between and around the marble representing the electron sea. Which one of the following bonding is represented by this model?",
     options: [
       "Covalent bonding",
@@ -453,6 +502,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following explains dipole-dipole force?",
     options: [
       "A type of intermolecular force that exists between non-polar molecules.",
@@ -462,6 +512,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following reactions creates energy in our bodies during respiration?",
     options: [
       "C 6 H 12 O 6 (s) + 6O 2 (g) → 6CO 2 (g) + 6H 2 O (l)",
@@ -471,6 +522,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "\"A reaction that involves the exchange of positive and negative ions of each reactant\". This is a definition of a",
     options: [
       "Decomposition reaction",
@@ -480,6 +532,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "What are the four quantum numbers for an electron in a 2s orbital?",
     options: [
       "2, 1, 0, + 1/2",
@@ -489,6 +542,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A student uses a digital balance (±0.02), a thermometer (±0.1), a measuring cylinder (±0.05), and a beaker (±0.5) during an experiment. Which of the above instrument is more precise?",
     options: [
       "The thermometer",
@@ -498,6 +552,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following explains that light has BOTH wave and particle nature?",
     options: [
       "A beam of light is a stream of particles of electromagnetic energy, with energy proportional to the observed frequency of the light.",
@@ -507,6 +562,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A nuclear breakdown in which particles or electromagnetic radiation is emitted is __________.",
     options: [
       "Radioactive isotopes",
@@ -516,6 +572,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which statement describes valence shell electron pair repulsion (VSEPR) theory?",
     options: [
       "Each degenerate orbitals are occupied by a single electron before the second electrons of opposite spin enters the orbitals.",
@@ -525,6 +582,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is a colorless, flammable volatile liquid and miscible with non-polar solvents?",
     options: [
       "Benzene",
@@ -534,6 +592,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The IUPAC name of the compound with the following structure is: [Image: exam question image]",
     options: [
       "3, 4, 5-Trimethylhexane",
@@ -543,6 +602,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following petroleum products is used as a solvent and in dry cleaning?",
     options: [
       "kerosene",
@@ -552,6 +612,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is NOT TRUE about laboratory preparation of ethylene by dehydration of ethanol?",
     options: [
       "The collected ethylene gas in the experiment decolorizes Br₂ in CCl₄.",
@@ -561,6 +622,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is an essential nutrient of plants?",
     options: [
       "Aluminum",
@@ -570,6 +632,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is the main reason for the large difference in dipole-moment between the triatomic molecules water (H₂O) and carbon dioxide (CO₂)?",
     options: [
       "The presence of lone pairs of electrons in water (H₂O) partially reinforces bond polarities.",
@@ -579,6 +642,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "How many non-bonding pairs of electrons are present in the valence shell of the central atom in ClF₃?",
     options: [
       "1",
@@ -588,6 +652,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one would be observed in a laboratory activity that is applied on naphthalene?",
     options: [
       "It is soluble in benzene.",
@@ -597,6 +662,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statements is CORRECT?",
     options: [
       "Valence bond model simply shows the linkage between atoms and the presence of lone pairs.",
@@ -606,6 +672,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The energy required to completely separate one mole of a solid ionic compound into gaseous ions is an",
     options: [
       "Ionization energy",
@@ -615,6 +682,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the following compounds reacts with basic oxide to form salt and water?",
     options: [
       "Acid",
@@ -624,6 +692,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following reaction represents formation of an acid from its salt?",
     options: [
       "CH 3 COOH (aq) + CH 3 OH (aq) → CH 3 CO 2 CH 3 (aq) +H 2 O (l)",
@@ -633,6 +702,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The negative logarithm of the molar concentration of hydrogen ion to the base ten is known as",
     options: [
       "pH",
@@ -642,6 +712,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following galvanic cell is an example of secondary cell?",
     options: [
       "Daniel's cell",
@@ -651,6 +722,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is responsible for electrolytic conductivity?",
     options: [
       "Ions strongly held in a fixed position.",
@@ -660,6 +732,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statement is TRUE about gases?",
     options: [
       "The particles of gases are closely packed together.",
@@ -669,6 +742,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following mathematical expressions is derived from the combination of Boyle's law, Charles' law and Avogadro's law?",
     options: [
       "V α nP",
@@ -678,6 +752,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "180 g of calcium carbonate (CaCO₃) is allowed to react with 156 gram of hydrochloric acid (HCl), according to the following reaction. Which of the following substances is the limiting reagent? (Atomic masses; Ca=40, Cl=35.5, O=16, C=12, H=1) CaCO 3 + 2HCl → CaCl 2 + CO 2 + H 2 O",
     options: [
       "HCl",
@@ -687,6 +762,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following isomers differs in the arrangement of carbon atoms in the longest continuous carbon chain?",
     options: [
       "Geometric",
@@ -696,6 +772,7 @@ const raw2015ChemistryQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following methods can be used in the laboratory for the preparation of alkynes?",
     options: [
       "Dehydration of alcohols with concentrated sulphuric acid.",

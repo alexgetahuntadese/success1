@@ -363,7 +363,7 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-center md:text-left">
               <p className="text-amber-100/80 text-sm mb-2">
-                Created by <span className="text-amber-300 font-semibold">Milkesa Comm.</span> <span className="text-amber-300 font-semibold">Getahun Tadese</span>
+                Created by <span className="text-amber-300 font-semibold">Alexander Getahun Tadese</span>
               </p>
               <p className="text-amber-100/60 text-xs mb-2">
                 © 2026 Simple Road. All rights reserved.

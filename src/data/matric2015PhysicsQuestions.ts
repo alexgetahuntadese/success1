@@ -12,6 +12,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statements does NOT describe magnetic nature of a material?",
     options: [
       "There is no a single magnetic North or magnetic South Pole.",
@@ -21,6 +22,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statements is correct about conduction in semiconductors?",
     options: [
       "N-type semiconductor is made from half-filled shell atoms doped with accepter atoms.",
@@ -30,6 +32,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "What is the acceleration due to gravity at an altitude twice the radius of the Earth? ($g_E$ is the gravitational acceleration on the surface of the Earth).",
     options: [
       "$$\\frac{g_E}{3}$$",
@@ -39,6 +42,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Four capacitors are connected in a capacitor network as shown in the figure below. The equivalent capacitance between terminals a and b in μF is [Image: exam question image]",
     options: [
       "$\\frac{3}{4}$",
@@ -48,6 +52,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A 64 V battery is connected to a series combination of 3 kΩ bulb and 4 kΩ electric iron. If the total current in the circuit is 8 mA, what is the internal resistance of the battery?",
     options: [
       "1 kΩ",
@@ -57,6 +62,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A solenoid with 5000 turns and length 1m carries 15A of current. If no iron core is inserted in the solenoid, what is the magnetic field strength at the center of the solenoid?",
     options: [
       "$20π\\times10^{-2}$ T",
@@ -66,6 +72,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A small source emits sound waves which are spherical. The intensity of the sound wave measures at a distance r = 3.0 m from the source is 1.5 W/m². At what distance from the source would the intensity be one-fourth as much as it is at r = 3.0 m?",
     options: [
       "$12.0$ m",
@@ -75,6 +82,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Consider a system of two point masses M1 and M2 with M1 = 0.5 M2. The two masses are located on the x-y plane as shown in the figure below. Which one of the following alternatives indicates the position of center of mass of the system? [Image: exam question image]",
     options: [
       "$$\\left(5,4\\right) cm$$",
@@ -84,6 +92,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Light ray is allowed to enter from air medium $(n_{air}=1)$ into water medium (index of refraction $n_w=\\frac{4}{3})$ at an angle of $30^\\circ$ with the normal to air-water interface (boundary). Which one of the following is correct about the ray of light?",
     options: [
       "The sine of the angle of refraction of the light ray in water is equal to 0.5.",
@@ -93,6 +102,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A fluid travelling over an object's surface exerts less pressure than if the fluid was static. This is a statement of",
     options: [
       "Bernoulli's principle.",
@@ -102,6 +112,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following activities of experiment is NOT necessary to determine the specific latent heat of vaporization of water?",
     options: [
       "Measuring temperature",
@@ -111,6 +122,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statements is correct about critical and boiling points of a substance?",
     options: [
       "The critical point and the boiling point of a substance occur at the same specific temperature and pressure.",
@@ -120,6 +132,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A 30 kg rigid object has a moment of inertia 45 kg⋅m 2 about its center of mass. What is the object's moment of inertia when it rotates through an axis 2 m away and parallel to the axis through its center of mass?",
     options: [
       "90 kg⋅m 2",
@@ -129,6 +142,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Two coplanar forces acts on a uniform beam as shown in the figure below. The moment of force on the beam is [Image: exam question image]",
     options: [
       "48.0 Nm.",
@@ -138,6 +152,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Water flows at the rate of 500.0 cm³/s at small cross-section 5 cm². The larger cross-section is 25 cm². What is the ratio of the speed of the water at A₁ to A₂. [Image: exam question image]",
     options: [
       "5",
@@ -147,6 +162,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "An ideal monoatomic gas expands adiabatically from an initial volume of 2 liters at a temperature of 300 K to 16 liters of volume. What is the final temperature of the gas? (Use the ratio of specific heat capacity at constant pressure to that at constant volume to be 5/3.)",
     options: [
       "37.5 K",
@@ -156,6 +172,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Consider a particle performing a circular motion around a circle of radius r with an angular velocity $\\omega$ and the particle's projection on the horizontal diameter of the circle (between points Q and R) as shown in the figure below? Which one of the following statements is correct about the motion of the particle and its projection on $\\overline{QR}$ [Image: exam question image]",
     options: [
       "The projection of the particle on $\\overline{QR}$ swings between points Q and R with constant speed.",
@@ -165,6 +182,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Air molecules vibrate in a pipe of length L closed at one end but open at the other. If the speed of sound through the pipe is $V$ , which one of the following statements is correct about the resonance effects of vibration of air molecules in the pipe?",
     options: [
       "The fundamental resonance frequency is ${\\frac{V}{4L}}$.",
@@ -174,6 +192,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A monochromatic light of wave length $\\lambda$ passes through double slits separated by a distance d . If the path difference between the lights is a and being an integer (0, 1, 2, 3, ...). Which one of the following would be observed on screen behind the slits?",
     options: [
       "constructive interference if $p = (n + 1/2) \\lambda$.",
@@ -183,6 +202,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Suppose you are standing on a horizontal floor, in a room, with one of your feet and leaning the wall of the room with the other foot. The number of action reaction pair of forces you experience is",
     options: [
       "1.",
@@ -192,6 +212,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The amount of heat energy required to change a substance from a liquid to a gaseous state is known as",
     options: [
       "specific heat capacity.",
@@ -201,6 +222,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following is correct about mechanical waves?",
     options: [
       "The maximum height in a transverse wave is known as the trough of the wave.",
@@ -210,6 +232,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A car of mass 1.50 × 10³ kg collides with a wall and rebounds. The initial and final velocities of the car are $v_1 = -15.0$ m/s and $v_2 = 2.60$ m/s respectively. If the collision lasts for 0.15 s, what is the magnitude of the average force exerted on the car?",
     options: [
       "2.60 × 10⁴ N",
@@ -219,6 +242,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Starting from rest, a block of mass 5.0 kg slides 2.5 m down a rough 37° incline. The coefficient of kinetic friction between the block and the incline is $µ_k = 0.44$ . What is the work done by the friction force on the block?",
     options: [
       "-75.00 J",
@@ -228,6 +252,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "An inclined plane is 20 m long and is inclined at an angle of 15° to the horizontal. If the effort required to push a block of weight 3,000 N up the slope is 900 N, what is the efficiency of the inclined plane?",
     options: [
       "100 %",
@@ -237,6 +262,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A wooden block of volume 5.00 × 10⁻⁴ m³ floats partially submerged in water, and a small steel object of mass m is placed on top of the block. When m = 0.25 kg, the system is in equilibrium and the top of the wooden block is at the level of the water. What is the density of the wood?",
     options: [
       "1000 kg.m⁻³",
@@ -246,6 +272,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A boy in a journey covers his route by travelling 3.0 km east and 4.0 km north. What is the magnitude of his resultant displacement?",
     options: [
       "5.0 km",
@@ -255,6 +282,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The graph given below shows the velocity of a man travelling on a motorcycle as a function of time. Which one of the following statements is correct about the velocity-time graph? [Image: exam question image]",
     options: [
       "The displacement during the time interval from t = 6 s to t = 14 s is equal to the area of region II minus the area of region III.",
@@ -264,6 +292,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A bimetallic strip made up of iron and brass bonded together is used in a thermostat. The coefficient of linear expansions for iron and brass are 1.1 × 10⁻⁵/K and 1.9 × 10⁻⁵/K, respectively. Which of one the following phenomena occurs when the temperature changes?",
     options: [
       "When the temperature decreases, the brass section of the bimetallic strip contracts slowly than the iron and the strip bends towards the brass section.",
@@ -273,6 +302,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statements does NOT describe coherent light or interference of coherent light?",
     options: [
       "Two waves which maintain constant phase relationship can produce sustained interference.",
@@ -282,6 +312,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Kirchhoff's junction rule is a consequence of conservation of",
     options: [
       "momentum.",
@@ -291,6 +322,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statements describes the photoelectric effect interaction of radiation with matter?",
     options: [
       "When radiation of certain frequency f, interact with atoms of a material, electrons will be emitted with energies proportional to the radiation energy.",
@@ -300,6 +332,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A positive point charge of 2 μC is placed on the x-axis at the origin and a positive charge of 6 μC and a negative point charge of -4 μC are placed, respectively at x=-3cm and x=+3cm on the x-axis. What is the net electric force on the 2 μC charge?",
     options: [
       "200 N toward the negative x-axis",
@@ -309,6 +342,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Consider a point charge Q in an electrostatic field and a point mass m in a gravitational field. Which one of the following statements is correct about the potential energy of the objects?",
     options: [
       "The electric potential decreases as a positive charge moves opposite to the electric field while the gravitational potential of the mass increases when it moves along the gravitational field.",
@@ -318,6 +352,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Four resistors are connected to a voltage source as shown in the circuit diagram shown below. What are the current through the 3 Ω resistor and the voltage drop across the 4 Ω resistor, respectively? [Image: exam question image]",
     options: [
       "$\\frac{2}{3}$ A and 4 V",
@@ -327,6 +362,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "An electron moving with a speed of 2.2×10⁷m/s east enters the region of a magnetic field strength of 5×10⁻⁴ T directed north. What is the magnetic force experienced by the electron?",
     options: [
       "1.76×10⁻¹⁵ N, perpendicular to north and east directions",
@@ -336,6 +372,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A magnetic field intensity of 4x10⁻⁴ T crosses a coil having face area 100 cm² and 5x10⁴ turns perpendicular to the face of the coil. If the magnetic flux in the coil set to zero within 2 ms. What is the magnitude of the induced emf in the coil?",
     options: [
       "4x10⁻³ V",
@@ -345,6 +382,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "In a simple a.c circuit, an inductor of 4μH and a capacitor of 9 pf are connected in series to each other and the combination is connected to an a.c source. What is the angular frequency at resonance of the circuit?",
     options: [
       "3.8x10⁸ rad/s",
@@ -354,6 +392,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Electrons in a Sodium atom emit radiation when they move from a higher energy level of -0.81eV to a lower energy level of -2.21eV. What is the frequency of radiation emitted in the process?",
     options: [
       "3.38x10 14 Hz",
@@ -363,6 +402,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following statements is NOT correct about power of a lens?",
     options: [
       "The power of a lens decreases as the focal length of the lens increases.",
@@ -372,6 +412,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following groups of physical quantities contains only vectors?",
     options: [
       "Work, Electric field, Displacement and Force",
@@ -381,6 +422,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Which rule about the number of significant figures is correct? Zeros in the number",
     options: [
       "450.0 are significant figures.",
@@ -390,6 +432,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "Given two vectors v₁ = 10 units along the positive y-axis and v₂ = 6 units at an angle of 37° above the positive x-axis. What is the scalar product of the vectors in square of units?",
     options: [
       "45",
@@ -399,6 +442,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "An airplane takes-off at airport A and travels 500 km due east within one hour and then turning to south it flies for 20 minutes to land on airport B which is 100 km away from the turning point. The magnitude average velocity of the plane during its flight between the two airports is",
     options: [
       "$\\sqrt{24}$ km/h",
@@ -408,6 +452,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A bullet is fired with an initial speed v at an angle θ with the horizontal. It takes a time T to reach its maximum vertical displacement hmax. It hits the target point a distance R away and exactly in the horizontal level to the point where it was fired. Which one of the following statement is NOT correct about the motion of the bullet?",
     options: [
       "The bullet hits the target at a time 2T after it was fired.",
@@ -417,6 +462,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A man pushes a 25.0 kg object by 250 N force along an inclined plane inclined at an angle of 37° to the horizontal. If the object moves with constant speed, the friction force exerts on the block is",
     options: [
       "250.0 N, up the inclined plane.",
@@ -426,6 +472,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "The following three collisions occur in different systems. I. A billiard ball A collides with an identical ball B and comes to rest after collision, while ball B moves with the same velocity as ball A was moving before. II. A bullet moving with speed v hits a suspended mass and is embedded in it and the combination moves with common velocity. III. Two cars moving in opposite direction become at rest after collision. Which of the following statements is correct about these collisions?",
     options: [
       "If and III are inelastic collisions.",
@@ -435,6 +482,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "An object of mass M is attached to a spring of spring constant K, as shown in the figure below. If the mass is pulled to a point P, which is at distance A from equilibrium position O, and released, Which one of the following statements is correct about energy of the system? (assume the surface is frictionless) [Image: exam question image]",
     options: [
       "At point O, the system has both kinetic and potential energy.",
@@ -444,6 +492,7 @@ const raw2015PhysicsQuestions = [
     ],
   },
   {
+    sectionDirection: "Choose the correct answer.",
     question: "A force $\\vec{F} = (\\overline{i} - 3\\overline{j}) \\, N$ acts on a wooden bar and drags the bar through a displacement of $\\vec{r} = 4\\overline{i}m$. What is the torque due to the force in N.m?",
     options: [
       "$4 \\,\\overline{i} \\, + \\, 12 \\,\\overline{j}$",

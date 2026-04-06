@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2017ChemistryQuestions: MatricExamQuestion[] = [
   {
     id: "m2017-chem-1",
+    sectionDirection: "Choose the correct answer.",
     question: "Which type of glass is made by heating a mixture of silica, sodium carbonate and limestone?",
     options: [
       "Pyrex glass",
@@ -15,6 +16,7 @@ export const matric2017ChemistryQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-chem-2",
+    sectionDirection: "Choose the correct answer.",
     question: "Consider the following galvanic cell:\n[Image: exam question image]\nWhen the Zn strip was connected to metal 'B' at 25°C, the voltmeter shows 0.51 V. Which of the following is the standard reduction potential of metal 'B'? ($E^\\circ_{\\mathrm{Zn}^{2+}/\\mathrm{Zn}} = -0.76$ V)",
     options: [
       "$E^\\circ_{\\mathrm{B}^{2+}/\\mathrm{B}} = 1.27$ V",
@@ -27,6 +29,7 @@ export const matric2017ChemistryQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-chem-3",
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the following polymer is used to make ropes, clothes, hair combs and stockings?",
     options: [
       "Bakelite",
@@ -39,6 +42,7 @@ export const matric2017ChemistryQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-chem-4",
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the following catalyst is used in the Ostwald process for the production of $HNO_3$?",
     options: [
       "CuO",
@@ -51,6 +55,7 @@ export const matric2017ChemistryQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-chem-5",
+    sectionDirection: "Choose the correct answer.",
     question: "Which of the following factors does NOT affect the rate of a chemical reaction having solid reactants?",
     options: [
       "Volume of reaction vessel",
@@ -63,6 +68,7 @@ export const matric2017ChemistryQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-chem-6",
+    sectionDirection: "Choose the correct answer.",
     question: "What is the electron configuration of $O_2^-$ molecule as per the molecular orbital model? (Atomic number of $O = 8$)",
     options: [
       "σ₁s² σ₁s*² σ₂s² σ₂s*² σ₂px² (π₂py² = π₂pz²) (π*₂py¹ = π*₂pz¹)",
@@ -75,6 +81,7 @@ export const matric2017ChemistryQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-chem-7",
+    sectionDirection: "Choose the correct answer.",
     question: "At a particular temperature, the equilibrium constant, Kc = 0.36 for the reaction SO$_3$(g) ⇌ SO$_2$(g) + O$_2$(g). Which of the following predictions can be drawn from the given data?",
     options: [
       "It is not possible to predict the direction of the reaction.",
