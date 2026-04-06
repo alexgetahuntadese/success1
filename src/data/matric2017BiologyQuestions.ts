@@ -3,6 +3,7 @@
 export const matric2017BiologyQuestions: MatricExamQuestion[] = [
   {
     id: "m2017-bio-1",
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following Ethiopian biological research institutes is known for housing a major gene bank in Africa?",
     options: [
       "Addis Ababa University Biology Department",
@@ -15,6 +16,7 @@ export const matric2017BiologyQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-bio-2",
+    sectionDirection: "Choose the correct answer.",
     question: "A grade 12 student marked two dots close to each other using a pen on a piece of paper and observed them under a microscope. The two dots appeared well separated under the microscope. This was due to",
     options: ["resolution", "magnification", "staining", "mounting"],
     correctAnswer: 0,
@@ -22,6 +24,7 @@ export const matric2017BiologyQuestions: MatricExamQuestion[] = [
   },
   {
     id: "m2017-bio-3",
+    sectionDirection: "Choose the correct answer.",
     question: "From the following alternatives select the common features that are found both in animal and plant cells.",
     options: [
       "Cell membrane, nucleus, cytoplasm, lysosome and Golgi apparatus",

@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2017MathQuestions: MatricExamQuestion[] = [
   {
     id: "m2017-math-1",
+    sectionDirection: "Choose the correct answer.",
     question: "Which one of the following function is NOT a power function?",
     options: [
       "f(x) = x^{-3/5}",

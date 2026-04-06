@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2016ChemistryQuestions: MatricExamQuestion[] = [
   {
     id: "m2016-chem-1",
+    sectionDirection: "Choose the correct answer.",
     question: "What are the molecular formulae of an alkene and alkyne containing seven carbon atoms, respectively?",
     options: [
       "C7H14 and C7H12",

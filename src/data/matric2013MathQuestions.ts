@@ -3,6 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2013MathQuestions: MatricExamQuestion[] = [
   {
     "id": "m2013-math-1",
+    "sectionDirection": "Choose the correct answer.",
     "question": "Given two vectors u = (1, 3) and v = (-3, 5) in the plane. Then 6u + 2v is equal to",
     "options": [
       "(0, 18)",
@@ -15,6 +16,7 @@ export const matric2013MathQuestions: MatricExamQuestion[] = [
   },
   {
     "id": "m2013-math-2",
+    "sectionDirection": "Choose the correct answer.",
     "question": "Which one of the following is the standard form of the equation of the circle centered at (2, -3) and radius 5?",
     "options": [
       "\\left(x - 2\\right)^2 + \\left(y - 3\\right)^2 = 25",
@@ -27,6 +29,7 @@ export const matric2013MathQuestions: MatricExamQuestion[] = [
   },
   {
     "id": "m2013-math-3",
+    "sectionDirection": "Choose the correct answer.",
     "question": "If f is a continuous function on [a, b] and F is its anti-derivative, then which of the following is true?",
     "options": [
       "\\int_a^b F'(x)dx = f(b) - f(a)",
