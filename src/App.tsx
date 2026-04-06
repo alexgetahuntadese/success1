@@ -8,7 +8,7 @@ import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { LanguageProvider } from "@/i18n/LanguageContext";
-import AuthProvider from "@/contexts/AuthContextFree";
+import AuthProvider from "@/contexts/AuthContext";
 import { Suspense, lazy } from "react";
 import { Loader2 } from "lucide-react";
 
@@ -30,7 +30,8 @@ const NotesPage = lazy(() => import("./pages/NotesPage"));
 const NotesSubjectsPage = lazy(() => import("./pages/NotesSubjectsPage"));
 const NotesChaptersPage = lazy(() => import("./pages/NotesChaptersPage"));
 const BooksPage = lazy(() => import("./pages/BooksPage"));
-const BookSubjectsPage = lazy(() => import("./pages/BookSubjectsPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const SignUpPage = lazy(() => import("./pages/SignUpPage"));
 
 // Loading component for lazy loaded routes
 const PageLoader = () => (
@@ -157,6 +158,16 @@ const App = () => (
                 <Route path="/books/:grade" element={
                   <Suspense fallback={<PageLoader />}>
                     <BookSubjectsPage />
+                  </Suspense>
+                } />
+                <Route path="/login" element={
+                  <Suspense fallback={<PageLoader />}>
+                    <LoginPage />
+                  </Suspense>
+                } />
+                <Route path="/signup" element={
+                  <Suspense fallback={<PageLoader />}>
+                    <SignUpPage />
                   </Suspense>
                 } />
               </Routes>
