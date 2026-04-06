@@ -156,7 +156,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
     sectionGroupTitle: "Part A: Writing",
     sectionTitle: "Punctuation and Capitalization",
     sectionDirection: "Choose the correct answer.",
-    question: "",
+    question: "Which sentence is correctly capitalized and punctuated?",
     options: [
       "We used to stay at the Hilton Hotel and dine at Kokeb restaurant.",
       "We used to stay at the Hilton hotel and dine at Kokeb Restaurant.",
@@ -171,7 +171,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
     sectionGroupTitle: "Part A: Writing",
     sectionTitle: "Punctuation and Capitalization",
     sectionDirection: "Choose the correct answer.",
-    question: "",
+    question: "Which sentence uses correct punctuation for a list?",
     options: [
       "We bought them blankets, bed sheets, cloths and some rice.",
       "We bought them blankets, bed sheets, cloths and, some rice.",
@@ -186,7 +186,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
     sectionGroupTitle: "Part A: Writing",
     sectionTitle: "Punctuation and Capitalization",
     sectionDirection: "Choose the correct answer.",
-    question: "",
+    question: "Which sentence is correctly punctuated with abbreviations?",
     options: [
       "At St. Paul Hospital, they train doctors in a variety of fields, e.g., cardiology, neurology, etc.",
       "At St Paul Hospital, they train doctors in a variety of fields, e.g., cardiology, neurology, etc.",
@@ -201,7 +201,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
     sectionGroupTitle: "Part A: Writing",
     sectionTitle: "Vocabulary",
     sectionDirection: "Choose the correct answer.",
-    question: "",
+    question: "Which sentence uses correct punctuation for a complex list?",
     options: [
       "They donated money: gave out food, clothing and medication; and pledged a lot more.",
       "They donated money; gave out food, clothing and medication; and pledged a lot more.",
@@ -216,7 +216,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
     sectionGroupTitle: "Part A: Writing",
     sectionTitle: "Vocabulary",
     sectionDirection: "Choose the correct answer.",
-    question: "",
+    question: "Which word is spelled correctly?",
     options: [
       "consession",
       "recession",
@@ -231,7 +231,7 @@ export const matric2015EnglishQuestions: MatricExamQuestion[] = [
     sectionGroupTitle: "Part A: Writing",
     sectionTitle: "Vocabulary",
     sectionDirection: "Choose the correct answer.",
-    question: "",
+    question: "Which word is spelled correctly?",
     options: [
       "thaught",
       "tought",
