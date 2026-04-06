@@ -95,6 +95,6 @@ const StarField = memo(({ starCount = 50, shootingCount = 3 }: { starCount?: num
       ))}
     </>
   );
-};
+});
 
 export default memo(StarField);

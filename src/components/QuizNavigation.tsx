@@ -7,9 +7,11 @@ interface QuizNavigationProps {
   onPrevious: () => void;
   onNext: () => void;
   onRestart: () => void;
+  onPEV?: () => void;
   canGoNext: boolean;
   canGoPrevious: boolean;
   isCompleted: boolean;
+  showPEV?: boolean;
 }
 
 export const QuizNavigation: React.FC<QuizNavigationProps> = ({
@@ -18,9 +20,11 @@ export const QuizNavigation: React.FC<QuizNavigationProps> = ({
   onPrevious,
   onNext,
   onRestart,
+  onPEV,
   canGoNext,
   canGoPrevious,
-  isCompleted
+  isCompleted,
+  showPEV = false
 }) => {
   return (
     <div className="flex justify-between items-center bg-white rounded-lg shadow-md p-4 mb-6">
@@ -46,14 +50,15 @@ export const QuizNavigation: React.FC<QuizNavigationProps> = ({
         <button
           onClick={onPrevious}
           disabled={!canGoPrevious}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all ${
+          className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all border-2 border-gray-400 shadow-md ${
             canGoPrevious
-              ? 'bg-blue-600 hover:bg-blue-700 text-white'
-              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              ? 'bg-green-600 hover:bg-green-700 text-white border-green-600'
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed border-gray-300'
           }`}
+          style={{ opacity: 1, visibility: 'visible', display: 'flex' }}
         >
-          <ChevronLeftIcon className="w-4 h-4" />
           <span>Previous</span>
+          <ChevronLeftIcon className="w-4 h-4" />
         </button>
 
         <button
@@ -68,6 +73,18 @@ export const QuizNavigation: React.FC<QuizNavigationProps> = ({
           <span>{isCompleted ? 'Complete' : 'Next'}</span>
           <ChevronRightIcon className="w-4 h-4" />
         </button>
+
+        {/* PEV Button */}
+        {showPEV && onPEV && (
+          <button
+            onClick={onPEV}
+            className="flex items-center space-x-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-all"
+            title="Post Exam Review"
+          >
+            <span>📝</span>
+            <span>PEV</span>
+          </button>
+        )}
       </div>
     </div>
   );

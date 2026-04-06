@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Sparkles, TrendingUp, Award, Target, Zap, Shield, Crown, Star, GraduationCap } from "lucide-react";
+import { Sparkles, TrendingUp, Award, Target, Zap, Shield, Crown, Star, GraduationCap, BookOpen } from "lucide-react";
 
 const Index = () => {
   return (
@@ -54,6 +54,46 @@ const Index = () => {
               </p>
               <Sparkles className="w-6 h-6 text-amber-300" />
             </div>
+            
+            {/* Clear Value Proposition Headline */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35 }}
+              className="mb-8"
+            >
+              <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 backdrop-blur-xl rounded-2xl p-6 border border-amber-400/30 max-w-4xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
+                  Ethiopia's Free Exam & Quiz Platform
+                </h2>
+                <p className="text-xl md:text-2xl text-amber-200 font-semibold mb-4">
+                  for Grade 9–12 Students
+                </p>
+                <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-xl p-4 border border-red-400/30 mb-4">
+                  <div className="flex items-center justify-center gap-3">
+                    <Award className="w-6 h-6 text-red-300" />
+                    <p className="text-2xl font-bold text-white">
+                      Grade 12 National Ethiopian Exam Preparation
+                    </p>
+                    <Award className="w-6 h-6 text-red-300" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-center gap-6 text-amber-300">
+                  <span className="flex items-center gap-2">
+                    <GraduationCap className="w-5 h-5" />
+                    <span className="font-medium">Exams</span>
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Target className="w-5 h-5" />
+                    <span className="font-medium">Quizzes</span>
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <BookOpen className="w-5 h-5" />
+                    <span className="font-medium">Books</span>
+                  </span>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
           
           <motion.p

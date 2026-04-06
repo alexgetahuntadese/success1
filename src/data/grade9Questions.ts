@@ -307,15 +307,18 @@ const buildChapterQuestions = (subject: string, chapter: string): Grade9Question
       make("Hard", 8, `Which teacher prompt would best reveal misunderstanding in "${title}"?`, `Explain how ${descriptor.concept} differs from ${peer(2).descriptor.concept}.`, [`Copy the chapter title neatly.`, `State the page number only.`, `Name the subject without explanation.`], `Comparison questions expose whether learners really understand boundaries between ideas.`, "Example: How do set operations differ from arithmetic operations?"),
       make("Hard", 9, `What is the strongest reason to keep "${title}" in the Grade 9 curriculum?`, `It helps students ${descriptor.skill} and apply learning beyond the classroom.`, [`It only increases the number of units.`, `It matters only for exams.`, `It adds vocabulary without deeper understanding.`], `The chapter matters because it develops transferable understanding.`, "Example: Set theory foundation helps in computer programming and data analysis"),
       make("Hard", 10, `Which answer best responds to the challenge of "${title}"?`, `Use ${descriptor.evidence} and ${descriptor.tool} to show how learners can ${descriptor.skill}.`, peers.map((item) => `Use ${item.descriptor.evidence} and ${item.descriptor.tool} to show how learners can ${item.descriptor.skill}.`), `That answer combines method, evidence, and outcome.`, "Example: Combine Venn diagrams with set notation to solve classification problems"),
-   if (subject === "English") {
+    ];
+  }
+
+  if (subject === "English") {
     return [
       // Gamified Multiple Choice Questions
       make("Easy", 1, `Which Grade 9 subject includes "${title}"?`, subject, others, `"${title}" is part of Grade 9 ${subject}.`, "Example: This unit helps develop communication skills.", "multiple-choice", 15, 25, ["Think about which subject deals with communication and language."], ["Quick Thinker"], 5),
       make("Easy", 2, `What is the main focus of "${title}"?`, descriptor.concept, peers.map((item) => item.descriptor.concept), `This chapter mainly teaches ${descriptor.concept}.`, "Example: Learning vocabulary and reading comprehension.", "multiple-choice", 15, 30, ["Look for keywords in the unit title."], ["Vocabulary Master"], 5),
       
       // True/False Questions
-      make("Easy", 3, `True or False: "${title}" focuses only on grammar rules.`, "False", ["True", "It depends", "Sometimes"], `False. "${title}" covers multiple language skills including reading, writing, and communication.", "Example: Units include various language activities.", "true-false", 10, 20, ["Consider what English units typically include."], ["Fact Checker"], 5),
-      make("Easy", 4, `True or False: Study skills are only important for exams.`, "False", ["True", "Maybe", "It depends"], `False. Study skills help in all areas of learning and life.", "Example: Good study habits improve overall learning.", "true-false", 10, 20, ["Think about when study skills are useful."], ["Critical Thinker"], 5),
+      make("Easy", 3, `True or False: "${title}" focuses only on grammar rules.`, "False", ["True", "It depends", "Sometimes"], `False. "${title}" covers multiple language skills including reading, writing, and communication.`, "Example: Units include various language activities.", "true-false", 10, 20, ["Consider what English units typically include."], ["Fact Checker"], 5),
+      make("Easy", 4, `True or False: Study skills are only important for exams.`, "False", ["True", "Maybe", "It depends"], `False. Study skills help in all areas of learning and life.`, "Example: Good study habits improve overall learning.", "true-false", 10, 20, ["Think about when study skills are useful."], ["Critical Thinker"], 5),
       
       // Fill in the Blank Questions
       make("Medium", 5, `In "${title}", students learn to organize their _____ effectively for better learning outcomes.`, "time", ["books", "desk", "pens"], `Time management is a key study skill covered in this unit.`, "Example: Creating study schedules and prioritizing tasks.", "fill-blank", 20, 35, ["What resource do we all have the same amount of?"], ["Time Manager"], 10),
@@ -333,7 +336,17 @@ const buildChapterQuestions = (subject: string, chapter: string): Grade9Question
       make("Hard", 11, `Arrange these study steps in the correct order for "${title}": [Preview notes, Review main ideas, Practice exercises, Test yourself]`, "Preview notes → Review main ideas → Practice exercises → Test yourself", ["Test yourself → Practice exercises → Review main ideas → Preview notes", "Practice exercises → Test yourself → Preview notes → Review main ideas", "Review main ideas → Preview notes → Practice exercises → Test yourself"], `This sequence follows effective study methodology from preparation to evaluation.`, "Example: Systematic approach improves learning efficiency.", "drag-drop", 35, 50, ["Think about the logical flow of learning."], ["Organized Learner"], 25),
       make("Hard", 12, `Organize these essay writing steps: [Research, Outline, Write introduction, Develop body paragraphs, Write conclusion, Edit]`, "Research → Outline → Write introduction → Develop body paragraphs → Write conclusion → Edit", ["Write introduction → Research → Outline → Develop body paragraphs → Write conclusion → Edit", "Research → Write introduction → Outline → Develop body paragraphs → Write conclusion → Edit", "Outline → Research → Write introduction → Develop body paragraphs → Write conclusion → Edit"], `This follows the standard academic writing process.`, "Example: Proper structure ensures coherent essays.", "drag-drop", 35, 55, ["Consider the logical progression of writing."], ["Writing Pro"], 25),
     ];
-) as Record<string, Record<string, Grade9Question[]>>;
+  }
+};
+
+export const bank: Record<string, Record<string, Grade9Question[]>> = {};
+
+grade9Subjects.forEach((subject) => {
+  bank[subject.name] = {};
+  subject.chapters.forEach((chapter) => {
+    bank[subject.name][chapter] = buildChapterQuestions(subject.name, chapter);
+  });
+});
 
 export const getGrade9ChapterQuestionCounts = (subjectName: string, chapter: string) => {
   const questions = bank[subjectName]?.[chapter] || [];

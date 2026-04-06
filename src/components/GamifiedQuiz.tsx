@@ -20,12 +20,16 @@ interface GamifiedQuizProps {
   questions: Grade9Question[];
   onComplete: (progress: GameProgress) => void;
   initialProgress?: GameProgress;
+  onPEV?: () => void;
+  showPEVButton?: boolean;
 }
 
 export const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   questions,
   onComplete,
-  initialProgress
+  initialProgress,
+  onPEV,
+  showPEVButton = false
 }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
@@ -264,9 +268,11 @@ export const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         onPrevious={handlePrevious}
         onNext={handleNext}
         onRestart={handleRestart}
+        onPEV={onPEV}
         canGoNext={canGoNext}
         canGoPrevious={canGoPrevious}
         isCompleted={isCompleted}
+        showPEV={showPEVButton}
       />
 
       {/* Progress */}
