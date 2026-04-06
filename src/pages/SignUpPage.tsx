@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "@/contexts/auth-context";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +11,6 @@ import { Loader2, Eye, EyeOff } from "lucide-react";
 const SignUpPage = () => {
   const navigate = useNavigate();
   const { register, isLoading } = useAuth();
-  const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,8 +19,8 @@ const SignUpPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!fullName || !phone || !password) {
-      toast.error("Please fill in all fields");
+    if (!phone || !password) {
+      toast.error("Please enter phone number and password");
       return;
     }
 
@@ -36,7 +35,7 @@ const SignUpPage = () => {
     }
 
     try {
-      await register({ fullName, phone, password });
+      await register({ fullName: phone, phone, password });
       toast.success("Account created successfully!");
       navigate("/grades");
     } catch (error: any) {

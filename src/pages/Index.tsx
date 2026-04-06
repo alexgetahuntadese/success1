@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Sparkles, TrendingUp, Award, Target, Zap, Shield, Crown, Star, GraduationCap } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { Sparkles, TrendingUp, Award, Target, Zap, Shield, Crown, Star, GraduationCap, LogIn, UserPlus } from "lucide-react";
 
 const Index = () => {
+  const { isAuthenticated, user } = useAuth();
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
       {/* Animated Background Elements */}
@@ -73,6 +76,84 @@ const Index = () => {
           >
             Premium Ethiopian Student Learning Experience
           </motion.p>
+          
+          {/* Auth Section */}
+          {isAuthenticated ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="flex flex-col gap-4 sm:flex-row sm:justify-center items-center"
+            >
+              <div className="text-center mb-4">
+                <p className="text-xl text-amber-100">
+                  Welcome back, <span className="text-amber-300 font-semibold">{user?.user_metadata?.name || 'Student'}</span>!
+                </p>
+                <p className="text-amber-200/70 text-sm">
+                  Continue your excellence journey
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <Link
+                  to="/grades"
+                  className="group relative inline-flex items-center justify-center px-12 py-6 text-xl font-bold text-white bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl shadow-2xl hover:shadow-amber-500/25 transform hover:scale-105 transition-all duration-300 border border-amber-400/20"
+                >
+                  <span className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl blur opacity-50 group-hover:opacity-75 transition duration-300"></span>
+                  <span className="relative flex items-center gap-3">
+                    <Target className="w-6 h-6" />
+                    Continue Learning
+                    <Zap className="w-6 h-6" />
+                  </span>
+                </Link>
+                <Link
+                  to="/profile"
+                  className="group inline-flex items-center justify-center px-12 py-6 text-xl font-bold text-amber-300 border-2 border-amber-400/50 rounded-2xl hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 backdrop-blur-sm"
+                >
+                  <span className="flex items-center gap-3">
+                    <Crown className="w-6 h-6" />
+                    My Profile
+                  </span>
+                </Link>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="flex flex-col gap-4 sm:flex-row sm:justify-center items-center"
+            >
+              <div className="text-center mb-4">
+                <p className="text-xl text-amber-100">
+                  Start Your Excellence Journey
+                </p>
+                <p className="text-amber-200/70 text-sm">
+                  Join thousands of successful students
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <Link
+                  to="/login"
+                  className="group relative inline-flex items-center justify-center px-12 py-6 text-xl font-bold text-white bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl shadow-2xl hover:shadow-amber-500/25 transform hover:scale-105 transition-all duration-300 border border-amber-400/20"
+                >
+                  <span className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl blur opacity-50 group-hover:opacity-75 transition duration-300"></span>
+                  <span className="relative flex items-center gap-3">
+                    <LogIn className="w-6 h-6" />
+                    Sign In
+                  </span>
+                </Link>
+                <Link
+                  to="/signup"
+                  className="group inline-flex items-center justify-center px-12 py-6 text-xl font-bold text-amber-300 border-2 border-amber-400/50 rounded-2xl hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 backdrop-blur-sm"
+                >
+                  <span className="flex items-center gap-3">
+                    <UserPlus className="w-6 h-6" />
+                    Sign Up
+                  </span>
+                </Link>
+              </div>
+            </motion.div>
+          )}
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}

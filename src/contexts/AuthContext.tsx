@@ -13,7 +13,7 @@ import {
   isAdminPreferences,
 } from "@/lib/authRoles";
 import { INACTIVE_ACCOUNT_NOTICE_KEY } from "@/lib/authStorage";
-import { parseAuthService } from "@/integrations/parse/parseAuth";
+import { backendAuthService } from "@/lib/backendAuth";
 import type {
   AuthUser,
   RegisterInput,
@@ -72,7 +72,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const bootstrap = async () => {
       try {
-        const session = await parseAuthService.getSession();
+        const session = await backendAuthService.getSession();
         
         if (!active) {
           return;
@@ -111,9 +111,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     displayName: deriveDisplayName(user, profile),
     refreshProfile: async () => {
       try {
-        const session = await parseAuthService.getSession();
+        const session = await backendAuthService.getSession();
         if (session?.profile) {
-          return await applyUserData(session.user, session.profile);
+          return await applyUserData(session.session.user, session.profile);
         }
         return null;
       } catch (error) {
@@ -123,9 +123,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     signIn: async (phone: string, password: string) => {
       try {
-        const session = await parseAuthService.signIn({ phone, password });
-        if (session?.session?.user && session?.session?.profile) {
-          const userProfile = await applyUserData(session.session.user, session.session.profile);
+        const session = await backendAuthService.signIn({ phone, password });
+        if (session?.session?.user && session?.profile) {
+          const userProfile = await applyUserData(session.session.user, session.profile);
           checkInactiveAccount(userProfile);
           return userProfile;
         }
@@ -137,9 +137,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     register: async (input: RegisterInput) => {
       try {
-        const session = await parseAuthService.register(input);
-        if (session?.session?.user && session?.session?.profile) {
-          const userProfile = await applyUserData(session.session.user, session.session.profile);
+        const session = await backendAuthService.register(input);
+        if (session?.session?.user && session?.profile) {
+          const userProfile = await applyUserData(session.session.user, session.profile);
           checkInactiveAccount(userProfile);
           return userProfile;
         }
@@ -151,9 +151,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     updateProfile: async (input: UpdateProfileInput) => {
       try {
-        const session = await parseAuthService.updateProfile(input);
-        if (session?.profile) {
-          const userProfile = await applyUserData(session.user, session.profile);
+        const session = await backendAuthService.updateProfile(input);
+        if (session?.session?.user && session?.profile) {
+          const userProfile = await applyUserData(session.session.user, session.profile);
           return userProfile;
         }
         return null;
@@ -164,7 +164,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     signOut: async () => {
       try {
-        await parseAuthService.signOut();
+        await backendAuthService.signOut();
         clearAuthState();
       } catch (error) {
         console.error("Sign out error:", error);

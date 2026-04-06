@@ -1,4 +1,4 @@
-import Parse from 'parse';
+import Parse from '@/lib/parsePolyfill';
 
 // Back4App configuration using environment variables
 const APP_ID = import.meta.env.VITE_BACK4APP_APP_ID;

@@ -1,3 +1,31 @@
+// Polyfill crypto.randomUUID for browsers/environments that don't support it (needed by Parse SDK)
+(function() {
+  const randomUUID = function() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  };
+
+  // Try to polyfill on multiple possible global objects
+  const globals = [globalThis, window, self];
+  for (const g of globals) {
+    if (g) {
+      try {
+        if (!g.crypto) {
+          g.crypto = {} as any;
+        }
+        if (!g.crypto.randomUUID) {
+          (g.crypto as any).randomUUID = randomUUID;
+        }
+      } catch (e) {
+        // Ignore errors
+      }
+    }
+  }
+})();
+
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
