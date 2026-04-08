@@ -46,13 +46,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const applyUserData = useCallback(
     async (authSession: AppSession, userProfile: UserProfile) => {
       const authUser = authSession.user;
+      const displayName = deriveDisplayName(authUser, userProfile);
       setSession(authSession);
       setUser(authUser);
       setProfile(userProfile);
 
-      if (authUser.user_metadata?.name) {
-        updateStudentName(authUser.user_metadata.name);
-      }
+      updateStudentName(displayName, authUser.id);
 
       setIsLoading(false);
       return userProfile;

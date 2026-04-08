@@ -39,18 +39,23 @@ export interface PerformanceData {
 
 const STORAGE_KEY = 'ethioquiz_performance';
 
+const resolveStorageKey = (userId?: string | null): string => {
+  const normalizedUserId = userId?.trim();
+  return normalizedUserId ? `${STORAGE_KEY}:${normalizedUserId}` : STORAGE_KEY;
+};
+
 // Generate a simple unique ID
 const generateId = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 };
 
 // Get or create student profile
-export const getOrCreateProfile = (studentName?: string): StudentProfile => {
-  const data = getPerformanceData();
+export const getOrCreateProfile = (studentName?: string, userId?: string | null): StudentProfile => {
+  const data = getPerformanceData(userId);
   if (data.profile.student_id) {
     if (studentName && studentName !== data.profile.student_name) {
       data.profile.student_name = studentName;
-      savePerformanceData(data);
+      savePerformanceData(data, userId);
     }
     return data.profile;
   }
@@ -62,16 +67,27 @@ export const getOrCreateProfile = (studentName?: string): StudentProfile => {
   };
   
   data.profile = profile;
-  savePerformanceData(data);
+  savePerformanceData(data, userId);
   return profile;
 };
 
 // Get all performance data
-export const getPerformanceData = (): PerformanceData => {
+export const getPerformanceData = (userId?: string | null): PerformanceData => {
+  const storageKey = resolveStorageKey(userId);
+
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = localStorage.getItem(storageKey);
     if (stored) {
       return JSON.parse(stored);
+    }
+
+    if (userId) {
+      const legacyStored = localStorage.getItem(STORAGE_KEY);
+      if (legacyStored) {
+        const parsedLegacyData = JSON.parse(legacyStored) as PerformanceData;
+        localStorage.setItem(storageKey, JSON.stringify(parsedLegacyData));
+        return parsedLegacyData;
+      }
     }
   } catch (error) {
     console.error('Error reading performance data:', error);
@@ -95,18 +111,21 @@ export const getPerformanceData = (): PerformanceData => {
 };
 
 // Save performance data
-export const savePerformanceData = (data: PerformanceData): void => {
+export const savePerformanceData = (data: PerformanceData, userId?: string | null): void => {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    localStorage.setItem(resolveStorageKey(userId), JSON.stringify(data));
   } catch (error) {
     console.error('Error saving performance data:', error);
   }
 };
 
 // Save a quiz attempt
-export const saveQuizAttempt = (attempt: Omit<QuizAttempt, 'attempt_id' | 'student_id' | 'attempted_at'>): void => {
-  const data = getPerformanceData();
-  const profile = getOrCreateProfile();
+export const saveQuizAttempt = (
+  attempt: Omit<QuizAttempt, 'attempt_id' | 'student_id' | 'attempted_at'>,
+  userId?: string | null
+): void => {
+  const data = getPerformanceData(userId);
+  const profile = getOrCreateProfile(undefined, userId);
   
   const newAttempt: QuizAttempt = {
     ...attempt,
@@ -117,7 +136,7 @@ export const saveQuizAttempt = (attempt: Omit<QuizAttempt, 'attempt_id' | 'stude
   
   data.attempts.push(newAttempt);
   data.analysis = calculateSkillAnalysis(data.attempts);
-  savePerformanceData(data);
+  savePerformanceData(data, userId);
 };
 
 // Calculate weighted average score for a subject (recent attempts weighted higher)
@@ -211,14 +230,14 @@ export const calculateSkillAnalysis = (attempts: QuizAttempt[]): SkillAnalysis =
 };
 
 // Get total quiz count
-export const getTotalQuizCount = (): number => {
-  const data = getPerformanceData();
+export const getTotalQuizCount = (userId?: string | null): number => {
+  const data = getPerformanceData(userId);
   return data.attempts.length;
 };
 
 // Get overall average score
-export const getOverallAverageScore = (): number => {
-  const data = getPerformanceData();
+export const getOverallAverageScore = (userId?: string | null): number => {
+  const data = getPerformanceData(userId);
   if (data.attempts.length === 0) return 0;
   
   const totalScore = data.attempts.reduce((sum, a) => sum + a.score, 0);
@@ -226,25 +245,25 @@ export const getOverallAverageScore = (): number => {
 };
 
 // Get recent attempts
-export const getRecentAttempts = (limit: number = 10): QuizAttempt[] => {
-  const data = getPerformanceData();
+export const getRecentAttempts = (limit: number = 10, userId?: string | null): QuizAttempt[] => {
+  const data = getPerformanceData(userId);
   return [...data.attempts]
     .sort((a, b) => new Date(b.attempted_at).getTime() - new Date(a.attempted_at).getTime())
     .slice(0, limit);
 };
 
 // Update student name
-export const updateStudentName = (name: string): void => {
-  const data = getPerformanceData();
+export const updateStudentName = (name: string, userId?: string | null): void => {
+  const data = getPerformanceData(userId);
   if (!data.profile.student_id) {
-    getOrCreateProfile(name);
+    getOrCreateProfile(name, userId);
   } else {
     data.profile.student_name = name;
-    savePerformanceData(data);
+    savePerformanceData(data, userId);
   }
 };
 
 // Clear all performance data
-export const clearPerformanceData = (): void => {
-  localStorage.removeItem(STORAGE_KEY);
+export const clearPerformanceData = (userId?: string | null): void => {
+  localStorage.removeItem(resolveStorageKey(userId));
 };
