@@ -1,11 +1,11 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, CheckCircle2, XCircle, ChevronRight, Clock, Target, Brain, Lightbulb, RotateCcw, Eye } from 'lucide-react';
-import { getMatricQuestions, getMatricSubjectsForYear, MatricExamQuestion } from '@/data/matricExams';
+import type { MatricExamQuestion } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
 
@@ -15,8 +15,8 @@ const MatricQuizPage = () => {
   const yearNum = Number(year);
   const streamKey = stream ?? 'natural';
   const streamLabel = streamKey === 'social' ? 'Social Science' : 'Natural Science';
-  const questions = getMatricQuestions(yearNum, streamKey, subject ?? '');
-  const scoreableQuestions = questions.filter((question) => question.correctAnswer >= 0).length;
+  const [questions, setQuestions] = useState<MatricExamQuestion[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -26,6 +26,47 @@ const MatricQuizPage = () => {
   const [answers, setAnswers] = useState<(number | null)[]>(new Array(questions.length).fill(null));
   const answeredCount = answers.filter(a => a !== null).length;
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
+  const scoreableQuestions = questions.filter((question) => question.correctAnswer >= 0).length;
+
+  useEffect(() => {
+    let active = true;
+
+    const load = async () => {
+      setIsLoading(true);
+      const { getMatricQuestions } = await import('@/data/matricExams');
+      const nextQuestions = getMatricQuestions(yearNum, streamKey, subject ?? '');
+
+      if (!active) {
+        return;
+      }
+
+      setQuestions(nextQuestions);
+      setAnswers(new Array(nextQuestions.length).fill(null));
+      setCurrentIndex(0);
+      setSelectedAnswer(null);
+      setShowExplanation(false);
+      setShowCorrectAnswer(false);
+      setScore(0);
+      setFinished(false);
+      setIsLoading(false);
+    };
+
+    void load();
+
+    return () => {
+      active = false;
+    };
+  }, [streamKey, subject, yearNum]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 overflow-hidden relative flex items-center justify-center">
+        <StarField starCount={30} shootingCount={2} />
+        <TopBar />
+        <div className="relative z-10 text-white/70">Loading exam...</div>
+      </div>
+    );
+  }
 
   if (questions.length === 0) {
     return (

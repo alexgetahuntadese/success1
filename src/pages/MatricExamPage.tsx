@@ -1,15 +1,42 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Calendar, BookOpen, Clock, TrendingUp, Award, Sparkles } from 'lucide-react';
-import { getMatricStreamsForYear, getMatricYears } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
 
 const MatricExamPage = () => {
   const navigate = useNavigate();
-  const years = getMatricYears();
+  const [yearSummaries, setYearSummaries] = useState<{ year: number; streamsCount: number; totalQuestions: number }[]>([]);
+
+  useEffect(() => {
+    let active = true;
+
+    const load = async () => {
+      const { getMatricStreamsForYear, getMatricYears } = await import('@/data/matricExams');
+      const summaries = getMatricYears().map((year) => {
+        const streams = getMatricStreamsForYear(year);
+        const totalQuestions = streams.reduce(
+          (sum, stream) => sum + stream.subjects.reduce((streamSum, subject) => streamSum + subject.questions.length, 0),
+          0,
+        );
+
+        return { year, streamsCount: streams.length, totalQuestions };
+      });
+
+      if (active) {
+        setYearSummaries(summaries);
+      }
+    };
+
+    void load();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-indigo-950 pt-14 px-4 pb-4 md:p-8 md:pt-14 overflow-hidden relative">
@@ -38,12 +65,7 @@ const MatricExamPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {years.map((year, index) => {
-            const streams = getMatricStreamsForYear(year);
-            const totalQuestions = streams.reduce(
-              (sum, stream) => sum + stream.subjects.reduce((streamSum, subject) => streamSum + subject.questions.length, 0),
-              0,
-            );
+          {yearSummaries.map(({ year, streamsCount, totalQuestions }, index) => {
             const isLatest = index === 0;
 
             return (
@@ -81,7 +103,7 @@ const MatricExamPage = () => {
                       <div className="flex items-center justify-between text-sm">
                         <div className="flex items-center gap-2 text-white/50">
                           <BookOpen className="h-4 w-4" />
-                          <span>{streams.length} streams</span>
+                          <span>{streamsCount} streams</span>
                         </div>
                         <div className="flex items-center gap-2 text-white/50">
                           <TrendingUp className="h-4 w-4" />

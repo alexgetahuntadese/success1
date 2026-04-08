@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -23,7 +24,7 @@ import {
   CheckCircle2,
   type LucideIcon,
 } from 'lucide-react';
-import { getMatricSubjectsForYear } from '@/data/matricExams';
+import type { MatricExamSubject } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
 import { useAuth } from "@/hooks/useAuth";
@@ -61,7 +62,24 @@ const MatricYearPage = () => {
   const yearNum = Number(year);
   const streamKey = stream ?? 'natural';
   const streamLabel = streamKey === 'social' ? 'Social Science' : 'Natural Science';
-  const subjects = getMatricSubjectsForYear(yearNum, streamKey);
+  const [subjects, setSubjects] = useState<MatricExamSubject[]>([]);
+
+  useEffect(() => {
+    let active = true;
+
+    const load = async () => {
+      const { getMatricSubjectsForYear } = await import('@/data/matricExams');
+      if (active) {
+        setSubjects(getMatricSubjectsForYear(yearNum, streamKey));
+      }
+    };
+
+    void load();
+
+    return () => {
+      active = false;
+    };
+  }, [streamKey, yearNum]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 md:p-8 md:pt-14 overflow-hidden relative">
