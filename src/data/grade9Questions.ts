@@ -328,7 +328,7 @@ const buildChapterQuestions = (subject: string, chapter: string): Grade9Question
 
   if (subject === "Biology") {
     return [
-      make("Easy", 1, `Which Grade 9 subject includes="${title}"?`, subject, others, `"${title}" is part of Grade 9 ${subject}.`, "Example: Biology explores living systems.", ""),
+      make("Easy", 1, `Which Grade 9 subject includes "${title}"?`, subject, others, `"${title}" is part of Grade 9 ${subject}.`, "Example: Biology explores living systems.", ""),
       make("Easy", 2, `What is the main focus of "${title}"?`, descriptor.concept, peers.map((item) => item.descriptor.concept), `This chapter mainly teaches ${descriptor.concept}.`, "Example: Understanding cell structure and function.", ""),
       make("Easy", 3, `Which learning goal best matches "${title}"?`, descriptor.skill, peers.map((item) => item.descriptor.skill), `Students study this chapter to ${descriptor.skill}.`, "Example: Students should be able to identify organisms.", ""),
       make("Easy", 4, `Which real-life application best connects with "${title}"?`, descriptor.application, peers.map((item) => item.descriptor.application), `The chapter connects best with ${descriptor.application}.`, "Example: Understanding health and disease.", ""),
@@ -378,8 +378,6 @@ const buildChapterQuestions = (subject: string, chapter: string): Grade9Question
       make("Medium", 6, `Traffic accidents can be reduced through better _____ and following safety rules.`, "education", ["speed", "luck", "weather"], `Education about traffic safety helps prevent accidents.`, "Example: Learning about road signs and safe crossing.", "fill-blank"),
       
       // Word Puzzle Questions
-      make("Medium", 7, `Unscramble the letters to form a vocabulary word from "${title}": N-A-T-I-O-N-A-L-P-A-R-K`, "NATIONAL PARK", ["PARK NATIONAL", "NATIONAL PAR", "PARKATIONAL"], `National parks are protected areas for wildlife and nature.`, "Example: Simien Mountains National Park in Ethiopia.", "word-puzzle"),
-      make("Medium", 8, `Rearrange to form a study method: Y-T-U-D-S-S-T-Y`, "STUDY", ["STUDYT", "DYSSTUY", "TUDYSYS"], `Study is the systematic approach to learning and revision.`, "Example: Regular study improves retention.", "word-puzzle"),
       make("Medium", 7, `Unscramble the letters to form a vocabulary word from "${title}": N-A-T-I-O-N-A-L-P-A-R-K`, "NATIONAL PARK", ["PARK NATIONAL", "NATIONAL PAR", "PARKATIONAL"], `National parks are protected areas for wildlife and nature.`, "Example: Simien Mountains National Park in Ethiopia.", "word-puzzle", 25, 45, ["Look for common compound words related to nature conservation."], ["Word Wizard"], 15),
       make("Medium", 8, `Rearrange to form a study method: Y-T-U-D-S-S-T-Y`, "STUDY", ["STUDYT", "DYSSTUY", "TUDYSYS"], `Study is the systematic approach to learning and revision.`, "Example: Regular study improves retention.", "word-puzzle", 25, 40, ["Think about what you do to prepare for tests."], ["Puzzle Solver"], 15),
       
