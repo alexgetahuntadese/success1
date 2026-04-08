@@ -38,6 +38,7 @@ const slugify = (value: string) =>
   value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
 const rotate = (items: string[], seed: number) => {
+  if (!items.length) return [];
   const shift = seed % items.length;
   return [...items.slice(shift), ...items.slice(0, shift)];
 };
@@ -201,7 +202,8 @@ const buildChapterQuestions = (subject: string, chapter: string): Grade9Question
   const title = cleanTitle(chapter);
   const descriptor = inferDescriptor(subject, chapter);
   const peers = peersFor(subject, chapter);
-  const peer = (index: number) => peers[index % peers.length];
+  const fallbackPeer = { chapter, title, descriptor };
+  const peer = (index: number) => (peers.length ? peers[index % peers.length] : fallbackPeer);
   const others = otherSubjectsFor(subject);
 
   const make = (
@@ -212,7 +214,7 @@ const buildChapterQuestions = (subject: string, chapter: string): Grade9Question
     distractors: string[],
     explanation: string,
     example: string,
-    questionType: "multiple-choice" | "true-false" | "fill-blank" | "matching" | "word-puzzle" | "drag-drop" = "multiple-choice",
+    questionType: "multiple-choice" | "true-false" | "fill-blank" | "matching" | "word-puzzle" | "drag-drop" | "" = "multiple-choice",
     points?: number,
     timeLimit?: number,
     hints?: string[],
@@ -232,7 +234,7 @@ const buildChapterQuestions = (subject: string, chapter: string): Grade9Question
     timeLimit: timeLimit || (difficulty === "Easy" ? 30 : difficulty === "Medium" ? 45 : 60),
     hints: hints || [],
     badges: badges || [],
-    questionType,
+    questionType: questionType || "multiple-choice",
     streakBonus: streakBonus || 0,
   });
 
