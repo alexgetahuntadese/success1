@@ -1,4 +1,5 @@
 import { grade9Subjects } from "./grade9Subjects";
+import { grade9EnglishQuestions } from "./grade9EnglishQuestions";
 
 export interface Grade9Question {
   id: string;
@@ -17,6 +18,22 @@ export interface Grade9Question {
   questionType?: "multiple-choice" | "true-false" | "fill-blank" | "matching" | "word-puzzle" | "drag-drop";
   streakBonus?: number;
 }
+
+type CuratedGrade9QuestionBank = Record<string, Record<string, Grade9Question[]>>;
+
+const curatedGrade9QuestionBanks: CuratedGrade9QuestionBank = {
+  English: Object.fromEntries(
+    Object.entries(grade9EnglishQuestions).map(([chapter, questions]) => [
+      chapter,
+      questions.map((question) => ({
+        ...question,
+        example: "",
+        chapter,
+        subject: "English",
+      })),
+    ]),
+  ),
+};
 
 type Descriptor = {
   concept: string;
@@ -309,22 +326,43 @@ const buildChapterQuestions = (subject: string, chapter: string): Grade9Question
       make("Hard", 8, `Which teacher prompt would best reveal misunderstanding in "${title}"?`, `Explain how ${descriptor.concept} differs from ${peer(2).descriptor.concept}.`, [`Copy the chapter title neatly.`, `State the page number only.`, `Name the subject without explanation.`], `Comparison questions expose whether learners really understand boundaries between ideas.`, "Example: How do set operations differ from arithmetic operations?"),
       make("Hard", 9, `What is the strongest reason to keep "${title}" in the Grade 9 curriculum?`, `It helps students ${descriptor.skill} and apply learning beyond the classroom.`, [`It only increases the number of units.`, `It matters only for exams.`, `It adds vocabulary without deeper understanding.`], `The chapter matters because it develops transferable understanding.`, "Example: Set theory foundation helps in computer programming and data analysis"),
       make("Hard", 10, `Which answer best responds to the challenge of "${title}"?`, `Use ${descriptor.evidence} and ${descriptor.tool} to show how learners can ${descriptor.skill}.`, peers.map((item) => `Use ${item.descriptor.evidence} and ${item.descriptor.tool} to show how learners can ${item.descriptor.skill}.`), `That answer combines method, evidence, and outcome.`, "Example: Combine Venn diagrams with set notation to solve classification problems"),
-      make("Medium", 6, `How does "${title}" connect to mathematics?`, `It uses ${descriptor.tool} to analyze ${descriptor.concept}.`, peers.map((item) => `It uses ${item.descriptor.tool} to analyze ${item.descriptor.concept}.`), `Physics often applies mathematical methods.`, "Example: Calculus in motion analysis.", ""),
-      make("Medium", 7, `What environmental factors affect "${title}"?`, descriptor.application, peers.map((item) => item.descriptor.application), `Environmental conditions influence ${descriptor.application}.`, "Example: Air resistance affects falling objects.", ""),
-      make("Medium", 8, `Which invention changed our understanding of "${title}"?`, descriptor.concept, peers.map((item) => item.descriptor.concept), `This invention revolutionized ${descriptor.concept}.`, "Example: Newton's laws of motion.", ""),
-      make("Medium", 9, `How can "${title}" knowledge improve daily life?`, descriptor.application, peers.map((item) => item.descriptor.application), `Apply physics principles to ${descriptor.application}.`, "Example: Better driving through understanding friction.", ""),
-      make("Medium", 10, `What is the most important formula in "${title}"?`, descriptor.evidence, peers.map((item) => item.descriptor.evidence), `Key formulas include ${descriptor.evidence}.`, "Example: The equation F = ma.", ""),
+    ];
+  }
 
-      make("Hard", 1, `Design an experiment to investigate ${descriptor.concept} in ${descriptor.application}.`, `Use controlled variables and ${descriptor.tool}.`, peers.map((item) => `Use controlled variables and ${item.descriptor.tool}.`), `Experimental design requires systematic planning.`, "Example: Measure acceleration of falling objects.", ""),
-      make("Hard", 2, `Analyze the limitations of ${descriptor.tool} in studying "${title}".`, `Consider precision and external factors.`, peers.map((item) => `Consider precision and external factors.`), `Understanding tool limitations is crucial.`, "Example: Air resistance affects measurement accuracy.", ""),
-      make("Hard", 3, `Compare and contrast ${descriptor.concept} with ${peer(0).descriptor.concept}.`, `Both involve motion but differ in key aspects.`, peers.map((item) => `Both involve motion but differ in key aspects.`), `Deep understanding requires seeing relationships.`, "Example: Speed vs. velocity analysis.", ""),
-      make("Hard", 4, `Evaluate the ethical implications of "${title}" in ${descriptor.application}.`, `Consider safety and environmental impact.`, peers.map((item) => `Consider safety and environmental impact.`), `Physics applications have ethical dimensions.`, "Example: Nuclear energy concerns.", ""),
-      make("Hard", 5, `How might "${title}" principles evolve with new technology?`, `New discoveries may refine ${descriptor.concept}.`, peers.map((item) => `New discoveries may refine ${item.descriptor.concept}.`), `Scientific understanding progresses over time.`, "Example: Quantum mechanics applications.", ""),
-      make("Hard", 6, `Synthesize knowledge from "${title}" to solve a complex ${descriptor.application} problem.`, `Integrate multiple physics concepts.`, peers.map((item) => `Integrate multiple physics concepts.`), `Complex problems require integrated thinking.`, "Example: Designing an efficient vehicle.", ""),
-      make("Hard", 7, `What historical developments led to current understanding of "${title}"?`, `${descriptor.concept} evolved through key discoveries.`, peers.map((item) => `${item.descriptor.concept} evolved through key discoveries.`), `Physics builds on historical work.`, "Example: Galileo's contributions to motion.", ""),
-      make("Hard", 8, `How does "${title}" connect to other sciences?`, `It provides foundations for chemistry and biology.`, peers.map((item) => `It provides foundations for chemistry and biology.`), `Physics is fundamental to natural sciences.`, "Example: Biophysics applications.", ""),
-      make("Hard", 9, `What are the mathematical foundations of "${title}"?`, `${descriptor.concept} relies on advanced mathematics.`, peers.map((item) => `${item.descriptor.concept} relies on advanced mathematics.`), `Physics often requires mathematical rigor.`, "Example: Calculus in motion analysis.", ""),
-      make("Hard", 10, `Propose a research project to advance understanding of "${title}".`, `Focus on novel aspects of ${descriptor.concept}.`, peers.map((item) => `Focus on novel aspects of ${item.descriptor.concept}.`), `Research pushes boundaries of knowledge.`, "Example: Investigating new materials.", ""),
+  if (subject === "Mathematics") {
+    return [
+      make("Easy", 1, `Which Grade 9 subject includes "${title}"?`, subject, others, `"${title}" is part of Grade 9 ${subject}.`, "Example: Mathematics builds logical and quantitative thinking."),
+      make("Easy", 2, `What is the main focus of "${title}"?`, descriptor.concept, peers.map((item) => item.descriptor.concept), `This chapter mainly teaches ${descriptor.concept}.`, "Example: Understand rules first, then apply them."),
+      make("Easy", 3, `Which learning goal best matches "${title}"?`, descriptor.skill, peers.map((item) => item.descriptor.skill), `Students study this chapter to ${descriptor.skill}.`, "Example: Solve accurately and explain each step."),
+      make("Easy", 4, `Which real-life context best connects with "${title}"?`, descriptor.application, peers.map((item) => item.descriptor.application), `The chapter connects best with ${descriptor.application}.`, "Example: Making decisions using quantities and comparisons."),
+      make("Easy", 5, `Which study tool is most helpful for "${title}"?`, descriptor.tool, peers.map((item) => item.descriptor.tool), `${descriptor.tool} is useful for mastering this chapter.`, "Example: Diagrams and worked examples."),
+      make("Easy", 6, `Which statement best summarizes "${title}"?`, `It builds understanding of ${descriptor.concept}.`, peers.slice(0, 3).map((item) => `It builds understanding of ${item.descriptor.concept}.`), `That statement best captures this chapter.`, "Example: From concept to practice."),
+      make("Easy", 7, `A student who learned "${title}" well should be able to:`, descriptor.skill, peers.map((item) => item.descriptor.skill), `The chapter helps students ${descriptor.skill}.`, "Example: Apply math ideas to class and real life."),
+      make("Easy", 8, `Which type of evidence appears most often in "${title}"?`, descriptor.evidence, peers.map((item) => item.descriptor.evidence), `${descriptor.evidence} is central in this chapter.`, "Example: Step-by-step solutions."),
+      make("Easy", 9, `Which chapter from the same subject focuses more on ${peer(0).descriptor.concept}?`, peer(0).title, [peer(1).title, peer(2).title, title], `"${peer(0).title}" is the best match for that focus.`, "Example: Related topic with different emphasis."),
+      make("Easy", 10, `What is a common mistake in "${title}"?`, descriptor.misconception, peers.map((item) => item.descriptor.misconception), `That misconception can lead to incorrect answers.`, "Example: Using the wrong rule at the wrong step."),
+
+      make("Medium", 1, `A learner wants to ${descriptor.application}. Which chapter should they revise first?`, title, [peer(0).title, peer(1).title, peer(2).title], `"${title}" should be revised first because it targets ${descriptor.concept}.`, "Example: Start with the method you actually need."),
+      make("Medium", 2, `Which revision plan best fits "${title}"?`, `Practice ${descriptor.evidence} and explain how to ${descriptor.skill}.`, peers.map((item) => `Practice ${item.descriptor.evidence} and explain how to ${item.descriptor.skill}.`), `Strong revision combines method and explanation.`, "Example: Solve and justify each step."),
+      make("Medium", 3, `Which comparison is correct?`, `"${title}" focuses on ${descriptor.concept}, while "${peer(0).title}" focuses on ${peer(0).descriptor.concept}.`, [`"${title}" and "${peer(0).title}" are exactly the same.`, `"${title}" is not part of ${subject}.`, `"${peer(0).title}" is unrelated to ${subject}.`], `These chapters are related but not identical.`, "Example: Similar area, different goal."),
+      make("Medium", 4, `Which answer would likely score highest in "${title}"?`, `An answer using ${descriptor.evidence} to demonstrate ${descriptor.skill}.`, peers.map((item) => `An answer using ${item.descriptor.evidence} to demonstrate ${item.descriptor.skill}.`), `High-scoring answers show process and correctness.`, "Example: Correct method with clear reasoning."),
+      make("Medium", 5, `If a student memorizes "${title}" but cannot apply it, what is missing?`, "Application and reasoning", ["Only more copying", "Only more page numbers", "Only a longer summary"], `Mathematics needs transfer of knowledge, not recall only.`, "Example: Knowing formulas but choosing the wrong one."),
+      make("Medium", 6, `How does "${title}" support problem-solving in other topics?`, `It strengthens ${descriptor.skill} through ${descriptor.concept}.`, peers.map((item) => `It strengthens ${item.descriptor.skill} through ${item.descriptor.concept}.`), `This chapter builds transferable habits of thinking.`, "Example: Better reasoning across algebra and geometry."),
+      make("Medium", 7, `Which classroom task best fits "${title}"?`, `A task that uses ${descriptor.tool} to apply ${descriptor.concept}.`, peers.map((item) => `A task that uses ${item.descriptor.tool} to apply ${item.descriptor.concept}.`), `Good tasks align tools, concepts, and outcomes.`, "Example: Real-world context with mathematical model."),
+      make("Medium", 8, `Which error most clearly shows misunderstanding of "${title}"?`, descriptor.misconception, peers.map((item) => item.descriptor.misconception), `That error conflicts with the chapter's core method.`, "Example: Incorrect operation order."),
+      make("Medium", 9, `How can "${title}" help in everyday decisions?`, `By using ${descriptor.concept} for ${descriptor.application}.`, peers.map((item) => `By using ${item.descriptor.concept} for ${item.descriptor.application}.`), `This chapter connects math to practical choices.`, "Example: Comparing options using clear reasoning."),
+      make("Medium", 10, `Which question is most likely from "${title}"?`, `How can we apply ${descriptor.concept} to ${descriptor.application}?`, peers.map((item) => `How can we apply ${item.descriptor.concept} to ${item.descriptor.application}?`), `That question directly reflects the chapter objective.`, "Example: Solve a context-based task using the chapter method."),
+
+      make("Hard", 1, `A student says "${title}" is just memorization. Which response is strongest?`, `It also requires students to ${descriptor.skill} and justify each step.`, [`Memorization alone is enough.`, `"${title}" has no practical value.`, `The chapter can be skipped.`], `Mathematical understanding is shown through application and explanation.`, "Example: Correct answer plus valid reasoning."),
+      make("Hard", 2, `Which assessment best measures deep understanding of "${title}"?`, `A task requiring ${descriptor.evidence} and application of ${descriptor.skill}.`, peers.map((item) => `A task requiring ${item.descriptor.evidence} and application of ${item.descriptor.skill}.`), `This checks reasoning quality, not recall.`, "Example: Multi-step question with explanation."),
+      make("Hard", 3, `Which conclusion best synthesizes the purpose of "${title}"?`, `Students should use ${descriptor.concept} to solve and explain ${descriptor.application} problems.`, peers.map((item) => `Students should use ${item.descriptor.concept} to solve and explain ${item.descriptor.application} problems.`), `This combines concept, method, and outcome.`, "Example: From rule knowledge to real problem solving."),
+      make("Hard", 4, `Which reasoning error would weaken an answer from "${title}" most?`, descriptor.misconception, peers.map((item) => item.descriptor.misconception), `That error breaks the logic required in this chapter.`, "Example: Applying a rule without checking conditions."),
+      make("Hard", 5, `Which project best links "${title}" to student life?`, `A project using ${descriptor.concept} to improve ${descriptor.application}.`, peers.map((item) => `A project using ${item.descriptor.concept} to improve ${item.descriptor.application}.`), `The strongest project shows clear real-world transfer.`, "Example: Analyze school data to support decisions."),
+      make("Hard", 6, `Why is "${descriptor.tool}" better than copying notes for "${title}"?`, `Because it helps learners ${descriptor.skill} through active reasoning.`, [`Because copying always proves understanding.`, `Because tools do not matter in mathematics.`, `Because "${title}" has no reasoning tasks.`], `Active use of the right tool improves understanding.`, "Example: Visual reasoning before formal steps."),
+      make("Hard", 7, `Which contrast is most accurate?`, `"${title}" develops ${descriptor.concept}, while "${peer(1).title}" develops ${peer(1).descriptor.concept}.`, [`Both chapters always require identical answers.`, `"${peer(1).title}" is not in ${subject}.`, `"${title}" has no clear focus.`], `Strong learners distinguish nearby concepts precisely.`, "Example: Different methods for different chapter goals."),
+      make("Hard", 8, `Which teacher prompt best reveals misunderstanding in "${title}"?`, `Explain how ${descriptor.concept} differs from ${peer(2).descriptor.concept}.`, [`Copy the chapter title only.`, `Write the page number only.`, `Name the subject without explanation.`], `Comparison prompts reveal concept boundaries clearly.`, "Example: Explain why one method fits and another does not."),
+      make("Hard", 9, `What is the strongest reason to keep "${title}" in Grade 9?`, `It helps students ${descriptor.skill} and apply mathematics beyond exams.`, [`It only increases chapter count.`, `It matters only for tests.`, `It adds vocabulary without understanding.`], `The chapter builds transferable reasoning for future study.`, "Example: Better analytical thinking across subjects."),
+      make("Hard", 10, `Which answer best responds to challenges in "${title}"?`, `Use ${descriptor.evidence} and ${descriptor.tool} to demonstrate ${descriptor.skill}.`, peers.map((item) => `Use ${item.descriptor.evidence} and ${item.descriptor.tool} to demonstrate ${item.descriptor.skill}.`), `This combines method, evidence, and outcome effectively.`, "Example: Show process clearly and justify the result."),
     ];
   }
 
@@ -392,6 +430,41 @@ const buildChapterQuestions = (subject: string, chapter: string): Grade9Question
       make("Hard", 12, `Organize these essay writing steps: [Research, Outline, Write introduction, Develop body paragraphs, Write conclusion, Edit]`, "Research → Outline → Write introduction → Develop body paragraphs → Write conclusion → Edit", ["Write introduction → Research → Outline → Develop body paragraphs → Write conclusion → Edit", "Research → Write introduction → Outline → Develop body paragraphs → Write conclusion → Edit", "Outline → Research → Write introduction → Develop body paragraphs → Write conclusion → Edit"], `This follows the standard academic writing process.`, "Example: Proper structure ensures coherent essays.", "drag-drop", 35, 55, ["Consider the logical progression of writing."], ["Writing Pro"], 25),
     ];
   }
+
+  return [
+    make("Easy", 1, `Which Grade 9 subject includes "${title}"?`, subject, others, `"${title}" is part of Grade 9 ${subject}.`, "Example: This chapter belongs to the selected subject."),
+    make("Easy", 2, `What is the main concept in "${title}"?`, descriptor.concept, peers.map((item) => item.descriptor.concept), `This chapter mainly focuses on ${descriptor.concept}.`, "Example: Identifying the key idea of the unit."),
+    make("Easy", 3, `Which skill is developed most in "${title}"?`, descriptor.skill, peers.map((item) => item.descriptor.skill), `The chapter is designed to help learners ${descriptor.skill}.`, "Example: Applying chapter methods correctly."),
+    make("Easy", 4, `Which real-life use best matches "${title}"?`, descriptor.application, peers.map((item) => item.descriptor.application), `The best connection is ${descriptor.application}.`, "Example: Linking class work to everyday situations."),
+    make("Easy", 5, `Which learning tool best supports "${title}"?`, descriptor.tool, peers.map((item) => item.descriptor.tool), `${descriptor.tool} is commonly used in this chapter.`, "Example: Using the right representation to solve problems."),
+    make("Easy", 6, `Which statement best summarizes "${title}"?`, `It strengthens understanding of ${descriptor.concept}.`, peers.slice(0, 3).map((item) => `It strengthens understanding of ${item.descriptor.concept}.`), `This summary matches the chapter focus.`, "Example: Core understanding first, then application."),
+    make("Easy", 7, `A student who learns "${title}" well should be able to:`, descriptor.skill, peers.map((item) => item.descriptor.skill), `That outcome reflects the chapter objective.`, "Example: Demonstrating the expected skill in class tasks."),
+    make("Easy", 8, `Which type of evidence appears most in "${title}"?`, descriptor.evidence, peers.map((item) => item.descriptor.evidence), `${descriptor.evidence} is central in this chapter.`, "Example: Working through examples and structured evidence."),
+    make("Easy", 9, `Which chapter from the same subject emphasizes ${peer(0).descriptor.concept} more?`, peer(0).title, [peer(1).title, peer(2).title, title], `"${peer(0).title}" places stronger focus on that concept.`, "Example: Compare chapter themes before choosing."),
+    make("Easy", 10, `What is a common misconception in "${title}"?`, descriptor.misconception, peers.map((item) => item.descriptor.misconception), `That misconception can lead to weak understanding.`, "Example: Mixing similar ideas without checking definitions."),
+
+    make("Medium", 1, `How does "${title}" support practical decision-making?`, `It applies ${descriptor.concept} to ${descriptor.application}.`, peers.map((item) => `It applies ${item.descriptor.concept} to ${item.descriptor.application}.`), `This chapter connects theory to practical use.`, "Example: Using chapter ideas in everyday contexts."),
+    make("Medium", 2, `Which revision strategy best fits "${title}"?`, `Use ${descriptor.evidence} and practice to ${descriptor.skill}.`, peers.map((item) => `Use ${item.descriptor.evidence} and practice to ${item.descriptor.skill}.`), `Good revision combines concept and application.`, "Example: Review then solve guided tasks."),
+    make("Medium", 3, `Which comparison is most accurate?`, `"${title}" focuses on ${descriptor.concept}, while "${peer(0).title}" focuses on ${peer(0).descriptor.concept}.`, [`"${title}" and "${peer(0).title}" are exactly the same.`, `"${title}" is not in ${subject}.`, `"${peer(0).title}" has no clear concept.`], `The strongest answer distinguishes chapter focus clearly.`, "Example: Similar subject, different concept emphasis."),
+    make("Medium", 4, `What type of answer is most likely to score high in "${title}"?`, `An answer that uses ${descriptor.evidence} to show ${descriptor.skill}.`, peers.map((item) => `An answer that uses ${item.descriptor.evidence} to show ${item.descriptor.skill}.`), `High-scoring answers align with the chapter method.`, "Example: Explain process, not final result only."),
+    make("Medium", 5, `If a learner memorizes "${title}" but cannot apply it, what is missing?`, "Application and reasoning", ["Only more copying", "Only a longer summary", "Only page references"], `This chapter requires understanding in action.`, "Example: Knowing terms but failing in tasks."),
+    make("Medium", 6, `Which class task best aligns with "${title}"?`, `A task that uses ${descriptor.tool} to practice ${descriptor.skill}.`, peers.map((item) => `A task that uses ${item.descriptor.tool} to practice ${item.descriptor.skill}.`), `Best-fit tasks match both process and outcome.`, "Example: Guided activity followed by explanation."),
+    make("Medium", 7, `Which objective best describes "${title}"?`, `Build ${descriptor.concept} and use it in ${descriptor.application}.`, peers.map((item) => `Build ${item.descriptor.concept} and use it in ${item.descriptor.application}.`), `This links chapter theory and real application.`, "Example: Understand, then transfer to context."),
+    make("Medium", 8, `Which error most weakens performance in "${title}"?`, descriptor.misconception, peers.map((item) => item.descriptor.misconception), `That error conflicts with the chapter's core approach.`, "Example: Using the wrong rule for the right-looking problem."),
+    make("Medium", 9, `How can "${title}" improve daily life?`, `By applying ${descriptor.concept} through ${descriptor.application}.`, peers.map((item) => `By applying ${item.descriptor.concept} through ${item.descriptor.application}.`), `The chapter matters beyond exams.`, "Example: Better decisions through structured thinking."),
+    make("Medium", 10, `Which question is most likely from "${title}"?`, `How can ${descriptor.concept} be used in ${descriptor.application}?`, peers.map((item) => `How can ${item.descriptor.concept} be used in ${item.descriptor.application}?`), `That question reflects chapter intent directly.`, "Example: Context-based application question."),
+
+    make("Hard", 1, `A student says "${title}" is only memory work. Which response is strongest?`, `It also requires learners to ${descriptor.skill} and justify their reasoning.`, [`Memorization is fully enough.`, `"${title}" has no practical value.`, `The chapter can be skipped.`], `Deep understanding includes explanation and application.`, "Example: Reasoned answers score better than recall alone."),
+    make("Hard", 2, `Which assessment best checks deep understanding of "${title}"?`, `A task combining ${descriptor.evidence} with ${descriptor.skill}.`, peers.map((item) => `A task combining ${item.descriptor.evidence} with ${item.descriptor.skill}.`), `This measures understanding quality, not recall only.`, "Example: Multi-step question with justification."),
+    make("Hard", 3, `Which conclusion best synthesizes the purpose of "${title}"?`, `Learners should apply ${descriptor.concept} to solve ${descriptor.application} tasks clearly.`, peers.map((item) => `Learners should apply ${item.descriptor.concept} to solve ${item.descriptor.application} tasks clearly.`), `This combines concept, process, and output.`, "Example: From chapter ideas to real solutions."),
+    make("Hard", 4, `Which reasoning mistake damages answers in "${title}" most?`, descriptor.misconception, peers.map((item) => item.descriptor.misconception), `That mistake breaks the chapter's method and logic.`, "Example: Choosing a procedure that does not fit the context."),
+    make("Hard", 5, `Which project best connects "${title}" with student life?`, `A project applying ${descriptor.concept} to improve ${descriptor.application}.`, peers.map((item) => `A project applying ${item.descriptor.concept} to improve ${item.descriptor.application}.`), `Strong projects show transferable understanding.`, "Example: Use chapter concepts to solve a school/community issue."),
+    make("Hard", 6, `Why is "${descriptor.tool}" better than rote copying for "${title}"?`, `It helps learners actively ${descriptor.skill}.`, [`Copying always proves understanding.`, `Tools are never important in this subject.`, `"${title}" has no reasoning tasks.`], `Learning tools support active understanding and transfer.`, "Example: Structured evidence supports accurate reasoning."),
+    make("Hard", 7, `Which contrast is most accurate?`, `"${title}" builds ${descriptor.concept}, while "${peer(1).title}" builds ${peer(1).descriptor.concept}.`, [`Both chapters always require identical responses.`, `"${peer(1).title}" is not in ${subject}.`, `"${title}" has no clear focus.`], `Strong answers distinguish nearby concepts correctly.`, "Example: Correct chapter chosen for the right concept."),
+    make("Hard", 8, `Which prompt best reveals misunderstanding in "${title}"?`, `Explain how ${descriptor.concept} differs from ${peer(2).descriptor.concept}.`, [`Copy the chapter title only.`, `Write only the page number.`, `Name the subject without explanation.`], `Comparison prompts reveal concept boundaries clearly.`, "Example: Explain why one approach fits and another does not."),
+    make("Hard", 9, `What is the strongest reason to keep "${title}" in Grade 9?`, `It helps learners ${descriptor.skill} and apply knowledge beyond exams.`, [`It only increases chapter count.`, `It matters only for tests.`, `It adds vocabulary without understanding.`], `The chapter builds transferable competence for future study.`, "Example: Better analysis and problem-solving across subjects."),
+    make("Hard", 10, `Which response best addresses challenges in "${title}"?`, `Use ${descriptor.evidence} and ${descriptor.tool} to show ${descriptor.skill}.`, peers.map((item) => `Use ${item.descriptor.evidence} and ${item.descriptor.tool} to show ${item.descriptor.skill}.`), `This combines method, evidence, and clear outcome.`, "Example: Show process clearly and justify conclusions."),
+  ];
 };
 
 export const bank: Record<string, Record<string, Grade9Question[]>> = {};
@@ -399,7 +472,9 @@ export const bank: Record<string, Record<string, Grade9Question[]>> = {};
 grade9Subjects.forEach((subject) => {
   bank[subject.name] = {};
   subject.chapters.forEach((chapter) => {
-    bank[subject.name][chapter] = buildChapterQuestions(subject.name, chapter);
+    bank[subject.name][chapter] =
+      curatedGrade9QuestionBanks[subject.name]?.[chapter] ||
+      buildChapterQuestions(subject.name, chapter);
   });
 });
 
