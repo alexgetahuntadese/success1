@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { BookSubject, getBooksGrade } from "@/lib/booksData";
-import { getRemoteBookPdfUrl } from "@/lib/bookRemotePdfMap";
 
 const getKehulumBookUrl = (gradeNumber: number, pdfPath: string) => {
   const match = pdfPath.match(/grade-\d+-(.+)\.pdf$/);
@@ -62,7 +61,6 @@ const BookSubjectsPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {gradeData.subjects.map((subject, index) => {
             const sourceUrl = getKehulumBookUrl(gradeNumber, subject.pdf);
-            const remotePdfUrl = getRemoteBookPdfUrl(gradeNumber, subject.pdf);
 
             return (
               <div
@@ -109,7 +107,7 @@ const BookSubjectsPage = () => {
 
                 <div className="mt-6 flex flex-wrap gap-3">
                   <a
-                    href={remotePdfUrl}
+                    href={subject.pdf}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-slate-950 transition hover:bg-white/90"
@@ -161,7 +159,7 @@ const BookSubjectsPage = () => {
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <a
-                      href={getRemoteBookPdfUrl(gradeNumber, previewBook.pdf)}
+                      href={previewBook.pdf}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-slate-950 transition hover:bg-white/90"
