@@ -238,7 +238,7 @@ export const en = {
     pending: 'Pending Review',
     rejected: 'Rejected',
     unknown: 'Unknown',
-    paymentSubmitted: 'Payment receipt submitted! Please refresh the page to see updated status. Admin will review your payment shortly.',
+    paymentSubmitted: "Payment receipt submitted! IMPORTANT: Please refresh this page to see your updated payment status and premium access.",
     paymentError: 'Could not submit the payment right now.',
     enterTransactionRef: 'Enter the transaction reference from your payment receipt.',
     uploadReceipt: 'Upload your receipt screenshot or photo.',
