@@ -22,6 +22,7 @@ const SubjectsPage = lazy(() => import("./pages/SubjectsPage"));
 const ChaptersPage = lazy(() => import("./pages/ChaptersPage"));
 const QuizPage = lazy(() => import("./pages/QuizPage"));
 const CareerSimulatorPage = lazy(() => import("./pages/CareerSimulatorPage"));
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const PerformancePage = lazy(() => import("./pages/PerformancePage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const MatricExamPage = lazy(() => import("./pages/MatricExamPage"));
@@ -117,6 +118,13 @@ const App = () => (
                   <ProtectedRoute>
                     <Suspense fallback={<PageLoader />}>
                       <CareerSimulatorPage />
+                    </Suspense>
+                  </ProtectedRoute>
+                } />
+                <Route path="/dashboard" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <DashboardPage />
                     </Suspense>
                   </ProtectedRoute>
                 } />

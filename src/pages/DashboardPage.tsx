@@ -16,10 +16,23 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import AppLogo from "@/components/AppLogo";
+import {
+  getPerformanceData,
+  getOverallAverageScore,
+  getRecentAttempts,
+  getTotalQuizCount,
+} from "@/lib/performanceUtils";
+import { getProfileKey } from "@/lib/profileUtils";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
-  const { displayName, profile } = useAuth();
+  const { displayName, profile, user } = useAuth();
+  const profileKey = getProfileKey(profile, user);
+  const performanceData = getPerformanceData(profileKey);
+  const totalQuizzes = getTotalQuizCount(profileKey);
+  const averageScore = getOverallAverageScore(profileKey);
+  const recentAttempts = getRecentAttempts(2, profileKey);
+  const activeSubjects = new Set(performanceData.attempts.map((attempt) => attempt.subject)).size;
 
   const quickActions = [
     {
@@ -52,10 +65,12 @@ const DashboardPage = () => {
     },
   ];
 
-  const recentActivity = [
-    { title: "Biology - Chapter 3", type: "Quiz", score: "85%", date: "2 days ago" },
-    { title: "Chemistry Notes", type: "Study", duration: "45 min", date: "3 days ago" },
-  ];
+  const recentActivity = recentAttempts.map((attempt) => ({
+    title: `${attempt.subject} - ${attempt.chapter}`,
+    type: "Quiz",
+    score: `${attempt.score}%`,
+    date: new Date(attempt.attempted_at).toLocaleDateString(),
+  }));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
@@ -96,7 +111,7 @@ const DashboardPage = () => {
             Hello, {displayName || "Student"}
           </h1>
           <p className="mt-2 text-white/60">
-            Ready to continue your learning journey?
+            {profile?.grade ? `Grade ${profile.grade} study plan is ready for you.` : "Ready to continue your learning journey?"}
           </p>
         </motion.div>
 
@@ -113,7 +128,7 @@ const DashboardPage = () => {
                 <TrendingUp className="h-6 w-6 text-cyan-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">12</p>
+                <p className="text-2xl font-bold text-white">{totalQuizzes}</p>
                 <p className="text-sm text-white/60">Quizzes Completed</p>
               </div>
             </CardContent>
@@ -124,7 +139,7 @@ const DashboardPage = () => {
                 <Target className="h-6 w-6 text-emerald-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">78%</p>
+                <p className="text-2xl font-bold text-white">{averageScore}%</p>
                 <p className="text-sm text-white/60">Average Score</p>
               </div>
             </CardContent>
@@ -135,7 +150,7 @@ const DashboardPage = () => {
                 <BookOpen className="h-6 w-6 text-amber-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">5</p>
+                <p className="text-2xl font-bold text-white">{activeSubjects}</p>
                 <p className="text-sm text-white/60">Subjects Active</p>
               </div>
             </CardContent>
@@ -199,7 +214,7 @@ const DashboardPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {recentActivity.map((activity) => (
+                {recentActivity.length > 0 ? recentActivity.map((activity) => (
                   <div
                     key={activity.title}
                     className="flex items-center justify-between rounded-xl bg-white/5 p-4"
@@ -220,7 +235,11 @@ const DashboardPage = () => {
                       <p className="text-xs text-white/60">{activity.date}</p>
                     </div>
                   </div>
-                ))}
+                )) : (
+                  <div className="rounded-xl bg-white/5 p-4 text-sm text-white/60">
+                    No profile activity yet. Complete a quiz to start building your dashboard.
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>

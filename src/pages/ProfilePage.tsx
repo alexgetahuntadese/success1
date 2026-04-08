@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, Mail, Save, Trash2, User } from 'lucide-react';
+import { ArrowLeft, Mail, Save, School, Trash2, User } from 'lucide-react';
 import { clearPerformanceData, getPerformanceData, updateStudentName } from '@/lib/performanceUtils';
 import {
   AlertDialog,
@@ -23,6 +23,7 @@ import { toast } from 'sonner';
 import { useLanguage } from '@/i18n/LanguageContext';
 import TopBar from "@/components/TopBar";
 import { useAuth } from '@/hooks/useAuth';
+import { getProfileDisplayName, getProfileKey } from '@/lib/profileUtils';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -30,8 +31,12 @@ const ProfilePage = () => {
   const { isAuthenticated, isLoading: isAuthLoading, profile, refreshProfile, user, updateProfile } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [grade, setGrade] = useState('');
+  const [school, setSchool] = useState('');
   const [quizCount, setQuizCount] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
+  const profileKey = getProfileKey(profile, user);
+  const displayName = getProfileDisplayName(profile, user);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -39,14 +44,16 @@ const ProfilePage = () => {
     }
 
     const loadProfile = () => {
-      const data = getPerformanceData(user?.id);
-      setName(profile?.name || user?.user_metadata?.name || data.profile.student_name || '');
+      const data = getPerformanceData(profileKey);
+      setName(profile?.name || displayName || data.profile.student_name || '');
       setEmail(profile?.email || user?.email || '');
+      setGrade(profile?.grade || '');
+      setSchool(profile?.school || '');
       setQuizCount(data.attempts.length);
     };
 
     loadProfile();
-  }, [isAuthenticated, profile?.email, profile?.name, user?.email, user?.id, user?.user_metadata?.name]);
+  }, [displayName, isAuthenticated, profile?.email, profile?.grade, profileKey, profile?.name, profile?.school, user?.email]);
 
   const handleSave = async () => {
     if (!name.trim()) {
@@ -60,8 +67,10 @@ const ProfilePage = () => {
       await updateProfile({
         name: name.trim(),
         email: email?.trim() || null,
+        grade: grade.trim() || null,
+        school: school.trim() || null,
       });
-      updateStudentName(name.trim(), user?.id);
+      updateStudentName(name.trim(), profileKey);
       await refreshProfile();
       toast.success(t('profile.profileUpdated'));
     } catch (error) {
@@ -73,8 +82,8 @@ const ProfilePage = () => {
   };
 
   const handleClearData = () => {
-    clearPerformanceData(user?.id);
-    setName('');
+    clearPerformanceData(profileKey);
+    setName(displayName);
     setQuizCount(0);
     toast.success(t('profile.dataCleared'));
   };
@@ -149,6 +158,43 @@ const ProfilePage = () => {
                   className="bg-white/[0.04] border-white/[0.08] pl-10 text-white placeholder:text-white/30"
                 />
               </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="grade" className="text-white">Grade</Label>
+                <Input
+                  id="grade"
+                  value={grade}
+                  onChange={(e) => setGrade(e.target.value)}
+                  placeholder="9, 10, 11, 12"
+                  className="bg-white/[0.04] border-white/[0.08] text-white placeholder:text-white/30"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="school" className="text-white">School</Label>
+                <div className="relative">
+                  <School className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/35" />
+                  <Input
+                    id="school"
+                    value={school}
+                    onChange={(e) => setSchool(e.target.value)}
+                    placeholder="Your school"
+                    className="bg-white/[0.04] border-white/[0.08] pl-10 text-white placeholder:text-white/30"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="text-white">Phone</Label>
+              <Input
+                id="phone"
+                value={profile?.phone || user?.phone || ''}
+                readOnly
+                className="bg-white/[0.03] border-white/[0.08] text-white/60"
+              />
             </div>
             
             <Button onClick={handleSave} disabled={isSaving} className="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white">
