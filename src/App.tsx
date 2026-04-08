@@ -36,6 +36,7 @@ const BooksPage = lazy(() => import("./pages/BooksPage"));
 const BookSubjectsPage = lazy(() => import("./pages/BookSubjectsPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const SignUpPage = lazy(() => import("./pages/SignUpPage"));
+const PaymentPage = lazy(() => import("./pages/PaymentPage"));
 
 // Loading component for lazy loaded routes
 const PageLoader = () => (
@@ -202,6 +203,13 @@ const App = () => (
                   <ProtectedRoute>
                     <Suspense fallback={<PageLoader />}>
                       <BookSubjectsPage />
+                    </Suspense>
+                  </ProtectedRoute>
+                } />
+                <Route path="/payment" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <PaymentPage />
                     </Suspense>
                   </ProtectedRoute>
                 } />

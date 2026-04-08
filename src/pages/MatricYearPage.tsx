@@ -28,6 +28,7 @@ import type { MatricExamSubject } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
 import { useAuth } from "@/hooks/useAuth";
+import { isFreeMatricSubject } from '@/lib/paymentAccess';
 
 const subjectIcons: Record<string, LucideIcon> = {
   Mathematics: Calculator,
@@ -110,7 +111,7 @@ const MatricYearPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {subjects.map((subj, index) => {
             const hasQuestions = subj.questions.length > 0;
-            const locked = false; // All subjects unlocked
+            const locked = hasQuestions && !premiumAccess && !isFreeMatricSubject(index);
             const SubjectIcon = subjectIcons[subj.subject] ?? BookOpen;
             const colorClass = subjectColors[subj.subject] ?? 'from-gray-500 to-gray-600';
             const isAvailable = hasQuestions && !locked;
@@ -121,11 +122,19 @@ const MatricYearPage = () => {
                 className="group relative"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
-                {hasQuestions && (
+                {hasQuestions && !locked && (
                   <div className="absolute -top-2 -right-2 z-20">
                     <Badge className="bg-emerald-500/90 text-white border-0 shadow-lg text-xs">
                       <CheckCircle2 className="h-3 w-3 mr-1" />
-                      Available
+                      {isFreeMatricSubject(index) ? "Free" : "Paid"}
+                    </Badge>
+                  </div>
+                )}
+                {locked && (
+                  <div className="absolute -top-2 -right-2 z-20">
+                    <Badge className="bg-amber-500/90 text-white border-0 shadow-lg text-xs">
+                      <Lock className="h-3 w-3 mr-1" />
+                      Premium
                     </Badge>
                   </div>
                 )}
@@ -189,10 +198,14 @@ const MatricYearPage = () => {
                           className={`w-full bg-gradient-to-r ${colorClass} hover:opacity-90 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}
                           onClick={(e) => {
                             e.stopPropagation();
+                            if (locked) {
+                              navigate("/payment");
+                              return;
+                            }
                             navigate(`/matric/${yearNum}/${streamKey}/${subj.subject}`);
                           }}
                         >
-                          Start Exam
+                          {isFreeMatricSubject(index) ? "Start Free Exam" : "Start Exam"}
                         </Button>
                       ) : locked ? (
                         <Button

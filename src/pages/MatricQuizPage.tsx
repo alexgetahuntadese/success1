@@ -8,15 +8,19 @@ import { ArrowLeft, CheckCircle2, XCircle, ChevronRight, Clock, Target, Brain, L
 import type { MatricExamQuestion } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
+import { useAuth } from '@/hooks/useAuth';
+import { isFreeMatricSubject } from '@/lib/paymentAccess';
 
 const MatricQuizPage = () => {
   const { year, stream, subject } = useParams<{ year: string; stream: string; subject: string }>();
   const navigate = useNavigate();
+  const { hasPremiumAccess } = useAuth();
   const yearNum = Number(year);
   const streamKey = stream ?? 'natural';
   const streamLabel = streamKey === 'social' ? 'Social Science' : 'Natural Science';
   const [questions, setQuestions] = useState<MatricExamQuestion[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [subjectIndex, setSubjectIndex] = useState(-1);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -33,13 +37,16 @@ const MatricQuizPage = () => {
 
     const load = async () => {
       setIsLoading(true);
-      const { getMatricQuestions } = await import('@/data/matricExams');
+      const { getMatricQuestions, getMatricSubjectsForYear } = await import('@/data/matricExams');
       const nextQuestions = getMatricQuestions(yearNum, streamKey, subject ?? '');
+      const availableSubjects = getMatricSubjectsForYear(yearNum, streamKey);
+      const nextSubjectIndex = availableSubjects.findIndex((item) => item.subject === (subject ?? ''));
 
       if (!active) {
         return;
       }
 
+      setSubjectIndex(nextSubjectIndex);
       setQuestions(nextQuestions);
       setAnswers(new Array(nextQuestions.length).fill(null));
       setCurrentIndex(0);
@@ -58,6 +65,8 @@ const MatricQuizPage = () => {
     };
   }, [streamKey, subject, yearNum]);
 
+  const locked = subjectIndex >= 0 && !hasPremiumAccess && !isFreeMatricSubject(subjectIndex);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 overflow-hidden relative flex items-center justify-center">
@@ -66,6 +75,10 @@ const MatricQuizPage = () => {
         <div className="relative z-10 text-white/70">Loading exam...</div>
       </div>
     );
+  }
+
+  if (locked) {
+    return <Navigate to="/payment" replace />;
   }
 
   if (questions.length === 0) {
