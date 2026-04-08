@@ -1,4 +1,4 @@
-import Parse from '@/integrations/parse/parseConfig';
+import Parse, { isParseConfigured } from '@/integrations/parse/parseConfig';
 import type {
   AuthSessionResponse,
   AuthUser,
@@ -10,6 +10,8 @@ import type {
 
 // Parse User class for extended user data
 const UserProfileClass = 'UserProfile';
+
+const isParseReady = () => Boolean(isParseConfigured && Parse?.User && Parse?.Query && Parse?.Object);
 
 // Helper to convert Parse User to AuthUser
 const parseUserToAuthUser = (parseUser: Parse.User): AuthUser => ({
@@ -67,6 +69,13 @@ const getUserProfile = async (parseUser: Parse.User): Promise<UserProfile> => {
 
 export const parseAuthService = {
   async getSession(): Promise<AuthSessionResponse> {
+    if (!isParseReady()) {
+      return {
+        session: null,
+        profile: null,
+      };
+    }
+
     const currentUser = Parse.User.current();
     
     if (!currentUser) {
@@ -93,7 +102,9 @@ export const parseAuthService = {
     } catch (error) {
       console.error('Parse getSession error:', error);
       // Clear invalid session
-      Parse.User.logOut();
+      if (Parse?.User?.logOut) {
+        await Parse.User.logOut();
+      }
       return {
         session: null,
         profile: null,
@@ -102,6 +113,10 @@ export const parseAuthService = {
   },
 
   async register(input: RegisterInput): Promise<AuthSessionResponse> {
+    if (!isParseReady()) {
+      throw new Error('Authentication is not configured. Please set Back4App environment keys.');
+    }
+
     const user = new Parse.User();
     user.set('username', input.phone);
     user.set('password', input.password);
@@ -127,6 +142,10 @@ export const parseAuthService = {
   },
 
   async signIn(input: SignInInput): Promise<AuthSessionResponse> {
+    if (!isParseReady()) {
+      throw new Error('Authentication is not configured. Please set Back4App environment keys.');
+    }
+
     try {
       const parseUser = await Parse.User.logIn(input.phone, input.password);
       const userProfile = await getUserProfile(parseUser);
@@ -156,6 +175,10 @@ export const parseAuthService = {
   },
 
   async updateProfile(input: UpdateProfileInput): Promise<AuthSessionResponse> {
+    if (!isParseReady()) {
+      throw new Error('Authentication is not configured. Please set Back4App environment keys.');
+    }
+
     const currentUser = Parse.User.current();
     
     if (!currentUser) {
@@ -205,6 +228,10 @@ export const parseAuthService = {
   },
 
   async signOut(): Promise<void> {
+    if (!isParseReady()) {
+      return;
+    }
+
     try {
       await Parse.User.logOut();
     } catch (error: any) {
@@ -215,6 +242,10 @@ export const parseAuthService = {
 
   // Additional Parse-specific methods
   async requestPasswordReset(email: string): Promise<void> {
+    if (!isParseReady()) {
+      throw new Error('Authentication is not configured. Please set Back4App environment keys.');
+    }
+
     try {
       await Parse.User.requestPasswordReset(email);
     } catch (error: any) {
@@ -224,6 +255,10 @@ export const parseAuthService = {
   },
 
   async changePassword(oldPassword: string, newPassword: string): Promise<void> {
+    if (!isParseReady()) {
+      throw new Error('Authentication is not configured. Please set Back4App environment keys.');
+    }
+
     const currentUser = Parse.User.current();
     
     if (!currentUser) {
