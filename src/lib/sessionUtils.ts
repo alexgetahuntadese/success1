@@ -37,7 +37,16 @@ const SESSIONS_KEY = 'quiz_sessions';
 const PARTICIPANTS_KEY = 'session_participants';
 const ANSWERS_KEY = 'session_answers';
 
-const generateId = () => crypto.randomUUID();
+const generateId = () => {
+  if (
+    typeof globalThis !== "undefined" &&
+    typeof globalThis.crypto?.randomUUID === "function"
+  ) {
+    return globalThis.crypto.randomUUID();
+  }
+
+  return `id-${Date.now()}-${Math.random().toString(16).slice(2)}-${Math.random().toString(16).slice(2)}`;
+};
 
 export const generateSessionCode = (): string => {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';

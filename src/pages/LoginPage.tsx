@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,7 @@ import { Loader2, Eye, EyeOff } from "lucide-react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { signIn, isLoading } = useAuth();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +27,8 @@ const LoginPage = () => {
     try {
       await signIn(phone, password);
       toast.success("Signed in successfully!");
-      navigate("/grades");
+      const targetPath = (location.state as { from?: string } | null)?.from || "/grades";
+      navigate(targetPath, { replace: true });
     } catch (error: any) {
       toast.error(error.message || "Failed to sign in");
     }

@@ -10,6 +10,7 @@ import type {
 
 // Parse User class for extended user data
 const UserProfileClass = 'UserProfile';
+const StudentsClass = 'Students';
 
 const isParseReady = () => Boolean(isParseConfigured && Parse?.User && Parse?.Query && Parse?.Object);
 
@@ -66,6 +67,28 @@ const parseObjectToUserProfile = (obj: Parse.Object, parseUser: Parse.User): Use
   last_login: obj.get('lastLogin') || null,
 });
 
+const upsertStudentRecord = async (parseUser: Parse.User, preferredName?: string | null) => {
+  const query = new Parse.Query(StudentsClass);
+  query.equalTo('user', parseUser);
+
+  let student = await query.first();
+  if (!student) {
+    const Student = Parse.Object.extend(StudentsClass);
+    student = new Student();
+    student.set('user', parseUser);
+  }
+
+  const mobile = parseUser.get('username') || parseUser.get('phone') || '';
+  student.set('mobile', mobile);
+  student.set('phone', mobile);
+  student.set('name', preferredName?.trim() || parseUser.get('name') || mobile);
+  student.set('isActive', true);
+  student.set('lastLogin', new Date().toISOString());
+
+  await student.save();
+  return student;
+};
+
 // Get or create user profile
 const getUserProfile = async (parseUser: Parse.User): Promise<UserProfile> => {
   const query = new Parse.Query(UserProfileClass);
@@ -111,6 +134,7 @@ export const parseAuthService = {
     try {
       // Refresh the user to get latest data
       await currentUser.fetch();
+      await upsertStudentRecord(currentUser);
       const userProfile = await getUserProfile(currentUser);
       const authUser = parseUserToAuthUser(currentUser);
       
@@ -153,6 +177,7 @@ export const parseAuthService = {
     
     try {
       const parseUser = await user.signUp();
+      await upsertStudentRecord(parseUser, input.fullName || null);
       const userProfile = await getUserProfile(parseUser);
       const authUser = parseUserToAuthUser(parseUser);
       
@@ -182,6 +207,7 @@ export const parseAuthService = {
 
     try {
       const parseUser = await Parse.User.logIn(normalizedPhone, input.password);
+      await upsertStudentRecord(parseUser);
       const userProfile = await getUserProfile(parseUser);
       const authUser = parseUserToAuthUser(parseUser);
       
@@ -243,6 +269,8 @@ export const parseAuthService = {
         }
         await profile.save();
       }
+
+      await upsertStudentRecord(currentUser, input.name);
       
       const userProfile = await getUserProfile(currentUser);
       const authUser = parseUserToAuthUser(currentUser);

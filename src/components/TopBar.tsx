@@ -128,7 +128,7 @@ const TopBar = () => {
                       variant="ghost"
                       size="sm"
                       onClick={() => {
-                        navigate('/');
+                        navigate('/login');
                         setIsOpen(false);
                       }}
                       className="justify-start h-12 text-base text-white/85 hover:bg-white/12 hover:text-white"
@@ -223,7 +223,7 @@ const TopBar = () => {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/login')}
               className="font-medium text-white/95 hover:bg-white/12 hover:text-white px-2 sm:px-3"
             >
               <LogIn className="h-4 w-4 shrink-0 sm:mr-1.5" />
