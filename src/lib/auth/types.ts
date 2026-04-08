@@ -47,8 +47,13 @@ export type SignInInput = {
 };
 
 export type UpdateProfileInput = {
-  name: string;
+  name?: string;
   email?: string | null;
+  grade?: string | null;
+  school?: string | null;
+  gender?: string | null;
+  date_of_birth?: string | null;
+  profile_image_url?: string | null;
 };
 
 export type AuthSessionResponse = {

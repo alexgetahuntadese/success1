@@ -4,13 +4,11 @@ import StarField from '@/components/StarField';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, User, Trophy, BookOpen, Target } from 'lucide-react';
 import { 
   getPerformanceData, 
   getOverallAverageScore, 
   getTotalQuizCount,
-  getRecentAttempts,
   PerformanceData 
 } from '@/lib/performanceUtils';
 import PerformanceChart from '@/components/performance/PerformanceChart';
@@ -20,20 +18,25 @@ import PerformanceHistory from '@/components/performance/PerformanceHistory';
 import ProgressOverTime from '@/components/performance/ProgressOverTime';
 import { useLanguage } from '@/i18n/LanguageContext';
 import TopBar from "@/components/TopBar";
+import { useAuth } from '@/hooks/useAuth';
+import { getProfileDisplayName, getProfileKey } from '@/lib/profileUtils';
 
 const PerformancePage = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const { user, profile } = useAuth();
   const [data, setData] = useState<PerformanceData | null>(null);
   const [averageScore, setAverageScore] = useState(0);
   const [totalQuizzes, setTotalQuizzes] = useState(0);
+  const profileKey = getProfileKey(profile, user);
+  const displayName = getProfileDisplayName(profile, user);
 
   useEffect(() => {
-    const performanceData = getPerformanceData();
+    const performanceData = getPerformanceData(profileKey);
     setData(performanceData);
-    setAverageScore(getOverallAverageScore());
-    setTotalQuizzes(getTotalQuizCount());
-  }, []);
+    setAverageScore(getOverallAverageScore(profileKey));
+    setTotalQuizzes(getTotalQuizCount(profileKey));
+  }, [profileKey]);
 
   if (!data) {
     return (
@@ -72,7 +75,7 @@ const PerformancePage = () => {
             <div>
               <h1 className="text-3xl font-bold text-white">{t('performance.dashboard')}</h1>
               <p className="text-white/50">
-                {data.profile.student_name || 'Student'}{t('performance.learningJourney')}
+                {displayName}{t('performance.learningJourney')}
               </p>
             </div>
           </div>

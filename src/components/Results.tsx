@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +8,8 @@ import { CheckCircle, XCircle, Clock, RotateCcw, ArrowLeft, BarChart3, Trophy, T
 import { useNavigate, useParams } from 'react-router-dom';
 import { saveQuizAttempt } from '@/lib/performanceUtils';
 import { useLanguage } from '@/i18n/LanguageContext';
+import { useAuth } from '@/hooks/useAuth';
+import { getProfileKey } from '@/lib/profileUtils';
 
 interface Question {
   id: string;
@@ -45,9 +47,16 @@ const Results = ({
   const navigate = useNavigate();
   const params = useParams();
   const { t } = useLanguage();
+  const { user, profile } = useAuth();
+  const hasSavedAttemptRef = useRef(false);
   const percentage = Math.round((score / totalQuestions) * 100);
+  const profileKey = getProfileKey(profile, user);
   
   useEffect(() => {
+    if (hasSavedAttemptRef.current) {
+      return;
+    }
+
     const attemptGrade = grade || params.grade || 'Unknown';
     const attemptSubject = subject || params.subject || 'Unknown';
     const attemptChapter = chapter || params.chapterId || 'Unknown';
@@ -64,8 +73,9 @@ const Results = ({
       time_spent: timeTaken,
     };
 
-    saveQuizAttempt(attemptData);
-  }, []);
+    saveQuizAttempt(attemptData, profileKey);
+    hasSavedAttemptRef.current = true;
+  }, [chapter, difficulty, grade, params.chapterId, params.difficulty, params.grade, params.subject, profileKey, score, subject, timeTaken, totalQuestions, percentage]);
   
   const getScoreColor = (percentage: number) => {
     if (percentage >= 80) return 'text-green-500';

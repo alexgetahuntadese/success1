@@ -39,14 +39,14 @@ const ProfilePage = () => {
     }
 
     const loadProfile = () => {
-      const data = getPerformanceData();
+      const data = getPerformanceData(user?.id);
       setName(profile?.name || user?.user_metadata?.name || data.profile.student_name || '');
       setEmail(profile?.email || user?.email || '');
       setQuizCount(data.attempts.length);
     };
 
     loadProfile();
-  }, [isAuthenticated, profile?.email, profile?.name, user?.email, user?.user_metadata?.name]);
+  }, [isAuthenticated, profile?.email, profile?.name, user?.email, user?.id, user?.user_metadata?.name]);
 
   const handleSave = async () => {
     if (!name.trim()) {
@@ -61,7 +61,7 @@ const ProfilePage = () => {
         name: name.trim(),
         email: email?.trim() || null,
       });
-      updateStudentName(name.trim());
+      updateStudentName(name.trim(), user?.id);
       await refreshProfile();
       toast.success(t('profile.profileUpdated'));
     } catch (error) {
@@ -73,7 +73,7 @@ const ProfilePage = () => {
   };
 
   const handleClearData = () => {
-    clearPerformanceData();
+    clearPerformanceData(user?.id);
     setName('');
     setQuizCount(0);
     toast.success(t('profile.dataCleared'));

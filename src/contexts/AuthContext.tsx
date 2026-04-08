@@ -21,14 +21,8 @@ import type {
   UpdateProfileInput,
   UserProfile,
 } from "@/lib/auth/types";
+import { getProfileDisplayName, getProfileKey } from "@/lib/profileUtils";
 import { updateStudentName } from "@/lib/performanceUtils";
-
-const deriveDisplayName = (user: AuthUser | null, profile: UserProfile | null) => {
-  if (profile?.name) return profile.name;
-  if (user?.user_metadata?.name) return user.user_metadata.name;
-  if (user?.phone) return user.phone;
-  return "Student";
-};
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<AppSession | null>(null);
@@ -46,12 +40,13 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const applyUserData = useCallback(
     async (authSession: AppSession, userProfile: UserProfile) => {
       const authUser = authSession.user;
-      const displayName = deriveDisplayName(authUser, userProfile);
+      const displayName = getProfileDisplayName(userProfile, authUser);
+      const profileKey = getProfileKey(userProfile, authUser);
       setSession(authSession);
       setUser(authUser);
       setProfile(userProfile);
 
-      updateStudentName(displayName, authUser.id);
+      updateStudentName(displayName, profileKey);
 
       setIsLoading(false);
       return userProfile;
@@ -110,7 +105,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     hasPremiumAccess: hasPremiumPreferences(profile?.preferences as any),
     paymentStatus: getPaymentStatus(profile?.preferences as any),
     isLoading,
-    displayName: deriveDisplayName(user, profile),
+    displayName: getProfileDisplayName(profile, user),
     refreshProfile: async () => {
       try {
         const session = await parseAuthService.getSession();

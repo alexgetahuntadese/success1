@@ -267,6 +267,21 @@ export const parseAuthService = {
         if (input.email !== undefined) {
           profile.set('email', input.email);
         }
+        if (input.grade !== undefined) {
+          profile.set('grade', input.grade);
+        }
+        if (input.school !== undefined) {
+          profile.set('school', input.school);
+        }
+        if (input.gender !== undefined) {
+          profile.set('gender', input.gender);
+        }
+        if (input.date_of_birth !== undefined) {
+          profile.set('dateOfBirth', input.date_of_birth);
+        }
+        if (input.profile_image_url !== undefined) {
+          profile.set('profileImageUrl', input.profile_image_url);
+        }
         await profile.save();
       }
 
