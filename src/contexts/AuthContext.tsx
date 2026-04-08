@@ -168,7 +168,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         clearAuthState();
       }
     },
-  }), [session, user, profile, isLoading, clearAuthState, applyUserData, checkInactiveAccount]);
+  }), [user, profile, isLoading, clearAuthState, applyUserData, checkInactiveAccount]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
