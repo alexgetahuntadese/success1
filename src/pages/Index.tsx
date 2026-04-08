@@ -17,35 +17,58 @@ const Index = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative px-4 py-24 md:py-32"
+        className="relative px-4 py-20 md:py-28"
       >
         <div className="mx-auto max-w-7xl text-center relative z-10">
+          {/* Enhanced Logo Animation */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-12"
+            initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1, delay: 0.2, type: "spring", stiffness: 100 }}
+            className="mb-10"
           >
             <div className="relative inline-flex items-center justify-center">
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-600 rounded-2xl blur-2xl opacity-50 animate-pulse"></div>
-              <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-2xl border border-amber-300/20">
-                <Crown className="w-16 h-16 text-white" />
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-600 rounded-3xl blur-3xl opacity-60"
+                animate={{ scale: [1, 1.1, 1], opacity: [0.6, 0.8, 0.6] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <div className="relative w-36 h-36 mx-auto bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 rounded-3xl flex items-center justify-center shadow-2xl border border-amber-300/20 backdrop-blur-sm">
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <Crown className="w-20 h-20 text-white drop-shadow-lg" />
+                </motion.div>
               </div>
             </div>
           </motion.div>
           
+          {/* Enhanced Brand Name */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="mb-6"
           >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <img src="/logo.svg" alt="Simple Road" className="w-12 h-12 md:w-16 md:h-16" />
-              <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400 bg-clip-text text-transparent">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <motion.img 
+                src="/logo.svg" 
+                alt="Simple Road" 
+                className="w-14 h-14 md:w-18 md:h-18 drop-shadow-lg"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ duration: 0.3 }}
+              />
+              <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400 bg-clip-text text-transparent drop-shadow-2xl">
                 Simple Road
               </h1>
-              <img src="/logo.svg" alt="Simple Road" className="w-12 h-12 md:w-16 md:h-16" />
+              <motion.img 
+                src="/logo.svg" 
+                alt="Simple Road" 
+                className="w-14 h-14 md:w-18 md:h-18 drop-shadow-lg"
+                whileHover={{ scale: 1.1, rotate: -5 }}
+                transition={{ duration: 0.3 }}
+              />
             </div>
             <div className="flex items-center justify-center gap-2 mb-6">
               <Sparkles className="w-6 h-6 text-amber-300" />
@@ -55,42 +78,72 @@ const Index = () => {
               <Sparkles className="w-6 h-6 text-amber-300" />
             </div>
             
-            {/* Clear Value Proposition Headline */}
+            {/* Enhanced Value Proposition Headline */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35 }}
               className="mb-8"
             >
-              <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 backdrop-blur-xl rounded-2xl p-6 border border-amber-400/30 max-w-4xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
+              <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 backdrop-blur-xl rounded-3xl p-8 border border-amber-400/30 max-w-5xl mx-auto shadow-2xl">
+                <motion.h2 
+                  className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
                   Ethiopia's Free Exam & Quiz Platform
-                </h2>
-                <p className="text-xl md:text-2xl text-amber-200 font-semibold mb-4">
+                </motion.h2>
+                <p className="text-2xl md:text-3xl text-amber-200 font-semibold mb-6">
                   for Grade 9–12 Students
                 </p>
-                <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-xl p-4 border border-red-400/30 mb-4">
-                  <div className="flex items-center justify-center gap-3">
-                    <Award className="w-6 h-6 text-red-300" />
-                    <p className="text-2xl font-bold text-white">
+                <motion.div 
+                  className="bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-2xl p-6 border border-red-400/30 mb-6 shadow-xl"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex items-center justify-center gap-4">
+                    <motion.div
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Award className="w-8 h-8 text-red-300" />
+                    </motion.div>
+                    <p className="text-3xl font-bold text-white">
                       Grade 12 National Ethiopian Exam Preparation
                     </p>
-                    <Award className="w-6 h-6 text-red-300" />
+                    <motion.div
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Award className="w-8 h-8 text-red-300" />
+                    </motion.div>
                   </div>
-                </div>
-                <div className="flex items-center justify-center gap-6 text-amber-300">
-                  <span className="flex items-center gap-2">
-                    <GraduationCap className="w-5 h-5" />
-                    <span className="font-medium">Exams</span>
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <Target className="w-5 h-5" />
-                    <span className="font-medium">Quizzes</span>
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <BookOpen className="w-5 h-5" />
-                    <span className="font-medium">Books</span>
-                  </span>
+                </motion.div>
+                <div className="flex items-center justify-center gap-8 text-amber-300">
+                  <motion.span 
+                    className="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-full"
+                    whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.2)" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <GraduationCap className="w-6 h-6" />
+                    <span className="font-medium text-lg">Exams</span>
+                  </motion.span>
+                  <motion.span 
+                    className="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-full"
+                    whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.2)" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Target className="w-6 h-6" />
+                    <span className="font-medium text-lg">Quizzes</span>
+                  </motion.span>
+                  <motion.span 
+                    className="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-full"
+                    whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.2)" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <BookOpen className="w-6 h-6" />
+                    <span className="font-medium text-lg">Books</span>
+                  </motion.span>
                 </div>
               </div>
             </motion.div>
@@ -120,28 +173,200 @@ const Index = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col gap-6 sm:flex-row sm:justify-center items-center"
           >
-            <Link
-              to="/matric"
-              className="group relative inline-flex items-center justify-center px-12 py-6 text-xl font-bold text-white bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl shadow-2xl hover:shadow-amber-500/25 transform hover:scale-105 transition-all duration-300 border border-amber-400/20"
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl blur opacity-50 group-hover:opacity-75 transition duration-300"></span>
-              <span className="relative flex items-center gap-3">
-                <Crown className="w-6 h-6" />
-                Start Excellence Journey
-                <Zap className="w-6 h-6" />
-              </span>
-            </Link>
-            <Link
-              to="/matric"
-              className="group inline-flex items-center justify-center px-12 py-6 text-xl font-bold text-amber-300 border-2 border-amber-400/50 rounded-2xl hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 backdrop-blur-sm"
+              <Link
+                to="/matric"
+                className="group relative inline-flex items-center justify-center px-14 py-7 text-xl font-bold text-white bg-gradient-to-r from-amber-500 to-orange-600 rounded-3xl shadow-2xl hover:shadow-amber-500/40 transition-all duration-300 border border-amber-400/20 overflow-hidden"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-500 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-500"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "0%" }}
+                  transition={{ duration: 0.5 }}
+                />
+                <span className="relative flex items-center gap-4">
+                  <motion.div
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <Crown className="w-7 h-7" />
+                  </motion.div>
+                  <span className="text-xl">Start Excellence Journey</span>
+                  <motion.div
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <Zap className="w-7 h-7" />
+                  </motion.div>
+                </span>
+              </Link>
+            </motion.div>
+            
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <span className="flex items-center gap-3">
-                <Target className="w-6 h-6" />
-                Explore Excellence
-                <Star className="w-6 h-6" />
-              </span>
-            </Link>
+              <Link
+                to="/matric"
+                className="group relative inline-flex items-center justify-center px-14 py-7 text-xl font-bold text-amber-300 border-2 border-amber-400/50 rounded-3xl hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 backdrop-blur-sm overflow-hidden"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-orange-400/20 rounded-3xl opacity-0 group-hover:opacity-100 transition duration-500"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "0%" }}
+                  transition={{ duration: 0.5 }}
+                />
+                <span className="relative flex items-center gap-4">
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <Target className="w-7 h-7" />
+                  </motion.div>
+                  <span className="text-xl">Explore Excellence</span>
+                  <motion.div
+                    animate={{ rotate: [0, 180] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Star className="w-7 h-7" />
+                  </motion.div>
+                </span>
+              </Link>
+            </motion.div>
           </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Statistics Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.7 }}
+        className="relative px-4 py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10 backdrop-blur-sm"
+      >
+        <div className="mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Trusted by Ethiopian Students
+            </h2>
+            <p className="text-lg text-amber-100/60">
+              Join thousands of students excelling with Simple Road
+            </p>
+          </motion.div>
+          
+          <div className="grid gap-8 md:grid-cols-4">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="text-center"
+            >
+              <div className="bg-gradient-to-br from-amber-500/20 to-orange-500/20 backdrop-blur-xl rounded-2xl p-6 border border-amber-400/30">
+                <motion.div
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <GraduationCap className="w-12 h-12 text-amber-300 mx-auto mb-4" />
+                </motion.div>
+                <motion.h3 
+                  className="text-3xl md:text-4xl font-bold text-white mb-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 1.2 }}
+                >
+                  10,000+
+                </motion.h3>
+                <p className="text-amber-200">Active Students</p>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="text-center"
+            >
+              <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl rounded-2xl p-6 border border-blue-400/30">
+                <motion.div
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                >
+                  <Target className="w-12 h-12 text-blue-300 mx-auto mb-4" />
+                </motion.div>
+                <motion.h3 
+                  className="text-3xl md:text-4xl font-bold text-white mb-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 1.3 }}
+                >
+                  50,000+
+                </motion.h3>
+                <p className="text-blue-200">Quizzes Taken</p>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.1 }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="text-center"
+            >
+              <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-xl rounded-2xl p-6 border border-green-400/30">
+                <motion.div
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <TrendingUp className="w-12 h-12 text-green-300 mx-auto mb-4" />
+                </motion.div>
+                <motion.h3 
+                  className="text-3xl md:text-4xl font-bold text-white mb-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 1.4 }}
+                >
+                  95%
+                </motion.h3>
+                <p className="text-green-200">Success Rate</p>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="text-center"
+            >
+              <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-xl rounded-2xl p-6 border border-purple-400/30">
+                <motion.div
+                  animate={{ rotate: [0, 180, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <Star className="w-12 h-12 text-purple-300 mx-auto mb-4" />
+                </motion.div>
+                <motion.h3 
+                  className="text-3xl md:text-4xl font-bold text-white mb-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 1.5 }}
+                >
+                  4.9/5
+                </motion.h3>
+                <p className="text-purple-200">Student Rating</p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </motion.section>
 
