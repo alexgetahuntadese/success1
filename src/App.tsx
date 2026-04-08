@@ -11,6 +11,7 @@ import { LanguageProvider } from "@/i18n/LanguageContext";
 import AuthProvider from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import PublicRoute from "@/components/PublicRoute";
+import RequireAdmin from "@/components/auth/RequireAdmin";
 import { Suspense, lazy } from "react";
 import { Loader2 } from "lucide-react";
 
@@ -37,6 +38,7 @@ const BookSubjectsPage = lazy(() => import("./pages/BookSubjectsPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const SignUpPage = lazy(() => import("./pages/SignUpPage"));
 const PaymentPage = lazy(() => import("./pages/PaymentPage"));
+const AdminPaymentsPage = lazy(() => import("./pages/AdminPaymentsPage"));
 
 // Loading component for lazy loaded routes
 const PageLoader = () => (
@@ -211,6 +213,15 @@ const App = () => (
                     <Suspense fallback={<PageLoader />}>
                       <PaymentPage />
                     </Suspense>
+                  </ProtectedRoute>
+                } />
+                <Route path="/admin/payments" element={
+                  <ProtectedRoute>
+                    <RequireAdmin fallback={<Navigate to="/payment" replace />}>
+                      <Suspense fallback={<PageLoader />}>
+                        <AdminPaymentsPage />
+                      </Suspense>
+                    </RequireAdmin>
                   </ProtectedRoute>
                 } />
                 <Route path="/login" element={

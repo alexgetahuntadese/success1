@@ -76,6 +76,14 @@ const getUserProfileObject = async (parseUser: Parse.User) => {
   return profile;
 };
 
+const getLatestSubmissionForUser = async (parseUser: Parse.User) => {
+  const query = new Parse.Query(PaymentSubmissionClass);
+  query.equalTo("user", parseUser);
+  query.descending("submittedAt");
+  query.include("user");
+  return query.first();
+};
+
 const ensureAdminUser = async () => {
   const currentUser = getCurrentParseUser();
   const profile = await getUserProfileObject(currentUser);
@@ -138,6 +146,7 @@ const syncReviewedPaymentToProfile = async (
   profile: Parse.Object,
   submissionId: string,
   status: ParsePaymentSubmissionStatus,
+  verifiedAt?: string | null,
 ) => {
   const currentPreferences = profile.get("preferences") || {};
 
@@ -147,7 +156,7 @@ const syncReviewedPaymentToProfile = async (
       setPremiumAccess(currentPreferences, {
         premium: true,
         paymentStatus: "verified",
-        paidAt: new Date().toISOString(),
+        paidAt: verifiedAt || new Date().toISOString(),
         paymentSubmissionId: submissionId,
       }),
     );
@@ -166,6 +175,30 @@ const syncReviewedPaymentToProfile = async (
     );
     await profile.save();
   }
+};
+
+export const syncLatestPaymentStatusForUser = async (parseUser: Parse.User) => {
+  const profile = await getUserProfileObject(parseUser);
+  const latestSubmission = await getLatestSubmissionForUser(parseUser);
+
+  if (!latestSubmission?.id) {
+    return profile;
+  }
+
+  const latestStatus = (latestSubmission.get("status") || "pending") as ParsePaymentSubmissionStatus;
+
+  if (latestStatus === "pending") {
+    await syncPendingPaymentToProfile(profile, latestSubmission.id);
+    return profile;
+  }
+
+  await syncReviewedPaymentToProfile(
+    profile,
+    latestSubmission.id,
+    latestStatus,
+    latestSubmission.get("verifiedAt")?.toISOString?.() || null,
+  );
+  return profile;
 };
 
 export const parsePaymentService = {
@@ -243,7 +276,12 @@ export const parsePaymentService = {
     await submission.save();
 
     const targetProfile = await getUserProfileObject(targetUser);
-    await syncReviewedPaymentToProfile(targetProfile, submission.id, input.status);
+    await syncReviewedPaymentToProfile(
+      targetProfile,
+      submission.id,
+      input.status,
+      submission.get("verifiedAt")?.toISOString?.() || null,
+    );
 
     return mapSubmission(submission);
   },

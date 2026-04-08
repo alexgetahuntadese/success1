@@ -1,4 +1,5 @@
 import Parse, { isParseConfigured } from '@/integrations/parse/parseConfig';
+import { syncLatestPaymentStatusForUser } from '@/integrations/parse/parsePayments';
 import type {
   AuthSessionResponse,
   AuthUser,
@@ -135,6 +136,7 @@ export const parseAuthService = {
       // Refresh the user to get latest data
       await currentUser.fetch();
       await upsertStudentRecord(currentUser);
+      await syncLatestPaymentStatusForUser(currentUser);
       const userProfile = await getUserProfile(currentUser);
       const authUser = parseUserToAuthUser(currentUser);
       
@@ -208,6 +210,7 @@ export const parseAuthService = {
     try {
       const parseUser = await Parse.User.logIn(normalizedPhone, input.password);
       await upsertStudentRecord(parseUser);
+      await syncLatestPaymentStatusForUser(parseUser);
       const userProfile = await getUserProfile(parseUser);
       const authUser = parseUserToAuthUser(parseUser);
       

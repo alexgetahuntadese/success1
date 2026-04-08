@@ -1,12 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  AlertCircle,
   ArrowLeft,
   CheckCircle2,
   Clock3,
   CreditCard,
-  ExternalLink,
   ShieldCheck,
   Upload,
   XCircle,
@@ -24,7 +22,6 @@ import { useAuth } from "@/hooks/useAuth";
 import {
   parsePaymentService,
   type ParsePaymentSubmission,
-  type ParsePaymentSubmissionStatus,
 } from "@/integrations/parse/parsePayments";
 import { toast } from "sonner";
 
@@ -63,25 +60,14 @@ const statusMeta = {
 
 const PaymentPage = () => {
   const navigate = useNavigate();
-  const {
-    displayName,
-    hasPremiumAccess,
-    isAdmin,
-    paymentStatus,
-    profile,
-    refreshProfile,
-  } = useAuth();
+  const { displayName, hasPremiumAccess, isAdmin, paymentStatus, profile, refreshProfile } = useAuth();
   const [paymentMethod, setPaymentMethod] = useState<"cbe" | "telebirr">("cbe");
   const [transactionRef, setTransactionRef] = useState("");
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [notes, setNotes] = useState("");
   const [submissions, setSubmissions] = useState<ParsePaymentSubmission[]>([]);
-  const [adminSubmissions, setAdminSubmissions] = useState<ParsePaymentSubmission[]>([]);
-  const [reviewNotes, setReviewNotes] = useState<Record<string, string>>({});
   const [isLoadingSubmissions, setIsLoadingSubmissions] = useState(false);
-  const [isLoadingAdminSubmissions, setIsLoadingAdminSubmissions] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [reviewingSubmissionId, setReviewingSubmissionId] = useState<string | null>(null);
 
   const currentChannel = bankOptions[paymentMethod];
 
@@ -126,20 +112,6 @@ const PaymentPage = () => {
     }
   };
 
-  const refreshAdminSubmissions = async () => {
-    if (!isAdmin) {
-      setAdminSubmissions([]);
-      return;
-    }
-
-    try {
-      const items = await parsePaymentService.listAllSubmissions();
-      setAdminSubmissions(items);
-    } catch (error) {
-      console.error("Failed to refresh admin payment submissions:", error);
-    }
-  };
-
   useEffect(() => {
     let active = true;
 
@@ -168,40 +140,6 @@ const PaymentPage = () => {
       active = false;
     };
   }, []);
-
-  useEffect(() => {
-    if (!isAdmin) {
-      setAdminSubmissions([]);
-      return;
-    }
-
-    let active = true;
-
-    const loadAdminSubmissions = async () => {
-      setIsLoadingAdminSubmissions(true);
-
-      try {
-        const items = await parsePaymentService.listAllSubmissions();
-        if (active) {
-          setAdminSubmissions(items);
-        }
-      } catch (error) {
-        if (active) {
-          console.error("Failed to load admin payment submissions:", error);
-        }
-      } finally {
-        if (active) {
-          setIsLoadingAdminSubmissions(false);
-        }
-      }
-    };
-
-    void loadAdminSubmissions();
-
-    return () => {
-      active = false;
-    };
-  }, [isAdmin]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -238,33 +176,6 @@ const PaymentPage = () => {
       toast.error(error?.message || "Could not submit the payment right now.");
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  const handleReview = async (
-    submissionId: string,
-    status: ParsePaymentSubmissionStatus,
-  ) => {
-    setReviewingSubmissionId(submissionId);
-
-    try {
-      await parsePaymentService.reviewSubmission({
-        submissionId,
-        status,
-        reviewerNotes: reviewNotes[submissionId] || "",
-      });
-
-      toast.success(
-        status === "verified"
-          ? "Payment verified and premium access activated."
-          : "Payment rejected. The student can submit a new receipt.",
-      );
-
-      await Promise.all([refreshAdminSubmissions(), refreshSubmissions(), refreshProfile()]);
-    } catch (error: any) {
-      toast.error(error?.message || "Could not review this submission.");
-    } finally {
-      setReviewingSubmissionId(null);
     }
   };
 
@@ -378,6 +289,16 @@ const PaymentPage = () => {
                   Payment receipts and review notes are now stored in Back4App. Admin approval updates premium access on your user profile.
                 </div>
 
+                {isAdmin && (
+                  <div className="rounded-xl border border-cyan-400/30 bg-cyan-500/10 p-4 text-sm text-cyan-100">
+                    This account is an admin. Review submissions from{" "}
+                    <Link to="/admin/payments" className="font-semibold text-cyan-200 underline underline-offset-4">
+                      the admin payment approvals page
+                    </Link>
+                    .
+                  </div>
+                )}
+
                 <Button
                   type="submit"
                   disabled={isSubmitting || hasPremiumAccess}
@@ -471,131 +392,6 @@ const PaymentPage = () => {
             </Card>
           </div>
         </div>
-
-        {isAdmin && (
-          <Card className="mt-6 bg-white/[0.05] border-white/[0.10] backdrop-blur-xl">
-            <CardHeader>
-              <CardTitle className="text-white">Admin Review Queue</CardTitle>
-              <CardDescription className="text-white/60">
-                Review student payment submissions stored in Back4App and approve or reject access.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {isLoadingAdminSubmissions ? (
-                <div className="text-sm text-white/55">Loading admin submissions...</div>
-              ) : adminSubmissions.length === 0 ? (
-                <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/55">
-                  No submissions need review right now.
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {adminSubmissions.map((submission) => {
-                    const meta = statusMeta[submission.status];
-                    const isReviewing = reviewingSubmissionId === submission.id;
-
-                    return (
-                      <div
-                        key={submission.id}
-                        className="rounded-2xl border border-white/10 bg-white/[0.04] p-4"
-                      >
-                        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-2">
-                              <p className="font-semibold text-white">
-                                {submission.user_name || "Unknown student"}
-                              </p>
-                              <Badge className={meta.className}>
-                                {meta.icon}
-                                <span className="ml-1">{meta.label}</span>
-                              </Badge>
-                            </div>
-                            <p className="text-sm text-white/60">
-                              {submission.user_phone || "No phone"} • {submission.payment_method.toUpperCase()} • {submission.amount} ETB
-                            </p>
-                            <p className="text-sm text-white/55">
-                              Ref {submission.transaction_ref} • Submitted {new Date(submission.submitted_at).toLocaleString()}
-                            </p>
-                            <p className="text-sm text-white/55">
-                              Receiver: {submission.bank_name} ({submission.account_number})
-                            </p>
-                            {submission.submitter_notes && (
-                              <p className="text-sm text-white/65">
-                                Student note: {submission.submitter_notes}
-                              </p>
-                            )}
-                            {submission.reviewer_notes && (
-                              <div className="rounded-xl border border-white/10 bg-black/10 px-3 py-2 text-sm text-white/65">
-                                Latest review note: {submission.reviewer_notes}
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="flex flex-col gap-2 md:w-80">
-                            <Button
-                              type="button"
-                              variant="outline"
-                              onClick={() => {
-                                if (submission.receiptUrl) {
-                                  window.open(submission.receiptUrl, "_blank", "noopener,noreferrer");
-                                }
-                              }}
-                              disabled={!submission.receiptUrl}
-                              className="border-white/15 bg-white/[0.04] text-white hover:bg-white/10"
-                            >
-                              <ExternalLink className="mr-2 h-4 w-4" />
-                              Open Receipt
-                            </Button>
-
-                            <Textarea
-                              value={reviewNotes[submission.id] || ""}
-                              onChange={(event) =>
-                                setReviewNotes((current) => ({
-                                  ...current,
-                                  [submission.id]: event.target.value,
-                                }))
-                              }
-                              placeholder="Optional review note for the student"
-                              className="min-h-24 bg-white/[0.04] border-white/15 text-white placeholder:text-white/30"
-                            />
-
-                            <div className="flex gap-2">
-                              <Button
-                                type="button"
-                                onClick={() => void handleReview(submission.id, "verified")}
-                                disabled={isReviewing}
-                                className="flex-1 bg-emerald-500 text-white hover:bg-emerald-400"
-                              >
-                                <CheckCircle2 className="mr-2 h-4 w-4" />
-                                Approve
-                              </Button>
-                              <Button
-                                type="button"
-                                onClick={() => void handleReview(submission.id, "rejected")}
-                                disabled={isReviewing}
-                                variant="destructive"
-                                className="flex-1"
-                              >
-                                <XCircle className="mr-2 h-4 w-4" />
-                                Reject
-                              </Button>
-                            </div>
-
-                            {submission.status === "pending" && (
-                              <div className="flex items-start gap-2 rounded-xl border border-amber-400/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-100">
-                                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
-                                Back4App approval here will update the student's profile and unlock premium access when verified.
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
       </div>
     </div>
   );
