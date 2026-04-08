@@ -31,7 +31,11 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     for (const k of keys) {
       value = value?.[k];
     }
-    if (typeof value === 'string') return value;
+    
+    if (typeof value === 'string') {
+      return value;
+    }
+    
     // Fallback to English
     let fallback: any = translations.en;
     for (const k of keys) {

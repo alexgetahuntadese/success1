@@ -24,19 +24,20 @@ import {
   type ParsePaymentSubmission,
 } from "@/integrations/parse/parsePayments";
 import { toast } from "sonner";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const PAYMENT_AMOUNT_BIRR = "200";
 
 const bankOptions = {
   cbe: {
     label: "Commercial Bank of Ethiopia",
-    accountName: "Simple Road",
-    accountNumber: "1000000000000",
+    accountName: "Alexander Getahun Tadese",
+    accountNumber: "1000282751279",
   },
   telebirr: {
     label: "Telebirr",
-    accountName: "Simple Road",
-    accountNumber: "0912345678",
+    accountName: "Alexander Getahun Tadese",
+    accountNumber: "0949835147",
   },
 } as const;
 
@@ -66,6 +67,7 @@ const statusMeta = {
 const PaymentPage = () => {
   const navigate = useNavigate();
   const { displayName, hasPremiumAccess, isAdmin, paymentStatus, profile, refreshProfile } = useAuth();
+  const { t } = useLanguage();
   const [paymentMethod, setPaymentMethod] = useState<"cbe" | "telebirr">("cbe");
   const [transactionRef, setTransactionRef] = useState("");
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
@@ -79,34 +81,34 @@ const PaymentPage = () => {
   const accessState = useMemo(() => {
     if (hasPremiumAccess) {
       return {
-        label: "Premium Active",
-        description: "Your account is already unlocked for paid content.",
+        label: t("payment.premiumActive"),
+        description: t("payment.premiumActiveDesc"),
         className: "bg-emerald-500/15 text-emerald-100 border-emerald-400/30",
       };
     }
 
     if (paymentStatus === "pending") {
       return {
-        label: "Payment Pending",
-        description: "Your receipt was submitted and is waiting for review.",
+        label: t("payment.paymentPending"),
+        description: t("payment.paymentPendingDesc"),
         className: "bg-amber-500/15 text-amber-100 border-amber-400/30",
       };
     }
 
     if (paymentStatus === "rejected") {
       return {
-        label: "Payment Rejected",
-        description: "Please review the rejection note and submit a new receipt.",
+        label: t("payment.paymentRejected"),
+        description: t("payment.paymentRejectedDesc"),
         className: "bg-rose-500/15 text-rose-100 border-rose-400/30",
       };
     }
 
     return {
-      label: "Payment Required",
-      description: "Matric premium subjects and locked chapters require a verified 200 ETB payment.",
+      label: t("payment.paymentRequired"),
+      description: t("payment.paymentRequiredDesc"),
       className: "bg-sky-500/15 text-sky-100 border-sky-400/30",
     };
-  }, [hasPremiumAccess, paymentStatus]);
+  }, [hasPremiumAccess, paymentStatus, t]);
 
   const refreshSubmissions = async () => {
     try {
@@ -150,12 +152,12 @@ const PaymentPage = () => {
     event.preventDefault();
 
     if (!transactionRef.trim()) {
-      toast.error("Enter the transaction reference from your payment receipt.");
+      toast.error(t("payment.enterTransactionRef"));
       return;
     }
 
     if (!receiptFile) {
-      toast.error("Upload your receipt screenshot or photo.");
+      toast.error(t("payment.uploadReceipt"));
       return;
     }
 
@@ -172,13 +174,13 @@ const PaymentPage = () => {
         submitterNotes: notes.trim(),
       });
 
-      toast.success("Payment receipt submitted. It is now stored in Back4App for admin review.");
+      toast.success(t("payment.paymentSubmitted"));
       setTransactionRef("");
       setReceiptFile(null);
       setNotes("");
       await Promise.all([refreshSubmissions(), refreshProfile()]);
     } catch (error: any) {
-      toast.error(error?.message || "Could not submit the payment right now.");
+      toast.error(error?.message || t("payment.paymentError"));
     } finally {
       setIsSubmitting(false);
     }
@@ -200,9 +202,9 @@ const PaymentPage = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-3xl md:text-4xl font-bold text-white">Payment Access</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-white">{t("payment.title")}</h1>
             <p className="text-white/55 text-sm">
-              Unlock premium matric subjects and other paid content for {displayName}.
+              {t("payment.subtitle")} {displayName}.
             </p>
           </div>
           <Badge className={accessState.className}>{accessState.label}</Badge>
@@ -213,10 +215,10 @@ const PaymentPage = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <CreditCard className="h-5 w-5" />
-                Pay 200 ETB
+                {t("payment.payAmount")}
               </CardTitle>
               <CardDescription className="text-white/60">
-                Submit one verified payment to unlock paid matric subjects.
+                {t("payment.description")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -224,8 +226,8 @@ const PaymentPage = () => {
                 <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
                   <div className="flex items-center justify-between gap-3">
                     <div>
-                      <p className="text-white/65 text-sm">Required amount</p>
-                      <p className="text-3xl font-bold text-white">200 ETB</p>
+                      <p className="text-white/65 text-sm">{t("payment.requiredAmount")}</p>
+                      <p className="text-3xl font-bold text-white">{t("payment.payAmount")}</p>
                     </div>
                     <ShieldCheck className="h-8 w-8 text-emerald-300" />
                   </div>
@@ -233,7 +235,7 @@ const PaymentPage = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="paymentMethod" className="text-white">Payment Method</Label>
+                  <Label htmlFor="paymentMethod" className="text-white">{t("payment.paymentMethod")}</Label>
                   <select
                     id="paymentMethod"
                     value={paymentMethod}
@@ -247,28 +249,28 @@ const PaymentPage = () => {
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label className="text-white">Receiver Name</Label>
+                    <Label className="text-white">{t("payment.receiverName")}</Label>
                     <Input value={currentChannel.accountName} readOnly className="bg-white/[0.03] border-white/10 text-white/70" />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-white">Account / Number</Label>
+                    <Label className="text-white">{t("payment.accountNumber")}</Label>
                     <Input value={currentChannel.accountNumber} readOnly className="bg-white/[0.03] border-white/10 text-white/70" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="transactionRef" className="text-white">Transaction Reference</Label>
+                  <Label htmlFor="transactionRef" className="text-white">{t("payment.transactionRef")}</Label>
                   <Input
                     id="transactionRef"
                     value={transactionRef}
                     onChange={(event) => setTransactionRef(event.target.value)}
-                    placeholder="Enter the transaction ID from your receipt"
+                    placeholder={t("payment.enterTransactionRef")}
                     className="bg-white/[0.04] border-white/15 text-white placeholder:text-white/30"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="receipt" className="text-white">Receipt Screenshot</Label>
+                  <Label htmlFor="receipt" className="text-white">{t("payment.receiptScreenshot")}</Label>
                   <Input
                     id="receipt"
                     type="file"
@@ -276,29 +278,35 @@ const PaymentPage = () => {
                     onChange={(event) => setReceiptFile(event.target.files?.[0] ?? null)}
                     className="bg-white/[0.04] border-white/15 text-white file:text-white"
                   />
-                  <p className="text-xs text-white/45">PNG, JPG, or WEBP. Max 5MB.</p>
+                  <p className="text-xs text-white/45">{t("payment.fileTypes")}</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="notes" className="text-white">Notes for Review</Label>
+                  <Label htmlFor="notes" className="text-white">{t("payment.notesForReview")}</Label>
                   <Textarea
                     id="notes"
                     value={notes}
                     onChange={(event) => setNotes(event.target.value)}
-                    placeholder="Optional: include the payer name or anything the reviewer should know"
+                    placeholder={t("payment.optionalNotes")}
                     className="bg-white/[0.04] border-white/15 text-white placeholder:text-white/30"
                   />
                 </div>
 
                 <div className="rounded-xl border border-sky-400/30 bg-sky-500/10 p-4 text-sm text-sky-100">
-                  Payment receipts and review notes are now stored in Back4App. Admin approval updates premium access on your user profile.
+                  <p className="font-semibold mb-2">💡 {t("payment.afterSubmission")}</p>
+                  <ul className="space-y-1 text-xs">
+                    <li>• {t("payment.receiptStored")}</li>
+                    <li>• {t("payment.refreshPage")}</li>
+                    <li>• {t("payment.premiumActivates")}</li>
+                    <li>• {t("payment.receiveNotification")}</li>
+                  </ul>
                 </div>
 
                 {isAdmin && (
                   <div className="rounded-xl border border-cyan-400/30 bg-cyan-500/10 p-4 text-sm text-cyan-100">
-                    This account is an admin. Review submissions from{" "}
+                    {t("payment.adminAccount")}{" "}
                     <Link to="/admin/payments" className="font-semibold text-cyan-200 underline underline-offset-4">
-                      the admin payment approvals page
+                      {t("payment.adminPaymentApprovalsPage")}
                     </Link>
                     .
                   </div>
@@ -310,7 +318,7 @@ const PaymentPage = () => {
                   className="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-semibold"
                 >
                   <Upload className="mr-2 h-4 w-4" />
-                  {hasPremiumAccess ? "Premium Already Active" : isSubmitting ? "Submitting..." : "Submit Payment Receipt"}
+                  {hasPremiumAccess ? t("payment.premiumAlreadyActive") : isSubmitting ? t("payment.submitting") : t("payment.submitPaymentReceipt")}
                 </Button>
               </form>
             </CardContent>
@@ -319,14 +327,14 @@ const PaymentPage = () => {
           <div className="space-y-6">
             <Card className="bg-white/[0.05] border-white/[0.10] backdrop-blur-xl">
               <CardHeader>
-                <CardTitle className="text-white">Access Summary</CardTitle>
+                <CardTitle className="text-white">{t("payment.accessSummary")}</CardTitle>
                 <CardDescription className="text-white/60">
-                  Your current payment and account access state.
+                  {t("payment.currentAccessState")}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-white/45 mb-2">Student</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-white/45 mb-2">{t("payment.student")}</p>
                   <p className="text-white font-semibold">{profile?.name || displayName}</p>
                   <p className="text-white/55 text-sm">{profile?.phone || "No phone number available"}</p>
                 </div>
@@ -336,11 +344,11 @@ const PaymentPage = () => {
                   <p className="text-white/60 text-sm mt-3">{accessState.description}</p>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-white/45 mb-2">What Happens Next</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-white/45 mb-2">{t("payment.whatHappensNext")}</p>
                   <div className="space-y-2 text-sm text-white/65">
-                    <p>1. Transfer 200 ETB using the selected payment channel.</p>
-                    <p>2. Upload your receipt and transaction reference here.</p>
-                    <p>3. Admin reviews the submission in Back4App and your app access updates.</p>
+                    <p>{t("payment.transferInstructions")}</p>
+                    <p>{t("payment.uploadInstructions")}</p>
+                    <p>{t("payment.adminReviewInstructions")}</p>
                   </div>
                 </div>
               </CardContent>
@@ -348,23 +356,23 @@ const PaymentPage = () => {
 
             <Card className="bg-white/[0.05] border-white/[0.10] backdrop-blur-xl">
               <CardHeader>
-                <CardTitle className="text-white">Submission History</CardTitle>
+                <CardTitle className="text-white">{t("payment.submissionHistory")}</CardTitle>
                 <CardDescription className="text-white/60">
-                  Your recent payment submissions and review status.
+                  {t("payment.recentSubmissions")}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 {isLoadingSubmissions ? (
-                  <div className="text-sm text-white/55">Loading submissions...</div>
+                  <div className="text-sm text-white/55">{t("payment.loadingSubmissions")}</div>
                 ) : submissions.length === 0 ? (
                   <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/55">
-                    No payment submissions yet.
+                    {t("payment.noSubmissions")}
                   </div>
                 ) : (
                   <div className="space-y-3">
                     {submissions.map((submission) => {
                       const meta = statusMeta[submission.status as keyof typeof statusMeta] || {
-                        label: "Unknown",
+                        label: t("payment.unknown"),
                         className: "bg-gray-500/15 text-gray-200 border-gray-400/30",
                         icon: <Clock3 className="h-4 w-4" />,
                       };
@@ -373,9 +381,9 @@ const PaymentPage = () => {
                         <div key={submission.id} className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
                           <div className="flex items-start justify-between gap-3">
                             <div>
-                              <p className="font-medium text-white">{submission.payment_method.toUpperCase()} payment</p>
+                              <p className="font-medium text-white">{submission.payment_method.toUpperCase()} {t("payment.cbePayment").toLowerCase() === submission.payment_method.toLowerCase() ? "" : t("payment.telebirrPayment").toLowerCase() === submission.payment_method.toLowerCase() ? "" : ""} payment</p>
                               <p className="text-sm text-white/55">
-                                {submission.amount} ETB • Ref {submission.transaction_ref}
+                                {submission.amount} ETB • {t("payment.ref")} {submission.transaction_ref}
                               </p>
                             </div>
                             <Badge className={meta.className}>
@@ -384,13 +392,13 @@ const PaymentPage = () => {
                             </Badge>
                           </div>
                           <p className="mt-3 text-xs text-white/45">
-                            Submitted {new Date(submission.submitted_at).toLocaleString()}
+                            {t("payment.submitted")} {new Date(submission.submitted_at).toLocaleString()}
                           </p>
                           {submission.submitter_notes && (
-                            <p className="mt-2 text-sm text-white/60">{submission.submitter_notes}</p>
+                            <p className="mt-2 text-sm text-white/60">{t("payment.submitterNotes")} {submission.submitter_notes}</p>
                           )}
                           {submission.reviewer_notes && (
-                            <p className="mt-2 text-sm text-white/60">{submission.reviewer_notes}</p>
+                            <p className="mt-2 text-sm text-white/60">{t("payment.reviewerNotes")} {submission.reviewer_notes}</p>
                           )}
                         </div>
                       );
