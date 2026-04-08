@@ -10,7 +10,7 @@ import { getChapterNote, getNotesSubject } from "@/lib/notesData";
 import { getGrade12MathNotesByChapter } from "@/data/grade12MathematicsNotes";
 import { getGrade11MathNotesByChapter } from "@/data/grade11MathematicsNotes";
 import { getGrade12QuickNotesBySubject } from "@/data/grade12QuickNotes";
-import { FREE_CHAPTER_LIMIT, isFreeChapter } from "@/lib/paymentAccess";
+import { isFreeChapter } from "@/lib/paymentAccess";
 
 type NoteSection = {
   title: string;
@@ -273,26 +273,6 @@ const NotesChaptersPage = () => {
           )}
         </div>
 
-        {!premiumAccess && (
-          <div className="mb-8 rounded-2xl border border-amber-400/30 bg-amber-500/10 p-5 text-white">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-lg font-bold">Only the first {FREE_CHAPTER_LIMIT} note chapters are free</h2>
-                <p className="mt-1 text-sm text-white/75">
-                  Notes for chapters 1-{FREE_CHAPTER_LIMIT} stay open in each subject. The rest are locked until payment is verified.
-                </p>
-              </div>
-              <Button
-                onClick={() => navigate("/payment")}
-                className="bg-white text-slate-950 hover:bg-white/90"
-              >
-                <CreditCard className="mr-2 h-4 w-4" />
-                Unlock All Notes
-              </Button>
-            </div>
-          </div>
-        )}
-
         <div className="space-y-5">
           {premiumAccess && isGrade12QuickDeckSubject && quickDeck.length > 0 && (
             <div className="group relative opacity-0 animate-fade-in" style={{ animationFillMode: "forwards" }}>
@@ -500,7 +480,7 @@ const NotesChaptersPage = () => {
                   {locked ? (
                     <div className="rounded-xl border border-white/15 bg-white/[0.04] p-5 text-white/80">
                       <p className="text-sm">
-                        This chapter is locked. Only the first {FREE_CHAPTER_LIMIT} chapters are free for each subject.
+                        This chapter is locked. Please complete payment to access notes.
                       </p>
                       <Button
                         onClick={() => navigate("/payment")}

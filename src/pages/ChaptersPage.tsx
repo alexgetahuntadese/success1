@@ -43,7 +43,7 @@ import { grade10GeographyQuestions } from '@/data/grade10GeographyQuestions';
 import { grade10EconomicsQuestions } from '@/data/grade10EconomicsQuestions';
 import { grade10HistoryQuestions } from '@/data/grade10HistoryQuestions';
 import { grade10AmharicQuestions } from '@/data/grade10AmharicQuestions';
-import { FREE_CHAPTER_LIMIT, isFreeChapter } from '@/lib/paymentAccess';
+import { isFreeChapter } from '@/lib/paymentAccess';
 
 const ChaptersPage = () => {
   const navigate = useNavigate();
@@ -1130,26 +1130,6 @@ const ChaptersPage = () => {
           )}
         </div>
 
-        {!isUnavailableGrade12QuizSubject && chapters.length > 0 && !premiumAccess && (
-          <div className="mb-8 rounded-2xl border border-amber-400/30 bg-amber-500/10 p-5 text-white">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-lg font-bold">Only the first {FREE_CHAPTER_LIMIT} chapters are free</h2>
-                <p className="mt-1 text-sm text-white/75">
-                  Chapters 1-{FREE_CHAPTER_LIMIT} are open in every subject. The rest are locked until payment is verified.
-                </p>
-              </div>
-              <Button
-                onClick={() => navigate("/payment")}
-                className="bg-white text-slate-950 hover:bg-white/90"
-              >
-                <CreditCard className="mr-2 h-4 w-4" />
-                Unlock All Chapters
-              </Button>
-            </div>
-          </div>
-        )}
-
         {isUnavailableGrade12QuizSubject && (
           <div className="app-glass max-w-2xl mx-auto rounded-2xl p-8 text-center">
             <h2 className="text-2xl font-bold text-white mb-3">Quiz Bank Not Ready Yet</h2>
@@ -1287,7 +1267,7 @@ const ChaptersPage = () => {
                   <h4 className="mb-2 text-xs font-medium text-white/80">Choose Difficulty</h4>
                   {locked && (
                     <div className="mb-3 rounded-xl border border-white/12 bg-white/8 p-3 text-xs text-white/75">
-                      Pay first to open this chapter. Only chapters 1-{FREE_CHAPTER_LIMIT} are free for each subject.
+                      This chapter is locked. Please complete payment to access it.
                     </div>
                   )}
                   <div className="grid grid-cols-3 gap-2">
