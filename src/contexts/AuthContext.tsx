@@ -15,15 +15,13 @@ import {
 import { INACTIVE_ACCOUNT_NOTICE_KEY } from "@/lib/authStorage";
 import { parseAuthService } from "@/integrations/parse/parseAuth";
 import type {
+  AppSession,
   AuthUser,
   RegisterInput,
   UpdateProfileInput,
   UserProfile,
 } from "@/lib/auth/types";
 import { updateStudentName } from "@/lib/performanceUtils";
-
-const getStringValue = (value: unknown) =>
-  typeof value === "string" ? value.trim() : "";
 
 const deriveDisplayName = (user: AuthUser | null, profile: UserProfile | null) => {
   if (profile?.name) return profile.name;
@@ -33,18 +31,22 @@ const deriveDisplayName = (user: AuthUser | null, profile: UserProfile | null) =
 };
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [session, setSession] = useState<AppSession | null>(null);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const clearAuthState = useCallback(() => {
+    setSession(null);
     setUser(null);
     setProfile(null);
     setIsLoading(false);
   }, []);
 
   const applyUserData = useCallback(
-    async (authUser: AuthUser, userProfile: UserProfile) => {
+    async (authSession: AppSession, userProfile: UserProfile) => {
+      const authUser = authSession.user;
+      setSession(authSession);
       setUser(authUser);
       setProfile(userProfile);
 
@@ -52,6 +54,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         updateStudentName(authUser.user_metadata.name);
       }
 
+      setIsLoading(false);
       return userProfile;
     },
     []
@@ -78,8 +81,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           return;
         }
 
-        if (session?.session?.user && session?.profile) {
-          await applyUserData(session.session.user, session.profile);
+        if (session?.session && session?.profile) {
+          await applyUserData(session.session, session.profile);
           checkInactiveAccount(session.profile);
         } else {
           clearAuthState();
@@ -100,7 +103,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [clearAuthState, applyUserData, checkInactiveAccount]);
 
   const value = useMemo<AuthContextValue>(() => ({
-    session: user ? { user, accessToken: 'local-token', expiresAt: null } : null,
+    session,
     user,
     profile,
     isAuthenticated: Boolean(user),
@@ -112,8 +115,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     refreshProfile: async () => {
       try {
         const session = await parseAuthService.getSession();
-        if (session?.profile) {
-          return await applyUserData(session.user, session.profile);
+        if (session?.session && session?.profile) {
+          return await applyUserData(session.session, session.profile);
         }
         return null;
       } catch (error) {
@@ -124,8 +127,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     signIn: async (phone: string, password: string) => {
       try {
         const session = await parseAuthService.signIn({ phone, password });
-        if (session?.session?.user && session?.session?.profile) {
-          const userProfile = await applyUserData(session.session.user, session.session.profile);
+        if (session?.session && session?.profile) {
+          const userProfile = await applyUserData(session.session, session.profile);
           checkInactiveAccount(userProfile);
           return userProfile;
         }
@@ -138,8 +141,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     register: async (input: RegisterInput) => {
       try {
         const session = await parseAuthService.register(input);
-        if (session?.session?.user && session?.session?.profile) {
-          const userProfile = await applyUserData(session.session.user, session.session.profile);
+        if (session?.session && session?.profile) {
+          const userProfile = await applyUserData(session.session, session.profile);
           checkInactiveAccount(userProfile);
           return userProfile;
         }
@@ -152,8 +155,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     updateProfile: async (input: UpdateProfileInput) => {
       try {
         const session = await parseAuthService.updateProfile(input);
-        if (session?.profile) {
-          const userProfile = await applyUserData(session.user, session.profile);
+        if (session?.session && session?.profile) {
+          const userProfile = await applyUserData(session.session, session.profile);
           return userProfile;
         }
         return null;
@@ -171,7 +174,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         clearAuthState();
       }
     },
-  }), [user, profile, isLoading, clearAuthState, applyUserData, checkInactiveAccount]);
+  }), [session, user, profile, isLoading, clearAuthState, applyUserData, checkInactiveAccount]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

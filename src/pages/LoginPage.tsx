@@ -19,7 +19,7 @@ const LoginPage = () => {
     e.preventDefault();
     
     if (!phone || !password) {
-      toast.error("Please enter phone number and password");
+      toast.error("Please enter mobile number and password");
       return;
     }
 
@@ -44,7 +44,7 @@ const LoginPage = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-white">Phone Number</Label>
+              <Label htmlFor="phone" className="text-white">Mobile Number</Label>
               <Input
                 id="phone"
                 type="tel"

@@ -13,14 +13,36 @@ const UserProfileClass = 'UserProfile';
 
 const isParseReady = () => Boolean(isParseConfigured && Parse?.User && Parse?.Query && Parse?.Object);
 
+const normalizePhoneNumber = (value: string) => {
+  const compact = value.replace(/[^\d+]/g, "");
+
+  if (!compact) {
+    return "";
+  }
+
+  if (compact.startsWith("+")) {
+    return compact;
+  }
+
+  if (compact.startsWith("251")) {
+    return `+${compact}`;
+  }
+
+  if (compact.startsWith("0")) {
+    return `+251${compact.slice(1)}`;
+  }
+
+  return compact;
+};
+
 // Helper to convert Parse User to AuthUser
 const parseUserToAuthUser = (parseUser: Parse.User): AuthUser => ({
   id: parseUser.id || '',
-  phone: parseUser.get('username') || '',
+  phone: parseUser.get('username') || parseUser.get('phone') || '',
   email: parseUser.get('email') || null,
   user_metadata: {
     name: parseUser.get('name') || null,
-    mobile: parseUser.get('username') || null,
+    mobile: parseUser.get('username') || parseUser.get('phone') || null,
   },
 });
 
@@ -59,6 +81,7 @@ const getUserProfile = async (parseUser: Parse.User): Promise<UserProfile> => {
     profile.set('name', parseUser.get('name') || '');
     profile.set('email', parseUser.get('email') || '');
     profile.set('phone', parseUser.get('username') || '');
+    profile.set('mobile', parseUser.get('username') || '');
     profile.set('isActive', true);
     profile.set('preferences', {});
     await profile.save();
@@ -117,10 +140,16 @@ export const parseAuthService = {
       throw new Error('Authentication is not configured. Please set Back4App environment keys.');
     }
 
+    const normalizedPhone = normalizePhoneNumber(input.phone);
+    if (!normalizedPhone) {
+      throw new Error('Please enter a valid mobile number');
+    }
+
     const user = new Parse.User();
-    user.set('username', input.phone);
+    user.set('username', normalizedPhone);
+    user.set('phone', normalizedPhone);
     user.set('password', input.password);
-    user.set('name', input.fullName);
+    user.set('name', input.fullName?.trim() || normalizedPhone);
     
     try {
       const parseUser = await user.signUp();
@@ -146,8 +175,13 @@ export const parseAuthService = {
       throw new Error('Authentication is not configured. Please set Back4App environment keys.');
     }
 
+    const normalizedPhone = normalizePhoneNumber(input.phone);
+    if (!normalizedPhone) {
+      throw new Error('Please enter a valid mobile number');
+    }
+
     try {
-      const parseUser = await Parse.User.logIn(input.phone, input.password);
+      const parseUser = await Parse.User.logIn(normalizedPhone, input.password);
       const userProfile = await getUserProfile(parseUser);
       const authUser = parseUserToAuthUser(parseUser);
       

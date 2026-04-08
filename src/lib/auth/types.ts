@@ -36,7 +36,7 @@ export type UserProfile = {
 };
 
 export type RegisterInput = {
-  fullName: string;
+  fullName?: string;
   phone: string;
   password: string;
 };

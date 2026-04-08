@@ -153,7 +153,7 @@ export const backendAuthService = {
       await requestJson<AuthSessionResponse>("/auth/register", {
         method: "POST",
         body: JSON.stringify({
-          fullName: input.fullName.trim(),
+          fullName: input.fullName?.trim() || "",
           phone: normalizePhoneNumber(input.phone),
           password: input.password,
         }),

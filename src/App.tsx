@@ -9,6 +9,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import AuthProvider from "@/contexts/AuthContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import PublicRoute from "@/components/PublicRoute";
 import { Suspense, lazy } from "react";
 import { Loader2 } from "lucide-react";
 
@@ -73,103 +75,141 @@ const App = () => (
                   </Suspense>
                 } />
                 <Route path="/grades" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <GradesPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <GradesPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/grade/:grade" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <GradeSelection />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <GradeSelection />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/grade/:grade/subjects" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <SubjectsPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <SubjectsPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route
                   path="/grade/:grade/subject/:subject"
                   element={<Navigate to="chapters" replace />}
                 />
                 <Route path="/grade/:grade/subject/:subject/chapters" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <ChaptersPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <ChaptersPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/grade/:grade/subject/:subject/chapter/:chapterId/difficulty/:difficulty/quiz" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <QuizPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <QuizPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/career-simulator" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <CareerSimulatorPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <CareerSimulatorPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/performance" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <PerformancePage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <PerformancePage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/profile" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <ProfilePage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <ProfilePage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/matric" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <MatricExamPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <MatricExamPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/matric/:year" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <MatricStreamPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <MatricStreamPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/matric/:year/:stream" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <MatricYearPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <MatricYearPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/matric/:year/:stream/:subject" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <MatricQuizPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <MatricQuizPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/notes" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <NotesPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <NotesPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/notes/:grade" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <NotesSubjectsPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <NotesSubjectsPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/notes/:grade/:subject" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <NotesChaptersPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <NotesChaptersPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/books" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <BooksPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <BooksPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/books/:grade" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <BookSubjectsPage />
-                  </Suspense>
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <BookSubjectsPage />
+                    </Suspense>
+                  </ProtectedRoute>
                 } />
                 <Route path="/login" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <LoginPage />
-                  </Suspense>
+                  <PublicRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <LoginPage />
+                    </Suspense>
+                  </PublicRoute>
                 } />
                 <Route path="/signup" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <SignUpPage />
-                  </Suspense>
+                  <PublicRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <SignUpPage />
+                    </Suspense>
+                  </PublicRoute>
                 } />
               </Routes>
             </BrowserRouter>
