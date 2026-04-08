@@ -30,6 +30,7 @@ const NotesPage = lazy(() => import("./pages/NotesPage"));
 const NotesSubjectsPage = lazy(() => import("./pages/NotesSubjectsPage"));
 const NotesChaptersPage = lazy(() => import("./pages/NotesChaptersPage"));
 const BooksPage = lazy(() => import("./pages/BooksPage"));
+const BookSubjectsPage = lazy(() => import("./pages/BookSubjectsPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const SignUpPage = lazy(() => import("./pages/SignUpPage"));
 
