@@ -14,6 +14,8 @@ import PublicRoute from "@/components/PublicRoute";
 import RequireAdmin from "@/components/auth/RequireAdmin";
 import { Suspense, lazy } from "react";
 import { Loader2 } from "lucide-react";
+import AuthDebug from "@/components/debug/AuthDebug";
+import PaymentDebug from "@/components/debug/PaymentDebug";
 
 // Lazy load components for code splitting
 const Index = lazy(() => import("./pages/Index"));
@@ -54,7 +56,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 5 * 60 * 1000, // 5 minutes
-      cacheTime: 10 * 60 * 1000, // 10 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (renamed from cacheTime)
       retry: 1,
       refetchOnWindowFocus: false,
     },
@@ -69,7 +71,7 @@ const App = () => (
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            <BrowserRouter>
+            <BrowserRouter future={{ v7_relativeSplatPath: true }}>
               <Analytics />
               <SpeedInsights />
               <Routes>
@@ -215,6 +217,7 @@ const App = () => (
                     </Suspense>
                   </ProtectedRoute>
                 } />
+                <Route path="/admin-payments" element={<Navigate to="/admin/payments" replace />} />
                 <Route path="/admin/payments" element={
                   <ProtectedRoute>
                     <RequireAdmin fallback={<Navigate to="/payment" replace />}>
@@ -222,6 +225,19 @@ const App = () => (
                         <AdminPaymentsPage />
                       </Suspense>
                     </RequireAdmin>
+                  </ProtectedRoute>
+                } />
+                <Route path="/debug/auth" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-slate-950 pt-14 px-4">
+                        <div className="max-w-4xl mx-auto space-y-6">
+                          <h1 className="text-2xl font-bold text-white mb-4">Auth Debug</h1>
+                          <AuthDebug />
+                          <PaymentDebug />
+                        </div>
+                      </div>
+                    </Suspense>
                   </ProtectedRoute>
                 } />
                 <Route path="/login" element={

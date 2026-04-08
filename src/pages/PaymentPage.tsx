@@ -46,6 +46,11 @@ const statusMeta = {
     className: "bg-emerald-500/15 text-emerald-200 border-emerald-400/30",
     icon: <CheckCircle2 className="h-4 w-4" />,
   },
+  approved: {
+    label: "Approved",
+    className: "bg-emerald-500/15 text-emerald-200 border-emerald-400/30",
+    icon: <CheckCircle2 className="h-4 w-4" />,
+  },
   pending: {
     label: "Pending Review",
     className: "bg-amber-500/15 text-amber-100 border-amber-400/30",
@@ -358,7 +363,11 @@ const PaymentPage = () => {
                 ) : (
                   <div className="space-y-3">
                     {submissions.map((submission) => {
-                      const meta = statusMeta[submission.status];
+                      const meta = statusMeta[submission.status as keyof typeof statusMeta] || {
+                        label: "Unknown",
+                        className: "bg-gray-500/15 text-gray-200 border-gray-400/30",
+                        icon: <Clock3 className="h-4 w-4" />,
+                      };
 
                       return (
                         <div key={submission.id} className="rounded-xl border border-white/10 bg-white/[0.04] p-4">

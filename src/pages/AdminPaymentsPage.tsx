@@ -30,6 +30,11 @@ const statusMeta = {
     className: "bg-emerald-500/15 text-emerald-200 border-emerald-400/30",
     icon: <CheckCircle2 className="h-4 w-4" />,
   },
+  approved: {
+    label: "Approved",
+    className: "bg-emerald-500/15 text-emerald-200 border-emerald-400/30",
+    icon: <CheckCircle2 className="h-4 w-4" />,
+  },
   pending: {
     label: "Pending Review",
     className: "bg-amber-500/15 text-amber-100 border-amber-400/30",
@@ -104,8 +109,8 @@ const AdminPaymentsPage = () => {
       });
 
       toast.success(
-        status === "verified"
-          ? "Payment verified and premium access activated."
+        status === "verified" || status === "approved"
+          ? "Payment approved and premium access activated."
           : "Payment rejected. The student can submit a new receipt.",
       );
 

@@ -4,7 +4,7 @@ import { hasPremiumPreferences, isAdminPreferences, setPremiumAccess } from "@/l
 const PaymentSubmissionClass = "PaymentSubmission";
 const UserProfileClass = "UserProfile";
 
-export type ParsePaymentSubmissionStatus = "pending" | "verified" | "rejected";
+export type ParsePaymentSubmissionStatus = "pending" | "verified" | "rejected" | "approved";
 export type ParsePaymentMethod = "cbe" | "telebirr";
 
 export type ParsePaymentSubmission = {
@@ -150,12 +150,12 @@ const syncReviewedPaymentToProfile = async (
 ) => {
   const currentPreferences = profile.get("preferences") || {};
 
-  if (status === "verified") {
+  if (status === "verified" || status === "approved") {
     profile.set(
       "preferences",
       setPremiumAccess(currentPreferences, {
         premium: true,
-        paymentStatus: "verified",
+        paymentStatus: status,
         paidAt: verifiedAt || new Date().toISOString(),
         paymentSubmissionId: submissionId,
       }),

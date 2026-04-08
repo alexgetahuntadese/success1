@@ -42,7 +42,7 @@ export const hasPremiumPreferences = (preferences: Json | null | undefined) => {
     return false;
   }
 
-  if (paymentStatus && paymentStatus !== "verified") {
+  if (paymentStatus && paymentStatus !== "verified" && paymentStatus !== "approved") {
     return false;
   }
 
