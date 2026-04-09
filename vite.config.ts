@@ -22,6 +22,9 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // Parse SDK uses Node's `events` EventEmitter; Vite externalizes it with a broken stub,
+      // which causes "Emitter is not a constructor" in LiveQuery. Use the real polyfill.
+      events: path.resolve(__dirname, "node_modules/events/events.js"),
       // fast-equals@5.4.0 ships without the expected ESM entry in this install,
       // so we pin Vite to the working CJS build.
       "fast-equals": path.resolve(
@@ -46,7 +49,14 @@ export default defineConfig(({ mode }) => ({
     sourcemap: mode === 'development',
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query'],
+    include: [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "@tanstack/react-query",
+      "events",
+      "parse",
+    ],
   },
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode),

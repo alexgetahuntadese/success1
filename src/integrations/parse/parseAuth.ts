@@ -1,4 +1,4 @@
-import Parse, { isParseConfigured } from '@/integrations/parse/parseConfig';
+import Parse, { isParseAuthReady } from '@/integrations/parse/parseConfig';
 import { syncLatestPaymentStatusForUser } from '@/integrations/parse/parsePayments';
 import type {
   AuthSessionResponse,
@@ -13,7 +13,7 @@ import type {
 const UserProfileClass = 'UserProfile';
 const StudentsClass = 'Students';
 
-const isParseReady = () => Boolean(isParseConfigured && Parse?.User && Parse?.Query && Parse?.Object);
+const isParseReady = () => isParseAuthReady();
 
 const normalizePhoneNumber = (value: string) => {
   const compact = value.replace(/[^\d+]/g, "");
