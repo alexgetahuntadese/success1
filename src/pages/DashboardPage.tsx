@@ -11,6 +11,7 @@ import {
   ArrowRight,
   TrendingUp,
   Target,
+  Video,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -62,6 +63,13 @@ const DashboardPage = () => {
       icon: Trophy,
       route: "/matric",
       color: "from-violet-500 to-purple-500",
+    },
+    {
+      title: "Live Call",
+      description: "Start a tutor/student video room",
+      icon: Video,
+      route: "/webrtc",
+      color: "from-fuchsia-500 to-pink-500",
     },
   ];
 
@@ -165,7 +173,7 @@ const DashboardPage = () => {
           className="mb-8"
         >
           <h2 className="mb-4 text-xl font-semibold text-white">Quick Actions</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {quickActions.map((action, index) => {
               const Icon = action.icon;
               return (

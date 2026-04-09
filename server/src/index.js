@@ -2,6 +2,8 @@ import "dotenv/config";
 
 import cors from "cors";
 import express from "express";
+import { createServer } from "node:http";
+import { Server as SocketIOServer } from "socket.io";
 import authRouter from './auth/sqliteRoutes.js'
 import { uploadRouter, receiptStaticPath } from './auth/payments.js'
 import pg from "pg";
@@ -24,14 +26,23 @@ if (!JWT_SECRET) {
 }
 
 const app = express();
+const httpServer = createServer(app);
 const pool = new Pool({
   connectionString: DATABASE_URL,
   ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
 });
 
-const allowedOrigins = CLIENT_ORIGIN.split(",")
-  .map((value) => value.trim())
-  .filter(Boolean);
+const defaultDevOrigins = [
+  "http://localhost:8080",
+  "http://127.0.0.1:8080",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+];
+
+const allowedOrigins = [
+  ...defaultDevOrigins,
+  ...CLIENT_ORIGIN.split(",").map((value) => value.trim()),
+].filter(Boolean);
 
 app.use(
   cors({
@@ -70,6 +81,52 @@ app.use((error, _request, response, _next) => {
   response.status(500).json({ message: "Something went wrong on the auth server." });
 });
 
-app.listen(Number(PORT), () => {
+const io = new SocketIOServer(httpServer, {
+  cors: {
+    origin: allowedOrigins,
+    credentials: true,
+  },
+});
+
+// Minimal 1:1 signaling by room.
+io.on("connection", (socket) => {
+  socket.on("webrtc:join-room", ({ roomId, displayName }) => {
+    if (!roomId || typeof roomId !== "string") return;
+    socket.join(roomId);
+    socket.data.roomId = roomId;
+    socket.data.displayName = displayName || "Student";
+
+    const room = io.sockets.adapter.rooms.get(roomId);
+    const peers = room ? Array.from(room).filter((id) => id !== socket.id) : [];
+    socket.emit("webrtc:room-users", peers);
+    socket.to(roomId).emit("webrtc:user-joined", {
+      socketId: socket.id,
+      displayName: socket.data.displayName,
+    });
+  });
+
+  socket.on("webrtc:offer", ({ target, sdp }) => {
+    if (!target || !sdp) return;
+    io.to(target).emit("webrtc:offer", { from: socket.id, sdp });
+  });
+
+  socket.on("webrtc:answer", ({ target, sdp }) => {
+    if (!target || !sdp) return;
+    io.to(target).emit("webrtc:answer", { from: socket.id, sdp });
+  });
+
+  socket.on("webrtc:ice-candidate", ({ target, candidate }) => {
+    if (!target || !candidate) return;
+    io.to(target).emit("webrtc:ice-candidate", { from: socket.id, candidate });
+  });
+
+  socket.on("disconnect", () => {
+    if (socket.data.roomId) {
+      socket.to(socket.data.roomId).emit("webrtc:user-left", { socketId: socket.id });
+    }
+  });
+});
+
+httpServer.listen(Number(PORT), () => {
   console.log(`Auth server listening on http://localhost:${PORT}`);
 });

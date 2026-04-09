@@ -41,6 +41,10 @@ const LoginPage = lazy(() => import("./pages/LoginPage"));
 const SignUpPage = lazy(() => import("./pages/SignUpPage"));
 const PaymentPage = lazy(() => import("./pages/PaymentPage"));
 const AdminPaymentsPage = lazy(() => import("./pages/AdminPaymentsPage"));
+const WebRtcPage = lazy(() => import("./pages/WebRtcPage"));
+const HostPage = lazy(() => import("./pages/HostPage"));
+const JoinPage = lazy(() => import("./pages/JoinPage"));
+const SessionPage = lazy(() => import("./pages/SessionPage"));
 
 // Loading component for lazy loaded routes
 const PageLoader = () => (
@@ -217,6 +221,27 @@ const App = () => (
                     </Suspense>
                   </ProtectedRoute>
                 } />
+                <Route path="/host" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <HostPage />
+                    </Suspense>
+                  </ProtectedRoute>
+                } />
+                <Route path="/join" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <JoinPage />
+                    </Suspense>
+                  </ProtectedRoute>
+                } />
+                <Route path="/session/:sessionCode" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <SessionPage />
+                    </Suspense>
+                  </ProtectedRoute>
+                } />
                 <Route path="/admin-payments" element={<Navigate to="/admin/payments" replace />} />
                 <Route path="/admin/payments" element={
                   <ProtectedRoute>
@@ -225,6 +250,13 @@ const App = () => (
                         <AdminPaymentsPage />
                       </Suspense>
                     </RequireAdmin>
+                  </ProtectedRoute>
+                } />
+                <Route path="/webrtc" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <WebRtcPage />
+                    </Suspense>
                   </ProtectedRoute>
                 } />
                 <Route path="/debug/auth" element={
