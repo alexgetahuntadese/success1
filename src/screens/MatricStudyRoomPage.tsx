@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users, Clock, Play, ArrowLeft, UserPlus, CheckCircle } from "lucide-react";
+import { Users, Clock, Play, ArrowLeft, ArrowRight, UserPlus, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BeautifulLoader } from "@/components/BeautifulLoader";
 import { toast } from "sonner";
@@ -183,9 +183,27 @@ const MatricStudyRoomPage = () => {
     }
   };
 
+  const openVideoRoom = () => {
+    if (room) {
+      try {
+        localStorage.setItem(
+          `roomMeta:${room.id}`,
+          JSON.stringify({
+            year: room.year,
+            stream: room.stream,
+            subject: room.subject,
+          }),
+        );
+      } catch (error) {
+        console.warn("Unable to persist room metadata", error);
+      }
+      window.location.href = `/room/${room.id}`;
+    }
+  };
+
   const copyRoomLink = () => {
     if (room) {
-      navigator.clipboard.writeText(`${window.location.origin}/matric/room/${room.id}`);
+      navigator.clipboard.writeText(`${window.location.origin}/room/${room.id}`);
       toast.success("Room link copied!");
     }
   };
@@ -236,7 +254,7 @@ const MatricStudyRoomPage = () => {
           </Button>
           
           {room && (
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <Badge variant="outline" className="text-white/70 border-white/20">
                 Room Code: {room.id}
               </Badge>
@@ -248,6 +266,15 @@ const MatricStudyRoomPage = () => {
               >
                 <UserPlus className="mr-2 h-4 w-4" />
                 Invite
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={openVideoRoom}
+                className="text-white/70 border-white/20 hover:text-white"
+              >
+                <ArrowRight className="mr-2 h-4 w-4" />
+                Open Video Room
               </Button>
             </div>
           )}
@@ -465,7 +492,7 @@ const MatricStudyRoomPage = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => navigator.clipboard.writeText(`${window.location.origin}/matric/room/${room.id}`)}
+                          onClick={() => navigator.clipboard.writeText(`${window.location.origin}/room/${room.id}`)}
                           className="text-white/70 border-white/20 hover:text-white"
                         >
                           Copy Link

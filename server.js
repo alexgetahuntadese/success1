@@ -23,6 +23,10 @@ io.on("connection", (socket) => {
   socket.on("ice-candidate", (data) => {
     socket.to(data.roomId).emit("ice-candidate", data.candidate);
   });
+
+  socket.on("quiz-update", (data) => {
+    socket.to(data.roomId).emit("quiz-update", data);
+  });
 });
 
 console.log("Signaling server running on http://localhost:5000");

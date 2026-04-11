@@ -50,11 +50,12 @@ interface Question {
 interface QuizInterfaceProps {
   quiz: Quiz;
   user: User;
+  questions?: Question[];
   onComplete: (result: Results) => void;
   onBack: () => void;
 }
 
-const QuizInterface = ({ quiz, user, onComplete, onBack }: QuizInterfaceProps) => {
+const QuizInterface = ({ quiz, user, questions: initialQuestions, onComplete, onBack }: QuizInterfaceProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [timeLeft, setTimeLeft] = useState(quiz.duration * 60);
@@ -65,6 +66,10 @@ const QuizInterface = ({ quiz, user, onComplete, onBack }: QuizInterfaceProps) =
   const { t } = useLanguage();
 
   const questions: Question[] = useMemo(() => {
+    if (initialQuestions && initialQuestions.length > 0) {
+      return initialQuestions;
+    }
+
     const generateQuestions = () => {
       if (quiz.chapters && quiz.chapters.length > 0) {
         const allQuestions: Question[] = [];
@@ -78,7 +83,7 @@ const QuizInterface = ({ quiz, user, onComplete, onBack }: QuizInterfaceProps) =
       return [];
     };
     return generateQuestions();
-  }, [quiz.subject, quiz.chapters, quiz.difficulty, quiz.questions]);
+  }, [initialQuestions, quiz.subject, quiz.chapters, quiz.difficulty, quiz.questions]);
 
   const currentQuestion = questions[currentQuestionIndex];
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;

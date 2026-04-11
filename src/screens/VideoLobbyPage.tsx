@@ -233,7 +233,7 @@ const VideoLobbyPage = () => {
 
   const copyRoomLink = () => {
     if (room) {
-      navigator.clipboard.writeText(`${window.location.origin}/matric/room/${room.id}`);
+      navigator.clipboard.writeText(`${window.location.origin}/room/${room.id}`);
       toast.success("Room link copied!");
     }
   };
