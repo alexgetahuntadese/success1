@@ -47,8 +47,8 @@ const MatricStudyRoomPage = () => {
   const [examStarted, setExamStarted] = useState(false);
 
   const years = getMatricYears();
-  const streams = selectedYear ? getMatricStreamsForYear(selectedYear) : [];
-  const subjects = selectedYear && selectedStream ? getMatricSubjectsForYear(selectedYear, selectedStream) : [];
+  const streams = selectedYear ? getMatricStreamsForYear(parseInt(selectedYear)) : [];
+  const subjects = selectedYear && selectedStream ? getMatricSubjectsForYear(parseInt(selectedYear), selectedStream) : [];
 
   useEffect(() => {
     const initializeSocket = async () => {
