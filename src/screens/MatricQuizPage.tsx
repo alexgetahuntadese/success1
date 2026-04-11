@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { ArrowLeft, CheckCircle2, XCircle, ChevronRight, Clock, Target, Brain, Lightbulb, RotateCcw, Eye } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, XCircle, ChevronRight, Clock, Target, Brain, Lightbulb, RotateCcw, Eye, Play } from 'lucide-react';
 import type { MatricExamQuestion } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
@@ -79,6 +79,10 @@ const MatricQuizPage = () => {
   if (locked) {
     return <Navigate to="/payment" replace />;
   }
+
+  const handleStartCollaborativeQuiz = () => {
+    navigate(`/matric/room?year=${yearNum}&stream=${encodeURIComponent(streamKey)}&subject=${encodeURIComponent(subject ?? '')}`);
+  };
 
   if (questions.length === 0) {
     return (
@@ -237,21 +241,22 @@ const MatricQuizPage = () => {
       <TopBar />
 
         <div className="max-w-4xl mx-auto relative z-10">
-        <div className="flex items-center gap-4 mb-6">
-          <Button variant="ghost" size="icon" onClick={() => navigate(`/matric/${yearNum}/${streamKey}`)} className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200">
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg">
-                <Brain className="h-5 w-5 text-white" />
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-6">
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon" onClick={() => navigate(`/matric/${yearNum}/${streamKey}`)} className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg">
+                  <Brain className="h-5 w-5 text-white" />
+                </div>
+                <h1 className="text-xl md:text-2xl font-bold text-white">{subject} - {streamLabel}</h1>
+                <Badge variant="outline" className="border-white/20 text-white/60 text-sm">
+                  {yearNum} E.C.
+                </Badge>
               </div>
-              <h1 className="text-xl md:text-2xl font-bold text-white">{subject} - {streamLabel}</h1>
-              <Badge variant="outline" className="border-white/20 text-white/60 text-sm">
-                {yearNum} E.C.
-              </Badge>
-            </div>
-            <div className="flex items-center gap-4 text-white/50 text-sm">
+              <div className="flex items-center gap-4 text-white/50 text-sm">
               <div className="flex items-center gap-1.5">
                 <Target className="h-4 w-4" />
                 <span>Question {currentIndex + 1} of {questions.length}</span>
@@ -266,6 +271,13 @@ const MatricQuizPage = () => {
               </div>
             </div>
           </div>
+          <Button
+            onClick={handleStartCollaborativeQuiz}
+            className="self-start rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-4 py-2 text-sm font-semibold hover:from-violet-600 hover:to-fuchsia-600 transition-all duration-200"
+          >
+            <Play className="mr-2 h-4 w-4" />
+            Quiz Together
+          </Button>
         </div>
 
         <div className="mb-8">

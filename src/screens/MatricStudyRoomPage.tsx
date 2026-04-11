@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/auth-context";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -36,6 +36,7 @@ const MatricStudyRoomPage = () => {
   const navigate = useNavigate();
   const { roomId } = useParams();
   
+  const location = useLocation();
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedYear, setSelectedYear] = useState("");
@@ -45,6 +46,10 @@ const MatricStudyRoomPage = () => {
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [examStarted, setExamStarted] = useState(false);
   const [joinCode, setJoinCode] = useState("");
+  const [prefillYear, setPrefillYear] = useState("");
+  const [prefillStream, setPrefillStream] = useState("");
+  const [prefillSubject, setPrefillSubject] = useState("");
+  const [autoCreated, setAutoCreated] = useState(false);
 
   const years = getMatricYears();
   const streams = selectedYear ? getMatricStreamsForYear(parseInt(selectedYear)) : [];
@@ -67,9 +72,10 @@ const MatricStudyRoomPage = () => {
     }
   }, [room?.status, timeRemaining]);
 
-  const createRoom = () => {
+  const createRoom = (prefill?: Partial<Pick<Room, 'year' | 'stream' | 'subject'>>) => {
     if (!user || !profile) {
       toast.error("Please sign in to create a room");
+      navigate("/login");
       return;
     }
 
@@ -77,9 +83,9 @@ const MatricStudyRoomPage = () => {
       id: Math.random().toString(36).substr(2, 9),
       hostId: user.id || "temp-host",
       hostName: profile.name || "Host",
-      year: "",
-      stream: "",
-      subject: "",
+      year: prefill?.year || "",
+      stream: prefill?.stream || "",
+      subject: prefill?.subject || "",
       participants: [{
         id: user.id || "temp-host",
         name: profile.name || "Host",
@@ -91,7 +97,10 @@ const MatricStudyRoomPage = () => {
     };
 
     setRoom(newRoom);
-    setStep("year");
+    setSelectedYear(newRoom.year);
+    setSelectedStream(newRoom.stream);
+    setSelectedSubject(newRoom.subject);
+    setStep(newRoom.year && newRoom.stream && newRoom.subject ? "waiting" : "year");
   };
 
   const joinRoom = (roomId: string) => {
@@ -131,6 +140,33 @@ const MatricStudyRoomPage = () => {
     setStep("waiting");
     setLoading(false);
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const yearQuery = params.get("year") ?? "";
+    const streamQuery = params.get("stream") ?? "";
+    const subjectQuery = params.get("subject") ?? "";
+
+    if (yearQuery || streamQuery || subjectQuery) {
+      setPrefillYear(yearQuery);
+      setPrefillStream(streamQuery);
+      setPrefillSubject(subjectQuery);
+      setSelectedYear(yearQuery);
+      setSelectedStream(streamQuery || "natural");
+      setSelectedSubject(subjectQuery);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    if (!roomId && !room && !autoCreated && (prefillYear || prefillStream || prefillSubject)) {
+      createRoom({
+        year: prefillYear,
+        stream: prefillStream,
+        subject: prefillSubject,
+      });
+      setAutoCreated(true);
+    }
+  }, [roomId, room, autoCreated, prefillYear, prefillStream, prefillSubject]);
 
   const selectYear = (year: string) => {
     setSelectedYear(year);
