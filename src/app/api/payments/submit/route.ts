@@ -47,7 +47,6 @@ export async function POST(request: NextRequest) {
       transactionRef,
       paymentMethod,
       status: "pending",
-      receiptUrl: receipt?.url || null,
       receiptFile: receipt ? {
         __type: "File",
         name: receipt.name,
@@ -74,7 +73,6 @@ export async function POST(request: NextRequest) {
         transactionRef,
         paymentMethod,
         status: "pending",
-        receiptUrl: receipt?.url || null,
         receiptFile: receipt ? {
           __type: "File",
           name: receipt.name,

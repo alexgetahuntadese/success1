@@ -23,9 +23,14 @@ const parseFetch = async <T,>(path: string, init?: RequestInit, useMasterKey = f
 
   if (useMasterKey && MASTER_KEY) {
     headers["X-Parse-Master-Key"] = MASTER_KEY;
+    console.log("[Back4App] Using Master Key for", path);
   } else {
     headers["X-Parse-REST-API-Key"] = REST_API_KEY!;
+    console.log("[Back4App] Using REST API Key for", path);
   }
+
+  console.log("[Back4App] Request to:", new URL(path, SERVER_URL).toString());
+  console.log("[Back4App] App ID:", APP_ID?.substring(0, 10) + "...");
 
   const response = await fetch(new URL(path, SERVER_URL).toString(), {
     ...init,
@@ -38,6 +43,7 @@ const parseFetch = async <T,>(path: string, init?: RequestInit, useMasterKey = f
 
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
+    console.error("[Back4App] Error response:", payload);
     throw new Error(payload?.error || "Back4App request failed.");
   }
 
@@ -62,7 +68,6 @@ type ParseObject = {
   amount: number;
   bankName: string;
   status: string;
-  receiptUrl?: string | null;
   receiptFile?: {
     __type: "File";
     name: string;
@@ -143,7 +148,7 @@ export const mapParseSubmission = (item: ParseObject): PaymentSubmission & { rec
   payment_method: item.paymentMethod as "cbe" | "telebirr",
   status: item.status as "pending" | "verified" | "rejected" | "approved",
   receipt_path: null,
-  receipt_url: item.receiptUrl || item.receiptFile?.url || null,
+  receipt_url: item.receiptFile?.url || null,
   receipt_content_type: null,
   receipt_size_bytes: null,
   submitted_at: item.submittedAt || item.createdAt || new Date().toISOString(),
@@ -153,5 +158,5 @@ export const mapParseSubmission = (item: ParseObject): PaymentSubmission & { rec
   verified_by: null,
   created_at: item.createdAt || new Date().toISOString(),
   updated_at: item.updatedAt || item.createdAt || new Date().toISOString(),
-  receiptUrl: item.receiptUrl || item.receiptFile?.url || null,
+  receiptUrl: item.receiptFile?.url || null,
 });
