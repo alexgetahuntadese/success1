@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, BookOpen, FlaskConical, Landmark, Users, Clock, TrendingUp, Sparkles } from 'lucide-react';
-import type { MatricExamStream } from '@/data/matricExams';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
+import { getMatricStreamsForYear } from '@/data/matricExams';
 
 const streamIcons = {
   natural: FlaskConical,
@@ -30,24 +29,7 @@ const MatricStreamPage = () => {
   const { year } = useParams<{ year: string }>();
   const navigate = useNavigate();
   const yearNum = Number(year);
-  const [streams, setStreams] = useState<MatricExamStream[]>([]);
-
-  useEffect(() => {
-    let active = true;
-
-    const load = async () => {
-      const { getMatricStreamsForYear } = await import('@/data/matricExams');
-      if (active) {
-        setStreams(getMatricStreamsForYear(yearNum));
-      }
-    };
-
-    void load();
-
-    return () => {
-      active = false;
-    };
-  }, [yearNum]);
+  const streams = getMatricStreamsForYear(yearNum);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 md:p-8 md:pt-14 overflow-hidden relative">
@@ -78,7 +60,7 @@ const MatricStreamPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {streams.map((stream, index) => {
             const StreamIcon = streamIcons[stream.key as keyof typeof streamIcons] ?? BookOpen;
-            const totalQuestions = stream.subjects.reduce((sum, subject) => sum + subject.questions.length, 0);
+            const totalQuestions = stream.subjects.reduce((sum, subject) => sum + subject.questionCount, 0);
             const info = streamInfo[stream.key as keyof typeof streamInfo];
             const isPopular = stream.key === 'natural';
 

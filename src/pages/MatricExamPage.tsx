@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,37 +5,19 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Calendar, BookOpen, Clock, TrendingUp, Award, Sparkles } from 'lucide-react';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
+import { getMatricStreamsForYear, getMatricYears } from '@/data/matricExams';
 
 const MatricExamPage = () => {
   const navigate = useNavigate();
-  const [yearSummaries, setYearSummaries] = useState<{ year: number; streamsCount: number; totalQuestions: number }[]>([]);
+  const yearSummaries = getMatricYears().map((year) => {
+    const streams = getMatricStreamsForYear(year);
+    const totalQuestions = streams.reduce(
+      (sum, stream) => sum + stream.subjects.reduce((streamSum, subject) => streamSum + subject.questionCount, 0),
+      0,
+    );
 
-  useEffect(() => {
-    let active = true;
-
-    const load = async () => {
-      const { getMatricStreamsForYear, getMatricYears } = await import('@/data/matricExams');
-      const summaries = getMatricYears().map((year) => {
-        const streams = getMatricStreamsForYear(year);
-        const totalQuestions = streams.reduce(
-          (sum, stream) => sum + stream.subjects.reduce((streamSum, subject) => streamSum + subject.questions.length, 0),
-          0,
-        );
-
-        return { year, streamsCount: streams.length, totalQuestions };
-      });
-
-      if (active) {
-        setYearSummaries(summaries);
-      }
-    };
-
-    void load();
-
-    return () => {
-      active = false;
-    };
-  }, []);
+    return { year, streamsCount: streams.length, totalQuestions };
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-indigo-950 pt-14 px-4 pb-4 md:p-8 md:pt-14 overflow-hidden relative">

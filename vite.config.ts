@@ -39,7 +39,8 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-select', 'class-variance-authority', 'clsx', 'tailwind-merge'],
-          charts: ['recharts', 'framer-motion'],
+          charts: ['recharts'],
+          motion: ['framer-motion'],
           supabase: ['@supabase/supabase-js', '@supabase/ssr'],
           utils: ['date-fns', 'zod', 'cmdk'],
         },

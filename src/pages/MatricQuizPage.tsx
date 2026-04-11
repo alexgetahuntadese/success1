@@ -10,6 +10,7 @@ import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
 import { useAuth } from '@/hooks/useAuth';
 import { isFreeMatricSubject } from '@/lib/paymentAccess';
+import { getMatricQuestions, getMatricSubjectIndex } from '@/data/matricExams';
 
 const MatricQuizPage = () => {
   const { year, stream, subject } = useParams<{ year: string; stream: string; subject: string }>();
@@ -37,10 +38,8 @@ const MatricQuizPage = () => {
 
     const load = async () => {
       setIsLoading(true);
-      const { getMatricQuestions, getMatricSubjectsForYear } = await import('@/data/matricExams');
-      const nextQuestions = getMatricQuestions(yearNum, streamKey, subject ?? '');
-      const availableSubjects = getMatricSubjectsForYear(yearNum, streamKey);
-      const nextSubjectIndex = availableSubjects.findIndex((item) => item.subject === (subject ?? ''));
+      const nextQuestions = await getMatricQuestions(yearNum, streamKey, subject ?? '');
+      const nextSubjectIndex = getMatricSubjectIndex(yearNum, streamKey, subject ?? '');
 
       if (!active) {
         return;
