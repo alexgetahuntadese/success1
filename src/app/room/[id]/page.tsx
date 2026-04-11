@@ -175,15 +175,14 @@ export default function RoomPage() {
   }, [id]);
 
   useEffect(() => {
-    getGrade9Questions('Mathematics', 'Unit 1: Further on Sets', 'easy', 8)
-      .then((questions) => {
-        setGrade9Questions(questions);
-        setGrade9LoadError(null);
-      })
-      .catch((error) => {
-        console.error('Unable to load Grade 9 Mathematics Unit 1 questions', error);
-        setGrade9LoadError('Unable to load Grade 9 Mathematics questions.');
-      });
+    try {
+      const questions = getGrade9Questions('Mathematics', 'Unit 1: Further on Sets', 'easy', 8);
+      setGrade9Questions(questions);
+      setGrade9LoadError(null);
+    } catch (error) {
+      console.error('Unable to load Grade 9 Mathematics Unit 1 questions', error);
+      setGrade9LoadError('Unable to load Grade 9 Mathematics questions.');
+    }
   }, []);
 
   const sendQuiz = (payload: { question?: string; title?: string; questions?: Grade9Question[] }) => {

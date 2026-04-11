@@ -153,6 +153,11 @@ const QuizPage = () => {
     }
   };
 
+  const handleOpenLiveRoom = () => {
+    const query = subject && grade ? `?grade=${encodeURIComponent(grade)}&subject=${encodeURIComponent(subject)}` : '';
+    navigate(`/matric/room${query}`);
+  };
+
   if (isLoading) {
     return (
     <div className="app-shell container mx-auto pt-14 px-4 pb-4">
@@ -345,14 +350,23 @@ const QuizPage = () => {
       <StarField starCount={30} shootingCount={2} />
       <TopBar />
       <div className="mb-6">
-        <Button
-          variant="ghost"
-          onClick={handleBackToChapters}
-          className="mb-4 text-white/90 hover:bg-white/12 transition-all duration-200"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
-        </Button>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <Button
+            variant="ghost"
+            onClick={handleBackToChapters}
+            className="text-white/90 hover:bg-white/12 transition-all duration-200"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back
+          </Button>
+          <Button
+            onClick={handleOpenLiveRoom}
+            className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white"
+          >
+            <Play className="mr-2 h-4 w-4" />
+            Open Live Room
+          </Button>
+        </div>
         
         <div className="bg-white/[0.06] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.1]">
           <div className="flex items-center gap-4 mb-4">
