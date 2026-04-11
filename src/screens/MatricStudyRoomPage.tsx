@@ -144,7 +144,7 @@ const MatricStudyRoomPage = () => {
       });
 
       socketService.onExamBegin((examData) => {
-        navigate(`/matric/session/${roomId}`);
+        navigate(`/matric/video/${roomId}`);
       });
 
       // Mock room data for UI

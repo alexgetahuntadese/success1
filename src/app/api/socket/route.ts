@@ -26,10 +26,21 @@ const SocketHandler = (req: NextRequest, res: any) => {
     // Store rooms data
     const rooms = new Map<string, {
       host: string;
-      participants: Map<string, { name: string; isHost: boolean; answers: Record<number, string>; currentQuestion: number; finished: boolean }>;
+      participants: Map<string, { 
+        name: string; 
+        isHost: boolean; 
+        answers: Record<number, string>; 
+        currentQuestion: number; 
+        finished: boolean;
+        violations: string[];
+        videoEnabled: boolean;
+        audioEnabled: boolean;
+        joinedAt: number;
+      }>;
       status: 'waiting' | 'starting' | 'active' | 'finished';
       examData?: { questions: any[]; timeLimit: number };
       startTime?: number;
+      maxParticipants: number;
     }>();
 
     io.on('connection', (socket) => {
@@ -42,11 +53,19 @@ const SocketHandler = (req: NextRequest, res: any) => {
           rooms.set(roomId, {
             host: user.id,
             participants: new Map(),
-            status: 'waiting'
+            status: 'waiting',
+            maxParticipants: 4
           });
         }
 
         const room = rooms.get(roomId)!;
+        
+        // Check room capacity
+        if (room.participants.size >= room.maxParticipants) {
+          socket.emit('error', 'Room is full (max 4 participants)');
+          return;
+        }
+
         const isHost = room.host === user.id;
         
         room.participants.set(user.id, {
@@ -54,7 +73,11 @@ const SocketHandler = (req: NextRequest, res: any) => {
           isHost,
           answers: {},
           currentQuestion: 0,
-          finished: false
+          finished: false,
+          violations: [],
+          videoEnabled: true,
+          audioEnabled: true,
+          joinedAt: Date.now()
         });
 
         socket.join(roomId);
@@ -63,10 +86,15 @@ const SocketHandler = (req: NextRequest, res: any) => {
         const participants = Array.from(room.participants.entries()).map(([id, data]) => ({
           id,
           name: data.name,
-          isHost: data.isHost
+          isHost: data.isHost,
+          videoEnabled: data.videoEnabled,
+          audioEnabled: data.audioEnabled
         }));
         
         io.to(roomId).emit('room:participants', participants);
+        
+        // Notify others about new user for WebRTC
+        socket.to(roomId).emit('user:joined', user.id);
       });
 
       socket.on('room:leave', (roomId: string, userId: string) => {
@@ -222,6 +250,54 @@ const SocketHandler = (req: NextRequest, res: any) => {
         }
       });
 
+      // WebRTC signaling events
+      socket.on('offer', (roomId: string, peerId: string, offer: RTCSessionDescriptionInit) => {
+        socket.to(peerId).emit('offer', socket.id, offer);
+      });
+
+      socket.on('answer', (roomId: string, peerId: string, answer: RTCSessionDescriptionInit) => {
+        socket.to(peerId).emit('answer', socket.id, answer);
+      });
+
+      socket.on('ice:candidate', (roomId: string, peerId: string, candidate: RTCIceCandidateInit) => {
+        socket.to(peerId).emit('ice:candidate', socket.id, candidate);
+      });
+
+      // Video/Audio toggle events
+      socket.on('video:toggle', (roomId: string, userId: string, enabled: boolean) => {
+        const room = rooms.get(roomId);
+        if (room) {
+          const participant = room.participants.get(userId);
+          if (participant) {
+            participant.videoEnabled = enabled;
+            io.to(roomId).emit('video:toggled', userId, enabled);
+          }
+        }
+      });
+
+      socket.on('audio:toggle', (roomId: string, userId: string, enabled: boolean) => {
+        const room = rooms.get(roomId);
+        if (room) {
+          const participant = room.participants.get(userId);
+          if (participant) {
+            participant.audioEnabled = enabled;
+            io.to(roomId).emit('audio:toggled', userId, enabled);
+          }
+        }
+      });
+
+      // Anti-cheat violations
+      socket.on('violation', (roomId: string, userId: string, violation: string) => {
+        const room = rooms.get(roomId);
+        if (room) {
+          const participant = room.participants.get(userId);
+          if (participant) {
+            participant.violations.push(`${violation} at ${new Date().toISOString()}`);
+            io.to(roomId).emit('violation:logged', userId, violation);
+          }
+        }
+      });
+
       socket.on('disconnect', () => {
         console.log('Client disconnected:', socket.id);
         
@@ -230,10 +306,15 @@ const SocketHandler = (req: NextRequest, res: any) => {
           if (room.participants.has(socket.id)) {
             room.participants.delete(socket.id);
             
+            // Notify others about user leaving for WebRTC
+            socket.to(roomId).emit('user:left', socket.id);
+            
             const participants = Array.from(room.participants.entries()).map(([id, data]) => ({
               id,
               name: data.name,
-              isHost: data.isHost
+              isHost: data.isHost,
+              videoEnabled: data.videoEnabled,
+              audioEnabled: data.audioEnabled
             }));
             
             io.to(roomId).emit('room:participants', participants);

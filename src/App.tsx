@@ -48,6 +48,7 @@ const JoinPage = lazy(() => import("./screens/JoinPage"));
 const SessionPage = lazy(() => import("./screens/SessionPage"));
 const MatricStudyRoomPage = lazy(() => import("./screens/MatricStudyRoomPage"));
 const MatricExamSessionPage = lazy(() => import("./screens/MatricExamSessionPage"));
+const VideoLobbyPage = lazy(() => import("./screens/VideoLobbyPage"));
 
 
 const queryClient = new QueryClient({
@@ -193,6 +194,13 @@ const App = () => (
                   <ProtectedRoute>
                     <Suspense fallback={<PageLoader />}>
                       <MatricExamSessionPage />
+                    </Suspense>
+                  </ProtectedRoute>
+                } />
+                <Route path="/matric/video/:roomId" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <VideoLobbyPage />
                     </Suspense>
                   </ProtectedRoute>
                 } />

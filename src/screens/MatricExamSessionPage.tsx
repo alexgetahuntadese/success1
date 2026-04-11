@@ -209,12 +209,14 @@ const MatricExamSessionPage = () => {
   const handleAnswerChange = (answer: string) => {
     setCurrentAnswer(answer);
     
-    // Save answer immediately
+    // Save answer immediately via socket for real-time sync
     if (session && user) {
+      socketService.submitAnswer(session.currentQuestion, answer);
+      
       const updatedSession = {
         ...session,
         participants: session.participants.map(p => 
-          p.id === user.uid 
+          p.id === user.id 
             ? { ...p, answers: { ...p.answers, [session.currentQuestion]: answer } }
             : p
         )
@@ -230,8 +232,11 @@ const MatricExamSessionPage = () => {
     if (nextIndex >= questions.length) {
       finishExam();
     } else {
+      // Update progress via socket
+      socketService.updateProgress(nextIndex);
+      
       setSession({ ...session, currentQuestion: nextIndex });
-      setCurrentAnswer(session.participants.find(p => p.id === user?.uid)?.answers[nextIndex] || "");
+      setCurrentAnswer(session.participants.find(p => p.id === user.id)?.answers[nextIndex] || "");
     }
   };
 
@@ -239,8 +244,12 @@ const MatricExamSessionPage = () => {
     if (!session || session.currentQuestion <= 0) return;
     
     const prevIndex = session.currentQuestion - 1;
+    
+    // Update progress via socket
+    socketService.updateProgress(prevIndex);
+    
     setSession({ ...session, currentQuestion: prevIndex });
-    setCurrentAnswer(session.participants.find(p => p.id === user?.uid)?.answers[prevIndex] || "");
+    setCurrentAnswer(session.participants.find(p => p.id === user.id)?.answers[prevIndex] || "");
   };
 
   const finishExam = async () => {
@@ -249,7 +258,7 @@ const MatricExamSessionPage = () => {
     setFinished(true);
     
     // Calculate score
-    const userParticipant = session.participants.find(p => p.id === user.uid);
+    const userParticipant = session.participants.find(p => p.id === user.id);
     if (userParticipant) {
       let correct = 0;
       questions.forEach((q, index) => {
@@ -260,12 +269,17 @@ const MatricExamSessionPage = () => {
       
       const score = Math.round((correct / questions.length) * 100);
       
+      const results = { score, answers: userParticipant.answers };
+      
+      // Submit results via socket for real-time sync
+      socketService.finishExam(results);
+      
       const updatedSession = {
         ...session,
         status: "finished" as const,
         endTime: new Date().toISOString(),
         participants: session.participants.map(p => 
-          p.id === user.uid 
+          p.id === user.id 
             ? { ...p, finished: true, finishedAt: new Date().toISOString(), score }
             : p
         )

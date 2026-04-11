@@ -13,7 +13,7 @@ export interface RoomEvents {
 }
 
 class SocketService {
-  private socket: Socket | null = null;
+  public socket: Socket | null = null;
   private currentRoom: string | null = null;
 
   connect(): Promise<void> {
