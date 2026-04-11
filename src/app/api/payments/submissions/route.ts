@@ -9,7 +9,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "userId is required." }, { status: 400 });
     }
 
-    const payload = await listSubmissions({ userId });
+    const payload = await listSubmissions({
+      user: {
+        __type: "Pointer",
+        className: "_User",
+        objectId: userId,
+      },
+    });
     return NextResponse.json(payload.results.map(mapParseSubmission));
   } catch (error) {
     console.error("Back4App payment list error:", error);

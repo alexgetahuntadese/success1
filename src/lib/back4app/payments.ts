@@ -1,5 +1,3 @@
-import { userProfileService } from "@/lib/firebase/auth";
-import { setPremiumAccess, hasPremiumPreferences } from "@/lib/authRoles";
 import type { PaymentSubmission } from "@/lib/firebase/types";
 
 const apiJson = async <T,>(input: RequestInfo, init?: RequestInit): Promise<T> => {
@@ -78,20 +76,6 @@ export const paymentService = {
       }),
     });
 
-    const currentProfile = await userProfileService.getUserProfile(input.userId);
-    if (currentProfile && !hasPremiumPreferences(currentProfile.preferences)) {
-      const nextPreferences = setPremiumAccess(currentProfile.preferences, {
-        premium: false,
-        paymentStatus: "pending",
-        paymentSubmissionId: submission.id,
-      });
-
-      await userProfileService.upsertProfile({
-        ...currentProfile,
-        preferences: nextPreferences,
-      });
-    }
-
     return submission;
   },
 
@@ -114,20 +98,6 @@ export const paymentService = {
         receiptContentType: input.receiptFile.type,
       }),
     });
-
-    const currentProfile = await userProfileService.getUserProfile(input.userId);
-    if (currentProfile && !hasPremiumPreferences(currentProfile.preferences)) {
-      const nextPreferences = setPremiumAccess(currentProfile.preferences, {
-        premium: false,
-        paymentStatus: "backend4app_pending",
-        paymentSubmissionId: submission.id,
-      });
-
-      await userProfileService.upsertProfile({
-        ...currentProfile,
-        preferences: nextPreferences,
-      });
-    }
 
     return submission;
   },

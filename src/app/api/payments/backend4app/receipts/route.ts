@@ -11,7 +11,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Missing userId parameter." }, { status: 400 });
     }
 
-    const response = await listSubmissions({ userId });
+    const response = await listSubmissions({
+      user: {
+        __type: "Pointer",
+        className: "_User",
+        objectId: userId,
+      },
+    });
     const submissions = response.results.map(mapParseSubmission);
 
     return NextResponse.json(submissions);

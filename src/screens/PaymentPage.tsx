@@ -19,8 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
-import { paymentService, type PaymentSubmissionWithReceiptUrl } from "@/services/firebaseService";
-import { paymentService as back4appPaymentService } from "@/lib/back4app/payments";
+import { paymentService, type PaymentSubmissionWithReceiptUrl } from "@/lib/back4app/payments";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -129,7 +128,7 @@ const PaymentPage = () => {
       try {
         const userId = user?.uid || profile?.id || "";
         if (!userId) return;
-        const items = await back4appPaymentService.listOwnSubmissions(userId);
+        const items = await paymentService.listOwnSubmissions(userId);
         if (active) {
           setSubmissions(items);
         }
@@ -169,7 +168,7 @@ const PaymentPage = () => {
 
     try {
       if (receiptFile) {
-        await back4appPaymentService.submitPaymentWithReceipt({
+        await paymentService.submitPaymentWithReceipt({
           userId,
           userName: profile?.name || displayName || null,
           userPhone: profile?.phone || null,
@@ -182,7 +181,7 @@ const PaymentPage = () => {
           submitterNotes: notes.trim(),
         });
       } else {
-        await back4appPaymentService.submitPayment({
+        await paymentService.submitPayment({
           userId,
           userName: profile?.name || displayName || null,
           userPhone: profile?.phone || null,

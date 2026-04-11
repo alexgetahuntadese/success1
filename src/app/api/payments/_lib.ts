@@ -1,8 +1,10 @@
 import type { PaymentSubmission } from "@/lib/firebase/types";
 
-const APP_ID = process.env.VITE_BACK4APP_APP_ID;
-const JS_KEY = process.env.VITE_BACK4APP_JS_KEY;
-const SERVER_URL = process.env.VITE_BACK4APP_SERVER_URL || "https://parseapi.back4app.com/";
+const APP_ID = process.env.BACK4APP_APP_ID || process.env.VITE_BACK4APP_APP_ID;
+const JS_KEY = process.env.BACK4APP_JS_KEY || process.env.VITE_BACK4APP_JS_KEY;
+const REST_API_KEY = process.env.BACK4APP_REST_API_KEY || process.env.VITE_BACK4APP_REST_API_KEY || process.env.BACK4APP_JS_KEY || process.env.VITE_BACK4APP_JS_KEY;
+const MASTER_KEY = process.env.BACK4APP_MASTER_KEY || process.env.VITE_BACK4APP_MASTER_KEY;
+const SERVER_URL = process.env.BACK4APP_SERVER_URL || process.env.VITE_BACK4APP_SERVER_URL || "https://parseapi.back4app.com/";
 const CLASS_NAME = "PaymentSubmission";
 
 const ensureConfig = () => {
@@ -11,15 +13,24 @@ const ensureConfig = () => {
   }
 };
 
-const parseFetch = async <T,>(path: string, init?: RequestInit): Promise<T> => {
+const parseFetch = async <T,>(path: string, init?: RequestInit, useMasterKey = false): Promise<T> => {
   ensureConfig();
+
+  const headers: Record<string, string> = {
+    "X-Parse-Application-Id": APP_ID!,
+    "Content-Type": "application/json",
+  };
+
+  if (useMasterKey && MASTER_KEY) {
+    headers["X-Parse-Master-Key"] = MASTER_KEY;
+  } else {
+    headers["X-Parse-REST-API-Key"] = REST_API_KEY!;
+  }
 
   const response = await fetch(new URL(path, SERVER_URL).toString(), {
     ...init,
     headers: {
-      "X-Parse-Application-Id": APP_ID!,
-      "X-Parse-JavaScript-Key": JS_KEY!,
-      "Content-Type": "application/json",
+      ...headers,
       ...(init?.headers ?? {}),
     },
     cache: "no-store",
@@ -74,13 +85,20 @@ export const uploadReceiptToBack4App = async (
   const base64 = base64DataUrl.replace(/^data:[^;]+;base64,/, "");
   const bytes = Buffer.from(base64, "base64");
 
+  const headers: Record<string, string> = {
+    "X-Parse-Application-Id": APP_ID!,
+    "Content-Type": contentType || "application/octet-stream",
+  };
+
+  if (MASTER_KEY) {
+    headers["X-Parse-Master-Key"] = MASTER_KEY;
+  } else {
+    headers["X-Parse-REST-API-Key"] = REST_API_KEY!;
+  }
+
   const response = await fetch(new URL(`/files/${encodeURIComponent(fileName)}`, SERVER_URL).toString(), {
     method: "POST",
-    headers: {
-      "X-Parse-Application-Id": APP_ID!,
-      "X-Parse-JavaScript-Key": JS_KEY!,
-      "Content-Type": contentType || "application/octet-stream",
-    },
+    headers,
     body: bytes,
     cache: "no-store",
   });
@@ -97,21 +115,21 @@ export const createSubmission = async (data: Record<string, unknown>) =>
   parseFetch<{ objectId: string; createdAt: string }>(`/classes/${CLASS_NAME}`, {
     method: "POST",
     body: JSON.stringify(data),
-  });
+  }, true);
 
 export const listSubmissions = async (where?: Record<string, unknown>) => {
   const query = where ? `?where=${encodeURIComponent(JSON.stringify(where))}&order=-submittedAt` : "?order=-submittedAt";
-  return parseFetch<{ results: ParseObject[] }>(`/classes/${CLASS_NAME}${query}`);
+  return parseFetch<{ results: ParseObject[] }>(`/classes/${CLASS_NAME}${query}`, undefined, true);
 };
 
 export const updateSubmission = async (submissionId: string, data: Record<string, unknown>) =>
   parseFetch<{ updatedAt: string }>(`/classes/${CLASS_NAME}/${encodeURIComponent(submissionId)}`, {
     method: "PUT",
     body: JSON.stringify(data),
-  });
+  }, true);
 
 export const getSubmission = async (submissionId: string) =>
-  parseFetch<ParseObject>(`/classes/${CLASS_NAME}/${encodeURIComponent(submissionId)}`);
+  parseFetch<ParseObject>(`/classes/${CLASS_NAME}/${encodeURIComponent(submissionId)}`, undefined, true);
 
 export const mapParseSubmission = (item: ParseObject): PaymentSubmission & { receiptUrl: string | null } => ({
   id: item.objectId,
