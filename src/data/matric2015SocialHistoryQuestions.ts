@@ -3,7 +3,7 @@ import { MatricExamQuestion } from "./matricExams";
 export const matric2015SocialHistoryQuestions: MatricExamQuestion[] = [
   {
     "id": "m2015-social-hist-1",
-    "sectionDirection": "Choose the correct answer.",
+    "sectionDirection": "Choose the correct answer from the given options.",
     "question": "Which one of the following was a factor for the Oromo population movement of the 16 th century?",
     "options": [
       "The desire to expand Oromo religion",
@@ -16,6 +16,7 @@ export const matric2015SocialHistoryQuestions: MatricExamQuestion[] = [
   },
   {
     "id": "m2015-social-hist-2",
+    "sectionDirection": "Choose the correct answer from the given options.",
     "question": "What challenge did Emperor Serse Dingil face beyond the Mereb River in the 1570s?",
     "options": [
       "Turkish expansionism",
@@ -28,6 +29,7 @@ export const matric2015SocialHistoryQuestions: MatricExamQuestion[] = [
   },
   {
     "id": "m2015-social-hist-3",
+    "sectionDirection": "Choose the correct answer from the given options.",
     "question": "What achievements earned Iyasu I the nickname \"Iyasu the Great\"?",
     "options": [
       "The successful campaign against the Funj Sultanate in the west",
