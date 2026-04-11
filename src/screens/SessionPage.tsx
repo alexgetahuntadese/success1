@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import StarField from '@/components/StarField';
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "@/lib/router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Copy, Play, Trophy, Users } from "lucide-react";

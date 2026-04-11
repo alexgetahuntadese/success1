@@ -1,61 +1,66 @@
 'use client';
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ThemeProvider } from "next-themes";
-import { LanguageProvider } from "@/i18n/LanguageContext";
-import AuthProvider from "@/contexts/AuthContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import PublicRoute from "@/components/PublicRoute";
-import { Suspense, lazy } from "react";
-import PageLoader from "@/components/PageLoader";
-import AuthDebug from "@/components/debug/AuthDebug";
-import PaymentDebug from "@/components/debug/PaymentDebug";
+import { usePathname } from 'next/navigation';
+import { Suspense, lazy, type ComponentType, type LazyExoticComponent } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider } from 'next-themes';
 
-// Lazy load components with preloading for critical paths
-const Index = lazy(() => import("./screens/Index"));
-const LoginPage = lazy(() => import("./screens/LoginPage"));
-const SignUpPage = lazy(() => import("./screens/SignUpPage"));
-const PaymentPage = lazy(() => import("./screens/PaymentPage"));
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as Sonner } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { Navigate, RouterProvider } from '@/lib/router';
+import { LanguageProvider } from '@/i18n/LanguageContext';
+import AuthProvider from '@/contexts/AuthContext';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import PublicRoute from '@/components/PublicRoute';
+import PageLoader from '@/components/PageLoader';
+import AuthDebug from '@/components/debug/AuthDebug';
+import PaymentDebug from '@/components/debug/PaymentDebug';
 
-// Preload common routes after initial load
-const GradesPage = lazy(() => import("./screens/GradesPage"));
-const SubjectsPage = lazy(() => import("./screens/SubjectsPage"));
-const ChaptersPage = lazy(() => import("./screens/ChaptersPage"));
-const DashboardPage = lazy(() => import("./screens/DashboardPage"));
+const Index = lazy(() => import('./screens/Index'));
+const LoginPage = lazy(() => import('./screens/LoginPage'));
+const SignUpPage = lazy(() => import('./screens/SignUpPage'));
+const PaymentPage = lazy(() => import('./screens/PaymentPage'));
+const GradesPage = lazy(() => import('./screens/GradesPage'));
+const SubjectsPage = lazy(() => import('./screens/SubjectsPage'));
+const ChaptersPage = lazy(() => import('./screens/ChaptersPage'));
+const DashboardPage = lazy(() => import('./screens/DashboardPage'));
+const GradeSelection = lazy(() => import('./screens/GradeSelection'));
+const QuizPage = lazy(() => import('./screens/QuizPage'));
+const CareerSimulatorPage = lazy(() => import('./screens/CareerSimulatorPage'));
+const PerformancePage = lazy(() => import('./screens/PerformancePage'));
+const ProfilePage = lazy(() => import('./screens/ProfilePage'));
+const MatricExamPage = lazy(() => import('./screens/MatricExamPage'));
+const MatricStreamPage = lazy(() => import('./screens/MatricStreamPage'));
+const MatricYearPage = lazy(() => import('./screens/MatricYearPage'));
+const MatricQuizPage = lazy(() => import('./screens/MatricQuizPage'));
+const NotesPage = lazy(() => import('./screens/NotesPage'));
+const NotesSubjectsPage = lazy(() => import('./screens/NotesSubjectsPage'));
+const NotesChaptersPage = lazy(() => import('./screens/NotesChaptersPage'));
+const BooksPage = lazy(() => import('./screens/BooksPage'));
+const BookSubjectsPage = lazy(() => import('./screens/BookSubjectsPage'));
+const WebRtcPage = lazy(() => import('./screens/WebRtcPage'));
+const HostPage = lazy(() => import('./screens/HostPage'));
+const JoinPage = lazy(() => import('./screens/JoinPage'));
+const SessionPage = lazy(() => import('./screens/SessionPage'));
+const MatricStudyRoomPage = lazy(() => import('./screens/MatricStudyRoomPage'));
+const MatricExamSessionPage = lazy(() => import('./screens/MatricExamSessionPage'));
+const VideoLobbyPage = lazy(() => import('./screens/VideoLobbyPage'));
 
-// Lazy load less frequent components
-const GradeSelection = lazy(() => import("./screens/GradeSelection"));
-const QuizPage = lazy(() => import("./screens/QuizPage"));
-const CareerSimulatorPage = lazy(() => import("./screens/CareerSimulatorPage"));
-const PerformancePage = lazy(() => import("./screens/PerformancePage"));
-const ProfilePage = lazy(() => import("./screens/ProfilePage"));
-const MatricExamPage = lazy(() => import("./screens/MatricExamPage"));
-const MatricStreamPage = lazy(() => import("./screens/MatricStreamPage"));
-const MatricYearPage = lazy(() => import("./screens/MatricYearPage"));
-const MatricQuizPage = lazy(() => import("./screens/MatricQuizPage"));
-const NotesPage = lazy(() => import("./screens/NotesPage"));
-const NotesSubjectsPage = lazy(() => import("./screens/NotesSubjectsPage"));
-const NotesChaptersPage = lazy(() => import("./screens/NotesChaptersPage"));
-const BooksPage = lazy(() => import("./screens/BooksPage"));
-const BookSubjectsPage = lazy(() => import("./screens/BookSubjectsPage"));
-const WebRtcPage = lazy(() => import("./screens/WebRtcPage"));
-const HostPage = lazy(() => import("./screens/HostPage"));
-const JoinPage = lazy(() => import("./screens/JoinPage"));
-const SessionPage = lazy(() => import("./screens/SessionPage"));
-const MatricStudyRoomPage = lazy(() => import("./screens/MatricStudyRoomPage"));
-const MatricExamSessionPage = lazy(() => import("./screens/MatricExamSessionPage"));
-const VideoLobbyPage = lazy(() => import("./screens/VideoLobbyPage"));
+type Params = Record<string, string>;
 
+type AppRoute = {
+  pattern: string;
+  guard?: 'protected' | 'public';
+  component?: LazyExoticComponent<ComponentType>;
+  redirectTo?: string | ((params: Params) => string);
+};
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 10 * 60 * 1000, // 10 minutes
-      gcTime: 15 * 60 * 1000, // 15 minutes
+      staleTime: 10 * 60 * 1000,
+      gcTime: 15 * 60 * 1000,
       retry: 1,
       refetchOnWindowFocus: false,
       networkMode: 'online',
@@ -66,255 +71,151 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <LanguageProvider>
-        <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter future={{ v7_relativeSplatPath: true }}>
-              <Routes>
-                <Route path="/" element={
-                  <Suspense fallback={<PageLoader />}>
-                    <Index />
-                  </Suspense>
-                } />
-                <Route path="/grades" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <GradesPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/grade/:grade" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <GradeSelection />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/grade/:grade/subjects" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <SubjectsPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route
-                  path="/grade/:grade/subject/:subject"
-                  element={<Navigate to="chapters" replace />}
-                />
-                <Route path="/grade/:grade/subject/:subject/chapters" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <ChaptersPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/grade/:grade/subject/:subject/chapter/:chapterId/difficulty/:difficulty/quiz" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <QuizPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/career-simulator" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <CareerSimulatorPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/dashboard" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <DashboardPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/performance" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <PerformancePage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/profile" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <ProfilePage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/matric" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <MatricExamPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/matric/:year" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <MatricStreamPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/matric/:year/:stream" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <MatricYearPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/matric/:year/:stream/:subject" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <MatricQuizPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/matric/:year/quiz/:subject" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <MatricQuizPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/matric/room" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <MatricStudyRoomPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/matric/room/:roomId" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <MatricStudyRoomPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/matric/session/:roomId" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <MatricExamSessionPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/matric/video/:roomId" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <VideoLobbyPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/notes" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <NotesPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/notes/:grade" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <NotesSubjectsPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/notes/:grade/:subject" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <NotesChaptersPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/books" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <BooksPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/books/:grade" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <BookSubjectsPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/payment" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <PaymentPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/host" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <HostPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/join" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <JoinPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/session/:sessionCode" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <SessionPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/webrtc" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <WebRtcPage />
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/debug/auth" element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-slate-950 pt-14 px-4">
-                        <div className="max-w-4xl mx-auto space-y-6">
-                          <h1 className="text-2xl font-bold text-white mb-4">Auth Debug</h1>
-                          <AuthDebug />
-                          <PaymentDebug />
-                        </div>
-                      </div>
-                    </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/login" element={
-                  <PublicRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <LoginPage />
-                    </Suspense>
-                  </PublicRoute>
-                } />
-                <Route path="/signup" element={
-                  <PublicRoute>
-                    <Suspense fallback={<PageLoader />}>
-                      <SignUpPage />
-                    </Suspense>
-                  </PublicRoute>
-                } />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </AuthProvider>
-      </LanguageProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
+const DebugAuthPage = () => (
+  <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-slate-950 pt-14 px-4">
+    <div className="max-w-4xl mx-auto space-y-6">
+      <h1 className="text-2xl font-bold text-white mb-4">Auth Debug</h1>
+      <AuthDebug />
+      <PaymentDebug />
+    </div>
+  </div>
 );
+
+const routes: AppRoute[] = [
+  { pattern: '/', component: Index },
+  { pattern: '/grades', guard: 'protected', component: GradesPage },
+  { pattern: '/grade/:grade', guard: 'protected', component: GradeSelection },
+  {
+    pattern: '/grade/:grade/subject/:subject',
+    redirectTo: ({ grade, subject }) => `/grade/${grade}/subject/${subject}/chapters`,
+  },
+  { pattern: '/grade/:grade/subjects', guard: 'protected', component: SubjectsPage },
+  { pattern: '/grade/:grade/subject/:subject/chapters', guard: 'protected', component: ChaptersPage },
+  {
+    pattern: '/grade/:grade/subject/:subject/chapter/:chapterId/difficulty/:difficulty/quiz',
+    guard: 'protected',
+    component: QuizPage,
+  },
+  { pattern: '/career-simulator', guard: 'protected', component: CareerSimulatorPage },
+  { pattern: '/dashboard', guard: 'protected', component: DashboardPage },
+  { pattern: '/performance', guard: 'protected', component: PerformancePage },
+  { pattern: '/profile', guard: 'protected', component: ProfilePage },
+  { pattern: '/matric', guard: 'protected', component: MatricExamPage },
+  { pattern: '/matric/:year', guard: 'protected', component: MatricStreamPage },
+  { pattern: '/matric/:year/:stream', guard: 'protected', component: MatricYearPage },
+  { pattern: '/matric/:year/:stream/:subject', guard: 'protected', component: MatricQuizPage },
+  { pattern: '/matric/:year/quiz/:subject', guard: 'protected', component: MatricQuizPage },
+  { pattern: '/matric/room', guard: 'protected', component: MatricStudyRoomPage },
+  { pattern: '/matric/room/:roomId', guard: 'protected', component: MatricStudyRoomPage },
+  { pattern: '/matric/session/:roomId', guard: 'protected', component: MatricExamSessionPage },
+  { pattern: '/matric/video/:roomId', guard: 'protected', component: VideoLobbyPage },
+  { pattern: '/notes', guard: 'protected', component: NotesPage },
+  { pattern: '/notes/:grade', guard: 'protected', component: NotesSubjectsPage },
+  { pattern: '/notes/:grade/:subject', guard: 'protected', component: NotesChaptersPage },
+  { pattern: '/books', guard: 'protected', component: BooksPage },
+  { pattern: '/books/:grade', guard: 'protected', component: BookSubjectsPage },
+  { pattern: '/payment', guard: 'protected', component: PaymentPage },
+  { pattern: '/host', guard: 'protected', component: HostPage },
+  { pattern: '/join', guard: 'protected', component: JoinPage },
+  { pattern: '/session/:sessionCode', guard: 'protected', component: SessionPage },
+  { pattern: '/webrtc', guard: 'protected', component: WebRtcPage },
+  { pattern: '/debug/auth', guard: 'protected', component: lazy(async () => ({ default: DebugAuthPage })) },
+  { pattern: '/login', guard: 'public', component: LoginPage },
+  { pattern: '/signup', guard: 'public', component: SignUpPage },
+];
+
+const splitPath = (path: string) => {
+  if (path === '/') {
+    return [];
+  }
+
+  return path.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean);
+};
+
+const matchRoute = (pathname: string) => {
+  const pathSegments = splitPath(pathname);
+
+  for (const route of routes) {
+    const routeSegments = splitPath(route.pattern);
+    if (routeSegments.length !== pathSegments.length) {
+      continue;
+    }
+
+    const params: Params = {};
+    let isMatch = true;
+
+    for (let index = 0; index < routeSegments.length; index += 1) {
+      const routeSegment = routeSegments[index];
+      const pathSegment = pathSegments[index];
+
+      if (routeSegment.startsWith(':')) {
+        params[routeSegment.slice(1)] = decodeURIComponent(pathSegment);
+        continue;
+      }
+
+      if (routeSegment !== pathSegment) {
+        isMatch = false;
+        break;
+      }
+    }
+
+    if (isMatch) {
+      return { route, params };
+    }
+  }
+
+  return null;
+};
+
+const App = () => {
+  const pathname = usePathname() ?? '/';
+  const match = matchRoute(pathname);
+
+  let content = <Navigate to="/" replace />;
+  let params: Params = {};
+
+  if (match) {
+    params = match.params;
+
+    if (match.route.redirectTo) {
+      const target =
+        typeof match.route.redirectTo === 'function'
+          ? match.route.redirectTo(match.params)
+          : match.route.redirectTo;
+      content = <Navigate to={target} replace />;
+    } else if (match.route.component) {
+      const Screen = match.route.component;
+      const screenElement = (
+        <Suspense fallback={<PageLoader />}>
+          <Screen />
+        </Suspense>
+      );
+
+      if (match.route.guard === 'protected') {
+        content = <ProtectedRoute>{screenElement}</ProtectedRoute>;
+      } else if (match.route.guard === 'public') {
+        content = <PublicRoute>{screenElement}</PublicRoute>;
+      } else {
+        content = screenElement;
+      }
+    }
+  }
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <LanguageProvider>
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <RouterProvider params={params}>{content}</RouterProvider>
+            </TooltipProvider>
+          </AuthProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

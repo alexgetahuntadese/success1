@@ -1,6 +1,6 @@
 import { useState } from "react";
 import StarField from '@/components/StarField';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@/lib/router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";

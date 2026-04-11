@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "@/lib/router";
 import { ArrowLeft, BookOpen, Brain, ChevronDown, ChevronUp, GraduationCap, Lightbulb, NotebookPen, Sparkles, Target, Zap, Lock, CreditCard } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import StarField from "@/components/StarField";
