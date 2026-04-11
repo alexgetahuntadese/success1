@@ -91,13 +91,13 @@ const MatricStudyRoomPage = () => {
 
     const newRoom: Room = {
       id: Math.random().toString(36).substr(2, 9),
-      hostId: user.uid,
+      hostId: user.id || "temp-host",
       hostName: profile.name || "Host",
       year: "",
       stream: "",
       subject: "",
       participants: [{
-        id: user.uid,
+        id: user.id || "temp-host",
         name: profile.name || "Host",
         joinedAt: new Date().toISOString(),
         isHost: true
@@ -112,7 +112,42 @@ const MatricStudyRoomPage = () => {
 
   const joinRoom = async (roomId: string) => {
     try {
-      // Simulate joining room - in real app, this would call API
+      if (!user || !profile) {
+        toast.error("Please sign in to join room");
+        return;
+      }
+
+      // Join room via socket
+      await socketService.joinRoom(roomId, {
+        id: user.id || "temp-user",
+        name: profile.name || "Student"
+      });
+
+      // Set up socket listeners
+      socketService.onParticipantsUpdate((participants) => {
+        if (room) {
+          setRoom({
+            ...room,
+            participants: participants.map(p => ({
+              ...p,
+              joinedAt: new Date().toISOString()
+            }))
+          });
+        }
+      });
+
+      socketService.onCountdownStart((seconds) => {
+        setTimeRemaining(seconds);
+        if (room) {
+          setRoom({ ...room, status: "starting" });
+        }
+      });
+
+      socketService.onExamBegin((examData) => {
+        navigate(`/matric/session/${roomId}`);
+      });
+
+      // Mock room data for UI
       const mockRoom: Room = {
         id: roomId,
         hostId: "mock-host",
@@ -126,20 +161,17 @@ const MatricStudyRoomPage = () => {
             name: "Study Host",
             joinedAt: new Date().toISOString(),
             isHost: true
+          },
+          {
+            id: user.id || "temp-user",
+            name: profile.name || "Student",
+            joinedAt: new Date().toISOString(),
+            isHost: false
           }
         ],
         status: "waiting",
         createdAt: new Date().toISOString()
       };
-
-      if (user && profile) {
-        mockRoom.participants.push({
-          id: user.uid,
-          name: profile.name || "Student",
-          joinedAt: new Date().toISOString(),
-          isHost: false
-        });
-      }
 
       setRoom(mockRoom);
       setStep("waiting");
@@ -183,13 +215,15 @@ const MatricStudyRoomPage = () => {
       return;
     }
 
+    // Start session via socket
+    socketService.startSession(room.id);
+    
     const updatedRoom = {
       ...room,
       status: "starting" as const,
       startedAt: new Date().toISOString()
     };
     setRoom(updatedRoom);
-    setTimeRemaining(30);
   };
 
   const startExam = () => {
@@ -454,7 +488,7 @@ const MatricStudyRoomPage = () => {
                       <div className="text-white/70 mb-4">
                         Share the room code to invite others
                       </div>
-                      {room.participants.length >= 2 && user?.uid === room.hostId && (
+                      {room.participants.length >= 2 && user?.id === room.hostId && (
                         <Button
                           onClick={startSession}
                           className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white"

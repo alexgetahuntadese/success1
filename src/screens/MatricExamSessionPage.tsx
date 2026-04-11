@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { BeautifulLoader } from "@/components/BeautifulLoader";
 import { toast } from "sonner";
 import { getMatricQuestions } from "@/data/matricExams";
+import { socketService } from "@/lib/socket";
 
 interface ExamSession {
   id: string;
@@ -60,9 +61,77 @@ const MatricExamSessionPage = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (roomId) {
-      loadExamSession();
-    }
+    const initializeExamSession = async () => {
+      if (!roomId) return;
+
+      try {
+        await socketService.connect();
+        
+        // Set up socket listeners for real-time updates
+        socketService.onAnswerSubmitted((userId, questionIndex, answer) => {
+          console.log(`User ${userId} answered question ${questionIndex}: ${answer}`);
+          // Update participant answers in real-time
+          if (session) {
+            const updatedSession = {
+              ...session,
+              participants: session.participants.map(p => 
+                p.id === userId 
+                  ? { ...p, answers: { ...p.answers, [questionIndex]: answer } }
+                  : p
+              )
+            };
+            setSession(updatedSession);
+          }
+        });
+
+        socketService.onProgressUpdate((userId, questionIndex) => {
+          console.log(`User ${userId} is on question ${questionIndex}`);
+          // Update participant progress in real-time
+          if (session) {
+            const updatedSession = {
+              ...session,
+              participants: session.participants.map(p => 
+                p.id === userId 
+                  ? { ...p, currentQuestion: questionIndex }
+                  : p
+              )
+            };
+            setSession(updatedSession);
+          }
+        });
+
+        socketService.onExamFinished((userId, results) => {
+          console.log(`User ${userId} finished exam with score: ${results.score}`);
+          // Update participant results in real-time
+          if (session) {
+            const updatedSession = {
+              ...session,
+              participants: session.participants.map(p => 
+                p.id === userId 
+                  ? { ...p, finished: true, finishedAt: new Date().toISOString(), score: results.score }
+                  : p
+              )
+            };
+            setSession(updatedSession);
+          }
+        });
+
+        // Load exam session
+        await loadExamSession();
+      } catch (error) {
+        console.error('Failed to initialize exam session:', error);
+        toast.error("Failed to load exam session");
+        navigate("/matric");
+      }
+    };
+
+    initializeExamSession();
+
+    return () => {
+      socketService.off('exam:answer');
+      socketService.off('exam:progress');
+      socketService.off('exam:finish');
+    };
   }, [roomId]);
 
   useEffect(() => {
