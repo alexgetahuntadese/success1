@@ -10,6 +10,9 @@ import { Label } from "@/components/ui/label";
 import { Clock, Users, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BeautifulLoader } from "@/components/BeautifulLoader";
+import { VideoGrid } from "@/components/VideoGrid";
+import { useWebRTC } from "@/hooks/useWebRTC";
+import { useAntiCheat } from "@/hooks/useAntiCheat";
 import { toast } from "sonner";
 import { getMatricQuestions } from "@/data/matricExams";
 import { socketService } from "@/lib/socket";
@@ -59,6 +62,26 @@ const MatricExamSessionPage = () => {
   const [finished, setFinished] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // WebRTC hook for video during exam
+  const {
+    localStream,
+    remoteStreams,
+    isVideoEnabled,
+    isAudioEnabled,
+    startLocalVideo,
+    toggleVideo,
+    toggleAudio,
+    cleanup: cleanupWebRTC
+  } = useWebRTC(roomId || "", user?.id || "");
+
+  // Anti-cheat hook
+  const {
+    violations: antiCheatViolations,
+    activateMonitoring,
+    deactivateMonitoring,
+    reportViolation
+  } = useAntiCheat();
 
   useEffect(() => {
     const initializeExamSession = async () => {
@@ -118,6 +141,12 @@ const MatricExamSessionPage = () => {
 
         // Load exam session
         await loadExamSession();
+        
+        // Start video for exam monitoring
+        await startLocalVideo();
+        
+        // Activate anti-cheat monitoring
+        activateMonitoring(roomId, user?.id || "temp-user");
       } catch (error) {
         console.error('Failed to initialize exam session:', error);
         toast.error("Failed to load exam session");
@@ -131,6 +160,8 @@ const MatricExamSessionPage = () => {
       socketService.off('exam:answer');
       socketService.off('exam:progress');
       socketService.off('exam:finish');
+      deactivateMonitoring();
+      cleanupWebRTC();
     };
   }, [roomId]);
 
@@ -211,7 +242,7 @@ const MatricExamSessionPage = () => {
     
     // Save answer immediately via socket for real-time sync
     if (session && user) {
-      socketService.submitAnswer(session.currentQuestion, answer);
+      socketService.socket?.emit('exam:answer', session.roomId, session.currentQuestion, answer);
       
       const updatedSession = {
         ...session,
@@ -233,7 +264,7 @@ const MatricExamSessionPage = () => {
       finishExam();
     } else {
       // Update progress via socket
-      socketService.updateProgress(nextIndex);
+      socketService.socket?.emit('exam:progress', session.roomId, nextIndex);
       
       setSession({ ...session, currentQuestion: nextIndex });
       setCurrentAnswer(session.participants.find(p => p.id === user.id)?.answers[nextIndex] || "");
@@ -246,7 +277,7 @@ const MatricExamSessionPage = () => {
     const prevIndex = session.currentQuestion - 1;
     
     // Update progress via socket
-    socketService.updateProgress(prevIndex);
+    socketService.socket?.emit('exam:progress', session.roomId, prevIndex);
     
     setSession({ ...session, currentQuestion: prevIndex });
     setCurrentAnswer(session.participants.find(p => p.id === user.id)?.answers[prevIndex] || "");
@@ -272,7 +303,7 @@ const MatricExamSessionPage = () => {
       const results = { score, answers: userParticipant.answers };
       
       // Submit results via socket for real-time sync
-      socketService.finishExam(results);
+      socketService.socket?.emit('exam:finish', session.roomId, results);
       
       const updatedSession = {
         ...session,
@@ -338,7 +369,7 @@ const MatricExamSessionPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 p-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <Button
@@ -392,153 +423,202 @@ const MatricExamSessionPage = () => {
           </CardContent>
         </Card>
 
-        {/* Results View */}
-        {showResults && userParticipant?.score !== undefined ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
-              <CardHeader className="text-center">
-                <CheckCircle className="h-16 w-16 text-green-400 mx-auto mb-4" />
-                <CardTitle className="text-3xl text-white">Exam Completed!</CardTitle>
-                <CardDescription className="text-white/70">
-                  Here are your results
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-6xl font-bold text-white mb-4">
-                  {userParticipant.score}%
-                </div>
-                <div className="text-white/70 mb-6">
-                  You answered {getAnsweredCount()} out of {questions.length} questions
-                </div>
-                <Button onClick={() => navigate("/matric")} size="lg">
-                  Back to Matric
-                </Button>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ) : (
-          /* Question View */
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={session.currentQuestion}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
-                <CardHeader>
-                  <CardTitle className="text-xl text-white">
-                    Question {session.currentQuestion + 1}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="text-lg text-white leading-relaxed">
-                    {currentQuestionData.question}
-                  </div>
-                  
-                  <RadioGroup
-                    value={currentAnswer}
-                    onValueChange={handleAnswerChange}
-                    className="space-y-3"
-                  >
-                    {currentQuestionData.options.map((option, index) => (
-                      <div key={index} className="flex items-center space-x-2">
-                        <RadioGroupItem 
-                          value={option} 
-                          id={`option-${index}`}
-                          className="border-white/20 text-white"
-                        />
-                        <Label 
-                          htmlFor={`option-${index}`}
-                          className="text-white cursor-pointer flex-1 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
-                        >
-                          {option}
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Exam Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Video Grid */}
+            <VideoGrid
+              localStream={localStream}
+              remoteStreams={remoteStreams}
+              participants={session.participants.map(p => ({
+                id: p.id,
+                name: p.name,
+                isHost: false,
+                videoEnabled: true,
+                audioEnabled: true
+              }))}
+              currentUserId={user?.id || ""}
+              isVideoEnabled={isVideoEnabled}
+              isAudioEnabled={isAudioEnabled}
+              onToggleVideo={toggleVideo}
+              onToggleAudio={toggleAudio}
+              className="max-h-64"
+            />
 
-                  <div className="flex items-center justify-between pt-4">
-                    <Button
-                      variant="outline"
-                      onClick={previousQuestion}
-                      disabled={session.currentQuestion === 0}
-                      className="text-white/70 border-white/20"
-                    >
-                      Previous
+            {/* Results View */}
+            {showResults && userParticipant?.score !== undefined ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                  <CardHeader className="text-center">
+                    <CheckCircle className="h-16 w-16 text-green-400 mx-auto mb-4" />
+                    <CardTitle className="text-3xl text-white">Exam Completed!</CardTitle>
+                    <CardDescription className="text-white/70">
+                      Here are your results
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="text-center">
+                    <div className="text-6xl font-bold text-white mb-4">
+                      {userParticipant.score}%
+                    </div>
+                    <div className="text-white/70 mb-6">
+                      You answered {getAnsweredCount()} out of {questions.length} questions
+                    </div>
+                    <Button onClick={() => navigate("/matric")} size="lg">
+                      Back to Matric
                     </Button>
-                    
-                    <div className="flex items-center gap-2 text-white/70 text-sm">
-                      <span>Progress:</span>
-                      <span>{getAnsweredCount()}/{questions.length}</span>
-                    </div>
-
-                    {session.currentQuestion === questions.length - 1 ? (
-                      <Button
-                        onClick={finishExam}
-                        disabled={!currentAnswer}
-                        className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white"
-                      >
-                        Finish Exam
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={nextQuestion}
-                        disabled={!currentAnswer}
-                        className="bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-400 hover:to-purple-400 text-white"
-                      >
-                        Next
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </AnimatePresence>
-        )}
-
-        {/* Participants Sidebar */}
-        <div className="fixed right-4 top-20 w-64">
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
-            <CardHeader>
-              <CardTitle className="text-lg text-white flex items-center">
-                <Users className="mr-2 h-5 w-5" />
-                Participants
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {session.participants.map((participant) => (
-                  <div key={participant.id} className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                      {participant.name.charAt(0).toUpperCase()}
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-white text-sm font-medium">
-                        {participant.name}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ) : (
+              /* Question View */
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={session.currentQuestion}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                    <CardHeader>
+                      <CardTitle className="text-xl text-white">
+                        Question {session.currentQuestion + 1}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <div className="text-lg text-white leading-relaxed">
+                        {currentQuestionData.question}
                       </div>
-                      <div className="text-white/60 text-xs">
-                        {participant.finished ? (
-                          <span className="text-green-400">Finished</span>
+                      
+                      <RadioGroup
+                        value={currentAnswer}
+                        onValueChange={handleAnswerChange}
+                        className="space-y-3"
+                      >
+                        {currentQuestionData.options.map((option, index) => (
+                          <div key={index} className="flex items-center space-x-2">
+                            <RadioGroupItem 
+                              value={option} 
+                              id={`option-${index}`}
+                              className="border-white/20 text-white"
+                            />
+                            <Label 
+                              htmlFor={`option-${index}`}
+                              className="text-white cursor-pointer flex-1 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                            >
+                              {option}
+                            </Label>
+                          </div>
+                        ))}
+                      </RadioGroup>
+
+                      <div className="flex items-center justify-between pt-4">
+                        <Button
+                          variant="outline"
+                          onClick={previousQuestion}
+                          disabled={session.currentQuestion === 0}
+                          className="text-white/70 border-white/20"
+                        >
+                          Previous
+                        </Button>
+                        
+                        <div className="flex items-center gap-2 text-white/70 text-sm">
+                          <span>Progress:</span>
+                          <span>{getAnsweredCount()}/{questions.length}</span>
+                        </div>
+
+                        {session.currentQuestion === questions.length - 1 ? (
+                          <Button
+                            onClick={finishExam}
+                            disabled={!currentAnswer}
+                            className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white"
+                          >
+                            Finish Exam
+                          </Button>
                         ) : (
-                          <span>In Progress</span>
+                          <Button
+                            onClick={nextQuestion}
+                            disabled={!currentAnswer}
+                            className="bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-400 hover:to-purple-400 text-white"
+                          >
+                            Next
+                          </Button>
                         )}
                       </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </AnimatePresence>
+            )}
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Participants */}
+            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <CardHeader>
+                <CardTitle className="text-lg text-white flex items-center">
+                  <Users className="mr-2 h-5 w-5" />
+                  Participants
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {session.participants.map((participant) => (
+                    <div key={participant.id} className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                        {participant.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-white text-sm font-medium">
+                          {participant.name}
+                        </div>
+                        <div className="text-white/60 text-xs">
+                          {participant.finished ? (
+                            <span className="text-green-400">Finished</span>
+                          ) : (
+                            <span>In Progress</span>
+                          )}
+                        </div>
+                      </div>
+                      {participant.finished && participant.score && (
+                        <Badge className="bg-green-500/20 text-green-200 border-green-400/20 text-xs">
+                          {participant.score}%
+                        </Badge>
+                      )}
                     </div>
-                    {participant.finished && participant.score && (
-                      <Badge className="bg-green-500/20 text-green-200 border-green-400/20 text-xs">
-                        {participant.score}%
-                      </Badge>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Violations */}
+            {(antiCheatViolations.length > 0 || !isVideoEnabled) && (
+              <Card className="bg-red-500/10 backdrop-blur-lg border-red-500/20">
+                <CardHeader>
+                  <CardTitle className="text-lg text-red-200 flex items-center">
+                    <AlertCircle className="mr-2 h-5 w-5" />
+                    Violations
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {!isVideoEnabled && (
+                    <div className="text-red-300 text-sm mb-2">
+                      Camera is disabled
+                    </div>
+                  )}
+                  {antiCheatViolations.map((violation, index) => (
+                    <div key={index} className="text-red-300 text-xs">
+                      {violation}
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
       </div>
     </div>

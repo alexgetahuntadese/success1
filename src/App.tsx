@@ -169,6 +169,13 @@ const App = () => (
                     </Suspense>
                   </ProtectedRoute>
                 } />
+                <Route path="/matric/:year/:stream/:subject" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <MatricQuizPage />
+                    </Suspense>
+                  </ProtectedRoute>
+                } />
                 <Route path="/matric/:year/quiz/:subject" element={
                   <ProtectedRoute>
                     <Suspense fallback={<PageLoader />}>

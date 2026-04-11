@@ -25,8 +25,11 @@ class SocketService {
 
       this.socket = io(process.env.NODE_ENV === 'production' 
         ? window.location.origin 
-        : 'http://localhost:3000', {
-        transports: ['websocket', 'polling']
+        : 'http://localhost:3001', {
+        transports: ['websocket', 'polling'],
+        timeout: 10000,
+        forceNew: true,
+        path: '/api/socket/io'
       });
 
       this.socket.on('connect', () => {

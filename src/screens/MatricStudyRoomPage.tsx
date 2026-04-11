@@ -118,7 +118,7 @@ const MatricStudyRoomPage = () => {
       }
 
       // Join room via socket
-      await socketService.joinRoom(roomId, {
+      socketService.socket?.emit('room:join', roomId, {
         id: user.id || "temp-user",
         name: profile.name || "Student"
       });
@@ -216,7 +216,7 @@ const MatricStudyRoomPage = () => {
     }
 
     // Start session via socket
-    socketService.startSession(room.id);
+    socketService.socket?.emit('room:start', room.id);
     
     const updatedRoom = {
       ...room,
@@ -486,7 +486,21 @@ const MatricStudyRoomPage = () => {
                         Waiting for Participants
                       </div>
                       <div className="text-white/70 mb-4">
-                        Share the room code to invite others
+                        Share this room code to invite others
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-lg border-white/20 rounded-lg p-4 mb-4">
+                        <div className="text-white/60 text-sm mb-1">Room Code</div>
+                        <div className="text-white font-mono text-2xl font-bold mb-2">
+                          {room.id}
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => navigator.clipboard.writeText(`${window.location.origin}/matric/room/${room.id}`)}
+                          className="text-white/70 border-white/20 hover:text-white"
+                        >
+                          Copy Link
+                        </Button>
                       </div>
                       {room.participants.length >= 2 && user?.id === room.hostId && (
                         <Button

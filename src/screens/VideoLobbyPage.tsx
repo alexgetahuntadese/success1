@@ -80,7 +80,7 @@ const VideoLobbyPage = () => {
         await socketService.connect();
         
         // Join room via socket
-        await socketService.joinRoom(roomId, {
+        socketService.socket?.emit('room:join', roomId, {
           id: user.id || "temp-user",
           name: profile.name || "Student"
         });
@@ -108,7 +108,11 @@ const VideoLobbyPage = () => {
         });
 
         socketService.socket?.on('exam:begin', (examData: { questions: any[]; timeLimit: number }) => {
-          navigate(`/matric/session/${roomId}`);
+          setExamStarted(true);
+          // Navigate to exam session after countdown
+          setTimeout(() => {
+            navigate(`/matric/session/${roomId}`);
+          }, 1000);
         });
 
         socketService.socket?.on('video:toggled', (userId: string, enabled: boolean) => {
