@@ -15,7 +15,6 @@ import { useWebRTC } from "@/hooks/useWebRTC";
 import { useAntiCheat } from "@/hooks/useAntiCheat";
 import { toast } from "sonner";
 import { getMatricQuestions } from "@/data/matricExams";
-import { socketService } from "@/lib/socket";
 
 interface ExamSession {
   id: string;
@@ -88,65 +87,11 @@ const MatricExamSessionPage = () => {
       if (!roomId) return;
 
       try {
-        await socketService.connect();
-        
-        // Set up socket listeners for real-time updates
-        socketService.onAnswerSubmitted((userId, questionIndex, answer) => {
-          console.log(`User ${userId} answered question ${questionIndex}: ${answer}`);
-          // Update participant answers in real-time
-          if (session) {
-            const updatedSession = {
-              ...session,
-              participants: session.participants.map(p => 
-                p.id === userId 
-                  ? { ...p, answers: { ...p.answers, [questionIndex]: answer } }
-                  : p
-              )
-            };
-            setSession(updatedSession);
-          }
-        });
-
-        socketService.onProgressUpdate((userId, questionIndex) => {
-          console.log(`User ${userId} is on question ${questionIndex}`);
-          // Update participant progress in real-time
-          if (session) {
-            const updatedSession = {
-              ...session,
-              participants: session.participants.map(p => 
-                p.id === userId 
-                  ? { ...p, currentQuestion: questionIndex }
-                  : p
-              )
-            };
-            setSession(updatedSession);
-          }
-        });
-
-        socketService.onExamFinished((userId, results) => {
-          console.log(`User ${userId} finished exam with score: ${results.score}`);
-          // Update participant results in real-time
-          if (session) {
-            const updatedSession = {
-              ...session,
-              participants: session.participants.map(p => 
-                p.id === userId 
-                  ? { ...p, finished: true, finishedAt: new Date().toISOString(), score: results.score }
-                  : p
-              )
-            };
-            setSession(updatedSession);
-          }
-        });
-
         // Load exam session
         await loadExamSession();
         
         // Start video for exam monitoring
         await startLocalVideo();
-        
-        // Activate anti-cheat monitoring
-        activateMonitoring(roomId, user?.id || "temp-user");
       } catch (error) {
         console.error('Failed to initialize exam session:', error);
         toast.error("Failed to load exam session");
@@ -157,9 +102,6 @@ const MatricExamSessionPage = () => {
     initializeExamSession();
 
     return () => {
-      socketService.off('exam:answer');
-      socketService.off('exam:progress');
-      socketService.off('exam:finish');
       deactivateMonitoring();
       cleanupWebRTC();
     };
@@ -240,10 +182,8 @@ const MatricExamSessionPage = () => {
   const handleAnswerChange = (answer: string) => {
     setCurrentAnswer(answer);
     
-    // Save answer immediately via socket for real-time sync
+    // Save answer locally
     if (session && user) {
-      socketService.socket?.emit('exam:answer', session.roomId, session.currentQuestion, answer);
-      
       const updatedSession = {
         ...session,
         participants: session.participants.map(p => 
@@ -263,9 +203,6 @@ const MatricExamSessionPage = () => {
     if (nextIndex >= questions.length) {
       finishExam();
     } else {
-      // Update progress via socket
-      socketService.socket?.emit('exam:progress', session.roomId, nextIndex);
-      
       setSession({ ...session, currentQuestion: nextIndex });
       setCurrentAnswer(session.participants.find(p => p.id === user.id)?.answers[nextIndex] || "");
     }
@@ -275,9 +212,6 @@ const MatricExamSessionPage = () => {
     if (!session || session.currentQuestion <= 0) return;
     
     const prevIndex = session.currentQuestion - 1;
-    
-    // Update progress via socket
-    socketService.socket?.emit('exam:progress', session.roomId, prevIndex);
     
     setSession({ ...session, currentQuestion: prevIndex });
     setCurrentAnswer(session.participants.find(p => p.id === user.id)?.answers[prevIndex] || "");

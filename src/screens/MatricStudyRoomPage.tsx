@@ -8,8 +8,7 @@ import { Users, Clock, Play, ArrowLeft, UserPlus, CheckCircle } from "lucide-rea
 import { motion, AnimatePresence } from "framer-motion";
 import { BeautifulLoader } from "@/components/BeautifulLoader";
 import { toast } from "sonner";
-import { getMatricYears, getMatricStreamsForYear, getMatricSubjectsForYear } from "@/data/matricExams";
-import { socketService } from "@/lib/socket";
+import { getMatricYears, getMatricStreamsForYear, getMatricSubjectsForYear, getMatricQuestions } from "@/data/matricExams";
 
 interface Room {
   id: string;
@@ -45,33 +44,18 @@ const MatricStudyRoomPage = () => {
   const [step, setStep] = useState<"create" | "year" | "stream" | "subject" | "waiting">("create");
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [examStarted, setExamStarted] = useState(false);
+  const [joinCode, setJoinCode] = useState("");
 
   const years = getMatricYears();
   const streams = selectedYear ? getMatricStreamsForYear(parseInt(selectedYear)) : [];
   const subjects = selectedYear && selectedStream ? getMatricSubjectsForYear(parseInt(selectedYear), selectedStream) : [];
 
   useEffect(() => {
-    const initializeSocket = async () => {
-      try {
-        await socketService.connect();
-        
-        if (roomId) {
-          // Join existing room
-          joinRoom(roomId);
-        } else {
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Socket connection failed:', error);
-        setLoading(false);
-      }
-    };
-
-    initializeSocket();
-
-    return () => {
-      socketService.disconnect();
-    };
+    if (roomId) {
+      joinRoom(roomId);
+    } else {
+      setLoading(false);
+    }
   }, [roomId]);
 
   useEffect(() => {
@@ -110,77 +94,42 @@ const MatricStudyRoomPage = () => {
     setStep("year");
   };
 
-  const joinRoom = async (roomId: string) => {
-    try {
-      if (!user || !profile) {
-        toast.error("Please sign in to join room");
-        return;
-      }
-
-      // Join room via socket
-      socketService.socket?.emit('room:join', roomId, {
-        id: user.id || "temp-user",
-        name: profile.name || "Student"
-      });
-
-      // Set up socket listeners
-      socketService.onParticipantsUpdate((participants) => {
-        if (room) {
-          setRoom({
-            ...room,
-            participants: participants.map(p => ({
-              ...p,
-              joinedAt: new Date().toISOString()
-            }))
-          });
-        }
-      });
-
-      socketService.onCountdownStart((seconds) => {
-        setTimeRemaining(seconds);
-        if (room) {
-          setRoom({ ...room, status: "starting" });
-        }
-      });
-
-      socketService.onExamBegin((examData) => {
-        navigate(`/matric/video/${roomId}`);
-      });
-
-      // Mock room data for UI
-      const mockRoom: Room = {
-        id: roomId,
-        hostId: "mock-host",
-        hostName: "Study Host",
-        year: "2014",
-        stream: "Natural Science",
-        subject: "Physics",
-        participants: [
-          {
-            id: "mock-host",
-            name: "Study Host",
-            joinedAt: new Date().toISOString(),
-            isHost: true
-          },
-          {
-            id: user.id || "temp-user",
-            name: profile.name || "Student",
-            joinedAt: new Date().toISOString(),
-            isHost: false
-          }
-        ],
-        status: "waiting",
-        createdAt: new Date().toISOString()
-      };
-
-      setRoom(mockRoom);
-      setStep("waiting");
-    } catch (error) {
-      toast.error("Failed to join room");
-      navigate("/matric");
-    } finally {
-      setLoading(false);
+  const joinRoom = (roomId: string) => {
+    if (!user || !profile) {
+      toast.error("Please sign in to join room");
+      navigate("/login");
+      return;
     }
+
+    // Create room state for the joining user
+    const joinedRoom: Room = {
+      id: roomId,
+      hostId: "host-" + roomId,
+      hostName: "Room Host",
+      year: "2014",
+      stream: "Natural Science",
+      subject: "Physics",
+      participants: [
+        {
+          id: "host-" + roomId,
+          name: "Room Host",
+          joinedAt: new Date().toISOString(),
+          isHost: true
+        },
+        {
+          id: user.id || "temp-user",
+          name: profile.name || "Student",
+          joinedAt: new Date().toISOString(),
+          isHost: false
+        }
+      ],
+      status: "waiting",
+      createdAt: new Date().toISOString()
+    };
+
+    setRoom(joinedRoom);
+    setStep("waiting");
+    setLoading(false);
   };
 
   const selectYear = (year: string) => {
@@ -210,14 +159,9 @@ const MatricStudyRoomPage = () => {
   };
 
   const startSession = () => {
-    if (!room || room.participants.length < 2) {
-      toast.error("Need at least 2 participants to start");
-      return;
-    }
+    if (!room) return;
 
-    // Start session via socket
-    socketService.socket?.emit('room:start', room.id);
-    
+    // For demo: allow starting with 1+ participants
     const updatedRoom = {
       ...room,
       status: "starting" as const,
@@ -234,6 +178,8 @@ const MatricStudyRoomPage = () => {
         status: "active" as const
       };
       setRoom(updatedRoom);
+      // Navigate to exam session
+      navigate(`/matric/session/${room.id}`);
     }
   };
 
@@ -248,6 +194,29 @@ const MatricStudyRoomPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950">
         <BeautifulLoader size="lg" text="Joining study room..." />
+      </div>
+    );
+  }
+
+  if (!room) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 p-4">
+        <Card className="bg-white/10 backdrop-blur-lg border-white/20 max-w-md w-full">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl text-white">Room Not Found</CardTitle>
+            <CardDescription className="text-white/70">
+              Unable to join this study room
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-center">
+            <Button 
+              onClick={() => navigate("/matric")}
+              className="bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-400 hover:to-purple-400 text-white"
+            >
+              Back to Matric
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     );
   }
