@@ -10,7 +10,6 @@ import { LanguageProvider } from "@/i18n/LanguageContext";
 import AuthProvider from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import PublicRoute from "@/components/PublicRoute";
-import RequireAdmin from "@/components/auth/RequireAdmin";
 import { Suspense, lazy } from "react";
 import { Loader2 } from "lucide-react";
 import AuthDebug from "@/components/debug/AuthDebug";
@@ -236,16 +235,6 @@ const App = () => (
                     <Suspense fallback={<PageLoader />}>
                       <SessionPage />
                     </Suspense>
-                  </ProtectedRoute>
-                } />
-                <Route path="/admin-payments" element={<Navigate to="/admin/payments" replace />} />
-                <Route path="/admin/payments" element={
-                  <ProtectedRoute>
-                    <RequireAdmin fallback={<Navigate to="/payment" replace />}>
-                      <Suspense fallback={<PageLoader />}>
-                        <AdminPaymentsPage />
-                      </Suspense>
-                    </RequireAdmin>
                   </ProtectedRoute>
                 } />
                 <Route path="/webrtc" element={
