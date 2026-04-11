@@ -178,7 +178,7 @@ const Index = () => {
               whileTap={{ scale: 0.98 }}
             >
               <Link
-                to="/matric"
+                href="/matric"
                 className="group relative inline-flex items-center justify-center w-full sm:w-auto px-6 sm:px-14 py-4 sm:py-7 text-base sm:text-xl font-bold text-white bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl sm:rounded-3xl shadow-2xl hover:shadow-amber-500/40 transition-all duration-300 border border-amber-400/20 overflow-hidden"
               >
                 <motion.div
@@ -210,7 +210,7 @@ const Index = () => {
               whileTap={{ scale: 0.98 }}
             >
               <Link
-                to="/matric"
+                href="/matric"
                 className="group relative inline-flex items-center justify-center w-full sm:w-auto px-6 sm:px-14 py-4 sm:py-7 text-base sm:text-xl font-bold text-amber-300 border-2 border-amber-400/50 rounded-2xl sm:rounded-3xl hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 backdrop-blur-sm overflow-hidden"
               >
                 <motion.div
@@ -470,7 +470,7 @@ const Index = () => {
                 className="group"
               >
                 <Link
-                  to={item.route}
+                  href={item.route}
                   className="block relative group"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
@@ -538,7 +538,7 @@ const Index = () => {
                 className="group"
               >
                 <Link
-                  to={item.route}
+                  href={item.route}
                   className="block relative group"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
@@ -595,7 +595,7 @@ const Index = () => {
             className="flex flex-col gap-6 sm:flex-row sm:justify-center items-center"
           >
             <Link
-              to="/matric"
+              href="/matric"
               className="group relative inline-flex items-center justify-center px-16 py-8 text-2xl font-bold text-white bg-gradient-to-r from-amber-500 to-orange-600 rounded-3xl shadow-2xl hover:shadow-amber-500/30 transform hover:scale-105 transition-all duration-300 border border-amber-400/20"
             >
               <span className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-500 rounded-3xl blur opacity-50 group-hover:opacity-75 transition duration-300"></span>
@@ -606,7 +606,7 @@ const Index = () => {
               </span>
             </Link>
             <Link
-              to="/matric"
+              href="/matric"
               className="group inline-flex items-center justify-center px-16 py-8 text-2xl font-bold text-amber-300 border-2 border-amber-400/50 rounded-3xl hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 backdrop-blur-sm"
             >
               <span className="flex items-center gap-4">

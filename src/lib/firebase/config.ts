@@ -1,13 +1,13 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY?.trim(),
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN?.trim(),
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID?.trim(),
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET?.trim(),
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID?.trim(),
-  appId: import.meta.env.VITE_FIREBASE_APP_ID?.trim(),
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID?.trim(),
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY?.trim(),
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN?.trim(),
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID?.trim(),
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET?.trim(),
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID?.trim(),
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID?.trim(),
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID?.trim(),
 };
 
 const requiredKeys = [
@@ -23,7 +23,7 @@ export const firebaseReady = requiredKeys.every(Boolean);
 
 export const firebaseConfigError = firebaseReady
   ? ""
-  : "Missing Firebase environment variables. Add the VITE_FIREBASE_* values in .env and restart the app.";
+  : "Missing Firebase environment variables. Add the NEXT_PUBLIC_FIREBASE_* values in .env and restart the app.";
 
 export const firebaseApp = firebaseReady
   ? getApps().length
