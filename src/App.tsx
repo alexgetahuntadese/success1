@@ -39,7 +39,6 @@ const BookSubjectsPage = lazy(() => import("./screens/BookSubjectsPage"));
 const LoginPage = lazy(() => import("./screens/LoginPage"));
 const SignUpPage = lazy(() => import("./screens/SignUpPage"));
 const PaymentPage = lazy(() => import("./screens/PaymentPage"));
-const AdminPaymentsPage = lazy(() => import("./screens/AdminPaymentsPage"));
 const WebRtcPage = lazy(() => import("./screens/WebRtcPage"));
 const HostPage = lazy(() => import("./screens/HostPage"));
 const JoinPage = lazy(() => import("./screens/JoinPage"));

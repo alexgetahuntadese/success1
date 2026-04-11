@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/index.css";
-import LayoutClient from "./layout-client";
+import LayoutClient from "../app/layout-client";
 
 export const metadata: Metadata = {
   title: "Simple Road",

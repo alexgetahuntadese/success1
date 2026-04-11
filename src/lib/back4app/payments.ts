@@ -28,7 +28,8 @@ const fileToDataUrl = (file: File) =>
     reader.readAsDataURL(file);
   });
 
-export type PaymentSubmissionStatus = "pending" | "verified" | "rejected" | "approved";
+export type PaymentSubmissionStatus = "pending" | "verified" | "rejected" | "approved" | "backend4app_pending" | "backend4app_approved" | "backend4app_rejected";
+
 export type PaymentMethod = "cbe" | "telebirr";
 
 export type PaymentSubmissionWithReceiptUrl = PaymentSubmission & {
@@ -93,50 +94,69 @@ export const paymentService = {
 
     return submission;
   },
-};
 
-export const paymentAdminService = {
-  async listAllSubmissions(): Promise<PaymentSubmissionWithReceiptUrl[]> {
-    return apiJson<PaymentSubmissionWithReceiptUrl[]>("/api/payments/admin/submissions");
-  },
+  async submitPaymentWithReceipt(input: CreatePaymentSubmissionInput & { receiptFile: File }): Promise<PaymentSubmissionWithReceiptUrl> {
+    const receiptBase64 = await fileToDataUrl(input.receiptFile);
+    const submission = await apiJson<ApiSubmission>("/api/payments/backend4app/submit", {
+      method: "POST",
+      body: JSON.stringify({
+        userId: input.userId,
+        userName: input.userName,
+        userPhone: input.userPhone,
+        amount: input.amount,
+        bankName: input.bankName,
+        accountNumber: input.accountNumber,
+        transactionRef: input.transactionRef,
+        paymentMethod: input.paymentMethod,
+        submitterNotes: input.submitterNotes || null,
+        receiptBase64,
+        receiptFileName: input.receiptFile.name,
+        receiptContentType: input.receiptFile.type,
+      }),
+    });
 
-  async reviewSubmission(input: {
-    submission: PaymentSubmission;
-    status: PaymentSubmissionStatus;
-    reviewerNotes?: string;
-  }): Promise<PaymentSubmissionWithReceiptUrl> {
-    const nextSubmission = await apiJson<ApiSubmission>(
-      `/api/payments/admin/review/${encodeURIComponent(input.submission.id)}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify({
-          status: input.status,
-          reviewerNotes: input.reviewerNotes || null,
-        }),
-      }
-    );
+    const currentProfile = await userProfileService.getUserProfile(input.userId);
+    if (currentProfile && !hasPremiumPreferences(currentProfile.preferences)) {
+      const nextPreferences = setPremiumAccess(currentProfile.preferences, {
+        premium: false,
+        paymentStatus: "backend4app_pending",
+        paymentSubmissionId: submission.id,
+      });
 
-    if (input.submission.user_id) {
-      const profile = await userProfileService.getUserProfile(input.submission.user_id);
-      if (profile) {
-        const verifiedAt =
-          input.status === "verified" || input.status === "approved"
-            ? new Date().toISOString()
-            : null;
-        const nextPreferences = setPremiumAccess(profile.preferences, {
-          premium: input.status === "verified" || input.status === "approved",
-          paymentStatus: input.status,
-          paidAt: verifiedAt,
-          paymentSubmissionId: input.submission.id,
-        });
-
-        await userProfileService.upsertProfile({
-          ...profile,
-          preferences: nextPreferences,
-        });
-      }
+      await userProfileService.upsertProfile({
+        ...currentProfile,
+        preferences: nextPreferences,
+      });
     }
 
-    return nextSubmission;
+    return submission;
+  },
+
+  async getBackend4AppReceipts(userId: string): Promise<PaymentSubmissionWithReceiptUrl[]> {
+    return apiJson<PaymentSubmissionWithReceiptUrl[]>(`/api/payments/backend4app/receipts?userId=${encodeURIComponent(userId)}`);
+  },
+
+  async approveBackend4AppPaymentWithReceipt(paymentId: string, adminNotes?: string): Promise<PaymentSubmissionWithReceiptUrl> {
+    return apiJson<PaymentSubmissionWithReceiptUrl>("/api/payments/backend4app/approve", {
+      method: "POST",
+      body: JSON.stringify({
+        paymentId,
+        adminNotes,
+      }),
+    });
+  },
+
+  async rejectBackend4AppPaymentWithReceipt(paymentId: string, reason: string): Promise<PaymentSubmissionWithReceiptUrl> {
+    return apiJson<PaymentSubmissionWithReceiptUrl>("/api/payments/backend4app/reject", {
+      method: "POST",
+      body: JSON.stringify({
+        paymentId,
+        reason,
+      }),
+    });
+  },
+
+  async listAllSubmissions(): Promise<PaymentSubmissionWithReceiptUrl[]> {
+    return apiJson<PaymentSubmissionWithReceiptUrl[]>("/api/payments/admin/submissions");
   },
 };

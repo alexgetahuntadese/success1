@@ -61,9 +61,24 @@ const AdminPaymentsPage = () => {
     }
   };
 
-  useEffect(() => {
-    let active = true;
+  const handleApproveSubmission = async (submissionId: string) => {
+    try {
+      await paymentAdminService.approveBackend4AppPayment(submissionId, "Approved via backend4app system");
+      toast.success("Payment approved via backend4app");
+      await refreshSubmissions();
+    } catch (error) {
+      console.error("Failed to approve payment:", error);
+      toast.error("Failed to approve payment");
+    }
+  };
 
+  const handleRejectSubmission = async (submissionId: string) => {
+    try {
+      const reason = prompt("Please enter rejection reason:");
+      if (reason) {
+        await paymentAdminService.rejectBackend4AppPayment(submissionId, reason);
+        toast.success("Payment rejected via backend4app");
+        await refreshSubmissions();
     const loadSubmissions = async () => {
       setIsLoading(true);
 
@@ -89,7 +104,7 @@ const AdminPaymentsPage = () => {
     return () => {
       active = false;
     };
-  }, []);
+  };
 
   const handleReview = async (
     submissionId: string,
@@ -154,13 +169,16 @@ const AdminPaymentsPage = () => {
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-3">
             <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/70">
-              1. Open the receipt and compare the transaction reference and amount.
+              1. Open: receipt and compare to transaction reference and amount.
             </div>
             <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/70">
-              2. Add a note if the student needs clarification or you want an audit trail.
+              2. Add a note if: student needs clarification or you want an audit trail.
             </div>
             <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/70">
-              3. Approve to activate premium, or reject to keep the student locked.
+              3. Approve: to activate premium, or reject to keep: student locked.
+            </div>
+            <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/70">
+              4. Check Backend4App Status: Verify real-time payment status from backend4app system.
             </div>
           </CardContent>
         </Card>
