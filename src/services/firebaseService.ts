@@ -7,7 +7,7 @@ export {
   userProfileService,
   userService,
 } from "@/lib/firebase/auth";
-export { paymentAdminService, paymentService } from "@/lib/firebase/payments";
+export { paymentAdminService, paymentService } from "@/lib/back4app/payments";
 export { careerSimulatorService } from "@/lib/firebase/functions";
 export type {
   AppSession,
@@ -22,4 +22,4 @@ export type {
 export type {
   PaymentMethod,
   PaymentSubmissionStatus,
-} from "@/lib/firebase/payments";
+} from "@/lib/back4app/payments";
