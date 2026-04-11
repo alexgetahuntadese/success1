@@ -13,7 +13,7 @@ import {
   isAdminPreferences,
 } from "@/lib/authRoles";
 import { INACTIVE_ACCOUNT_NOTICE_KEY } from "@/lib/authStorage";
-import { parseAuthService } from "@/integrations/parse/parseAuth";
+import { authService } from "@/lib/firebase/auth";
 import type {
   AppSession,
   AuthUser,

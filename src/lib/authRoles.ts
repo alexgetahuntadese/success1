@@ -1,4 +1,4 @@
-import type { Json } from "@/integrations/supabase/types";
+import type { Json } from "@/lib/firebase/types";
 
 const asObject = (value: Json | null | undefined) => {
   if (!value || Array.isArray(value) || typeof value !== "object") {
