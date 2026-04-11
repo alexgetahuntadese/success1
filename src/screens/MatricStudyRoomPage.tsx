@@ -1,0 +1,511 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "@/contexts/auth-context";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Users, Clock, Play, ArrowLeft, UserPlus, CheckCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { BeautifulLoader } from "@/components/BeautifulLoader";
+import { toast } from "sonner";
+import { getMatricYears, getMatricStreamsForYear, getMatricSubjectsForYear } from "@/data/matricExams";
+
+interface Room {
+  id: string;
+  hostId: string;
+  hostName: string;
+  year: string;
+  stream: string;
+  subject: string;
+  participants: Participant[];
+  status: "waiting" | "starting" | "active" | "finished";
+  createdAt: string;
+  startedAt?: string;
+  timeRemaining?: number;
+}
+
+interface Participant {
+  id: string;
+  name: string;
+  joinedAt: string;
+  isHost: boolean;
+}
+
+const MatricStudyRoomPage = () => {
+  const { user, profile } = useAuth();
+  const navigate = useNavigate();
+  const { roomId } = useParams();
+  
+  const [room, setRoom] = useState<Room | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedStream, setSelectedStream] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [step, setStep] = useState<"create" | "year" | "stream" | "subject" | "waiting">("create");
+  const [timeRemaining, setTimeRemaining] = useState(30);
+  const [examStarted, setExamStarted] = useState(false);
+
+  const years = getMatricYears();
+  const streams = selectedYear ? getMatricStreamsForYear(selectedYear) : [];
+  const subjects = selectedYear ? getMatricSubjectsForYear(selectedYear) : [];
+
+  useEffect(() => {
+    if (roomId) {
+      // Join existing room
+      joinRoom(roomId);
+    } else {
+      setLoading(false);
+    }
+  }, [roomId]);
+
+  useEffect(() => {
+    if (room?.status === "starting" && timeRemaining > 0) {
+      const timer = setTimeout(() => setTimeRemaining(timeRemaining - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (timeRemaining === 0 && room?.status === "starting") {
+      startExam();
+    }
+  }, [room?.status, timeRemaining]);
+
+  const createRoom = () => {
+    if (!user || !profile) {
+      toast.error("Please sign in to create a room");
+      return;
+    }
+
+    const newRoom: Room = {
+      id: Math.random().toString(36).substr(2, 9),
+      hostId: user.uid,
+      hostName: profile.name || "Host",
+      year: "",
+      stream: "",
+      subject: "",
+      participants: [{
+        id: user.uid,
+        name: profile.name || "Host",
+        joinedAt: new Date().toISOString(),
+        isHost: true
+      }],
+      status: "waiting",
+      createdAt: new Date().toISOString()
+    };
+
+    setRoom(newRoom);
+    setStep("year");
+  };
+
+  const joinRoom = async (roomId: string) => {
+    try {
+      // Simulate joining room - in real app, this would call API
+      const mockRoom: Room = {
+        id: roomId,
+        hostId: "mock-host",
+        hostName: "Study Host",
+        year: "2014",
+        stream: "Natural Science",
+        subject: "Physics",
+        participants: [
+          {
+            id: "mock-host",
+            name: "Study Host",
+            joinedAt: new Date().toISOString(),
+            isHost: true
+          }
+        ],
+        status: "waiting",
+        createdAt: new Date().toISOString()
+      };
+
+      if (user && profile) {
+        mockRoom.participants.push({
+          id: user.uid,
+          name: profile.name || "Student",
+          joinedAt: new Date().toISOString(),
+          isHost: false
+        });
+      }
+
+      setRoom(mockRoom);
+      setStep("waiting");
+    } catch (error) {
+      toast.error("Failed to join room");
+      navigate("/matric");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const selectYear = (year: string) => {
+    setSelectedYear(year);
+    setStep("stream");
+  };
+
+  const selectStream = (stream: any) => {
+    setSelectedStream(stream.key);
+    setStep("subject");
+  };
+
+  const selectSubject = (subject: any) => {
+    setSelectedSubject(subject.subject);
+    
+    if (room) {
+      const updatedRoom = {
+        ...room,
+        year: selectedYear,
+        stream: stream.key,
+        subject: subject.subject
+      };
+      setRoom(updatedRoom);
+    }
+    
+    setStep("waiting");
+  };
+
+  const startSession = () => {
+    if (!room || room.participants.length < 2) {
+      toast.error("Need at least 2 participants to start");
+      return;
+    }
+
+    const updatedRoom = {
+      ...room,
+      status: "starting" as const,
+      startedAt: new Date().toISOString()
+    };
+    setRoom(updatedRoom);
+    setTimeRemaining(30);
+  };
+
+  const startExam = () => {
+    setExamStarted(true);
+    if (room) {
+      const updatedRoom = {
+        ...room,
+        status: "active" as const
+      };
+      setRoom(updatedRoom);
+    }
+  };
+
+  const copyRoomLink = () => {
+    if (room) {
+      navigator.clipboard.writeText(`${window.location.origin}/matric/room/${room.id}`);
+      toast.success("Room link copied!");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950">
+        <BeautifulLoader size="lg" text="Joining study room..." />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 p-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/matric")}
+            className="text-white/70 hover:text-white"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Matric
+          </Button>
+          
+          {room && (
+            <div className="flex items-center gap-4">
+              <Badge variant="outline" className="text-white/70 border-white/20">
+                Room Code: {room.id}
+              </Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={copyRoomLink}
+                className="text-white/70 border-white/20 hover:text-white"
+              >
+                <UserPlus className="mr-2 h-4 w-4" />
+                Invite
+              </Button>
+            </div>
+          )}
+        </div>
+
+        {/* Room Creation Flow */}
+        {!roomId && step === "create" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
+            <Card className="bg-white/10 backdrop-blur-lg border-white/20 max-w-md mx-auto">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl text-white">Create Study Room</CardTitle>
+                <CardDescription className="text-white/70">
+                  Host a collaborative matric exam session
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button
+                  onClick={createRoom}
+                  className="w-full bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-400 hover:to-purple-400 text-white"
+                  size="lg"
+                >
+                  <Users className="mr-2 h-5 w-5" />
+                  Create Room
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Year Selection */}
+        {step === "year" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl text-white">Select Matric Year</CardTitle>
+                <CardDescription className="text-white/70">
+                  Choose the exam year for your study session
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {years.map((year) => (
+                    <Button
+                      key={year}
+                      variant="outline"
+                      onClick={() => selectYear(year)}
+                      className="h-20 text-lg bg-white/5 border-white/20 text-white hover:bg-white/10"
+                    >
+                      {year} E.C.
+                    </Button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Stream Selection */}
+        {step === "stream" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl text-white">Select Stream</CardTitle>
+                <CardDescription className="text-white/70">
+                  Choose your academic stream
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {streams.map((stream, index) => (
+                    <Button
+                      key={stream.key}
+                      variant="outline"
+                      onClick={() => selectStream(stream)}
+                      className="w-full h-16 text-left bg-white/5 border-white/20 text-white hover:bg-white/10"
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-lg">{stream.label}</span>
+                        <Badge className="bg-violet-500/20 text-violet-200 border-violet-400/20">
+                          {stream.subjects?.length || 0} subjects
+                        </Badge>
+                      </div>
+                    </Button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Subject Selection */}
+        {step === "subject" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl text-white">Select Subject</CardTitle>
+                <CardDescription className="text-white/70">
+                  Choose the subject for your exam session
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {subjects.map((subject) => (
+                    <Button
+                      key={subject.subject}
+                      variant="outline"
+                      onClick={() => selectSubject(subject)}
+                      className="h-16 text-left bg-white/5 border-white/20 text-white hover:bg-white/10"
+                    >
+                      <div className="flex flex-col items-start">
+                        <span className="font-medium">{subject.subject}</span>
+                        <span className="text-sm text-white/60">
+                          {subject.questionCount} questions
+                        </span>
+                      </div>
+                    </Button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Waiting Room */}
+        {step === "waiting" && room && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Room Info */}
+              <Card className="bg-white/10 backdrop-blur-lg border-white/20 lg:col-span-2">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-2xl text-white">Study Room</CardTitle>
+                      <CardDescription className="text-white/70">
+                        {room.year} E.C. - {room.stream} - {room.subject}
+                      </CardDescription>
+                    </div>
+                    <Badge 
+                      className={
+                        room.status === "waiting" ? "bg-yellow-500/20 text-yellow-200 border-yellow-400/20" :
+                        room.status === "starting" ? "bg-blue-500/20 text-blue-200 border-blue-400/20" :
+                        room.status === "active" ? "bg-green-500/20 text-green-200 border-green-400/20" :
+                        "bg-gray-500/20 text-gray-200 border-gray-400/20"
+                      }
+                    >
+                      {room.status}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {/* Countdown Timer */}
+                  {room.status === "starting" && (
+                    <motion.div
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      className="text-center py-8"
+                    >
+                      <div className="text-6xl font-bold text-white mb-4">
+                        {timeRemaining}
+                      </div>
+                      <div className="text-xl text-white/70">
+                        Exam starting in...
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Exam Active */}
+                  {examStarted && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-center py-8"
+                    >
+                      <CheckCircle className="h-16 w-16 text-green-400 mx-auto mb-4" />
+                      <div className="text-2xl text-white font-semibold mb-2">
+                        Exam in Progress
+                      </div>
+                      <div className="text-white/70">
+                        All participants are now taking the exam
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Waiting for participants */}
+                  {room.status === "waiting" && (
+                    <div className="text-center py-8">
+                      <Users className="h-16 w-16 text-violet-400 mx-auto mb-4" />
+                      <div className="text-xl text-white font-semibold mb-2">
+                        Waiting for Participants
+                      </div>
+                      <div className="text-white/70 mb-4">
+                        Share the room code to invite others
+                      </div>
+                      {room.participants.length >= 2 && user?.uid === room.hostId && (
+                        <Button
+                          onClick={startSession}
+                          className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white"
+                          size="lg"
+                        >
+                          <Play className="mr-2 h-5 w-5" />
+                          Start Session
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Participants */}
+              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <CardHeader>
+                  <CardTitle className="text-lg text-white flex items-center">
+                    <Users className="mr-2 h-5 w-5" />
+                    Participants ({room.participants.length})
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <AnimatePresence>
+                      {room.participants.map((participant, index) => (
+                        <motion.div
+                          key={participant.id}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 20 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"
+                        >
+                          <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                            {participant.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-white font-medium">
+                              {participant.name}
+                            </div>
+                            {participant.isHost && (
+                              <Badge className="bg-violet-500/20 text-violet-200 border-violet-400/20 text-xs">
+                                Host
+                              </Badge>
+                            )}
+                          </div>
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                  
+                  {room.participants.length < 2 && (
+                    <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+                      <div className="text-yellow-200 text-sm">
+                        Need at least 2 participants to start
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default MatricStudyRoomPage;

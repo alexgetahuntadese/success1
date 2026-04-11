@@ -166,10 +166,31 @@ const App = () => (
                     </Suspense>
                   </ProtectedRoute>
                 } />
-                <Route path="/matric/:year/:stream/:subject" element={
+                <Route path="/matric/:year/quiz/:subject" element={
                   <ProtectedRoute>
                     <Suspense fallback={<PageLoader />}>
                       <MatricQuizPage />
+                    </Suspense>
+                  </ProtectedRoute>
+                } />
+                <Route path="/matric/room" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <MatricStudyRoomPage />
+                    </Suspense>
+                  </ProtectedRoute>
+                } />
+                <Route path="/matric/room/:roomId" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <MatricStudyRoomPage />
+                    </Suspense>
+                  </ProtectedRoute>
+                } />
+                <Route path="/matric/session/:roomId" element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<PageLoader />}>
+                      <MatricExamSessionPage />
                     </Suspense>
                   </ProtectedRoute>
                 } />

@@ -43,6 +43,14 @@ const MatricExamPage = () => {
             </div>
             <p className="text-white/50 text-sm">Practice with authentic past exam questions by year</p>
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate('/matric/room')}
+            className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
+          >
+            <Users className="h-5 w-5" />
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
