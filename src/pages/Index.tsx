@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Sparkles, TrendingUp, Award, Target, Zap, Shield, Crown, Star, GraduationCap, BookOpen } from "lucide-react";
 
 const Index = () => {
