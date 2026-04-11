@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "dev": "next dev",
+    "build": "next build",
+    "build:dev": "next build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "start": "next start"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -52,6 +52,7 @@
     "framer-motion": "^12.38.0",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.462.0",
+    "next": "^16.2.3",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
