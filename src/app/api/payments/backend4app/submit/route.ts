@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { createSubmission, mapParseSubmission, uploadReceiptToBack4App } from "../../_lib";
+import { createSubmission, mapParseSubmission } from "../../_lib";
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,14 +24,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing required payment fields." }, { status: 400 });
     }
 
-    let receipt = null;
-    if (receiptBase64 && receiptFileName) {
-      receipt = await uploadReceiptToBack4App(
-        receiptFileName,
-        receiptContentType || "image/jpeg",
-        receiptBase64
-      );
-    }
+    // Store receipt as base64 data URL since public file upload is disabled
+    const receiptDataUrl = receiptBase64 && receiptFileName ? receiptBase64 : null;
 
     const created = await createSubmission({
       user: {
@@ -47,10 +41,7 @@ export async function POST(request: NextRequest) {
       transactionRef,
       paymentMethod,
       status: "pending",
-      receiptFile: receipt ? {
-        __type: "File",
-        name: receipt.name,
-      } : null,
+      receiptUrl: receiptDataUrl,
       submittedAt: new Date().toISOString(),
       submitterNotes: submitterNotes || null,
     });
@@ -73,10 +64,7 @@ export async function POST(request: NextRequest) {
         transactionRef,
         paymentMethod,
         status: "pending",
-        receiptFile: receipt ? {
-          __type: "File",
-          name: receipt.name,
-        } : null,
+        receiptUrl: receiptDataUrl,
         submittedAt: new Date().toISOString(),
         submitterNotes: submitterNotes || null,
       })
