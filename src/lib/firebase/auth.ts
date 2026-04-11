@@ -314,10 +314,7 @@ export const authService = {
   async signIn(input: { phone: string; password: string }) {
     await ensureAuthInitialized();
     const credential = await signInWithEmailAndPassword(auth!, phoneToEmail(input.phone), input.password);
-    const profile = (await userProfileService.getUserProfile(credential.user.uid)) ?? fallbackProfileFromUser(credential.user);
-    if (profile) {
-      await userProfileService.updateLastLogin(profile.id);
-    }
+    // Skip profile fetching for faster sign-in - let AuthContext handle it
     return this.getSession();
   },
 

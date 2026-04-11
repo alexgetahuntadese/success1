@@ -66,19 +66,44 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     []
   );
 
+  const checkPremiumStatusUpdates = useCallback(async (userId: string) => {
+    try {
+      const response = await fetch(`/api/payments/backend4app/premium-status?userId=${encodeURIComponent(userId)}`);
+      const data = await response.json();
+
+      if (response.ok && data.hasPremiumUpdate) {
+        console.log('Premium access granted! Refreshing profile...');
+        // Refresh the user's session to get updated premium status
+        const session = await authService.getSession();
+        if (session?.session && session?.profile) {
+          await applyUserData(session.session, session.profile);
+        }
+        
+        // Show a notification to the user
+        if (data.message) {
+          console.log(data.message);
+          // You could also show a toast notification here
+        }
+      }
+    } catch (error) {
+      console.error('Failed to check premium status updates:', error);
+    }
+  }, [applyUserData]);
+
   useEffect(() => {
     let active = true;
-    setIsLoading(true);
 
-    const unsubscribe = authService.onAuthStateChanged(async (nextState) => {
+    const bootstrap = async () => {
       try {
-        if (!active) {
-          return;
-        }
-
-        if (nextState.session && nextState.profile) {
+        setIsLoading(true);
+        const session = await authService.getSession();
+        if (session?.session && session?.profile) {
+          const nextState = session;
           await applyUserData(nextState.session, nextState.profile);
           checkInactiveAccount(nextState.profile);
+          
+          // Check for premium status updates
+          await checkPremiumStatusUpdates(nextState.session.user.id);
         } else {
           clearAuthState();
         }
@@ -88,13 +113,42 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           clearAuthState();
         }
       }
-    });
+    };
+
+    bootstrap();
 
     return () => {
       active = false;
-      unsubscribe();
     };
-  }, [clearAuthState, applyUserData, checkInactiveAccount]);
+  }, [clearAuthState, applyUserData, checkInactiveAccount, checkPremiumStatusUpdates]);
+
+  // Set up periodic premium status checks for authenticated non-premium users
+  useEffect(() => {
+    if (!user?.id || hasPremiumPreferences(profile?.preferences as any)) {
+      return;
+    }
+
+    const checkPremiumUpdates = async () => {
+      await checkPremiumStatusUpdates(user.id);
+    };
+
+    // Check every 30 seconds
+    const interval = setInterval(checkPremiumUpdates, 30000);
+    
+    // Check immediately when user logs in
+    checkPremiumUpdates();
+
+    // Also check when window gains focus
+    const handleFocus = () => {
+      checkPremiumUpdates();
+    };
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [user?.id, profile?.preferences, hasPremiumPreferences, checkPremiumStatusUpdates]);
 
   const value = useMemo<AuthContextValue>(() => ({
     session,

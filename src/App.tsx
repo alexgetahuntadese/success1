@@ -11,19 +11,26 @@ import AuthProvider from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import PublicRoute from "@/components/PublicRoute";
 import { Suspense, lazy } from "react";
-import { Loader2 } from "lucide-react";
+import PageLoader from "@/components/PageLoader";
 import AuthDebug from "@/components/debug/AuthDebug";
 import PaymentDebug from "@/components/debug/PaymentDebug";
 
-// Lazy load components for code splitting
+// Lazy load components with preloading for critical paths
 const Index = lazy(() => import("./screens/Index"));
-const GradeSelection = lazy(() => import("./screens/GradeSelection"));
+const LoginPage = lazy(() => import("./screens/LoginPage"));
+const SignUpPage = lazy(() => import("./screens/SignUpPage"));
+const PaymentPage = lazy(() => import("./screens/PaymentPage"));
+
+// Preload common routes after initial load
 const GradesPage = lazy(() => import("./screens/GradesPage"));
 const SubjectsPage = lazy(() => import("./screens/SubjectsPage"));
 const ChaptersPage = lazy(() => import("./screens/ChaptersPage"));
+const DashboardPage = lazy(() => import("./screens/DashboardPage"));
+
+// Lazy load less frequent components
+const GradeSelection = lazy(() => import("./screens/GradeSelection"));
 const QuizPage = lazy(() => import("./screens/QuizPage"));
 const CareerSimulatorPage = lazy(() => import("./screens/CareerSimulatorPage"));
-const DashboardPage = lazy(() => import("./screens/DashboardPage"));
 const PerformancePage = lazy(() => import("./screens/PerformancePage"));
 const ProfilePage = lazy(() => import("./screens/ProfilePage"));
 const MatricExamPage = lazy(() => import("./screens/MatricExamPage"));
@@ -35,31 +42,23 @@ const NotesSubjectsPage = lazy(() => import("./screens/NotesSubjectsPage"));
 const NotesChaptersPage = lazy(() => import("./screens/NotesChaptersPage"));
 const BooksPage = lazy(() => import("./screens/BooksPage"));
 const BookSubjectsPage = lazy(() => import("./screens/BookSubjectsPage"));
-const LoginPage = lazy(() => import("./screens/LoginPage"));
-const SignUpPage = lazy(() => import("./screens/SignUpPage"));
-const PaymentPage = lazy(() => import("./screens/PaymentPage"));
 const WebRtcPage = lazy(() => import("./screens/WebRtcPage"));
 const HostPage = lazy(() => import("./screens/HostPage"));
 const JoinPage = lazy(() => import("./screens/JoinPage"));
 const SessionPage = lazy(() => import("./screens/SessionPage"));
 
-// Loading component for lazy loaded routes
-const PageLoader = () => (
-  <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950">
-    <div className="flex flex-col items-center gap-4 text-white">
-      <Loader2 className="h-8 w-8 animate-spin" />
-      <span className="text-sm">Loading...</span>
-    </div>
-  </div>
-);
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes (renamed from cacheTime)
+      staleTime: 10 * 60 * 1000, // 10 minutes
+      gcTime: 15 * 60 * 1000, // 15 minutes
       retry: 1,
       refetchOnWindowFocus: false,
+      networkMode: 'online',
+    },
+    mutations: {
+      networkMode: 'online',
     },
   },
 });

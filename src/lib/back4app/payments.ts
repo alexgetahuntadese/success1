@@ -129,4 +129,35 @@ export const paymentService = {
   async listAllSubmissions(): Promise<PaymentSubmissionWithReceiptUrl[]> {
     return apiJson<PaymentSubmissionWithReceiptUrl[]>("/api/payments/admin/submissions");
   },
+
+  async getPaymentHistory(userId: string, options?: {
+    status?: PaymentSubmissionStatus;
+    limit?: number;
+    offset?: number;
+  }): Promise<{
+    submissions: PaymentSubmissionWithReceiptUrl[];
+    total: number;
+    userId: string;
+    filters: {
+      status?: string;
+      limit?: number;
+      offset?: number;
+    };
+  }> {
+    const params = new URLSearchParams({ userId });
+    
+    if (options?.status) {
+      params.append('status', options.status);
+    }
+    
+    if (options?.limit) {
+      params.append('limit', options.limit.toString());
+    }
+    
+    if (options?.offset) {
+      params.append('offset', options.offset.toString());
+    }
+
+    return apiJson(`/api/payments/history?${params.toString()}`);
+  },
 };

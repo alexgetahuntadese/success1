@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 
@@ -70,32 +72,33 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     ([_, config]) => config.theme || config.color
   )
 
-  if (!colorConfig.length) {
-    return null
-  }
+  React.useEffect(() => {
+    if (!colorConfig.length) return
 
-  return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
-  })
-  .join("\n")}
-}
-`
-          )
-          .join("\n"),
-      }}
-    />
-  )
+    const chartElement = document.querySelector(`[data-chart="${id}"]`)
+    if (!chartElement) return
+
+    colorConfig.forEach(([key, itemConfig]) => {
+      const lightColor = itemConfig.theme?.light || itemConfig.color
+      const darkColor = itemConfig.theme?.dark
+
+      if (lightColor) {
+        chartElement.style.setProperty(`--color-${key}`, lightColor)
+      }
+      if (darkColor) {
+        // Set dark mode color via data attribute or class
+        const darkElements = document.querySelectorAll('.dark')
+        darkElements.forEach(el => {
+          const darkChart = el.querySelector(`[data-chart="${id}"]`)
+          if (darkChart) {
+            (darkChart as HTMLElement).style.setProperty(`--color-${key}`, darkColor)
+          }
+        })
+      }
+    })
+  }, [id, config, colorConfig])
+
+  return null
 }
 
 const ChartTooltip = RechartsPrimitive.Tooltip

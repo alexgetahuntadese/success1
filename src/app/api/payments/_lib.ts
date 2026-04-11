@@ -1,4 +1,5 @@
 import type { PaymentSubmission } from "@/lib/firebase/types";
+import sharp from "sharp";
 
 const APP_ID = process.env.BACK4APP_APP_ID || process.env.VITE_BACK4APP_APP_ID;
 const JS_KEY = process.env.BACK4APP_JS_KEY || process.env.VITE_BACK4APP_JS_KEY;
@@ -26,7 +27,10 @@ type ParseObject = {
     className: "_User";
     objectId: string;
   } | null;
-  submittedAt?: string;
+  submittedAt?: {
+    __type: "Date";
+    iso: string;
+  } | string;
   amount: number;
   bankName: string;
   status: string;
@@ -55,19 +59,52 @@ const getHeaders = (useMasterKey = false): Record<string, string> => {
   return headers;
 };
 
+const convertImageToJpg = async (base64DataUrl: string): Promise<string> => {
+  // If it's already a JPG, return as-is
+  if (base64DataUrl.startsWith('data:image/jpeg') || base64DataUrl.startsWith('data:image/jpg')) {
+    return base64DataUrl;
+  }
+
+  try {
+    // Extract the base64 data
+    const base64 = base64DataUrl.replace(/^data:[^;]+;base64,/, "");
+    const imageBuffer = Buffer.from(base64, "base64");
+    
+    // Use Sharp to convert to JPEG with good quality
+    const jpgBuffer = await sharp(imageBuffer)
+      .jpeg({ quality: 90, progressive: true })
+      .toBuffer();
+    
+    // Convert back to base64 data URL
+    const jpgBase64 = `data:image/jpeg;base64,${jpgBuffer.toString('base64')}`;
+    
+    return jpgBase64;
+  } catch (error) {
+    console.error("Failed to convert image to JPG:", error);
+    // Fallback to original if conversion fails
+    return base64DataUrl;
+  }
+};
+
 export const uploadReceiptToBack4App = async (
   fileName: string,
   contentType: string,
   base64DataUrl: string
 ) => {
   ensureConfig();
-  const base64 = base64DataUrl.replace(/^data:[^;]+;base64,/, "");
+  
+  // Convert image to JPG format
+  const jpgDataUrl = await convertImageToJpg(base64DataUrl);
+  const base64 = jpgDataUrl.replace(/^data:[^;]+;base64,/, "");
   const bytes = Buffer.from(base64, "base64");
 
+  // Always save as JPG with .jpg extension
+  const jpgFileName = fileName.replace(/\.[^/.]+$/, ".jpg");
+  
   const headers = getHeaders(true); // Use Master Key for file upload
-  headers["Content-Type"] = contentType || "application/octet-stream";
+  headers["Content-Type"] = "image/jpeg";
 
-  const response = await fetch(new URL(`/files/${encodeURIComponent(fileName)}`, SERVER_URL).toString(), {
+  const response = await fetch(new URL(`/files/${encodeURIComponent(jpgFileName)}`, SERVER_URL).toString(), {
     method: "POST",
     headers,
     body: bytes,
@@ -138,7 +175,7 @@ export const mapParseSubmission = (item: ParseObject): PaymentSubmission & { rec
   receipt_url: item.receiptUrl || null,
   receipt_content_type: null,
   receipt_size_bytes: null,
-  submitted_at: item.submittedAt || item.createdAt || new Date().toISOString(),
+  submitted_at: (typeof item.submittedAt === "object" ? item.submittedAt?.iso : item.submittedAt) || item.createdAt || new Date().toISOString(),
   verified_at: null,
   reviewer_notes: null,
   submitter_notes: item.submitterNotes || null,

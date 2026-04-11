@@ -42,7 +42,10 @@ export async function POST(request: NextRequest) {
       paymentMethod,
       status: "pending",
       receiptUrl: receiptDataUrl,
-      submittedAt: new Date().toISOString(),
+      submittedAt: {
+        __type: "Date",
+        iso: new Date().toISOString(),
+      },
       submitterNotes: submitterNotes || null,
     });
 
@@ -65,7 +68,10 @@ export async function POST(request: NextRequest) {
         paymentMethod,
         status: "pending",
         receiptUrl: receiptDataUrl,
-        submittedAt: new Date().toISOString(),
+        submittedAt: {
+        __type: "Date",
+        iso: new Date().toISOString(),
+      },
         submitterNotes: submitterNotes || null,
       })
     );
