@@ -46,6 +46,8 @@ const WebRtcPage = lazy(() => import("./screens/WebRtcPage"));
 const HostPage = lazy(() => import("./screens/HostPage"));
 const JoinPage = lazy(() => import("./screens/JoinPage"));
 const SessionPage = lazy(() => import("./screens/SessionPage"));
+const MatricStudyRoomPage = lazy(() => import("./screens/MatricStudyRoomPage"));
+const MatricExamSessionPage = lazy(() => import("./screens/MatricExamSessionPage"));
 
 
 const queryClient = new QueryClient({

@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { BeautifulLoader } from "@/components/BeautifulLoader";
 import { toast } from "sonner";
 import { getMatricYears, getMatricStreamsForYear, getMatricSubjectsForYear } from "@/data/matricExams";
+import { socketService } from "@/lib/socket";
 
 interface Room {
   id: string;
@@ -47,15 +48,30 @@ const MatricStudyRoomPage = () => {
 
   const years = getMatricYears();
   const streams = selectedYear ? getMatricStreamsForYear(selectedYear) : [];
-  const subjects = selectedYear ? getMatricSubjectsForYear(selectedYear) : [];
+  const subjects = selectedYear && selectedStream ? getMatricSubjectsForYear(selectedYear, selectedStream) : [];
 
   useEffect(() => {
-    if (roomId) {
-      // Join existing room
-      joinRoom(roomId);
-    } else {
-      setLoading(false);
-    }
+    const initializeSocket = async () => {
+      try {
+        await socketService.connect();
+        
+        if (roomId) {
+          // Join existing room
+          joinRoom(roomId);
+        } else {
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Socket connection failed:', error);
+        setLoading(false);
+      }
+    };
+
+    initializeSocket();
+
+    return () => {
+      socketService.disconnect();
+    };
   }, [roomId]);
 
   useEffect(() => {
@@ -152,7 +168,7 @@ const MatricStudyRoomPage = () => {
       const updatedRoom = {
         ...room,
         year: selectedYear,
-        stream: stream.key,
+        stream: selectedStream,
         subject: subject.subject
       };
       setRoom(updatedRoom);

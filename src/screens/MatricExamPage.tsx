@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Calendar, BookOpen, Clock, TrendingUp, Award, Sparkles } from 'lucide-react';
+import { ArrowLeft, Calendar, BookOpen, Clock, TrendingUp, Award, Sparkles, Users } from 'lucide-react';
 import TopBar from '@/components/TopBar';
 import StarField from '@/components/StarField';
 import { getMatricStreamsForYear, getMatricYears } from '@/data/matricExams';
@@ -44,12 +44,11 @@ const MatricExamPage = () => {
             <p className="text-white/50 text-sm">Practice with authentic past exam questions by year</p>
           </div>
           <Button
-            variant="ghost"
-            size="icon"
             onClick={() => navigate('/matric/room')}
-            className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
+            className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-semibold px-6 py-2 rounded-full shadow-lg hover:shadow-emerald-500/25 transition-all duration-300"
           >
-            <Users className="h-5 w-5" />
+            <Users className="mr-2 h-5 w-5" />
+            Create Room
           </Button>
         </div>
 

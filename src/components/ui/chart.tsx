@@ -73,7 +73,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   )
 
   React.useEffect(() => {
-    if (!colorConfig.length) return
+    if (!colorConfig.length || typeof window === 'undefined') return
 
     const chartElement = document.querySelector(`[data-chart="${id}"]`)
     if (!chartElement) return
