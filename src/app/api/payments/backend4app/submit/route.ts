@@ -34,7 +34,11 @@ export async function POST(request: NextRequest) {
     }
 
     const created = await createSubmission({
-      userId,
+      user: {
+        __type: "Pointer",
+        className: "_User",
+        objectId: userId,
+      },
       userName: userName || null,
       userPhone: userPhone || null,
       amount: Number(amount),
@@ -42,16 +46,15 @@ export async function POST(request: NextRequest) {
       accountNumber,
       transactionRef,
       paymentMethod,
-      status: "backend4app_pending",
-      receiptPath: receipt?.name || null,
+      status: "pending",
       receiptUrl: receipt?.url || null,
-      receiptContentType: receiptContentType || null,
-      receiptSizeBytes: receiptBase64 ? receiptBase64.length : null,
+      receiptFile: receipt ? {
+        __type: "File",
+        name: receipt.name,
+        url: receipt.url,
+      } : null,
       submittedAt: new Date().toISOString(),
-      reviewerNotes: null,
       submitterNotes: submitterNotes || null,
-      verifiedAt: null,
-      verifiedBy: null,
     });
 
     return NextResponse.json(
@@ -59,7 +62,11 @@ export async function POST(request: NextRequest) {
         objectId: created.objectId,
         createdAt: created.createdAt,
         updatedAt: created.createdAt,
-        userId,
+        user: {
+          __type: "Pointer",
+          className: "_User",
+          objectId: userId,
+        },
         userName: userName || null,
         userPhone: userPhone || null,
         amount: Number(amount),
@@ -67,16 +74,15 @@ export async function POST(request: NextRequest) {
         accountNumber,
         transactionRef,
         paymentMethod,
-        status: "backend4app_pending",
-        receiptPath: receipt?.name || null,
+        status: "pending",
         receiptUrl: receipt?.url || null,
-        receiptContentType: receiptContentType || null,
-        receiptSizeBytes: receiptBase64 ? receiptBase64.length : null,
+        receiptFile: receipt ? {
+          __type: "File",
+          name: receipt.name,
+          url: receipt.url,
+        } : null,
         submittedAt: new Date().toISOString(),
-        reviewerNotes: null,
         submitterNotes: submitterNotes || null,
-        verifiedAt: null,
-        verifiedBy: null,
       })
     );
   } catch (error) {

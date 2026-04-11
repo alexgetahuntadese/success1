@@ -13,9 +13,8 @@ export async function POST(request: NextRequest) {
 
     const existing = await getSubmission(paymentId);
     await updateSubmission(paymentId, {
-      status: "backend4app_rejected",
-      reviewerNotes: reason || null,
-      verifiedAt: new Date().toISOString(),
+      status: "rejected",
+      submitterNotes: reason || existing.submitterNotes || null,
     });
 
     const updated = await getSubmission(paymentId);
