@@ -68,18 +68,17 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     let active = true;
+    setIsLoading(true);
 
-    const bootstrap = async () => {
+    const unsubscribe = authService.onAuthStateChanged(async (nextState) => {
       try {
-        const session = await authService.getSession();
-        
         if (!active) {
           return;
         }
 
-        if (session?.session && session?.profile) {
-          await applyUserData(session.session, session.profile);
-          checkInactiveAccount(session.profile);
+        if (nextState.session && nextState.profile) {
+          await applyUserData(nextState.session, nextState.profile);
+          checkInactiveAccount(nextState.profile);
         } else {
           clearAuthState();
         }
@@ -89,12 +88,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           clearAuthState();
         }
       }
-    };
-
-    bootstrap();
+    });
 
     return () => {
       active = false;
+      unsubscribe();
     };
   }, [clearAuthState, applyUserData, checkInactiveAccount]);
 
@@ -170,7 +168,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         clearAuthState();
       }
     },
-  }), [user, profile, isLoading, clearAuthState, applyUserData, checkInactiveAccount]);
+  }), [session, user, profile, isLoading, clearAuthState, applyUserData, checkInactiveAccount]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

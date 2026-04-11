@@ -11,6 +11,7 @@ import { Loader2, Eye, EyeOff } from "lucide-react";
 const SignUpPage = () => {
   const navigate = useNavigate();
   const { register, isLoading } = useAuth();
+  const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -19,8 +20,8 @@ const SignUpPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!phone || !password) {
-      toast.error("Please fill in mobile and password");
+    if (!fullName.trim() || !phone || !password) {
+      toast.error("Please fill in your name, mobile number, and password");
       return;
     }
 
@@ -35,7 +36,7 @@ const SignUpPage = () => {
     }
 
     try {
-      await register({ phone, password });
+      await register({ fullName: fullName.trim(), phone, password });
       toast.success("Account created successfully!");
       navigate("/grades");
     } catch (error: any) {
@@ -54,6 +55,18 @@ const SignUpPage = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="fullName" className="text-white">Full Name</Label>
+              <Input
+                id="fullName"
+                type="text"
+                placeholder="Your full name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                required
+              />
+            </div>
             <div className="space-y-2">
               <Label htmlFor="phone" className="text-white">Mobile Number</Label>
               <Input

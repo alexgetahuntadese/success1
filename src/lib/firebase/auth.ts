@@ -1,8 +1,10 @@
 import type { User as FirebaseUser } from "firebase/auth";
 import {
+  browserLocalPersistence,
   createUserWithEmailAndPassword,
   getIdTokenResult,
   onAuthStateChanged,
+  setPersistence,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   updateEmail,
@@ -14,7 +16,6 @@ import {
   doc,
   getDoc,
   getDocs,
-  serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -24,11 +25,25 @@ import type { AppSession, Json, UserProfile, RegisterInput, UpdateProfileInput }
 
 const USERS_COLLECTION = "users";
 const PHONE_EMAIL_DOMAIN = "simple-road.firebaseapp.local";
+let authInitializationPromise: Promise<void> | null = null;
 
 const requireFirebase = () => {
   if (!firebaseReady || !auth || !firestore) {
     throw new Error(firebaseConfigError || "Firebase is not configured.");
   }
+};
+
+const ensureAuthInitialized = async () => {
+  requireFirebase();
+
+  if (!authInitializationPromise) {
+    authInitializationPromise = setPersistence(auth!, browserLocalPersistence).catch((error) => {
+      authInitializationPromise = null;
+      throw error;
+    });
+  }
+
+  await authInitializationPromise;
 };
 
 export const normalizePhoneNumber = (phone: string) => phone.trim().replace(/[^\d+]/g, "");
@@ -170,12 +185,12 @@ export const userService = {
 
 export const authService = {
   async getCurrentUser() {
-    requireFirebase();
+    await ensureAuthInitialized();
     return auth.currentUser;
   },
 
   async getSession() {
-    requireFirebase();
+    await ensureAuthInitialized();
     const currentUser = auth.currentUser;
     if (!currentUser) {
       return { session: null, profile: null };
@@ -188,7 +203,7 @@ export const authService = {
   },
 
   async signIn(input: { phone: string; password: string }) {
-    requireFirebase();
+    await ensureAuthInitialized();
     const credential = await signInWithEmailAndPassword(auth!, phoneToEmail(input.phone), input.password);
     const profile = await userProfileService.getUserProfile(credential.user.uid);
     if (profile) {
@@ -198,7 +213,7 @@ export const authService = {
   },
 
   async register(input: RegisterInput) {
-    requireFirebase();
+    await ensureAuthInitialized();
     const email = phoneToEmail(input.phone);
     const credential = await createUserWithEmailAndPassword(auth!, email, input.password);
 
@@ -229,7 +244,7 @@ export const authService = {
   },
 
   async updateProfile(input: UpdateProfileInput) {
-    requireFirebase();
+    await ensureAuthInitialized();
     const currentUser = auth.currentUser;
     if (!currentUser) {
       throw new Error("User not authenticated");
@@ -262,8 +277,27 @@ export const authService = {
   },
 
   async signOut() {
-    requireFirebase();
+    await ensureAuthInitialized();
     await firebaseSignOut(auth!);
+  },
+
+  onAuthStateChanged(
+    callback: (value: { session: AppSession | null; profile: UserProfile | null }) => void | Promise<void>,
+  ) {
+    requireFirebase();
+
+    void ensureAuthInitialized();
+
+    return onAuthStateChanged(auth!, async (currentUser) => {
+      if (!currentUser) {
+        await callback({ session: null, profile: null });
+        return;
+      }
+
+      const session = await mapFirebaseUserToSession(currentUser);
+      const profile = await userProfileService.getUserProfile(currentUser.uid);
+      await callback({ session, profile });
+    });
   },
 };
 
@@ -284,4 +318,3 @@ export const formatAuthError = (error: unknown) => {
   const message = error instanceof Error ? error.message : String(error);
   return message || "An unexpected auth error occurred.";
 };
-
