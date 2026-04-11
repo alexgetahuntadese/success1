@@ -69,7 +69,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const bootstrap = async () => {
       try {
-        const session = await parseAuthService.getSession();
+        const session = await authService.getSession();
         
         if (!active) {
           return;
@@ -108,7 +108,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     displayName: getProfileDisplayName(profile, user),
     refreshProfile: async () => {
       try {
-        const session = await parseAuthService.getSession();
+        const session = await authService.getSession();
         if (session?.session && session?.profile) {
           return await applyUserData(session.session, session.profile);
         }
@@ -120,7 +120,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     signIn: async (phone: string, password: string) => {
       try {
-        const session = await parseAuthService.signIn({ phone, password });
+        const session = await authService.signIn({ phone, password });
         if (session?.session && session?.profile) {
           const userProfile = await applyUserData(session.session, session.profile);
           checkInactiveAccount(userProfile);
@@ -134,7 +134,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     register: async (input: RegisterInput) => {
       try {
-        const session = await parseAuthService.register(input);
+        const session = await authService.register(input);
         if (session?.session && session?.profile) {
           const userProfile = await applyUserData(session.session, session.profile);
           checkInactiveAccount(userProfile);
@@ -148,7 +148,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     updateProfile: async (input: UpdateProfileInput) => {
       try {
-        const session = await parseAuthService.updateProfile(input);
+        const session = await authService.updateProfile(input);
         if (session?.session && session?.profile) {
           const userProfile = await applyUserData(session.session, session.profile);
           return userProfile;
@@ -161,7 +161,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     signOut: async () => {
       try {
-        await parseAuthService.signOut();
+        await authService.signOut();
         clearAuthState();
       } catch (error) {
         console.error("Sign out error:", error);

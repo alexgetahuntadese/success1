@@ -12,8 +12,13 @@ export type {
   AppSession,
   Json,
   PaymentSubmission,
+  PaymentSubmissionWithReceiptUrl,
   QuestionDataPayload,
   SavedQuestion,
   SearchHistory,
   UserProfile,
 } from "@/lib/firebase/types";
+export type {
+  PaymentMethod,
+  PaymentSubmissionStatus,
+} from "@/lib/firebase/payments";

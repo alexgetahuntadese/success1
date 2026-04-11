@@ -19,10 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
-import {
-  parsePaymentService,
-  type ParsePaymentSubmission,
-} from "@/integrations/parse/parsePayments";
+import { paymentService, type PaymentSubmissionWithReceiptUrl } from "@/services/firebaseService";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -72,7 +69,7 @@ const PaymentPage = () => {
   const [transactionRef, setTransactionRef] = useState("");
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [notes, setNotes] = useState("");
-  const [submissions, setSubmissions] = useState<ParsePaymentSubmission[]>([]);
+  const [submissions, setSubmissions] = useState<PaymentSubmissionWithReceiptUrl[]>([]);
   const [isLoadingSubmissions, setIsLoadingSubmissions] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -112,7 +109,7 @@ const PaymentPage = () => {
 
   const refreshSubmissions = async () => {
     try {
-      const items = await parsePaymentService.listOwnSubmissions();
+      const items = await paymentService.listOwnSubmissions();
       setSubmissions(items);
     } catch (error) {
       console.error("Failed to refresh submissions:", error);
@@ -126,7 +123,7 @@ const PaymentPage = () => {
       setIsLoadingSubmissions(true);
 
       try {
-        const items = await parsePaymentService.listOwnSubmissions();
+        const items = await paymentService.listOwnSubmissions();
         if (active) {
           setSubmissions(items);
         }
@@ -164,7 +161,7 @@ const PaymentPage = () => {
     setIsSubmitting(true);
 
     try {
-      await parsePaymentService.submitPayment({
+      await paymentService.submitPayment({
         amount: Number(PAYMENT_AMOUNT_BIRR),
         bankName: currentChannel.label,
         accountNumber: currentChannel.accountNumber,

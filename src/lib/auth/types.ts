@@ -1,4 +1,6 @@
-export type AuthPreferences = Record<string, unknown> | null;
+import type { Json } from "@/lib/firebase/types";
+
+export type AuthPreferences = Json | null;
 
 export type AuthUser = {
   id: string;

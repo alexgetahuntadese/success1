@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Sparkles, Loader2, ChevronRight, RotateCcw, GraduationCap, Banknote, Brain, TrendingUp } from 'lucide-react';
 import { simulatorCareers, SimulatorCareer } from '@/lib/careerSimulatorData';
-import { careerSimulatorService } from '@/services/supabaseServiceFixed';
+import { careerSimulatorService } from '@/services/firebaseService';
+import type { CareerStage } from '@/lib/firebase/functions';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/i18n/LanguageContext';
 import TopBar from "@/components/TopBar";
@@ -31,7 +32,7 @@ const CareerSimulatorPage = () => {
   const [previousChoices, setPreviousChoices] = useState<string[]>([]);
   const [scenarioCount, setScenarioCount] = useState(0);
 
-  const callSimulator = async (stageType: string, career: SimulatorCareer, choices: string[] = []) => {
+  const callSimulator = async (stageType: CareerStage, career: SimulatorCareer, choices: string[] = []) => {
     const data = await careerSimulatorService.invoke({
       career,
       stage: stageType,

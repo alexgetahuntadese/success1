@@ -17,11 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
-import {
-  parsePaymentService,
-  type ParsePaymentSubmission,
-  type ParsePaymentSubmissionStatus,
-} from "@/integrations/parse/parsePayments";
+import { paymentAdminService, type PaymentSubmissionStatus, type PaymentSubmissionWithReceiptUrl } from "@/services/firebaseService";
 import { toast } from "sonner";
 
 const statusMeta = {
@@ -50,14 +46,14 @@ const statusMeta = {
 const AdminPaymentsPage = () => {
   const navigate = useNavigate();
   const { refreshProfile } = useAuth();
-  const [submissions, setSubmissions] = useState<ParsePaymentSubmission[]>([]);
+  const [submissions, setSubmissions] = useState<PaymentSubmissionWithReceiptUrl[]>([]);
   const [reviewNotes, setReviewNotes] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [reviewingSubmissionId, setReviewingSubmissionId] = useState<string | null>(null);
 
   const refreshSubmissions = async () => {
     try {
-      const items = await parsePaymentService.listAllSubmissions();
+      const items = await paymentAdminService.listAllSubmissions();
       setSubmissions(items);
     } catch (error) {
       console.error("Failed to refresh admin payment submissions:", error);
@@ -72,14 +68,14 @@ const AdminPaymentsPage = () => {
       setIsLoading(true);
 
       try {
-        const items = await parsePaymentService.listAllSubmissions();
+        const items = await paymentAdminService.listAllSubmissions();
         if (active) {
           setSubmissions(items);
         }
       } catch (error) {
         if (active) {
           console.error("Failed to load admin payment submissions:", error);
-          toast.error("Could not load payment submissions from Back4App.");
+          toast.error("Could not load payment submissions from Firebase.");
         }
       } finally {
         if (active) {
@@ -97,13 +93,13 @@ const AdminPaymentsPage = () => {
 
   const handleReview = async (
     submissionId: string,
-    status: ParsePaymentSubmissionStatus,
+    status: PaymentSubmissionStatus,
   ) => {
     setReviewingSubmissionId(submissionId);
 
     try {
-      await parsePaymentService.reviewSubmission({
-        submissionId,
+      await paymentAdminService.reviewSubmission({
+        submission: submissions.find((item) => item.id === submissionId)!,
         status,
         reviewerNotes: reviewNotes[submissionId] || "",
       });
@@ -140,7 +136,7 @@ const AdminPaymentsPage = () => {
           <div className="flex-1">
             <h1 className="text-3xl md:text-4xl font-bold text-white">Admin Payment Approvals</h1>
             <p className="text-white/55 text-sm">
-              Review payment receipts stored on Back4App and unlock student access.
+              Review payment receipts stored on Firebase and unlock student access.
             </p>
           </div>
           <Badge className="bg-cyan-500/15 text-cyan-100 border-cyan-400/30">
@@ -173,7 +169,7 @@ const AdminPaymentsPage = () => {
           <CardHeader>
             <CardTitle className="text-white">Approval Queue</CardTitle>
             <CardDescription className="text-white/60">
-              All payment submissions stored in Back4App.
+              All payment submissions stored in Firebase.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -279,7 +275,7 @@ const AdminPaymentsPage = () => {
                           {submission.status === "pending" && (
                             <div className="flex items-start gap-2 rounded-xl border border-amber-400/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-100">
                               <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
-                              Approval here updates the student's Back4App profile and unlocks premium access.
+                              Approval here updates the student's Firebase profile and unlocks premium access.
                             </div>
                           )}
                         </div>
