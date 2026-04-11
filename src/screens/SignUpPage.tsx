@@ -7,6 +7,11 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Loader2, Eye, EyeOff } from "lucide-react";
+import {
+  formatAuthError,
+  isPhoneAlreadyRegisteredError,
+  normalizePhoneNumber,
+} from "@/services/firebaseService";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -19,8 +24,9 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const normalizedPhone = normalizePhoneNumber(phone);
     
-    if (!fullName.trim() || !phone || !password) {
+    if (!fullName.trim() || !normalizedPhone || !password) {
       toast.error("Please fill in your name, mobile number, and password");
       return;
     }
@@ -36,11 +42,17 @@ const SignUpPage = () => {
     }
 
     try {
-      await register({ fullName: fullName.trim(), phone, password });
+      await register({ fullName: fullName.trim(), phone: normalizedPhone, password });
       toast.success("Account created successfully!");
       navigate("/grades");
-    } catch (error: any) {
-      toast.error(error.message || "Failed to create account");
+    } catch (error: unknown) {
+      if (isPhoneAlreadyRegisteredError(error)) {
+        toast.error("This mobile number is already registered. Please sign in instead.");
+        navigate("/login", { state: { from: "/signup", phone: normalizedPhone } });
+        return;
+      }
+
+      toast.error(formatAuthError(error));
     }
   };
 

@@ -15,6 +15,28 @@ const requireFirebase = () => {
   }
 };
 
+const formatPaymentError = (error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error);
+
+  if (message.includes("storage/unauthorized") || message.includes("permission-denied")) {
+    return "Payment receipt upload is blocked by Firebase permissions. Please try again in a moment.";
+  }
+
+  if (message.includes("storage/invalid-format")) {
+    return "Only image receipts are allowed.";
+  }
+
+  if (message.includes("storage/quota-exceeded")) {
+    return "Storage quota was exceeded. Please contact support.";
+  }
+
+  if (message.includes("storage/retry-limit-exceeded")) {
+    return "Receipt upload timed out. Please try again.";
+  }
+
+  return message || "Payment submission failed.";
+};
+
 export type PaymentSubmissionStatus = "pending" | "verified" | "rejected" | "approved";
 export type PaymentMethod = "cbe" | "telebirr";
 
@@ -99,15 +121,19 @@ export const paymentService = {
       throw new Error("User not authenticated");
     }
 
-    const snapshot = await getDocs(query(
-      collection(firestore!, PAYMENT_SUBMISSIONS_COLLECTION),
-      where("user_id", "==", user.uid),
-    ));
-    const submissions = snapshot.docs
-      .map((entry) => entry.data() as PaymentSubmission)
-      .sort((a, b) => new Date(b.submitted_at).getTime() - new Date(a.submitted_at).getTime());
+    try {
+      const snapshot = await getDocs(query(
+        collection(firestore!, PAYMENT_SUBMISSIONS_COLLECTION),
+        where("user_id", "==", user.uid),
+      ));
+      const submissions = snapshot.docs
+        .map((entry) => entry.data() as PaymentSubmission)
+        .sort((a, b) => new Date(b.submitted_at).getTime() - new Date(a.submitted_at).getTime());
 
-    return withReceiptUrls(submissions);
+      return withReceiptUrls(submissions);
+    } catch (error) {
+      throw new Error(formatPaymentError(error));
+    }
   },
 
   async submitPayment(input: CreatePaymentSubmissionInput): Promise<PaymentSubmissionWithReceiptUrl> {
@@ -117,53 +143,57 @@ export const paymentService = {
       throw new Error("User not authenticated");
     }
 
-    const uploadedReceipt = await uploadReceipt(user.uid, input.receiptFile);
-    const currentProfile = await userProfileService.getUserProfile(user.uid);
-    const submissionId = `${user.uid}_${Date.now()}`;
+    try {
+      const uploadedReceipt = await uploadReceipt(user.uid, input.receiptFile);
+      const currentProfile = await userProfileService.getUserProfile(user.uid);
+      const submissionId = `${user.uid}_${Date.now()}`;
 
-    const submission: PaymentSubmission = {
-      id: submissionId,
-      user_id: user.uid,
-      user_name: currentProfile?.name || user.displayName || user.email || null,
-      user_phone: currentProfile?.phone || currentProfile?.mobile || user.phoneNumber || null,
-      amount: input.amount,
-      bank_name: input.bankName.trim(),
-      account_number: input.accountNumber.trim(),
-      transaction_ref: input.transactionRef.trim(),
-      payment_method: input.paymentMethod,
-      status: "pending",
-      receipt_path: uploadedReceipt.receiptPath,
-      receipt_url: null,
-      receipt_content_type: uploadedReceipt.receiptContentType,
-      receipt_size_bytes: uploadedReceipt.receiptSizeBytes,
-      submitted_at: new Date().toISOString(),
-      verified_at: null,
-      reviewer_notes: null,
-      submitter_notes: input.submitterNotes?.trim() || null,
-      verified_by: null,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
+      const submission: PaymentSubmission = {
+        id: submissionId,
+        user_id: user.uid,
+        user_name: currentProfile?.name || user.displayName || user.email || null,
+        user_phone: currentProfile?.phone || currentProfile?.mobile || user.phoneNumber || null,
+        amount: input.amount,
+        bank_name: input.bankName.trim(),
+        account_number: input.accountNumber.trim(),
+        transaction_ref: input.transactionRef.trim(),
+        payment_method: input.paymentMethod,
+        status: "pending",
+        receipt_path: uploadedReceipt.receiptPath,
+        receipt_url: null,
+        receipt_content_type: uploadedReceipt.receiptContentType,
+        receipt_size_bytes: uploadedReceipt.receiptSizeBytes,
+        submitted_at: new Date().toISOString(),
+        verified_at: null,
+        reviewer_notes: null,
+        submitter_notes: input.submitterNotes?.trim() || null,
+        verified_by: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
 
-    await setDoc(paymentDoc(submission.id), submission);
+      await setDoc(paymentDoc(submission.id), submission);
 
-    if (currentProfile && !hasPremiumPreferences(currentProfile.preferences)) {
-      const nextPreferences = setPremiumAccess(currentProfile.preferences, {
-        premium: false,
-        paymentStatus: "pending",
-        paymentSubmissionId: submission.id,
-      });
+      if (currentProfile && !hasPremiumPreferences(currentProfile.preferences)) {
+        const nextPreferences = setPremiumAccess(currentProfile.preferences, {
+          premium: false,
+          paymentStatus: "pending",
+          paymentSubmissionId: submission.id,
+        });
 
-      await userProfileService.upsertProfile({
-        ...currentProfile,
-        preferences: nextPreferences,
-      });
+        await userProfileService.upsertProfile({
+          ...currentProfile,
+          preferences: nextPreferences,
+        });
+      }
+
+      return {
+        ...submission,
+        receiptUrl: await createReceiptUrl(submission.receipt_path),
+      };
+    } catch (error) {
+      throw new Error(formatPaymentError(error));
     }
-
-    return {
-      ...submission,
-      receiptUrl: await createReceiptUrl(submission.receipt_path),
-    };
   },
 };
 

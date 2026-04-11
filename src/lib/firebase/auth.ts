@@ -7,7 +7,6 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
-  updateEmail,
   updateProfile as firebaseUpdateProfile,
 } from "firebase/auth";
 import {
@@ -26,6 +25,7 @@ import type { AppSession, Json, UserProfile, RegisterInput, UpdateProfileInput }
 const USERS_COLLECTION = "users";
 const PHONE_EMAIL_DOMAIN = "simple-road.firebaseapp.local";
 let authInitializationPromise: Promise<void> | null = null;
+let firestoreAvailable = true;
 
 const requireFirebase = () => {
   if (!firebaseReady || !auth || !firestore) {
@@ -48,14 +48,42 @@ const ensureAuthInitialized = async () => {
 
 export const normalizePhoneNumber = (phone: string) => phone.trim().replace(/[^\d+]/g, "");
 
-const phoneToEmail = (phone: string) => `${normalizePhoneNumber(phone).replace(/[^\d]/g, "")}@${PHONE_EMAIL_DOMAIN}`;
+const sanitizePhoneDigits = (phone: string) => normalizePhoneNumber(phone).replace(/[^\d]/g, "");
+
+const phoneToEmail = (phone: string) => `${sanitizePhoneDigits(phone)}@${PHONE_EMAIL_DOMAIN}`;
+
+const emailToPhone = (email: string | null | undefined) => {
+  if (!email) {
+    return "";
+  }
+
+  const suffix = `@${PHONE_EMAIL_DOMAIN}`;
+  return email.endsWith(suffix) ? email.slice(0, -suffix.length) : "";
+};
+
+const isInternalPhoneEmail = (email: string | null | undefined) =>
+  Boolean(email && email.endsWith(`@${PHONE_EMAIL_DOMAIN}`));
+
+const sanitizeProfileEmail = (email: string | null | undefined) =>
+  isInternalPhoneEmail(email) ? null : email?.trim() || null;
+
+const isFirestoreUnavailableError = (error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error);
+  return message.includes("Database '(default)' not found");
+};
+
+const markFirestoreUnavailable = (error: unknown) => {
+  if (isFirestoreUnavailableError(error)) {
+    firestoreAvailable = false;
+  }
+};
 
 const blankProfile = (authId: string, phone: string, email: string | null): UserProfile => ({
   id: authId,
   auth_id: authId,
   name: null,
   mobile: phone,
-  email,
+  email: sanitizeProfileEmail(email),
   phone,
   grade: null,
   school: null,
@@ -71,15 +99,24 @@ const blankProfile = (authId: string, phone: string, email: string | null): User
 
 const userDoc = (userId: string) => doc(firestore!, USERS_COLLECTION, userId);
 
-const mapFirebaseUserToAuthUser = (user: FirebaseUser) => ({
-  id: user.uid,
-  phone: user.phoneNumber || user.displayName || "",
-  email: user.email,
-  user_metadata: {
-    name: user.displayName || null,
-    mobile: user.phoneNumber || null,
-  },
-});
+const fallbackProfileFromUser = (user: FirebaseUser): UserProfile => {
+  const resolvedPhone = user.phoneNumber || emailToPhone(user.email) || "";
+  return blankProfile(user.uid, resolvedPhone, sanitizeProfileEmail(user.email));
+};
+
+const mapFirebaseUserToAuthUser = (user: FirebaseUser) => {
+  const resolvedPhone = user.phoneNumber || emailToPhone(user.email) || "";
+
+  return {
+    id: user.uid,
+    phone: resolvedPhone,
+    email: user.email,
+    user_metadata: {
+      name: user.displayName || null,
+      mobile: resolvedPhone || null,
+    },
+  };
+};
 
 const mapFirebaseUserToSession = async (user: FirebaseUser): Promise<AppSession> => {
   const tokenResult = await getIdTokenResult(user, false);
@@ -93,19 +130,46 @@ const mapFirebaseUserToSession = async (user: FirebaseUser): Promise<AppSession>
 
 const readProfileSnapshot = async (userId: string) => {
   requireFirebase();
+  if (!firestoreAvailable) {
+    return null;
+  }
+
+  try {
   const snapshot = await getDoc(userDoc(userId));
   if (!snapshot.exists()) {
     return null;
   }
-  return snapshot.data() as UserProfile;
+  const profile = snapshot.data() as UserProfile;
+  return {
+    ...profile,
+    email: sanitizeProfileEmail(profile.email),
+  };
+  } catch (error) {
+    markFirestoreUnavailable(error);
+    if (isFirestoreUnavailableError(error)) {
+      return null;
+    }
+    throw error;
+  }
 };
 
 const saveProfile = async (profile: UserProfile) => {
   requireFirebase();
-  await setDoc(userDoc(profile.id), {
-    ...profile,
-    updated_at: new Date().toISOString(),
-  }, { merge: true });
+  if (!firestoreAvailable) {
+    return profile;
+  }
+
+  try {
+    await setDoc(userDoc(profile.id), {
+      ...profile,
+      updated_at: new Date().toISOString(),
+    }, { merge: true });
+  } catch (error) {
+    markFirestoreUnavailable(error);
+    if (!isFirestoreUnavailableError(error)) {
+      throw error;
+    }
+  }
   return profile;
 };
 
@@ -122,30 +186,67 @@ export const userProfileService = {
 
   async upsertProfile(profile: Partial<UserProfile> & { id: string; auth_id?: string | null }) {
     requireFirebase();
+    if (!firestoreAvailable) {
+      const now = new Date().toISOString();
+      return {
+        ...blankProfile(profile.id, profile.phone || "", profile.email || null),
+        ...profile,
+        auth_id: profile.auth_id ?? profile.id,
+        email: sanitizeProfileEmail(profile.email),
+        updated_at: now,
+        created_at: now,
+        last_login: now,
+        preferences: profile.preferences ?? ({ role: "student" } as Json),
+      } as UserProfile;
+    }
+
     const now = new Date().toISOString();
     const currentProfile = (await readProfileSnapshot(profile.id)) ?? blankProfile(profile.id, profile.phone || "", profile.email || null);
     const nextProfile: UserProfile = {
       ...currentProfile,
       ...profile,
       auth_id: profile.auth_id ?? currentProfile.auth_id,
+      email: sanitizeProfileEmail(profile.email ?? currentProfile.email),
       updated_at: now,
       created_at: currentProfile.created_at || now,
       last_login: profile.last_login ?? currentProfile.last_login,
       preferences: profile.preferences ?? currentProfile.preferences,
     };
 
-    await setDoc(userDoc(profile.id), nextProfile, { merge: true });
+    try {
+      await setDoc(userDoc(profile.id), nextProfile, { merge: true });
+    } catch (error) {
+      markFirestoreUnavailable(error);
+      if (isFirestoreUnavailableError(error)) {
+        return nextProfile;
+      }
+      throw error;
+    }
     return nextProfile;
   },
 
   async updateLastLogin(authId?: string) {
     requireFirebase();
+    if (!firestoreAvailable) {
+      return null;
+    }
+
     const targetUserId = authId || auth.currentUser?.uid;
     if (!targetUserId) {
       return null;
     }
 
-    const snapshot = await getDoc(userDoc(targetUserId));
+    let snapshot;
+    try {
+      snapshot = await getDoc(userDoc(targetUserId));
+    } catch (error) {
+      markFirestoreUnavailable(error);
+      if (isFirestoreUnavailableError(error)) {
+        return null;
+      }
+      throw error;
+    }
+
     if (!snapshot.exists()) {
       return null;
     }
@@ -157,7 +258,15 @@ export const userProfileService = {
       updated_at: new Date().toISOString(),
     };
 
-    await setDoc(userDoc(targetUserId), nextProfile, { merge: true });
+    try {
+      await setDoc(userDoc(targetUserId), nextProfile, { merge: true });
+    } catch (error) {
+      markFirestoreUnavailable(error);
+      if (isFirestoreUnavailableError(error)) {
+        return nextProfile;
+      }
+      throw error;
+    }
     return nextProfile;
   },
 };
@@ -197,7 +306,7 @@ export const authService = {
     }
 
     const session = await mapFirebaseUserToSession(currentUser);
-    const profile = await userProfileService.getUserProfile(currentUser.uid);
+    const profile = (await userProfileService.getUserProfile(currentUser.uid)) ?? fallbackProfileFromUser(currentUser);
 
     return { session, profile };
   },
@@ -205,7 +314,7 @@ export const authService = {
   async signIn(input: { phone: string; password: string }) {
     await ensureAuthInitialized();
     const credential = await signInWithEmailAndPassword(auth!, phoneToEmail(input.phone), input.password);
-    const profile = await userProfileService.getUserProfile(credential.user.uid);
+    const profile = (await userProfileService.getUserProfile(credential.user.uid)) ?? fallbackProfileFromUser(credential.user);
     if (profile) {
       await userProfileService.updateLastLogin(profile.id);
     }
@@ -214,20 +323,21 @@ export const authService = {
 
   async register(input: RegisterInput) {
     await ensureAuthInitialized();
-    const email = phoneToEmail(input.phone);
+    const normalizedPhone = normalizePhoneNumber(input.phone);
+    const email = phoneToEmail(normalizedPhone);
     const credential = await createUserWithEmailAndPassword(auth!, email, input.password);
 
     await firebaseUpdateProfile(credential.user, {
-      displayName: input.fullName?.trim() || input.phone,
+      displayName: input.fullName?.trim() || normalizedPhone,
     });
 
     const nextProfile = await userProfileService.upsertProfile({
       id: credential.user.uid,
       auth_id: credential.user.uid,
       name: input.fullName?.trim() || null,
-      mobile: input.phone.trim() || null,
-      email,
-      phone: normalizePhoneNumber(input.phone),
+      mobile: normalizedPhone || null,
+      email: null,
+      phone: normalizedPhone,
       is_active: true,
       preferences: { role: "student" } as Json,
       created_at: new Date().toISOString(),
@@ -250,10 +360,6 @@ export const authService = {
       throw new Error("User not authenticated");
     }
 
-    if (input.email && input.email !== currentUser.email) {
-      await updateEmail(currentUser, input.email);
-    }
-
     if (input.name) {
       await firebaseUpdateProfile(currentUser, { displayName: input.name });
     }
@@ -264,7 +370,7 @@ export const authService = {
       id: currentUser.uid,
       auth_id: currentUser.uid,
       name: input.name ?? currentProfile.name,
-      email: input.email ?? currentProfile.email,
+      email: sanitizeProfileEmail(input.email ?? currentProfile.email),
       grade: input.grade ?? currentProfile.grade,
       school: input.school ?? currentProfile.school,
       gender: input.gender ?? currentProfile.gender,
@@ -295,7 +401,7 @@ export const authService = {
       }
 
       const session = await mapFirebaseUserToSession(currentUser);
-      const profile = await userProfileService.getUserProfile(currentUser.uid);
+      const profile = (await userProfileService.getUserProfile(currentUser.uid)) ?? fallbackProfileFromUser(currentUser);
       await callback({ session, profile });
     });
   },
@@ -316,5 +422,27 @@ export const checkAuthStatus = async (): Promise<{ session: AppSession | null; p
 
 export const formatAuthError = (error: unknown) => {
   const message = error instanceof Error ? error.message : String(error);
+
+  if (message.includes("auth/invalid-credential")) {
+    return "Incorrect mobile number or password.";
+  }
+
+  if (message.includes("auth/email-already-in-use")) {
+    return "That mobile number is already registered.";
+  }
+
+  if (message.includes("auth/weak-password")) {
+    return "Password should be at least 6 characters.";
+  }
+
+  if (message.includes("auth/network-request-failed")) {
+    return "Network error. Check your internet connection and try again.";
+  }
+
   return message || "An unexpected auth error occurred.";
+};
+
+export const isPhoneAlreadyRegisteredError = (error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error);
+  return message.includes("auth/email-already-in-use");
 };

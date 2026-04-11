@@ -46,14 +46,14 @@ const ProfilePage = () => {
     const loadProfile = () => {
       const data = getPerformanceData(profileKey);
       setName(profile?.name || displayName || data.profile.student_name || '');
-      setEmail(profile?.email || user?.email || '');
+      setEmail(profile?.email || '');
       setGrade(profile?.grade || '');
       setSchool(profile?.school || '');
       setQuizCount(data.attempts.length);
     };
 
     loadProfile();
-  }, [displayName, isAuthenticated, profile?.email, profile?.grade, profileKey, profile?.name, profile?.school, user?.email]);
+  }, [displayName, isAuthenticated, profile?.email, profile?.grade, profileKey, profile?.name, profile?.school]);
 
   const handleSave = async () => {
     if (!name.trim()) {

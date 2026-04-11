@@ -2,6 +2,7 @@ export {
   authService,
   checkAuthStatus,
   formatAuthError,
+  isPhoneAlreadyRegisteredError,
   normalizePhoneNumber,
   userProfileService,
   userService,

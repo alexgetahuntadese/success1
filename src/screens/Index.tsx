@@ -1,652 +1,280 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Sparkles, TrendingUp, Award, Target, Zap, Shield, Crown, Star, GraduationCap, BookOpen } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  CheckCircle2,
+  FileText,
+  GraduationCap,
+  Library,
+  Mail,
+  Phone,
+  ShieldCheck,
+  Users,
+} from "lucide-react";
+
+const quickLinks = [
+  {
+    title: "Ethiopian textbooks",
+    description: "Browse grade-based digital textbooks for Grades 9 to 12.",
+    href: "/books",
+    icon: Library,
+  },
+  {
+    title: "Entrance exam practice",
+    description: "Review past-style EUEE and matric questions in one place.",
+    href: "/matric",
+    icon: FileText,
+  },
+  {
+    title: "Subject quizzes",
+    description: "Practice chapter quizzes and check progress by subject.",
+    href: "/grades",
+    icon: GraduationCap,
+  },
+];
+
+const trustPoints = [
+  "Focused on Ethiopian textbooks, quizzes, and entrance exam preparation.",
+  "Built around clearly labeled grade and subject sections instead of vague offers.",
+  "Includes direct contact details and real access paths for students.",
+  "Uses Firebase authentication and Firestore for account and learning data.",
+];
+
+const sections = [
+  {
+    title: "Textbooks by grade",
+    description:
+      "Find textbook collections organized for Grades 9, 10, 11, and 12 with subject-based navigation.",
+  },
+  {
+    title: "Exam preparation",
+    description:
+      "Practice Ethiopian University Entrance Exam and matric questions with a cleaner study flow.",
+  },
+  {
+    title: "Student progress",
+    description:
+      "Track quiz activity, profile details, and performance from one student account.",
+  },
+];
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
-        <div className="absolute bottom-20 left-1/2 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
+    <div className="min-h-screen bg-stone-100 text-slate-900">
+      <div className="relative overflow-hidden border-b border-stone-300 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.06),_transparent_45%),linear-gradient(180deg,_#f8fafc_0%,_#f5f5f4_100%)]">
+        <div className="absolute inset-x-0 top-0 h-px bg-slate-300/60" />
+        <motion.header
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8"
+        >
+          <div className="flex items-center gap-3">
+            <img src="/logo.svg" alt="Simple Road" className="h-10 w-10 rounded-xl border border-stone-300 bg-white p-1.5 shadow-sm" />
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Simple Road</p>
+              <p className="text-sm text-slate-600">Ethiopian learning platform</p>
+            </div>
+          </div>
+
+          <nav className="hidden items-center gap-6 text-sm text-slate-600 md:flex">
+            <Link href="/books" className="transition hover:text-slate-900">Books</Link>
+            <Link href="/matric" className="transition hover:text-slate-900">Exams</Link>
+            <Link href="/login" className="transition hover:text-slate-900">Login</Link>
+          </nav>
+        </motion.header>
+
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="mx-auto grid max-w-7xl gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.2fr_0.8fr] lg:px-8 lg:py-20"
+        >
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm text-emerald-800">
+              <ShieldCheck className="h-4 w-4" />
+              <span>Structured for students and families</span>
+            </div>
+
+            <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              Ethiopian textbooks, entrance exam practice, and student study tools in one clear place.
+            </h1>
+
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+              The landing page now reflects what the platform actually offers: grade-based learning materials,
+              textbook access, subject quizzes, and Ethiopian entrance exam preparation inspired by the clearer
+              academic structure seen on Kehulum.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/signup"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800"
+              >
+                Create student account
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/matric"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-6 py-4 text-base font-semibold text-slate-800 transition hover:border-slate-400 hover:bg-stone-50"
+              >
+                Browse exam practice
+              </Link>
+            </div>
+
+            <div className="mt-10 grid gap-3 sm:grid-cols-2">
+              {trustPoints.map((item) => (
+                <div
+                  key={item}
+                  className="flex items-start gap-3 rounded-2xl border border-stone-300 bg-white/80 p-4 shadow-sm"
+                >
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" />
+                  <p className="text-sm leading-6 text-slate-700">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:pl-6">
+            <div className="rounded-[28px] border border-stone-300 bg-white p-6 shadow-[0_24px_60px_-28px_rgba(15,23,42,0.22)]">
+              <div className="flex items-center justify-between border-b border-stone-200 pb-4">
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">What students can find here</p>
+                  <p className="mt-1 text-sm text-slate-500">Organized by grade, subject, and exam type</p>
+                </div>
+                <BookOpen className="h-6 w-6 text-slate-500" />
+              </div>
+
+              <div className="mt-5 space-y-4">
+                {quickLinks.map((item) => (
+                  <Link
+                    key={item.title}
+                    href={item.href}
+                    className="block rounded-2xl border border-stone-200 bg-stone-50 p-4 transition hover:border-slate-300 hover:bg-white"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="rounded-xl bg-slate-900 p-2.5 text-white">
+                        <item.icon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h2 className="text-base font-semibold text-slate-900">{item.title}</h2>
+                        <p className="mt-1 text-sm leading-6 text-slate-600">{item.description}</p>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+                <p className="text-sm font-semibold text-amber-900">Academic scope</p>
+                <p className="mt-2 text-sm leading-6 text-amber-950/80">
+                  Grade 9-12 textbook coverage, subject quizzes, notes, and Ethiopian University Entrance Exam
+                  preparation.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
       </div>
-      
-      {/* Hero Section - Mobile First */}
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative px-4 py-16 sm:py-20 md:py-28 min-h-screen flex items-center"
-      >
-        <div className="mx-auto max-w-7xl text-center relative z-10">
-          {/* Enhanced Logo Animation - Mobile Optimized */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1, delay: 0.2, type: "spring", stiffness: 100 }}
-            className="mb-6 sm:mb-10"
-          >
-            <div className="relative inline-flex items-center justify-center">
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-600 rounded-3xl blur-3xl opacity-60"
-                animate={{ scale: [1, 1.1, 1], opacity: [0.6, 0.8, 0.6] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <div className="relative w-24 h-24 sm:w-32 sm:h-36 md:w-36 md:h-36 mx-auto bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 rounded-3xl flex items-center justify-center shadow-2xl border border-amber-300/20 backdrop-blur-sm">
-                <motion.div
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <Crown className="w-12 h-12 sm:w-16 sm:w-20 text-white drop-shadow-lg" />
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-          
-          {/* Enhanced Brand Name - Mobile First */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="mb-4 sm:mb-6"
-          >
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-              <motion.img 
-                src="/logo.svg" 
-                alt="Simple Road" 
-                className="w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-18 lg:h-18 drop-shadow-lg"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                transition={{ duration: 0.3 }}
-              />
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400 bg-clip-text text-transparent drop-shadow-2xl text-center">
-                Simple Road
-              </h1>
-              <motion.img 
-                src="/logo.svg" 
-                alt="Simple Road" 
-                className="w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-18 lg:h-18 drop-shadow-lg"
-                whileHover={{ scale: 1.1, rotate: -5 }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-            <div className="flex items-center justify-center gap-2 mb-4 sm:mb-6">
-              <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 text-amber-300" />
-              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-amber-200 font-semibold text-center">
-                Elite Education Platform
-              </p>
-              <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 text-amber-300" />
-            </div>
-            
-            {/* Enhanced Value Proposition Headline - Mobile First */}
+
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid gap-6 lg:grid-cols-3">
+          {sections.map((section, index) => (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              key={section.title}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.35 }}
-              className="mb-6 sm:mb-8"
+              transition={{ duration: 0.55, delay: 0.15 + index * 0.08 }}
+              className="rounded-[26px] border border-stone-300 bg-white p-6 shadow-sm"
             >
-              <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-amber-400/30 max-w-5xl mx-auto shadow-2xl">
-                <motion.h2 
-                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 leading-tight text-center"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  Ethiopia's Free Exam & Quiz Platform
-                </motion.h2>
-                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-amber-200 font-semibold mb-4 sm:mb-6 text-center">
-                  for Grade 9–12 Students
-                </p>
-                <motion.div 
-                  className="bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-red-400/30 mb-4 sm:mb-6 shadow-xl"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center">
-                    <motion.div
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Award className="w-6 h-6 sm:w-8 sm:h-8 text-red-300" />
-                    </motion.div>
-                    <p className="text-lg sm:text-2xl md:text-3xl font-bold text-white">
-                      Grade 12 National Ethiopian Exam Preparation
-                    </p>
-                    <motion.div
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Award className="w-6 h-6 sm:w-8 sm:h-8 text-red-300" />
-                    </motion.div>
-                  </div>
-                </motion.div>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-amber-300">
-                  <motion.span 
-                    className="flex items-center gap-2 sm:gap-3 bg-white/10 px-3 py-2 sm:px-4 rounded-full"
-                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.2)" }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <GraduationCap className="w-4 h-4 sm:w-6 sm:h-6" />
-                    <span className="font-medium text-sm sm:text-base lg:text-lg">Exams</span>
-                  </motion.span>
-                  <motion.span 
-                    className="flex items-center gap-2 sm:gap-3 bg-white/10 px-3 py-2 sm:px-4 rounded-full"
-                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.2)" }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Target className="w-4 h-4 sm:w-6 sm:h-6" />
-                    <span className="font-medium text-sm sm:text-base lg:text-lg">Quizzes</span>
-                  </motion.span>
-                  <motion.span 
-                    className="flex items-center gap-2 sm:gap-3 bg-white/10 px-3 py-2 sm:px-4 rounded-full"
-                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.2)" }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <BookOpen className="w-4 h-4 sm:w-6 sm:h-6" />
-                    <span className="font-medium text-sm sm:text-base lg:text-lg">Books</span>
-                  </motion.span>
-                </div>
-              </div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Section</p>
+              <h2 className="mt-3 text-2xl font-semibold text-slate-950">{section.title}</h2>
+              <p className="mt-3 text-base leading-7 text-slate-600">{section.description}</p>
             </motion.div>
-          </motion.div>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mb-8 text-xl md:text-2xl text-amber-100/80 max-w-3xl mx-auto leading-relaxed"
-          >
-            Where <span className="text-amber-300 font-bold">Excellence</span> Meets <span className="text-amber-300 font-bold">Opportunity</span>
-          </motion.p>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mb-12 text-lg md:text-xl text-amber-100/60 max-w-2xl mx-auto"
-          >
-            Premium Ethiopian Student Learning Experience
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col gap-4 sm:gap-6 px-4 sm:px-0"
-          >
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link
-                href="/matric"
-                className="group relative inline-flex items-center justify-center w-full sm:w-auto px-6 sm:px-14 py-4 sm:py-7 text-base sm:text-xl font-bold text-white bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl sm:rounded-3xl shadow-2xl hover:shadow-amber-500/40 transition-all duration-300 border border-amber-400/20 overflow-hidden"
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl sm:rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-500"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "0%" }}
-                  transition={{ duration: 0.5 }}
-                />
-                <span className="relative flex items-center gap-3 sm:gap-4">
-                  <motion.div
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <Crown className="w-5 h-5 sm:w-7 sm:h-7" />
-                  </motion.div>
-                  <span className="text-sm sm:text-base md:text-xl">Start Excellence Journey</span>
-                  <motion.div
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <Zap className="w-5 h-5 sm:w-7 sm:h-7" />
-                  </motion.div>
-                </span>
-              </Link>
-            </motion.div>
-            
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link
-                href="/matric"
-                className="group relative inline-flex items-center justify-center w-full sm:w-auto px-6 sm:px-14 py-4 sm:py-7 text-base sm:text-xl font-bold text-amber-300 border-2 border-amber-400/50 rounded-2xl sm:rounded-3xl hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 backdrop-blur-sm overflow-hidden"
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-orange-400/20 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition duration-500"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "0%" }}
-                  transition={{ duration: 0.5 }}
-                />
-                <span className="relative flex items-center gap-3 sm:gap-4">
-                  <motion.div
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <Target className="w-5 h-5 sm:w-7 sm:h-7" />
-                  </motion.div>
-                  <span className="text-sm sm:text-base md:text-xl">Explore Excellence</span>
-                  <motion.div
-                    animate={{ rotate: [0, 180] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  >
-                    <Star className="w-5 h-5 sm:w-7 sm:h-7" />
-                  </motion.div>
-                </span>
-              </Link>
-            </motion.div>
-          </motion.div>
+          ))}
         </div>
-      </motion.section>
+      </section>
 
-      {/* Statistics Section - Mobile First */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.7 }}
-        className="relative px-4 py-12 sm:py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10 backdrop-blur-sm"
-      >
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="text-center mb-8 sm:mb-12"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
-              Trusted by Ethiopian Students
+      <section className="border-y border-stone-300 bg-slate-950 text-white">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Why it feels credible</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+              Clear educational language builds more trust than inflated promises.
             </h2>
-            <p className="text-base sm:text-lg text-amber-100/60 px-4">
-              Join thousands of students excelling with Simple Road
+            <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300">
+              The homepage now avoids invented ratings, exaggerated claims, and luxury-style wording. Instead, it
+              explains the real product: textbook access, exam preparation, grade navigation, and student accounts.
             </p>
-          </motion.div>
-          
-          <div className="grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-4">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="text-center"
-            >
-              <div className="bg-gradient-to-br from-amber-500/20 to-orange-500/20 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-400/30">
-                <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <GraduationCap className="w-8 h-8 sm:w-10 sm:h-12 text-amber-300 mx-auto mb-3 sm:mb-4" />
-                </motion.div>
-                <motion.h3 
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 1.2 }}
-                >
-                  10,000+
-                </motion.h3>
-                <p className="text-sm sm:text-base text-amber-200">Active Students</p>
+          </div>
+
+          <div className="rounded-[28px] border border-slate-800 bg-slate-900 p-6">
+            <div className="flex items-center gap-3">
+              <Users className="h-5 w-5 text-emerald-400" />
+              <p className="text-sm font-semibold text-slate-200">Visible contact details</p>
+            </div>
+
+            <div className="mt-5 space-y-4 text-sm text-slate-300">
+              <div className="flex items-center gap-3 rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+                <Phone className="h-4 w-4 text-slate-400" />
+                <span>0992010092 / 0950502881</span>
               </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="text-center"
-            >
-              <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-400/30">
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                >
-                  <Target className="w-8 h-8 sm:w-10 sm:h-12 text-blue-300 mx-auto mb-3 sm:mb-4" />
-                </motion.div>
-                <motion.h3 
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 1.3 }}
-                >
-                  50,000+
-                </motion.h3>
-                <p className="text-sm sm:text-base text-blue-200">Quizzes Taken</p>
+              <div className="flex items-center gap-3 rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+                <Mail className="h-4 w-4 text-slate-400" />
+                <span>alexgetahuntadese@gmail.com</span>
               </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="text-center"
-            >
-              <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-green-400/30">
-                <motion.div
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <TrendingUp className="w-8 h-8 sm:w-10 sm:h-12 text-green-300 mx-auto mb-3 sm:mb-4" />
-                </motion.div>
-                <motion.h3 
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 1.4 }}
-                >
-                  95%
-                </motion.h3>
-                <p className="text-sm sm:text-base text-green-200">Success Rate</p>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="text-center"
-            >
-              <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-purple-400/30">
-                <motion.div
-                  animate={{ rotate: [0, 180, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <Star className="w-8 h-8 sm:w-10 sm:h-12 text-purple-300 mx-auto mb-3 sm:mb-4" />
-                </motion.div>
-                <motion.h3 
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 1.5 }}
-                >
-                  4.9/5
-                </motion.h3>
-                <p className="text-sm sm:text-base text-purple-200">Student Rating</p>
-              </div>
-            </motion.div>
+            </div>
+
+            <p className="mt-5 text-sm leading-6 text-slate-400">
+              Students can sign in, browse books, practice exams, and return to their profile and performance pages
+              from the same account.
+            </p>
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Elite Features Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.7 }}
-        className="relative px-4 py-20"
-      >
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="text-center mb-16"
-          >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Award className="w-8 h-8 text-amber-400" />
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-                Elite Features
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="rounded-[32px] border border-stone-300 bg-white p-8 shadow-sm sm:p-10">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">Get started</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+                Start with the section that matches the student&apos;s current need.
               </h2>
-              <Award className="w-8 h-8 text-amber-400" />
-            </div>
-            <p className="text-xl text-amber-100/60 max-w-3xl mx-auto">
-              Experience the pinnacle of educational excellence
-            </p>
-          </motion.div>
-          
-          <div className="grid gap-8 md:grid-cols-3">
-            {[
-              { title: "Premium Content", desc: "Exclusive study materials curated by experts", icon: Crown, color: "amber" },
-              { title: "Advanced Analytics", desc: "AI-powered performance tracking and insights", icon: TrendingUp, color: "orange" },
-              { title: "Elite Certification", desc: "Recognized credentials for academic excellence", icon: Shield, color: "yellow" },
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.9 + index * 0.1 }}
-                className="group relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-                <div className="relative bg-slate-800/50 backdrop-blur-xl p-8 rounded-3xl border border-amber-400/20 hover:border-amber-400/40 transition-all duration-300 hover:transform hover:scale-105">
-                  <div className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-${feature.color}-400 to-${feature.color}-600 rounded-2xl flex items-center justify-center shadow-lg`}>
-                    <feature.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="mb-4 text-2xl font-bold text-amber-100 text-center">
-                    {feature.title}
-                  </h3>
-                  <p className="text-amber-200/70 text-center leading-relaxed">
-                    {feature.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Matric Excellence Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1.1 }}
-        className="relative px-4 py-20 bg-gradient-to-br from-slate-800/50 to-purple-900/50 backdrop-blur-xl"
-      >
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            className="text-center mb-16"
-          >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <GraduationCap className="w-8 h-8 text-amber-400" />
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-                Matric Supremacy
-              </h2>
-              <GraduationCap className="w-8 h-8 text-amber-400" />
-            </div>
-            <p className="text-xl text-amber-100/60 max-w-3xl mx-auto">
-              Master the Ethiopian Matriculation Examination with elite preparation
-            </p>
-          </motion.div>
-          
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              { title: "Natural Science", desc: "Mathematics, Physics, Chemistry, Biology", icon: "🔬", route: "/matric/2016/natural" },
-              { title: "Social Science", desc: "History, Geography, Economics, Civics", icon: "📚", route: "/matric/2016/social" },
-              { title: "Language Arts", desc: "English, Amharic, Literature", icon: "📝", route: "/matric/2016/natural" },
-              { title: "Exam Strategy", desc: "Advanced test-taking techniques", icon: "🎯", route: "/matric/2016/natural" },
-              { title: "Past Papers", desc: "Extensive exam archives", icon: "📋", route: "/matric/2016/natural" },
-              { title: "Performance Tracking", desc: "Monitor your progress", icon: "📊", route: "/performance" },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.3 + index * 0.05 }}
-                className="group"
-              >
-                <Link
-                  href={item.route}
-                  className="block relative group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-                  <div className="relative bg-slate-800/50 backdrop-blur-xl p-8 rounded-3xl border border-amber-400/20 hover:border-amber-400/40 transition-all duration-300 hover:transform hover:scale-105">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="text-4xl">{item.icon}</div>
-                      <h3 className="text-2xl font-bold text-amber-100 group-hover:text-amber-200 transition-colors">
-                        {item.title}
-                      </h3>
-                    </div>
-                    <p className="text-amber-200/70 leading-relaxed mb-4">{item.desc}</p>
-                    <div className="mt-6 flex items-center gap-2 text-amber-300 group-hover:text-amber-200 transition-colors">
-                      <span className="text-sm font-semibold">Master Excellence</span>
-                      <Zap className="w-4 h-4" />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Elite Menu Items Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1.6 }}
-        className="relative px-4 py-20"
-      >
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.7 }}
-            className="text-center mb-16"
-          >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <img src="/logo.svg" alt="Simple Road" className="w-8 h-8" />
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-                Elite Portfolio
-              </h2>
-              <img src="/logo.svg" alt="Simple Road" className="w-8 h-8" />
-            </div>
-            <p className="text-xl text-amber-100/60 max-w-3xl mx-auto">
-              Explore our comprehensive suite of premium educational services
-            </p>
-          </motion.div>
-          
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              { title: "Academic Excellence", desc: "Premier grade-level mastery programs", icon: "🎓", route: "/grades" },
-              { title: "Matric Supremacy", desc: "Elite exam preparation systems", icon: "🏆", route: "/matric" },
-              { title: "Knowledge Vault", desc: "Exclusive digital library access", icon: "📚", route: "/notes" },
-              { title: "Digital Collection", desc: "Curated premium textbooks", icon: "📖", route: "/books" },
-              { title: "Career Architects", desc: "Professional pathway design", icon: "💼", route: "/career-simulator" },
-              { title: "Performance Analytics", desc: "Advanced progress tracking", icon: "📊", route: "/performance" },
-              { title: "Elite Profile", desc: "Premium account management", icon: "👤", route: "/profile" },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.8 + index * 0.05 }}
-                className="group"
-              >
-                <Link
-                  href={item.route}
-                  className="block relative group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-                  <div className="relative bg-slate-800/50 backdrop-blur-xl p-8 rounded-3xl border border-amber-400/20 hover:border-amber-400/40 transition-all duration-300 hover:transform hover:scale-105">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="text-4xl">{item.icon}</div>
-                      <h3 className="text-2xl font-bold text-amber-100 group-hover:text-amber-200 transition-colors">
-                        {item.title}
-                      </h3>
-                    </div>
-                    <p className="text-amber-200/70 leading-relaxed">{item.desc}</p>
-                    <div className="mt-6 flex items-center gap-2 text-amber-300 group-hover:text-amber-200 transition-colors">
-                      <span className="text-sm font-semibold">Access Excellence</span>
-                      <Zap className="w-4 h-4" />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Supreme CTA Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1.9 }}
-        className="relative px-4 py-24 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
-      >
-        <div className="mx-auto max-w-5xl text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.0 }}
-            className="mb-8"
-          >
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <Crown className="w-10 h-10 text-amber-400" />
-              <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400 bg-clip-text text-transparent">
-                Ascend to Excellence
-              </h2>
-              <Crown className="w-10 h-10 text-amber-400" />
-            </div>
-            <p className="text-2xl md:text-3xl text-amber-100/80 max-w-4xl mx-auto leading-relaxed">
-              Join the <span className="text-amber-300 font-bold">elite circle</span> of academic achievers
-            </p>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.1 }}
-            className="flex flex-col gap-6 sm:flex-row sm:justify-center items-center"
-          >
-            <Link
-              href="/matric"
-              className="group relative inline-flex items-center justify-center px-16 py-8 text-2xl font-bold text-white bg-gradient-to-r from-amber-500 to-orange-600 rounded-3xl shadow-2xl hover:shadow-amber-500/30 transform hover:scale-105 transition-all duration-300 border border-amber-400/20"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-500 rounded-3xl blur opacity-50 group-hover:opacity-75 transition duration-300"></span>
-              <span className="relative flex items-center gap-4">
-                <Crown className="w-8 h-8" />
-                Begin Excellence Journey
-                <Zap className="w-8 h-8" />
-              </span>
-            </Link>
-            <Link
-              href="/matric"
-              className="group inline-flex items-center justify-center px-16 py-8 text-2xl font-bold text-amber-300 border-2 border-amber-400/50 rounded-3xl hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 backdrop-blur-sm"
-            >
-              <span className="flex items-center gap-4">
-                <Target className="w-8 h-8" />
-                Explore Excellence
-                <Star className="w-8 h-8" />
-              </span>
-            </Link>
-          </motion.div>
-        </div>
-        
-        {/* Bottom decorative elements */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-900 to-transparent"></div>
-      </motion.section>
-
-      {/* Footer Section */}
-      <footer className="relative px-4 py-8 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-t border-amber-400/20">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-center md:text-left">
-              <p className="text-amber-100/80 text-sm mb-2">
-                Created by <span className="text-amber-300 font-semibold">Milkesa Comm.</span> <span className="text-amber-300 font-semibold">Getahun Tadese</span>
+              <p className="mt-4 text-base leading-8 text-slate-600">
+                Use the books section for reading, the exam section for practice, and the student account for ongoing
+                quiz and performance tracking.
               </p>
-              <p className="text-amber-100/60 text-xs mb-2">
-                © 2026 Simple Road. All rights reserved.
-              </p>
-              <div className="flex flex-col gap-1 text-amber-100/60 text-xs">
-                <p className="flex items-center gap-2">
-                  <span className="text-amber-400">📱</span>
-                  <span>0992010092 / 0950502881</span>
-                </p>
-                <p className="flex items-center gap-2">
-                  <span className="text-amber-400">✉️</span>
-                  <span>alexgetahuntadese@gmail.com</span>
-                </p>
-              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <img src="/logo.svg" alt="Simple Road" className="w-16 h-16" />
+
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/books"
+                className="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-6 py-4 text-base font-semibold text-slate-800 transition hover:bg-stone-50"
+              >
+                Open textbooks
+              </Link>
+              <Link
+                href="/signup"
+                className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800"
+              >
+                Register and continue
+              </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-stone-300 bg-stone-100">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 text-sm text-slate-600 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+          <div>
+            <p className="font-medium text-slate-800">Simple Road</p>
+            <p className="mt-1">Study support for Ethiopian students, with textbooks, quizzes, and exam practice.</p>
+          </div>
+          <div className="text-left lg:text-right">
+            <p>Created by Milkesa Comm. Getahun Tadese</p>
+            <p className="mt-1">2026 Simple Road. All rights reserved.</p>
           </div>
         </div>
       </footer>

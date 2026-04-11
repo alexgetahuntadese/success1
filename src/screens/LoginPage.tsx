@@ -7,30 +7,34 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Loader2, Eye, EyeOff } from "lucide-react";
+import { formatAuthError, normalizePhoneNumber } from "@/services/firebaseService";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { signIn, isLoading } = useAuth();
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(
+    ((location.state as { phone?: string } | null)?.phone || "")
+  );
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const normalizedPhone = normalizePhoneNumber(phone);
     
-    if (!phone || !password) {
+    if (!normalizedPhone || !password) {
       toast.error("Please enter mobile number and password");
       return;
     }
 
     try {
-      await signIn(phone, password);
+      await signIn(normalizedPhone, password);
       toast.success("Signed in successfully!");
       const targetPath = (location.state as { from?: string } | null)?.from || "/grades";
       navigate(targetPath, { replace: true });
-    } catch (error: any) {
-      toast.error(error.message || "Failed to sign in");
+    } catch (error: unknown) {
+      toast.error(formatAuthError(error));
     }
   };
 

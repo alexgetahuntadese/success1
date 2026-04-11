@@ -68,6 +68,7 @@ const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState<"cbe" | "telebirr">("cbe");
   const [transactionRef, setTransactionRef] = useState("");
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
+  const [fileInputKey, setFileInputKey] = useState(0);
   const [notes, setNotes] = useState("");
   const [submissions, setSubmissions] = useState<PaymentSubmissionWithReceiptUrl[]>([]);
   const [isLoadingSubmissions, setIsLoadingSubmissions] = useState(false);
@@ -153,11 +154,6 @@ const PaymentPage = () => {
       return;
     }
 
-    if (!receiptFile) {
-      toast.error(t("payment.uploadReceipt"));
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -171,9 +167,10 @@ const PaymentPage = () => {
         submitterNotes: notes.trim(),
       });
 
-      toast.success(t("payment.paymentSubmitted"));
+      toast.success(receiptFile ? t("payment.paymentSubmitted") : t("payment.paymentSubmittedWithoutReceipt"));
       setTransactionRef("");
       setReceiptFile(null);
+      setFileInputKey((current) => current + 1);
       setNotes("");
       await Promise.all([refreshSubmissions(), refreshProfile()]);
     } catch (error: any) {
@@ -269,6 +266,7 @@ const PaymentPage = () => {
                 <div className="space-y-2">
                   <Label htmlFor="receipt" className="text-white">{t("payment.receiptScreenshot")}</Label>
                   <Input
+                    key={fileInputKey}
                     id="receipt"
                     type="file"
                     accept="image/png,image/jpeg,image/webp"
@@ -276,6 +274,12 @@ const PaymentPage = () => {
                     className="bg-white/[0.04] border-white/15 text-white file:text-white"
                   />
                   <p className="text-xs text-white/45">{t("payment.fileTypes")}</p>
+                  <p className="text-xs text-amber-200/90">{t("payment.receiptOptionalHelp")}</p>
+                  {receiptFile && (
+                    <p className="text-xs text-emerald-200">
+                      Selected: {receiptFile.name}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
