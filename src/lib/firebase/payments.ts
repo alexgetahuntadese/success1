@@ -4,7 +4,7 @@ import { collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase
 import { authService, userProfileService } from "@/lib/firebase/auth";
 import { firebaseConfigError, firebaseReady, firestore, storage } from "@/lib/firebase/client";
 import type { PaymentSubmission, Json } from "@/lib/firebase/types";
-import { hasPremiumPreferences, setPremiumAccess } from "@/lib/authRoles";
+import { hasPremiumPreferences, isAdminPreferences, setPremiumAccess } from "@/lib/authRoles";
 
 const PAYMENT_SUBMISSIONS_COLLECTION = "payment_submissions";
 const PAYMENT_RECEIPTS_BUCKET = "payment-receipts";
@@ -76,6 +76,20 @@ const uploadReceipt = async (userId: string, file: File) => {
 };
 
 const paymentDoc = (id: string) => doc(firestore!, PAYMENT_SUBMISSIONS_COLLECTION, id);
+
+const requireAdmin = async () => {
+  const currentUser = await authService.getCurrentUser();
+  if (!currentUser) {
+    throw new Error("User not authenticated");
+  }
+
+  const profile = await userProfileService.getUserProfile(currentUser.uid);
+  if (!profile || !isAdminPreferences(profile.preferences)) {
+    throw new Error("Admin access required");
+  }
+
+  return currentUser;
+};
 
 export const paymentService = {
   async listOwnSubmissions(): Promise<PaymentSubmissionWithReceiptUrl[]> {
@@ -156,6 +170,7 @@ export const paymentService = {
 export const paymentAdminService = {
   async listAllSubmissions(): Promise<PaymentSubmissionWithReceiptUrl[]> {
     requireFirebase();
+    await requireAdmin();
     const snapshot = await getDocs(collection(firestore!, PAYMENT_SUBMISSIONS_COLLECTION));
     const submissions = snapshot.docs
       .map((entry) => entry.data() as PaymentSubmission)
@@ -170,7 +185,7 @@ export const paymentAdminService = {
     reviewerNotes?: string;
   }): Promise<PaymentSubmissionWithReceiptUrl> {
     requireFirebase();
-    const currentUser = await authService.getCurrentUser();
+    const currentUser = await requireAdmin();
     const submissionRef = paymentDoc(input.submission.id);
     const snapshot = await getDoc(submissionRef);
 
@@ -215,4 +230,3 @@ export const paymentAdminService = {
     };
   },
 };
-

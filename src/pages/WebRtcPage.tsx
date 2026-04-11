@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const SIGNALING_URL = import.meta.env.VITE_SIGNALING_URL || "http://localhost:5000";
+const SIGNALING_URL = process.env.NEXT_PUBLIC_SIGNALING_URL || "http://localhost:5000";
 const RTC_CONFIG: RTCConfiguration = {
   iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
 };

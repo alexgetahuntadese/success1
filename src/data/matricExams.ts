@@ -32,7 +32,39 @@ type MatricQuestionModule = {
   [key: string]: unknown;
 };
 
-const questionModules = import.meta.glob<MatricQuestionModule>("./matric20*.ts");
+const questionModules: Record<string, () => Promise<MatricQuestionModule>> = {
+  "./matric2014BiologyQuestions.ts": () => import("./matric2014BiologyQuestions"),
+  "./matric2014ChemistryQuestions.ts": () => import("./matric2014ChemistryQuestions"),
+  "./matric2014MathQuestions.ts": () => import("./matric2014MathQuestions"),
+  "./matric2015BiologyQuestions.ts": () => import("./matric2015BiologyQuestions"),
+  "./matric2015ChemistryQuestions.ts": () => import("./matric2015ChemistryQuestions"),
+  "./matric2015EnglishQuestions.ts": () => import("./matric2015EnglishQuestions"),
+  "./matric2015MathQuestions.ts": () => import("./matric2015MathQuestions"),
+  "./matric2015PhysicsQuestions.ts": () => import("./matric2015PhysicsQuestions"),
+  "./matric2016BiologyQuestions.ts": () => import("./matric2016BiologyQuestions"),
+  "./matric2016ChemistryQuestions.ts": () => import("./matric2016ChemistryQuestions"),
+  "./matric2016EnglishQuestions.ts": () => import("./matric2016EnglishQuestions"),
+  "./matric2016MathQuestions.ts": () => import("./matric2016MathQuestions"),
+  "./matric2016PhysicsQuestions.ts": () => import("./matric2016PhysicsQuestions"),
+  "./matric2016ScholasticAptitudeQuestions.ts": () => import("./matric2016ScholasticAptitudeQuestions"),
+  "./matric2016SocialEconomicsQuestions.ts": () => import("./matric2016SocialEconomicsQuestions"),
+  "./matric2016SocialEnglishQuestions.ts": () => import("./matric2016SocialEnglishQuestions"),
+  "./matric2016SocialGeographyQuestions.ts": () => import("./matric2016SocialGeographyQuestions"),
+  "./matric2016SocialHistoryQuestions.ts": () => import("./matric2016SocialHistoryQuestions"),
+  "./matric2016SocialMathQuestions.ts": () => import("./matric2016SocialMathQuestions"),
+  "./matric2016SocialScholasticAptitudeQuestions.ts": () => import("./matric2016SocialScholasticAptitudeQuestions"),
+  "./matric2017BiologyQuestions.ts": () => import("./matric2017BiologyQuestions"),
+  "./matric2017ChemistryQuestions.ts": () => import("./matric2017ChemistryQuestions"),
+  "./matric2017EnglishQuestions.ts": () => import("./matric2017EnglishQuestions"),
+  "./matric2017MathQuestions.ts": () => import("./matric2017MathQuestions"),
+  "./matric2017PhysicsQuestions.ts": () => import("./matric2017PhysicsQuestions"),
+  "./matric2017ScholasticAptitudeQuestions.ts": () => import("./matric2017ScholasticAptitudeQuestions"),
+  "./matric2017SocialEnglishQuestions.ts": () => import("./matric2017SocialEnglishQuestions"),
+  "./matric2017SocialGeographyQuestions.ts": () => import("./matric2017SocialGeographyQuestions"),
+  "./matric2017SocialHistoryQuestions.ts": () => import("./matric2017SocialHistoryQuestions"),
+  "./matric2017SocialMathQuestions.ts": () => import("./matric2017SocialMathQuestions"),
+  "./matric2017SocialScholasticAptitudeQuestions.ts": () => import("./matric2017SocialScholasticAptitudeQuestions"),
+};
 const questionCache = new Map<string, Promise<MatricExamQuestion[]>>();
 
 const getYearMeta = (year: number) => matricCatalog.find((entry) => entry.year === year);
