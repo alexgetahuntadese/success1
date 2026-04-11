@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/index.css";
 import LayoutClient from "./layout-client";
 
@@ -16,6 +18,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <LayoutClient>{children}</LayoutClient>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

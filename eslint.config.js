@@ -12,7 +12,7 @@ const browserGlobals = {
 };
 
 export default tseslint.config(
-  { ignores: ["dist"] },
+  { ignores: [".next/**", "dist/**", "node_modules/**"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],

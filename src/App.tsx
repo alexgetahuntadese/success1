@@ -1,3 +1,4 @@
+'use client';
 
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -5,8 +6,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import AuthProvider from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -18,33 +17,33 @@ import AuthDebug from "@/components/debug/AuthDebug";
 import PaymentDebug from "@/components/debug/PaymentDebug";
 
 // Lazy load components for code splitting
-const Index = lazy(() => import("./pages/Index"));
-const GradeSelection = lazy(() => import("./pages/GradeSelection"));
-const GradesPage = lazy(() => import("./pages/GradesPage"));
-const SubjectsPage = lazy(() => import("./pages/SubjectsPage"));
-const ChaptersPage = lazy(() => import("./pages/ChaptersPage"));
-const QuizPage = lazy(() => import("./pages/QuizPage"));
-const CareerSimulatorPage = lazy(() => import("./pages/CareerSimulatorPage"));
-const DashboardPage = lazy(() => import("./pages/DashboardPage"));
-const PerformancePage = lazy(() => import("./pages/PerformancePage"));
-const ProfilePage = lazy(() => import("./pages/ProfilePage"));
-const MatricExamPage = lazy(() => import("./pages/MatricExamPage"));
-const MatricStreamPage = lazy(() => import("./pages/MatricStreamPage"));
-const MatricYearPage = lazy(() => import("./pages/MatricYearPage"));
-const MatricQuizPage = lazy(() => import("./pages/MatricQuizPage"));
-const NotesPage = lazy(() => import("./pages/NotesPage"));
-const NotesSubjectsPage = lazy(() => import("./pages/NotesSubjectsPage"));
-const NotesChaptersPage = lazy(() => import("./pages/NotesChaptersPage"));
-const BooksPage = lazy(() => import("./pages/BooksPage"));
-const BookSubjectsPage = lazy(() => import("./pages/BookSubjectsPage"));
-const LoginPage = lazy(() => import("./pages/LoginPage"));
-const SignUpPage = lazy(() => import("./pages/SignUpPage"));
-const PaymentPage = lazy(() => import("./pages/PaymentPage"));
-const AdminPaymentsPage = lazy(() => import("./pages/AdminPaymentsPage"));
-const WebRtcPage = lazy(() => import("./pages/WebRtcPage"));
-const HostPage = lazy(() => import("./pages/HostPage"));
-const JoinPage = lazy(() => import("./pages/JoinPage"));
-const SessionPage = lazy(() => import("./pages/SessionPage"));
+const Index = lazy(() => import("./screens/Index"));
+const GradeSelection = lazy(() => import("./screens/GradeSelection"));
+const GradesPage = lazy(() => import("./screens/GradesPage"));
+const SubjectsPage = lazy(() => import("./screens/SubjectsPage"));
+const ChaptersPage = lazy(() => import("./screens/ChaptersPage"));
+const QuizPage = lazy(() => import("./screens/QuizPage"));
+const CareerSimulatorPage = lazy(() => import("./screens/CareerSimulatorPage"));
+const DashboardPage = lazy(() => import("./screens/DashboardPage"));
+const PerformancePage = lazy(() => import("./screens/PerformancePage"));
+const ProfilePage = lazy(() => import("./screens/ProfilePage"));
+const MatricExamPage = lazy(() => import("./screens/MatricExamPage"));
+const MatricStreamPage = lazy(() => import("./screens/MatricStreamPage"));
+const MatricYearPage = lazy(() => import("./screens/MatricYearPage"));
+const MatricQuizPage = lazy(() => import("./screens/MatricQuizPage"));
+const NotesPage = lazy(() => import("./screens/NotesPage"));
+const NotesSubjectsPage = lazy(() => import("./screens/NotesSubjectsPage"));
+const NotesChaptersPage = lazy(() => import("./screens/NotesChaptersPage"));
+const BooksPage = lazy(() => import("./screens/BooksPage"));
+const BookSubjectsPage = lazy(() => import("./screens/BookSubjectsPage"));
+const LoginPage = lazy(() => import("./screens/LoginPage"));
+const SignUpPage = lazy(() => import("./screens/SignUpPage"));
+const PaymentPage = lazy(() => import("./screens/PaymentPage"));
+const AdminPaymentsPage = lazy(() => import("./screens/AdminPaymentsPage"));
+const WebRtcPage = lazy(() => import("./screens/WebRtcPage"));
+const HostPage = lazy(() => import("./screens/HostPage"));
+const JoinPage = lazy(() => import("./screens/JoinPage"));
+const SessionPage = lazy(() => import("./screens/SessionPage"));
 
 // Loading component for lazy loaded routes
 const PageLoader = () => (
@@ -76,8 +75,6 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter future={{ v7_relativeSplatPath: true }}>
-              <Analytics />
-              <SpeedInsights />
               <Routes>
                 <Route path="/" element={
                   <Suspense fallback={<PageLoader />}>
