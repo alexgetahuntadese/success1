@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+'use client';
+
+import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from 'react';
 import { en, TranslationKeys } from './translations/en';
 import { om } from './translations/om';
 import { am } from './translations/am';
@@ -16,13 +18,23 @@ const translations: Record<Language, TranslationKeys> = { en, om, am };
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguageState] = useState<Language>(
-    () => (localStorage.getItem('preferred_language') as Language) || 'en'
-  );
+  const [language, setLanguageState] = useState<Language>('en');
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Initialize from localStorage after hydration
+  useEffect(() => {
+    const stored = localStorage.getItem('preferred_language') as Language | null;
+    if (stored && ['en', 'om', 'am'].includes(stored)) {
+      setLanguageState(stored);
+    }
+    setIsHydrated(true);
+  }, []);
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('preferred_language', lang);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('preferred_language', lang);
+    }
   }, []);
 
   const t = useCallback((key: string): string => {
