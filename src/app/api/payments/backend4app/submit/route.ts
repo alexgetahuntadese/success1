@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { createSubmission, mapParseSubmission, uploadReceiptToBack4App } from "../_lib";
+import { createSubmission, mapParseSubmission, uploadReceiptToBack4App } from "../../_lib";
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,11 +34,7 @@ export async function POST(request: NextRequest) {
     }
 
     const created = await createSubmission({
-      user: {
-        __type: "Pointer",
-        className: "_User",
-        objectId: userId,
-      },
+      userId,
       userName: userName || null,
       userPhone: userPhone || null,
       amount: Number(amount),
@@ -46,15 +42,16 @@ export async function POST(request: NextRequest) {
       accountNumber,
       transactionRef,
       paymentMethod,
-      status: "pending",
+      status: "backend4app_pending",
+      receiptPath: receipt?.name || null,
       receiptUrl: receipt?.url || null,
-      receiptFile: receipt ? {
-        __type: "File",
-        name: receipt.name,
-        url: receipt.url,
-      } : null,
+      receiptContentType: receiptContentType || null,
+      receiptSizeBytes: receiptBase64 ? receiptBase64.length : null,
       submittedAt: new Date().toISOString(),
+      reviewerNotes: null,
       submitterNotes: submitterNotes || null,
+      verifiedAt: null,
+      verifiedBy: null,
     });
 
     return NextResponse.json(
@@ -62,11 +59,7 @@ export async function POST(request: NextRequest) {
         objectId: created.objectId,
         createdAt: created.createdAt,
         updatedAt: created.createdAt,
-        user: {
-          __type: "Pointer",
-          className: "_User",
-          objectId: userId,
-        },
+        userId,
         userName: userName || null,
         userPhone: userPhone || null,
         amount: Number(amount),
@@ -74,15 +67,16 @@ export async function POST(request: NextRequest) {
         accountNumber,
         transactionRef,
         paymentMethod,
-        status: "pending",
+        status: "backend4app_pending",
+        receiptPath: receipt?.name || null,
         receiptUrl: receipt?.url || null,
-        receiptFile: receipt ? {
-          __type: "File",
-          name: receipt.name,
-          url: receipt.url,
-        } : null,
+        receiptContentType: receiptContentType || null,
+        receiptSizeBytes: receiptBase64 ? receiptBase64.length : null,
         submittedAt: new Date().toISOString(),
+        reviewerNotes: null,
         submitterNotes: submitterNotes || null,
+        verifiedAt: null,
+        verifiedBy: null,
       })
     );
   } catch (error) {

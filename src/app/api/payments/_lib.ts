@@ -42,24 +42,27 @@ type ParseObject = {
   objectId: string;
   createdAt?: string;
   updatedAt?: string;
-  userId: string;
-  userName?: string | null;
-  userPhone?: string | null;
+  user?: {
+    __type: "Pointer";
+    className: "_User";
+    objectId: string;
+  } | null;
+  submittedAt?: string;
   amount: number;
   bankName: string;
-  accountNumber: string;
-  transactionRef: string;
-  paymentMethod: "cbe" | "telebirr";
-  status: "pending" | "verified" | "rejected" | "approved";
-  receiptPath?: string | null;
+  status: string;
   receiptUrl?: string | null;
-  receiptContentType?: string | null;
-  receiptSizeBytes?: number | null;
-  submittedAt?: string;
-  verifiedAt?: string | null;
-  reviewerNotes?: string | null;
+  receiptFile?: {
+    __type: "File";
+    name: string;
+    url: string;
+  } | null;
+  paymentMethod: string;
+  transactionRef: string;
   submitterNotes?: string | null;
-  verifiedBy?: string | null;
+  accountNumber: string;
+  userPhone?: string | null;
+  userName?: string | null;
 };
 
 export const uploadReceiptToBack4App = async (
@@ -112,25 +115,25 @@ export const getSubmission = async (submissionId: string) =>
 
 export const mapParseSubmission = (item: ParseObject): PaymentSubmission & { receiptUrl: string | null } => ({
   id: item.objectId,
-  user_id: item.userId,
+  user_id: item.user?.objectId || "",
   user_name: item.userName || null,
   user_phone: item.userPhone || null,
   amount: item.amount,
   bank_name: item.bankName,
   account_number: item.accountNumber,
   transaction_ref: item.transactionRef,
-  payment_method: item.paymentMethod,
-  status: item.status,
-  receipt_path: item.receiptPath || null,
-  receipt_url: item.receiptUrl || null,
-  receipt_content_type: item.receiptContentType || null,
-  receipt_size_bytes: item.receiptSizeBytes || null,
+  payment_method: item.paymentMethod as "cbe" | "telebirr",
+  status: item.status as "pending" | "verified" | "rejected" | "approved",
+  receipt_path: null,
+  receipt_url: item.receiptUrl || item.receiptFile?.url || null,
+  receipt_content_type: null,
+  receipt_size_bytes: null,
   submitted_at: item.submittedAt || item.createdAt || new Date().toISOString(),
-  verified_at: item.verifiedAt || null,
-  reviewer_notes: item.reviewerNotes || null,
+  verified_at: null,
+  reviewer_notes: null,
   submitter_notes: item.submitterNotes || null,
-  verified_by: item.verifiedBy || null,
+  verified_by: null,
   created_at: item.createdAt || new Date().toISOString(),
   updated_at: item.updatedAt || item.createdAt || new Date().toISOString(),
-  receiptUrl: item.receiptUrl || null,
+  receiptUrl: item.receiptUrl || item.receiptFile?.url || null,
 });

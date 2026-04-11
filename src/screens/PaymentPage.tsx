@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
 import { paymentService, type PaymentSubmissionWithReceiptUrl } from "@/services/firebaseService";
+import { paymentService as back4appPaymentService } from "@/lib/back4app/payments";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -63,7 +64,7 @@ const statusMeta = {
 
 const PaymentPage = () => {
   const navigate = useNavigate();
-  const { displayName, hasPremiumAccess, isAdmin, paymentStatus, profile, refreshProfile } = useAuth();
+  const { displayName, hasPremiumAccess, isAdmin, paymentStatus, profile, refreshProfile, user } = useAuth();
   const { t } = useLanguage();
   const [paymentMethod, setPaymentMethod] = useState<"cbe" | "telebirr">("cbe");
   const [transactionRef, setTransactionRef] = useState("");
@@ -110,7 +111,9 @@ const PaymentPage = () => {
 
   const refreshSubmissions = async () => {
     try {
-      const items = await paymentService.listOwnSubmissions();
+      const userId = user?.uid || profile?.id || "";
+      if (!userId) return;
+      const items = await back4appPaymentService.listOwnSubmissions(userId);
       setSubmissions(items);
     } catch (error) {
       console.error("Failed to refresh submissions:", error);
@@ -124,7 +127,9 @@ const PaymentPage = () => {
       setIsLoadingSubmissions(true);
 
       try {
-        const items = await paymentService.listOwnSubmissions();
+        const userId = user?.uid || profile?.id || "";
+        if (!userId) return;
+        const items = await back4appPaymentService.listOwnSubmissions(userId);
         if (active) {
           setSubmissions(items);
         }
@@ -144,7 +149,7 @@ const PaymentPage = () => {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user, profile]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -154,18 +159,42 @@ const PaymentPage = () => {
       return;
     }
 
+    const userId = user?.uid || profile?.id || "";
+    if (!userId) {
+      toast.error("User not authenticated");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      await paymentService.submitPayment({
-        amount: Number(PAYMENT_AMOUNT_BIRR),
-        bankName: currentChannel.label,
-        accountNumber: currentChannel.accountNumber,
-        paymentMethod,
-        transactionRef: transactionRef.trim(),
-        receiptFile,
-        submitterNotes: notes.trim(),
-      });
+      if (receiptFile) {
+        await back4appPaymentService.submitPaymentWithReceipt({
+          userId,
+          userName: profile?.name || displayName || null,
+          userPhone: profile?.phone || null,
+          amount: Number(PAYMENT_AMOUNT_BIRR),
+          bankName: currentChannel.label,
+          accountNumber: currentChannel.accountNumber,
+          paymentMethod,
+          transactionRef: transactionRef.trim(),
+          receiptFile,
+          submitterNotes: notes.trim(),
+        });
+      } else {
+        await back4appPaymentService.submitPayment({
+          userId,
+          userName: profile?.name || displayName || null,
+          userPhone: profile?.phone || null,
+          amount: Number(PAYMENT_AMOUNT_BIRR),
+          bankName: currentChannel.label,
+          accountNumber: currentChannel.accountNumber,
+          paymentMethod,
+          transactionRef: transactionRef.trim(),
+          receiptFile: null,
+          submitterNotes: notes.trim(),
+        });
+      }
 
       toast.success(receiptFile ? t("payment.paymentSubmitted") : t("payment.paymentSubmittedWithoutReceipt"));
       setTransactionRef("");
