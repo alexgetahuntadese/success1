@@ -66,7 +66,7 @@ type ParseObject = {
   receiptFile?: {
     __type: "File";
     name: string;
-    url: string;
+    url?: string;
   } | null;
   paymentMethod: string;
   transactionRef: string;

@@ -112,7 +112,7 @@ const PaymentPage = () => {
     try {
       const userId = user?.uid || profile?.id || "";
       if (!userId) return;
-      const items = await back4appPaymentService.listOwnSubmissions(userId);
+      const items = await paymentService.listOwnSubmissions(userId);
       setSubmissions(items);
     } catch (error) {
       console.error("Failed to refresh submissions:", error);

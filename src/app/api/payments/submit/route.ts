@@ -51,7 +51,6 @@ export async function POST(request: NextRequest) {
       receiptFile: receipt ? {
         __type: "File",
         name: receipt.name,
-        url: receipt.url,
       } : null,
       submittedAt: new Date().toISOString(),
       submitterNotes: submitterNotes || null,
@@ -79,7 +78,6 @@ export async function POST(request: NextRequest) {
         receiptFile: receipt ? {
           __type: "File",
           name: receipt.name,
-          url: receipt.url,
         } : null,
         submittedAt: new Date().toISOString(),
         submitterNotes: submitterNotes || null,

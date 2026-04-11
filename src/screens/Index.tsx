@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   BookOpen,
@@ -60,6 +60,8 @@ const sections = [
 ];
 
 const Index = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-stone-100 text-slate-900">
       <div className="relative overflow-hidden border-b border-stone-300 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.06),_transparent_45%),linear-gradient(180deg,_#f8fafc_0%,_#f5f5f4_100%)]">
@@ -79,9 +81,9 @@ const Index = () => {
           </div>
 
           <nav className="hidden items-center gap-6 text-sm text-slate-600 md:flex">
-            <Link href="/books" className="transition hover:text-slate-900">Books</Link>
-            <Link href="/matric" className="transition hover:text-slate-900">Exams</Link>
-            <Link href="/login" className="transition hover:text-slate-900">Login</Link>
+            <button onClick={() => navigate("/books")} className="transition hover:text-slate-900">Books</button>
+            <button onClick={() => navigate("/matric")} className="transition hover:text-slate-900">Exams</button>
+            <button onClick={() => navigate("/login")} className="transition hover:text-slate-900">Login</button>
           </nav>
         </motion.header>
 
@@ -108,19 +110,19 @@ const Index = () => {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/signup"
+              <button
+                onClick={() => navigate("/signup")}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800"
               >
                 Create student account
                 <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/matric"
+              </button>
+              <button
+                onClick={() => navigate("/matric")}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-6 py-4 text-base font-semibold text-slate-800 transition hover:border-slate-400 hover:bg-stone-50"
               >
                 Browse exam practice
-              </Link>
+              </button>
             </div>
 
             <div className="mt-10 grid gap-3 sm:grid-cols-2">
@@ -148,10 +150,10 @@ const Index = () => {
 
               <div className="mt-5 space-y-4">
                 {quickLinks.map((item) => (
-                  <Link
+                  <button
                     key={item.title}
-                    href={item.href}
-                    className="block rounded-2xl border border-stone-200 bg-stone-50 p-4 transition hover:border-slate-300 hover:bg-white"
+                    onClick={() => navigate(item.href)}
+                    className="block w-full text-left rounded-2xl border border-stone-200 bg-stone-50 p-4 transition hover:border-slate-300 hover:bg-white"
                   >
                     <div className="flex items-start gap-4">
                       <div className="rounded-xl bg-slate-900 p-2.5 text-white">
@@ -162,7 +164,7 @@ const Index = () => {
                         <p className="mt-1 text-sm leading-6 text-slate-600">{item.description}</p>
                       </div>
                     </div>
-                  </Link>
+                  </button>
                 ))}
               </div>
 
@@ -249,18 +251,18 @@ const Index = () => {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/books"
+              <button
+                onClick={() => navigate("/books")}
                 className="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-6 py-4 text-base font-semibold text-slate-800 transition hover:bg-stone-50"
               >
                 Open textbooks
-              </Link>
-              <Link
-                href="/signup"
+              </button>
+              <button
+                onClick={() => navigate("/signup")}
                 className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800"
               >
                 Register and continue
-              </Link>
+              </button>
             </div>
           </div>
         </div>
