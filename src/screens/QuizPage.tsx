@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StarField from '@/components/StarField';
-import { useParams, useNavigate, Navigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from '@/lib/router';
 
 import QuestionCard from '@/components/QuestionCard';
 import Results from '@/components/Results';

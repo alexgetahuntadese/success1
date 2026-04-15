@@ -2,6 +2,6 @@
 
 import Index from '@/screens/Index';
 
-export default function Home() {
+export default function AppClient() {
   return <Index />;
 }
