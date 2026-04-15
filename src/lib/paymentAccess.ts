@@ -1,6 +1,7 @@
 export const TRIAL_STORAGE_KEY = "studentTrialAccess";
-export const FREE_CHAPTER_LIMIT = 100;
-export const FREE_MATRIC_SUBJECT_LIMIT = 1;
+
+export const FREE_MATRIC_SUBJECT_LIMIT = 100; // Large enough to cover all subjects
+export const isFreeMatricSubject = (_subjectIndex: number) => true; // Always free
 
 export interface TrialAccess {
   studentName: string;
