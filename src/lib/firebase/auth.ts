@@ -417,26 +417,159 @@ export const checkAuthStatus = async (): Promise<{ session: AppSession | null; p
   };
 };
 
-export const formatAuthError = (error: unknown) => {
+export type AuthErrorCategory =
+  | "invalid-credentials"
+  | "user-not-found"
+  | "user-disabled"
+  | "email-in-use"
+  | "weak-password"
+  | "network-error"
+  | "too-many-requests"
+  | "invalid-email"
+  | "wrong-password"
+  | "requires-recent-login"
+  | "unauthorized-domain"
+  | "internal-error"
+  | "unknown";
+
+export interface AuthErrorDetails {
+  category: AuthErrorCategory;
+  message: string;
+  userMessage: string;
+  shouldRetry: boolean;
+  canContactSupport: boolean;
+}
+
+const getErrorCategory = (message: string): AuthErrorCategory => {
+  if (message.includes("auth/invalid-credential")) return "invalid-credentials";
+  if (message.includes("auth/user-not-found")) return "user-not-found";
+  if (message.includes("auth/user-disabled")) return "user-disabled";
+  if (message.includes("auth/email-already-in-use")) return "email-in-use";
+  if (message.includes("auth/weak-password")) return "weak-password";
+  if (message.includes("auth/network-request-failed")) return "network-error";
+  if (message.includes("auth/too-many-requests")) return "too-many-requests";
+  if (message.includes("auth/invalid-email")) return "invalid-email";
+  if (message.includes("auth/wrong-password")) return "wrong-password";
+  if (message.includes("auth/requires-recent-login")) return "requires-recent-login";
+  if (message.includes("auth/unauthorized-domain")) return "unauthorized-domain";
+  if (message.includes("auth/internal-error")) return "internal-error";
+  return "unknown";
+};
+
+const getErrorDetails = (category: AuthErrorCategory, originalMessage: string): AuthErrorDetails => {
+  const details: Record<AuthErrorCategory, AuthErrorDetails> = {
+    "invalid-credentials": {
+      category,
+      message: originalMessage,
+      userMessage: "The mobile number or password you entered is incorrect. Please check and try again.",
+      shouldRetry: true,
+      canContactSupport: false,
+    },
+    "user-not-found": {
+      category,
+      message: originalMessage,
+      userMessage: "No account found with this mobile number. Please sign up to create an account.",
+      shouldRetry: false,
+      canContactSupport: false,
+    },
+    "user-disabled": {
+      category,
+      message: originalMessage,
+      userMessage: "This account has been disabled. Please contact support at alexgetahuntadese@gmail.com or 0992010092.",
+      shouldRetry: false,
+      canContactSupport: true,
+    },
+    "email-in-use": {
+      category,
+      message: originalMessage,
+      userMessage: "This mobile number is already registered. Please sign in instead.",
+      shouldRetry: false,
+      canContactSupport: false,
+    },
+    "weak-password": {
+      category,
+      message: originalMessage,
+      userMessage: "Password must be at least 6 characters long. Please choose a stronger password.",
+      shouldRetry: true,
+      canContactSupport: false,
+    },
+    "network-error": {
+      category,
+      message: originalMessage,
+      userMessage: "Unable to connect. Please check your internet connection and try again.",
+      shouldRetry: true,
+      canContactSupport: false,
+    },
+    "too-many-requests": {
+      category,
+      message: originalMessage,
+      userMessage: "Too many attempts. Please wait a few minutes before trying again.",
+      shouldRetry: false,
+      canContactSupport: false,
+    },
+    "invalid-email": {
+      category,
+      message: originalMessage,
+      userMessage: "Please enter a valid mobile number.",
+      shouldRetry: true,
+      canContactSupport: false,
+    },
+    "wrong-password": {
+      category,
+      message: originalMessage,
+      userMessage: "Incorrect password. Please try again or reset your password if you've forgotten it.",
+      shouldRetry: true,
+      canContactSupport: false,
+    },
+    "requires-recent-login": {
+      category,
+      message: originalMessage,
+      userMessage: "For security reasons, please sign in again to continue.",
+      shouldRetry: false,
+      canContactSupport: false,
+    },
+    "unauthorized-domain": {
+      category,
+      message: originalMessage,
+      userMessage: "This domain is not authorized. Please contact support at alexgetahuntadese@gmail.com.",
+      shouldRetry: false,
+      canContactSupport: true,
+    },
+    "internal-error": {
+      category,
+      message: originalMessage,
+      userMessage: "Something went wrong on our end. Please try again in a moment.",
+      shouldRetry: true,
+      canContactSupport: true,
+    },
+    "unknown": {
+      category,
+      message: originalMessage,
+      userMessage: "An unexpected error occurred. Please try again or contact support if the problem continues.",
+      shouldRetry: true,
+      canContactSupport: true,
+    },
+  };
+
+  return details[category];
+};
+
+export const getAuthErrorDetails = (error: unknown): AuthErrorDetails => {
   const message = error instanceof Error ? error.message : String(error);
+  const category = getErrorCategory(message);
+  return getErrorDetails(category, message);
+};
 
-  if (message.includes("auth/invalid-credential")) {
-    return "Incorrect mobile number or password.";
-  }
+export const formatAuthError = (error: unknown): string => {
+  return getAuthErrorDetails(error).userMessage;
+};
 
-  if (message.includes("auth/email-already-in-use")) {
-    return "That mobile number is already registered.";
-  }
+export const shouldRetryAuthError = (error: unknown): boolean => {
+  return getAuthErrorDetails(error).shouldRetry;
+};
 
-  if (message.includes("auth/weak-password")) {
-    return "Password should be at least 6 characters.";
-  }
-
-  if (message.includes("auth/network-request-failed")) {
-    return "Network error. Check your internet connection and try again.";
-  }
-
-  return message || "An unexpected auth error occurred.";
+export const getAuthErrorCategory = (error: unknown): AuthErrorCategory => {
+  return getAuthErrorDetails(error).category;
 };
 
 export const isPhoneAlreadyRegisteredError = (error: unknown) => {
