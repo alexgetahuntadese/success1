@@ -42,6 +42,9 @@ const filterRelaxedMinBar = (questions: QuizQuestion[]) =>
       !!String(q.correct).trim(),
   );
 
+const sliceQuestions = (questions: QuizQuestion[], count: number) =>
+  [...questions].sort(() => Math.random() - 0.5).slice(0, Math.min(count, questions.length));
+
 const sliceQuestionsWithFilterFallback = (
   mapped: QuizQuestion[],
   count: number,
@@ -83,9 +86,6 @@ const filterByDifficulty = (questions: any[], difficulty: string) =>
 
     return question.difficulty.toLowerCase() === difficulty.toLowerCase();
   });
-
-const sliceQuestions = (questions: QuizQuestion[], count: number) =>
-  [...questions].sort(() => Math.random() - 0.5).slice(0, Math.min(count, questions.length));
 
 const getSubjectListTitles = async (grade: string, subject: string) => {
   if (grade === "11") {
