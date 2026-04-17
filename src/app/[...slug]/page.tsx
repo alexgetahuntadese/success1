@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import PublicRoute from '@/components/PublicRoute';
+import PremiumRoute from '@/components/PremiumRoute';
 import { Navigate } from '@/lib/router';
 import AuthDebug from '@/components/debug/AuthDebug';
 import PaymentDebug from '@/components/debug/PaymentDebug';
@@ -34,25 +35,25 @@ import WebRtcPage from '@/screens/WebRtcPage';
 
 const routes = [
   { pattern: /^\/debug\/auth\/?$/, content: () => <AuthDebug />, access: 'protected' as const },
-  { pattern: /^\/grade\/([^/]+)\/subject\/([^/]+)\/chapter\/([^/]+)\/difficulty\/([^/]+)\/quiz\/?$/, content: () => <QuizPage />, access: 'protected' as const },
-  { pattern: /^\/grade\/([^/]+)\/subject\/([^/]+)\/chapters\/?$/, content: () => <ChaptersPage />, access: 'protected' as const },
+  { pattern: /^\/grade\/([^/]+)\/subject\/([^/]+)\/chapter\/([^/]+)\/difficulty\/([^/]+)\/quiz\/?$/, content: () => <QuizPage />, access: 'free' as const },
+  { pattern: /^\/grade\/([^/]+)\/subject\/([^/]+)\/chapters\/?$/, content: () => <ChaptersPage />, access: 'free' as const },
   { pattern: /^\/grade\/([^/]+)\/subject\/([^/]+)\/?$/, redirect: (m: RegExpMatchArray) => `/grade/${m[1]}/subject/${m[2]}/chapters` },
-  { pattern: /^\/grade\/([^/]+)\/subjects\/?$/, content: () => <SubjectsPage />, access: 'protected' as const },
-  { pattern: /^\/grade\/([^/]+)\/?$/, content: () => <GradeSelection />, access: 'protected' as const },
-  { pattern: /^\/grades\/?$/, content: () => <GradesPage />, access: 'protected' as const },
+  { pattern: /^\/grade\/([^/]+)\/subjects\/?$/, content: () => <SubjectsPage />, access: 'free' as const },
+  { pattern: /^\/grade\/([^/]+)\/?$/, content: () => <GradeSelection />, access: 'free' as const },
+  { pattern: /^\/grades\/?$/, content: () => <GradesPage />, access: 'free' as const },
   { pattern: /^\/career-simulator\/?$/, content: () => <CareerSimulatorPage />, access: 'protected' as const },
   { pattern: /^\/dashboard\/?$/, content: () => <DashboardPage />, access: 'protected' as const },
   { pattern: /^\/performance\/?$/, content: () => <PerformancePage />, access: 'protected' as const },
   { pattern: /^\/profile\/?$/, content: () => <ProfilePage />, access: 'protected' as const },
-  { pattern: /^\/matric\/([^/]+)\/([^/]+)\/([^/]+)\/?$/, content: () => <MatricQuizPage />, access: 'protected' as const },
-  { pattern: /^\/matric\/([^/]+)\/([^/]+)\/?$/, content: () => <MatricYearPage />, access: 'protected' as const },
-  { pattern: /^\/matric\/([^/]+)\/?$/, content: () => <MatricStreamPage />, access: 'protected' as const },
-  { pattern: /^\/matric\/?$/, content: () => <MatricExamPage />, access: 'protected' as const },
-  { pattern: /^\/notes\/([^/]+)\/([^/]+)\/?$/, content: () => <NotesChaptersPage />, access: 'protected' as const },
-  { pattern: /^\/notes\/([^/]+)\/?$/, content: () => <NotesSubjectsPage />, access: 'protected' as const },
-  { pattern: /^\/notes\/?$/, content: () => <NotesPage />, access: 'protected' as const },
-  { pattern: /^\/books\/([^/]+)\/?$/, content: () => <BookSubjectsPage />, access: 'protected' as const },
-  { pattern: /^\/books\/?$/, content: () => <BooksPage />, access: 'protected' as const },
+  { pattern: /^\/matric\/([^/]+)\/([^/]+)\/([^/]+)\/?$/, content: () => <MatricQuizPage />, access: 'premium' as const },
+  { pattern: /^\/matric\/([^/]+)\/([^/]+)\/?$/, content: () => <MatricYearPage />, access: 'premium' as const },
+  { pattern: /^\/matric\/([^/]+)\/?$/, content: () => <MatricStreamPage />, access: 'premium' as const },
+  { pattern: /^\/matric\/?$/, content: () => <MatricExamPage />, access: 'premium' as const },
+  { pattern: /^\/notes\/([^/]+)\/([^/]+)\/?$/, content: () => <NotesChaptersPage />, access: 'free' as const },
+  { pattern: /^\/notes\/([^/]+)\/?$/, content: () => <NotesSubjectsPage />, access: 'free' as const },
+  { pattern: /^\/notes\/?$/, content: () => <NotesPage />, access: 'free' as const },
+  { pattern: /^\/books\/([^/]+)\/?$/, content: () => <BookSubjectsPage />, access: 'free' as const },
+  { pattern: /^\/books\/?$/, content: () => <BooksPage />, access: 'free' as const },
   { pattern: /^\/payment\/?$/, content: () => <PaymentPage />, access: 'protected' as const },
   { pattern: /^\/host\/?$/, content: () => <HostPage />, access: 'protected' as const },
   { pattern: /^\/join\/?$/, content: () => <JoinPage />, access: 'protected' as const },
@@ -94,6 +95,10 @@ export default function CatchAllPage() {
 
     if (route.access === 'public') {
       return <PublicRoute>{element}</PublicRoute>;
+    }
+
+    if (route.access === 'premium') {
+      return <PremiumRoute>{element}</PremiumRoute>;
     }
 
     return element;
