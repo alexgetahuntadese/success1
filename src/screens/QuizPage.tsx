@@ -22,7 +22,7 @@ const QuizPage = () => {
   const navigate = useNavigate();
   const { hasPremiumAccess: premiumAccess } = useAuth();
   const subject = params.subject;
-  const chapterId = params.chapterId ? decodeURIComponent(params.chapterId) : null;
+  const chapterId = params.chapterId || null;
   const difficulty = params.difficulty;
   const grade = params.grade;
   
@@ -147,7 +147,7 @@ const QuizPage = () => {
 
   const handleBackToChapters = () => {
     if (grade && subject) {
-      navigate(`/grade/${grade}/subject/${subject}/chapters`);
+      navigate(`/grade/${grade}/subject/${encodeURIComponent(subject)}/chapters`);
     } else {
       navigate(-1);
     }
@@ -301,7 +301,7 @@ const QuizPage = () => {
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-  const normalizedChapterId = decodeURIComponent(chapterId ?? '');
+  const normalizedChapterId = chapterId ?? '';
   const chapterIndex = chapterTitles.findIndex((title) => title === normalizedChapterId);
   const lockedChapter = chapterIndex >= 0 && !premiumAccess && !isFreeChapter(chapterIndex);
 

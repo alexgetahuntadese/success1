@@ -49,7 +49,7 @@ const ChaptersPage = () => {
   const navigate = useNavigate();
   const { hasPremiumAccess: premiumAccess } = useAuth();
   const { grade, subject } = useParams();
-  const decodedSubject = decodeURIComponent(subject || '');
+  const decodedSubject = subject || '';
   const isUnavailableGrade12QuizSubject =
     grade === '12' &&
     false;

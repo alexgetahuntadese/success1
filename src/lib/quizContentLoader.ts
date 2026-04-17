@@ -25,6 +25,56 @@ const filterValidQuestions = (questions: QuizQuestion[]) =>
       question.options.includes(question.correct),
   );
 
+type QuizLoadMeta = { grade: string; subject: string; chapter: string };
+
+const tryRepairCorrectInOptions = (q: QuizQuestion): QuizQuestion => {
+  if (q.options.includes(q.correct)) return q;
+  const t = q.correct.trim();
+  const hit = q.options.find((o) => o.trim() === t);
+  return hit ? { ...q, correct: hit } : q;
+};
+
+const filterRelaxedMinBar = (questions: QuizQuestion[]) =>
+  questions.filter(
+    (q) =>
+      q.question !== "Question not available" &&
+      q.options.length >= 2 &&
+      !!String(q.correct).trim(),
+  );
+
+const sliceQuestionsWithFilterFallback = (
+  mapped: QuizQuestion[],
+  count: number,
+  meta: QuizLoadMeta,
+): QuizQuestion[] => {
+  const strict = filterValidQuestions(mapped);
+  if (strict.length > 0) {
+    return sliceQuestions(strict, count);
+  }
+  const repaired = mapped.map(tryRepairCorrectInOptions);
+  const afterRepair = filterValidQuestions(repaired);
+  if (afterRepair.length > 0) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("[quizContentLoader] Repaired correct answer to match an option (trim/exact)", {
+        ...meta,
+        poolSize: mapped.length,
+      });
+    }
+    return sliceQuestions(afterRepair, count);
+  }
+  const relaxed = filterRelaxedMinBar(mapped);
+  if (relaxed.length > 0) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("[quizContentLoader] Strict validation removed all questions; using relaxed pool", {
+        ...meta,
+        poolSize: mapped.length,
+      });
+    }
+    return sliceQuestions(relaxed, count);
+  }
+  return [];
+};
+
 const filterByDifficulty = (questions: any[], difficulty: string) =>
   questions.filter((question) => {
     if (!question.difficulty) {
@@ -173,13 +223,12 @@ export const getQuestionsForSubject = async (
       return [];
     }
 
-    return sliceQuestions(
-      filterValidQuestions(
-        filterByDifficulty(chapterData, difficultyLevel).map((question, index) =>
-          normalizeQuestion(question, `g10-${subjectLower}-${index}`),
-        ),
+    return sliceQuestionsWithFilterFallback(
+      filterByDifficulty(chapterData, difficultyLevel).map((question, index) =>
+        normalizeQuestion(question, `g10-${subjectLower}-${index}`),
       ),
       count,
+      { grade, subject, chapter },
     );
   }
 
@@ -213,80 +262,73 @@ export const getQuestionsForSubject = async (
       }
       case "Mathematics": {
         const { getGrade11MathematicsQuestions } = await import("@/data/grade11MathematicsQuestions");
-        return sliceQuestions(
-          filterValidQuestions(
-            getGrade11MathematicsQuestions(chapter)
-              .filter((question) => question.difficulty.toLowerCase() === difficultyLevel)
-              .map((question) => normalizeQuestion(question, question.id)),
-          ),
+        return sliceQuestionsWithFilterFallback(
+          getGrade11MathematicsQuestions(chapter)
+            .filter((question) => question.difficulty.toLowerCase() === difficultyLevel)
+            .map((question) => normalizeQuestion(question, question.id)),
           count,
+          { grade, subject, chapter },
         );
       }
       case "Civics":
       case "Civic Education": {
         const { grade11CivicsQuestions } = await import("@/data/grade11CivicsQuestions");
-        return sliceQuestions(
-          filterValidQuestions(
-            filterByDifficulty(grade11CivicsQuestions[chapter] ?? [], difficultyLevel).map(
-              (question, index) => normalizeQuestion(question, `g11-civics-${index}`),
-            ),
+        return sliceQuestionsWithFilterFallback(
+          filterByDifficulty(grade11CivicsQuestions[chapter] ?? [], difficultyLevel).map(
+            (question, index) => normalizeQuestion(question, `g11-civics-${index}`),
           ),
           count,
+          { grade, subject, chapter },
         );
       }
       case "Economics": {
         const { grade11EconomicsQuestions } = await import("@/data/grade11EconomicsQuestions");
-        return sliceQuestions(
-          filterValidQuestions(
-            filterByDifficulty(grade11EconomicsQuestions[chapter] ?? [], difficultyLevel).map(
-              (question, index) => normalizeQuestion(question, `g11-economics-${index}`),
-            ),
+        return sliceQuestionsWithFilterFallback(
+          filterByDifficulty(grade11EconomicsQuestions[chapter] ?? [], difficultyLevel).map(
+            (question, index) => normalizeQuestion(question, `g11-economics-${index}`),
           ),
           count,
+          { grade, subject, chapter },
         );
       }
       case "English": {
         const { grade11EnglishQuestions } = await import("@/data/grade11EnglishQuestions");
-        return sliceQuestions(
-          filterValidQuestions(
-            filterByDifficulty(grade11EnglishQuestions[chapter] ?? [], difficultyLevel).map(
-              (question, index) => normalizeQuestion(question, `g11-english-${index}`),
-            ),
+        return sliceQuestionsWithFilterFallback(
+          filterByDifficulty(grade11EnglishQuestions[chapter] ?? [], difficultyLevel).map(
+            (question, index) => normalizeQuestion(question, `g11-english-${index}`),
           ),
           count,
+          { grade, subject, chapter },
         );
       }
       case "History": {
         const { grade11HistoryQuestions } = await import("@/data/grade11HistoryQuestions");
-        return sliceQuestions(
-          filterValidQuestions(
-            filterByDifficulty(grade11HistoryQuestions[chapter] ?? [], difficultyLevel).map(
-              (question, index) => normalizeQuestion(question, `g11-history-${index}`),
-            ),
+        return sliceQuestionsWithFilterFallback(
+          filterByDifficulty(grade11HistoryQuestions[chapter] ?? [], difficultyLevel).map(
+            (question, index) => normalizeQuestion(question, `g11-history-${index}`),
           ),
           count,
+          { grade, subject, chapter },
         );
       }
       case "Geography": {
         const { grade11GeographyQuestions } = await import("@/data/grade11GeographyQuestions");
-        return sliceQuestions(
-          filterValidQuestions(
-            filterByDifficulty(grade11GeographyQuestions[chapter] ?? [], difficultyLevel).map(
-              (question, index) => normalizeQuestion(question, `g11-geography-${index}`),
-            ),
+        return sliceQuestionsWithFilterFallback(
+          filterByDifficulty(grade11GeographyQuestions[chapter] ?? [], difficultyLevel).map(
+            (question, index) => normalizeQuestion(question, `g11-geography-${index}`),
           ),
           count,
+          { grade, subject, chapter },
         );
       }
       case "Amharic": {
         const { grade11AmharicQuestions } = await import("@/data/grade11AmharicQuestions");
-        return sliceQuestions(
-          filterValidQuestions(
-            filterByDifficulty(grade11AmharicQuestions[chapter] ?? [], difficultyLevel).map(
-              (question, index) => normalizeQuestion(question, `g11-amharic-${index}`),
-            ),
+        return sliceQuestionsWithFilterFallback(
+          filterByDifficulty(grade11AmharicQuestions[chapter] ?? [], difficultyLevel).map(
+            (question, index) => normalizeQuestion(question, `g11-amharic-${index}`),
           ),
           count,
+          { grade, subject, chapter },
         );
       }
       default:
@@ -294,117 +336,111 @@ export const getQuestionsForSubject = async (
     }
   }
 
+  if (grade !== "12") {
+    return [];
+  }
+
   switch (subject) {
     case "Mathematics": {
       const { grade12Mathematics } = await import("@/data/grade12Mathematics");
-      return sliceQuestions(
-        filterValidQuestions(
-          filterByDifficulty(grade12Mathematics[chapter] ?? [], difficulty).map((question, index) =>
-            normalizeQuestion(question, `g12-math-${index}`),
-          ),
+      return sliceQuestionsWithFilterFallback(
+        filterByDifficulty(grade12Mathematics[chapter] ?? [], difficulty).map((question, index) =>
+          normalizeQuestion(question, `g12-math-${index}`),
         ),
         count,
+        { grade, subject, chapter },
       );
     }
     case "Physics": {
       const { grade12PhysicsQuestions } = await import("@/data/grade12PhysicsQuestions");
-      return sliceQuestions(
-        filterValidQuestions(
-          filterByDifficulty(grade12PhysicsQuestions[chapter] ?? [], difficulty).map((question, index) =>
-            normalizeQuestion(question, `g12-physics-${index}`),
-          ),
+      return sliceQuestionsWithFilterFallback(
+        filterByDifficulty(grade12PhysicsQuestions[chapter] ?? [], difficulty).map((question, index) =>
+          normalizeQuestion(question, `g12-physics-${index}`),
         ),
         count,
+        { grade, subject, chapter },
       );
     }
     case "Biology": {
       const { grade12BiologyQuestions } = await import("@/data/grade12BiologyQuestions");
-      return sliceQuestions(
-        filterValidQuestions(
-          filterByDifficulty(grade12BiologyQuestions[chapter] ?? [], difficulty).map((question, index) =>
-            normalizeQuestion(question, `g12-biology-${index}`),
-          ),
+      return sliceQuestionsWithFilterFallback(
+        filterByDifficulty(grade12BiologyQuestions[chapter] ?? [], difficulty).map((question, index) =>
+          normalizeQuestion(question, `g12-biology-${index}`),
         ),
         count,
+        { grade, subject, chapter },
       );
     }
     case "English": {
       const { grade12EnglishQuestions } = await import("@/data/grade12EnglishQuestions");
-      return sliceQuestions(
-        filterValidQuestions(
-          filterByDifficulty(grade12EnglishQuestions[chapter] ?? [], difficulty).map((question, index) =>
-            normalizeQuestion(question, `g12-english-${index}`),
-          ),
+      return sliceQuestionsWithFilterFallback(
+        filterByDifficulty(grade12EnglishQuestions[chapter] ?? [], difficulty).map((question, index) =>
+          normalizeQuestion(question, `g12-english-${index}`),
         ),
         count,
+        { grade, subject, chapter },
       );
     }
     case "Agriculture": {
       const { grade12AgricultureQuestions } = await import("@/data/grade12AgricultureQuestions");
-      return sliceQuestions(
-        filterValidQuestions(
-          filterByDifficulty(grade12AgricultureQuestions[chapter] ?? [], difficulty).map((question, index) =>
-            normalizeQuestion(question, `g12-agriculture-${index}`),
-          ),
+      return sliceQuestionsWithFilterFallback(
+        filterByDifficulty(grade12AgricultureQuestions[chapter] ?? [], difficulty).map((question, index) =>
+          normalizeQuestion(question, `g12-agriculture-${index}`),
         ),
         count,
+        { grade, subject, chapter },
       );
     }
     case "Economics": {
       const { grade12EconomicsQuestions } = await import("@/data/grade12EconomicsQuestions");
-      return sliceQuestions(
-        filterValidQuestions(
-          filterByDifficulty(grade12EconomicsQuestions[chapter] ?? [], difficulty).map((question, index) =>
-            normalizeQuestion(question, `g12-economics-${index}`),
-          ),
+      return sliceQuestionsWithFilterFallback(
+        filterByDifficulty(grade12EconomicsQuestions[chapter] ?? [], difficulty).map((question, index) =>
+          normalizeQuestion(question, `g12-economics-${index}`),
         ),
         count,
+        { grade, subject, chapter },
       );
     }
     case "Amharic": {
       const { grade12AmharicQuestions } = await import("@/data/grade12AmharicQuestions");
-      return sliceQuestions(
-        filterValidQuestions(
-          filterByDifficulty(grade12AmharicQuestions[chapter] ?? [], difficulty).map((question, index) =>
-            normalizeQuestion(question, `g12-amharic-${index}`),
-          ),
+      return sliceQuestionsWithFilterFallback(
+        filterByDifficulty(grade12AmharicQuestions[chapter] ?? [], difficulty).map((question, index) =>
+          normalizeQuestion(question, `g12-amharic-${index}`),
         ),
         count,
+        { grade, subject, chapter },
       );
     }
     case "Civics":
     case "Civic Education": {
       const { grade12CivicsQuestions } = await import("@/data/grade12CivicsQuestions");
-      return sliceQuestions(
-        filterValidQuestions(
-          filterByDifficulty(grade12CivicsQuestions[chapter] ?? [], difficulty).map((question, index) =>
-            normalizeQuestion(question, `g12-civics-${index}`),
-          ),
+      return sliceQuestionsWithFilterFallback(
+        filterByDifficulty(grade12CivicsQuestions[chapter] ?? [], difficulty).map((question, index) =>
+          normalizeQuestion(question, `g12-civics-${index}`),
         ),
         count,
+        { grade, subject, chapter },
       );
     }
     case "History": {
       const { grade12HistoryQuestions } = await import("@/data/grade12HistoryQuestions");
-      return sliceQuestions(
-        filterValidQuestions(
-          filterByDifficulty(grade12HistoryQuestions[chapter] ?? [], difficulty).map((question, index) =>
-            normalizeQuestion(question, `g12-history-${index}`),
-          ),
+      return sliceQuestionsWithFilterFallback(
+        filterByDifficulty(grade12HistoryQuestions[chapter] ?? [], difficulty).map((question, index) =>
+          normalizeQuestion(question, `g12-history-${index}`),
         ),
         count,
+        { grade, subject, chapter },
       );
     }
     case "IT":
     case "Information Technology": {
       const { grade12ITQuestions } = await import("@/data/grade12ITQuestions");
-      return sliceQuestions(
-        filterValidQuestions(
-          filterByDifficulty(grade12ITQuestions[chapter] ?? [], difficulty).map((question, index) =>
-            normalizeQuestion(question, `g12-it-${index}`),
-          ),
+      return sliceQuestionsWithFilterFallback(
+        filterByDifficulty(grade12ITQuestions[chapter] ?? [], difficulty).map((question, index) =>
+          normalizeQuestion(question, `g12-it-${index}`),
         ),
         count,
+        { grade, subject, chapter },
       );
     }
     case "Geography": {
@@ -428,11 +464,10 @@ export const getQuestionsForSubject = async (
       }
 
       const levelQuestions = chapterData[difficulty.toLowerCase() as keyof typeof chapterData] ?? [];
-      return sliceQuestions(
-        filterValidQuestions(
-          levelQuestions.map((question, index) => normalizeQuestion(question, `g12-chemistry-${index}`)),
-        ),
+      return sliceQuestionsWithFilterFallback(
+        levelQuestions.map((question, index) => normalizeQuestion(question, `g12-chemistry-${index}`)),
         count,
+        { grade, subject, chapter },
       );
     }
     default:
