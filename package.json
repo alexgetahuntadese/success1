@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "next dev -H localhost",
+    "dev": "next dev --turbo -H localhost",
     "build": "next build",
     "build:dev": "next build",
     "lint": "eslint .",
