@@ -59,6 +59,18 @@ const routeParamPatterns: Array<{ pattern: RegExp; keys: string[] }> = [
 
 const customLocationStateKey = '__next_app_custom_location_state__';
 
+/** Match `[...slug]/page.tsx` so param parsing agrees with which screen is mounted. */
+const normalizeAppPathname = (pathname: string) =>
+  pathname.replace(/\/+$|\s+$/g, '') || '/';
+
+const safeDecodeURIComponent = (segment: string) => {
+  try {
+    return decodeURIComponent(segment);
+  } catch {
+    return segment;
+  }
+};
+
 export const useNavigate = () => {
   const router = useRouter();
 
@@ -83,7 +95,7 @@ export const useNavigate = () => {
 };
 
 export const useParams = () => {
-  const pathname = usePathname() || '/';
+  const pathname = normalizeAppPathname(usePathname() || '/');
 
   return useMemo(() => {
     for (const route of routeParamPatterns) {
@@ -91,7 +103,7 @@ export const useParams = () => {
       if (!match) continue;
 
       return route.keys.reduce<Record<string, string>>((acc, key, index) => {
-        acc[key] = decodeURIComponent(match[index + 1] ?? '');
+        acc[key] = safeDecodeURIComponent(match[index + 1] ?? '');
         return acc;
       }, {});
     }

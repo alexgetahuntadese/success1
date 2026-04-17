@@ -144,7 +144,7 @@ const NotesChaptersPage = () => {
   const { hasPremiumAccess: premiumAccess } = useAuth();
   const { grade, subject } = useParams();
   const gradeNumber = Number(grade);
-  const decodedSubject = decodeURIComponent(subject || "");
+  const decodedSubject = subject || "";
   const subjectData = getNotesSubject(gradeNumber, decodedSubject);
   const [expandedChapters, setExpandedChapters] = useState<Record<string, boolean>>({});
   const [quickMode, setQuickMode] = useState(false);
