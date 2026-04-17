@@ -9,7 +9,9 @@ const CLASS_NAME = "PaymentSubmission";
 
 const ensureConfig = () => {
   if (!APP_ID || !JS_KEY || !SERVER_URL) {
-    throw new Error("Back4App configuration is missing.");
+    throw new Error(
+      "Back4App configuration is missing. Set BACK4APP_APP_ID, BACK4APP_JS_KEY, and BACK4APP_SERVER_URL."
+    );
   }
 };
 

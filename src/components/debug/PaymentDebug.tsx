@@ -20,6 +20,12 @@ const PaymentDebug = () => {
         <p>2. Add your Firebase credentials</p>
         <p>3. Restart the development server</p>
       </div>
+      <div className="mt-4 p-3 bg-yellow-500/20 rounded">
+        <p className="font-semibold">If payments fail:</p>
+        <p>1. Add Back4App settings to .env.local</p>
+        <p>2. Set BACK4APP_APP_ID, BACK4APP_JS_KEY, and BACK4APP_SERVER_URL</p>
+        <p>3. Restart the server</p>
+      </div>
     </div>
   );
 };

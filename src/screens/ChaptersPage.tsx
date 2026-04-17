@@ -1156,17 +1156,60 @@ const ChaptersPage = () => {
 
         {!isUnavailableGrade12QuizSubject && chapters.length === 0 && (
           <div className="app-glass max-w-2xl mx-auto rounded-2xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-white mb-3">No Quiz Chapters Found</h2>
-            <p className="mb-6 text-white/78">
-              This quiz subject does not have chapter data available yet.
+            <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/15 border border-amber-400/30">
+              <BookOpen className="h-8 w-8 text-amber-300" />
+            </div>
+            <h2 className="text-2xl font-bold text-white mb-3">Quiz Content Coming Soon</h2>
+            <p className="mb-4 text-white/78">
+              We&apos;re currently building the quiz bank for <span className="font-semibold text-white">Grade {grade} {decodedSubject}</span>.
+              This subject will be available for practice soon.
             </p>
-            <Button
-              variant="outline"
-              className="border-white/[0.08] text-white hover:bg-white/10"
-              onClick={() => navigate(`/grade/${grade}/subjects`)}
-            >
-              Back to Quiz Subjects
-            </Button>
+
+            {/* Debug info for development */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className="mb-6 rounded-lg border border-white/10 bg-black/20 p-3 text-left">
+                <p className="text-xs text-white/50 font-mono">Debug: grade={grade}, subject={decodedSubject}</p>
+              </div>
+            )}
+
+            <div className="flex flex-col sm:flex-row justify-center gap-3 mb-6">
+              <Button
+                className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white"
+                onClick={() => navigate(`/notes/${grade}/${encodeURIComponent(decodedSubject)}`)}
+              >
+                <BookOpen className="mr-2 h-4 w-4" />
+                Study Notes
+              </Button>
+              <Button
+                variant="outline"
+                className="border-white/[0.08] text-white hover:bg-white/10"
+                onClick={() => navigate(`/grade/${grade}/subjects`)}
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Subjects
+              </Button>
+            </div>
+
+            <div className="border-t border-white/10 pt-6">
+              <p className="text-sm text-white/60 mb-3">
+                Need this content urgently? Let us know and we&apos;ll prioritize it.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-2 text-sm">
+                <a
+                  href="mailto:alexgetahuntadese@gmail.com?subject=Content Request: Grade {grade} {decodedSubject}"
+                  className="inline-flex items-center justify-center gap-2 text-violet-300 hover:text-violet-200 transition-colors"
+                >
+                  <span>alexgetahuntadese@gmail.com</span>
+                </a>
+                <span className="hidden sm:inline text-white/30">|</span>
+                <a
+                  href="tel:0992010092"
+                  className="inline-flex items-center justify-center gap-2 text-violet-300 hover:text-violet-200 transition-colors"
+                >
+                  <span>0992010092</span>
+                </a>
+              </div>
+            </div>
           </div>
         )}
 

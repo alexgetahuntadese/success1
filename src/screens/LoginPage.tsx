@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate, Link, useLocation, useParams } from "@/lib/router";
+import { useState, useCallback } from "react";
+import { useNavigate, Link, useLocation } from "@/lib/router";
 import { useAuth } from "@/contexts/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,27 +7,50 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, EyeOff } from "lucide-react";
-import { formatAuthError, normalizePhoneNumber } from "@/services/firebaseService";
+import { Eye, EyeOff, RefreshCw, AlertCircle } from "lucide-react";
+import { formatAuthError, normalizePhoneNumber, getAuthErrorDetails, shouldRetryAuthError, type AuthErrorDetails } from "@/services/firebaseService";
+
+const MAX_RETRIES = 2;
+const RETRY_DELAY = 2000;
+
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { signIn, isLoading } = useAuth();
+  const { signIn, isLoading: authLoading } = useAuth();
   const [phone, setPhone] = useState(
     ((location.state as { phone?: string } | null)?.phone || "")
   );
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorDetails, setErrorDetails] = useState<AuthErrorDetails | null>(null);
+  const [retryCount, setRetryCount] = useState(0);
+  const [canRetry, setCanRetry] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const normalizedPhone = normalizePhoneNumber(phone);
-    
-    if (!normalizedPhone || !password) {
-      toast.error("Please enter mobile number and password");
-      return;
+  const handleError = useCallback((error: unknown) => {
+    const details = getAuthErrorDetails(error);
+    setErrorDetails(details);
+    setCanRetry(details.shouldRetry && retryCount < MAX_RETRIES);
+
+    // Show appropriate toast based on error severity
+    if (details.category === "user-disabled" || details.category === "unauthorized-domain") {
+      toast.error(details.userMessage, { duration: 8000 });
+    } else if (details.category === "too-many-requests") {
+      toast.error(details.userMessage, { duration: 6000 });
+    } else {
+      toast.error(details.userMessage);
     }
+  }, [retryCount]);
+
+  const clearError = useCallback(() => {
+    setErrorDetails(null);
+    setCanRetry(false);
+  }, []);
+
+  const performSignIn = useCallback(async (attempt: number = 1): Promise<void> => {
+    const normalizedPhone = normalizePhoneNumber(phone);
 
     try {
       await signIn(normalizedPhone, password);
@@ -35,7 +58,60 @@ const LoginPage = () => {
       const targetPath = (location.state as { from?: string } | null)?.from || "/grades";
       navigate(targetPath, { replace: true });
     } catch (error: unknown) {
-      toast.error(formatAuthError(error));
+      const details = getAuthErrorDetails(error);
+
+      // Check if we should retry
+      if (details.shouldRetry && attempt < MAX_RETRIES && details.category === "network-error") {
+        setRetryCount(attempt);
+        toast.info(`Connection issue. Retrying... (${attempt}/${MAX_RETRIES})`, { duration: 3000 });
+        await delay(RETRY_DELAY * attempt);
+        return performSignIn(attempt + 1);
+      }
+
+      // Final error - no more retries
+      setRetryCount(0);
+      throw error;
+    }
+  }, [phone, password, signIn, navigate, location.state]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    clearError();
+
+    const normalizedPhone = normalizePhoneNumber(phone);
+
+    if (!normalizedPhone || !password) {
+      toast.error("Please enter your mobile number and password");
+      return;
+    }
+
+    // Validate phone format
+    if (!/^\d{10}$/.test(normalizedPhone.replace(/\D/g, ""))) {
+      toast.error("Please enter a valid 10-digit mobile number");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      await performSignIn(1);
+    } catch (error: unknown) {
+      handleError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRetry = async () => {
+    clearError();
+    setIsLoading(true);
+
+    try {
+      await performSignIn(1);
+    } catch (error: unknown) {
+      handleError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,6 +126,43 @@ const LoginPage = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Error Alert */}
+            <AnimatePresence>
+              {errorDetails && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="rounded-lg border border-red-400/30 bg-red-500/10 p-3"
+                >
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="h-5 w-5 shrink-0 text-red-400 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-sm text-red-200">{errorDetails.userMessage}</p>
+                      {errorDetails.canContactSupport && (
+                        <p className="mt-2 text-xs text-red-300/70">
+                          Need help? Contact: alexgetahuntadese@gmail.com | 0992010092
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  {canRetry && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleRetry}
+                      disabled={isLoading || authLoading}
+                      className="mt-2 w-full text-red-300 hover:text-red-200 hover:bg-red-500/20"
+                    >
+                      <RefreshCw className="h-4 w-4 mr-2" />
+                      Try Again
+                    </Button>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="space-y-2">
               <Label htmlFor="phone" className="text-white">Mobile Number</Label>
               <Input
@@ -57,9 +170,17 @@ const LoginPage = () => {
                 type="tel"
                 placeholder="0912345678"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  if (errorDetails) clearError();
+                }}
+                className={`bg-white/10 border-white/20 text-white placeholder:text-white/50 transition-colors ${
+                  errorDetails?.category === "invalid-credentials" || errorDetails?.category === "user-not-found"
+                    ? "border-red-400/50 focus:border-red-400"
+                    : ""
+                }`}
                 required
+                disabled={isLoading || authLoading}
               />
             </div>
             <div className="space-y-2">
@@ -70,14 +191,23 @@ const LoginPage = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50 pr-10"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (errorDetails) clearError();
+                  }}
+                  className={`bg-white/10 border-white/20 text-white placeholder:text-white/50 pr-10 transition-colors ${
+                    errorDetails?.category === "invalid-credentials" || errorDetails?.category === "wrong-password"
+                      ? "border-red-400/50 focus:border-red-400"
+                      : ""
+                  }`}
                   required
+                  disabled={isLoading || authLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white"
+                  disabled={isLoading || authLoading}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -86,10 +216,10 @@ const LoginPage = () => {
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-black font-semibold relative overflow-hidden"
-              disabled={isLoading}
+              disabled={isLoading || authLoading}
             >
               <AnimatePresence mode="wait">
-                {isLoading ? (
+                {isLoading || authLoading ? (
                   <motion.div
                     key="loading"
                     className="flex items-center justify-center gap-2"
@@ -107,7 +237,7 @@ const LoginPage = () => {
                       animate={{ opacity: [0.5, 1, 0.5] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
-                      Signing in...
+                      {retryCount > 0 ? `Retrying (${retryCount}/${MAX_RETRIES})...` : "Signing in..."}
                     </motion.span>
                   </motion.div>
                 ) : (
@@ -122,9 +252,9 @@ const LoginPage = () => {
                   </motion.span>
                 )}
               </AnimatePresence>
-              
+
               {/* Shimmer effect when loading */}
-              {isLoading && (
+              {(isLoading || authLoading) && (
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                   animate={{ x: [-100, 100] }}
