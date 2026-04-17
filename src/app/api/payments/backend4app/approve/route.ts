@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
           const currentPreferences = userProfile.preferences as any || {};
           const updatedPreferences = setPremiumAccess(currentPreferences, {
             premium: true,
-            paymentStatus: "verified",
+            paymentStatus: "approved",
             paidAt: new Date().toISOString(),
             paidUntil: null, // No expiration - lifetime access
             paymentSubmissionId: paymentId,
