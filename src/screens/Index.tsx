@@ -78,6 +78,7 @@ const Index = () => {
           </div>
 
           <nav className="hidden items-center gap-6 text-sm text-slate-600 md:flex">
+
             <button onClick={() => navigate("/books")} className="transition hover:text-slate-900">Books</button>
             <button onClick={() => navigate("/matric")} className="transition hover:text-slate-900">Exams</button>
             <button onClick={() => navigate("/login")} className="transition hover:text-slate-900">Login</button>
@@ -108,8 +109,6 @@ Sub-headline: The highest scorers have one thing in common: consistent practice.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-
-        
 
               <button
                 onClick={() => navigate("/matric")}
