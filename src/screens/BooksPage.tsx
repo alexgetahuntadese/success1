@@ -1,3 +1,5 @@
+'use client';
+
 import { useNavigate } from "@/lib/router";
 import { ArrowLeft, BookOpen, Download, GraduationCap, Sparkles } from "lucide-react";
 import TopBar from "@/components/TopBar";

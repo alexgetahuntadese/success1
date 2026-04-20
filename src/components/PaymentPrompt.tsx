@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "@/lib/router";
 import { AlertCircle, CheckCircle2, Clock, CreditCard, Gift } from "lucide-react";

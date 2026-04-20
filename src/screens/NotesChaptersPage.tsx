@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "@/lib/router";
 import { ArrowLeft, BookOpen, Brain, ChevronDown, ChevronUp, GraduationCap, Lightbulb, NotebookPen, Sparkles, Target, Zap, Lock, CreditCard } from "lucide-react";

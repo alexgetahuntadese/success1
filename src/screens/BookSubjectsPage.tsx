@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from "react";
 import { Navigate, useNavigate, useParams } from "@/lib/router";
 import { ArrowLeft, Download, ExternalLink, Eye, GraduationCap, Sparkles } from "lucide-react";
