@@ -1,3 +1,5 @@
+'use client';
+
 import { useNavigate } from "@/lib/router";
 import { motion } from "framer-motion";
 import {

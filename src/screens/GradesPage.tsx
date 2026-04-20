@@ -1,3 +1,5 @@
+'use client';
+
 import { useNavigate } from "@/lib/router";
 import { ArrowLeft, BookOpen, Trophy, Sparkles, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
