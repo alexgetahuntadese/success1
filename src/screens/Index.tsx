@@ -35,10 +35,7 @@ const quickLinks = [
 ];
 
 const trustPoints = [
-  "Focused on Ethiopian textbooks, quizzes, and entrance exam preparation.",
-  "Built around clearly labeled grade and subject sections instead of vague offers.",
-  "Includes direct contact details and real access paths for students.",
-  "Uses Firebase authentication and Firestore for account and learning data.",
+  
 ];
 
 const sections = [
