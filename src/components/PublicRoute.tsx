@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Navigate } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 
 import { useAuth } from "@/hooks/useAuth";
 
@@ -20,7 +20,9 @@ const PublicRoute = ({ children, redirectTo = "/grades" }: PublicRouteProps) => 
   }
 
   if (isAuthenticated) {
-    return <Navigate to={redirectTo} replace />;
+    const router = useRouter();
+    router.push('/');
+    return null;
   }
 
   return <>{children}</>;

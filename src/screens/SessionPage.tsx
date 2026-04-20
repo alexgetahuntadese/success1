@@ -1,6 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
 import StarField from '@/components/StarField';
-import { useParams, useNavigate } from "@/lib/router";
+import { useRouter } from 'next/navigation';
+
+interface SessionPageProps {
+  sessionCode: string;
+}
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Copy, Play, Trophy, Users } from "lucide-react";
@@ -45,9 +49,8 @@ interface NormalizedQuestion {
   correctAnswer: string;
 }
 
-const SessionPage = () => {
-  const { sessionCode } = useParams();
-  const navigate = useNavigate();
+const SessionPage = ({ sessionCode }: SessionPageProps) => {
+  const router = useRouter();
   const { toast } = useToast();
   const { t } = useLanguage();
   
@@ -152,7 +155,7 @@ const SessionPage = () => {
             <CardContent>
               <SessionLeaderboard participants={participants} />
               <Button
-                onClick={() => navigate('/grades')}
+                onClick={() => router.push('/grades')}
                 className="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500"
               >
                 {t('common.backToHome')}

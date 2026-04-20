@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "@/lib/router";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   ArrowLeft,
   CheckCircle2,
@@ -62,7 +63,7 @@ const statusMeta = {
 } as const;
 
 const PaymentPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { displayName, hasPremiumAccess, isAdmin, paymentStatus, profile, refreshProfile, user } = useAuth();
   const { t } = useLanguage();
   const [paymentMethod, setPaymentMethod] = useState<"cbe" | "telebirr">("cbe");
@@ -218,7 +219,7 @@ const PaymentPage = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate(-1)}
+            onClick={() => router.push('/')}
             className="text-white hover:bg-white/10"
           >
             <ArrowLeft className="h-5 w-5" />

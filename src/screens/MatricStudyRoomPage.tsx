@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams, useLocation } from "@/lib/router";
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from "@/contexts/auth-context";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -31,12 +31,15 @@ interface Participant {
   isHost: boolean;
 }
 
-const MatricStudyRoomPage = () => {
+interface MatricStudyRoomPageProps {
+  roomId?: string;
+}
+
+const MatricStudyRoomPage = ({ roomId }: MatricStudyRoomPageProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { user, profile } = useAuth();
-  const navigate = useNavigate();
-  const { roomId } = useParams();
   
-  const location = useLocation();
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedYear, setSelectedYear] = useState("");
@@ -75,7 +78,7 @@ const MatricStudyRoomPage = () => {
   const createRoom = (prefill?: Partial<Pick<Room, 'year' | 'stream' | 'subject'>>) => {
     if (!user || !profile) {
       toast.error("Please sign in to create a room");
-      navigate("/login");
+      router.push('/login');
       return;
     }
 
@@ -106,7 +109,7 @@ const MatricStudyRoomPage = () => {
   const joinRoom = (roomId: string) => {
     if (!user || !profile) {
       toast.error("Please sign in to join room");
-      navigate("/login");
+      router.push('/login');
       return;
     }
 
@@ -142,7 +145,7 @@ const MatricStudyRoomPage = () => {
   };
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams(searchParams.toString());
     const yearQuery = params.get("year") ?? "";
     const streamQuery = params.get("stream") ?? "";
     const subjectQuery = params.get("subject") ?? "";
@@ -155,7 +158,7 @@ const MatricStudyRoomPage = () => {
       setSelectedStream(streamQuery || "natural");
       setSelectedSubject(subjectQuery);
     }
-  }, [location.search]);
+  }, [searchParams.toString()]);
 
   useEffect(() => {
     if (!roomId && !room && !autoCreated && (prefillYear || prefillStream || prefillSubject)) {
@@ -215,7 +218,7 @@ const MatricStudyRoomPage = () => {
       };
       setRoom(updatedRoom);
       // Navigate to exam session
-      navigate(`/matric/session/${room.id}`);
+      router.push(`/matric/session/${room.id}`);
     }
   };
 
@@ -264,7 +267,7 @@ const MatricStudyRoomPage = () => {
           </CardHeader>
           <CardContent className="text-center">
             <Button 
-              onClick={() => navigate("/matric")}
+              onClick={() => router.push('/matric')}
               className="bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-400 hover:to-purple-400 text-white"
             >
               Back to Matric
@@ -282,7 +285,7 @@ const MatricStudyRoomPage = () => {
         <div className="flex items-center justify-between mb-8">
           <Button
             variant="ghost"
-            onClick={() => navigate("/matric")}
+            onClick={() => router.push('/matric')}
             className="text-white/70 hover:text-white"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />

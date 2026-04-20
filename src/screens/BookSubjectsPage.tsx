@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useNavigate, useParams } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, Download, ExternalLink, Eye, GraduationCap, Sparkles } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import StarField from "@/components/StarField";
@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { BookSubject, getBooksGrade } from "@/lib/booksData";
+
+interface BookSubjectsPageProps {
+  grade: string;
+}
 
 const getKehulumBookUrl = (gradeNumber: number, pdfPath: string) => {
   const match = pdfPath.match(/grade-\d+-(.+)\.pdf$/);
@@ -19,15 +23,14 @@ const getKehulumBookUrl = (gradeNumber: number, pdfPath: string) => {
   return `https://kehulum.com/student-textbook/new/grade-${gradeNumber}/${slug}`;
 };
 
-const BookSubjectsPage = () => {
-  const navigate = useNavigate();
-  const { grade } = useParams();
+const BookSubjectsPage = ({ grade }: BookSubjectsPageProps) => {
+  const router = useRouter();
   const gradeNumber = Number(grade);
   const gradeData = getBooksGrade(gradeNumber);
   const [previewBook, setPreviewBook] = useState<BookSubject | null>(null);
 
   if (!gradeData) {
-    return <Navigate to="/books" replace />;
+    return <div />;
   }
 
   return (
@@ -39,7 +42,7 @@ const BookSubjectsPage = () => {
         <Button
           variant="ghost"
           className="text-white/70 hover:text-white hover:bg-white/5 mb-8 transition-colors"
-          onClick={() => navigate("/books")}
+          onClick={() => router.push('/books')}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Books

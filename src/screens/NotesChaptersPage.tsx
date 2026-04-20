@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, BookOpen, Brain, ChevronDown, ChevronUp, GraduationCap, Lightbulb, NotebookPen, Sparkles, Target, Zap, Lock, CreditCard } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import StarField from "@/components/StarField";
@@ -12,11 +12,10 @@ import { getGrade11MathNotesByChapter } from "@/data/grade11MathematicsNotes";
 import { getGrade12QuickNotesBySubject } from "@/data/grade12QuickNotes";
 import { isFreeChapter } from "@/lib/paymentAccess";
 
-type NoteSection = {
-  title: string;
-  content: string;
-  highlight?: boolean;
-};
+interface NotesChaptersPageProps {
+  grade: string;
+  subject: string;
+}
 
 const amharicChapterDisplayMap: Record<string, string> = {
   "áˆá‹•áˆ«á áŠ áŠ•á‹µ: á‰‹áŠ•á‰‹áŠ“ áˆ›áˆ…á‰ áˆ¨áˆ°á‰¥": "ምዕራፍ አንድ: ቋንቋና ማህበረሰብ",
@@ -139,10 +138,9 @@ const toBulletItems = (content: string) => {
   return lineBullets;
 };
 
-const NotesChaptersPage = () => {
-  const navigate = useNavigate();
+const NotesChaptersPage = ({ grade, subject }: NotesChaptersPageProps) => {
+  const router = useRouter();
   const { hasPremiumAccess: premiumAccess } = useAuth();
-  const { grade, subject } = useParams();
   const gradeNumber = Number(grade);
   const decodedSubject = decodeURIComponent(subject || "");
   const subjectData = getNotesSubject(gradeNumber, decodedSubject);
@@ -227,9 +225,7 @@ const NotesChaptersPage = () => {
   };
 
   const openChapterQuiz = (chapter: string) => {
-    navigate(
-      `/grade/${gradeNumber}/subject/${encodeURIComponent(decodedSubject)}/chapter/${encodeURIComponent(chapter)}/difficulty/easy/quiz`
-    );
+    router.push(`/grade/${gradeNumber}/subject/${encodeURIComponent(decodedSubject)}/chapter/${encodeURIComponent(chapter)}/difficulty/easy/quiz`);
   };
 
   return (
@@ -241,7 +237,7 @@ const NotesChaptersPage = () => {
         <Button
           variant="ghost"
           className="text-white/70 hover:text-white hover:bg-white/5 mb-8 transition-colors"
-          onClick={() => navigate(`/notes/${gradeNumber}`)}
+          onClick={() => router.push(`/notes/${gradeNumber}`)}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Subjects
@@ -456,7 +452,7 @@ const NotesChaptersPage = () => {
                       className="text-white/70 hover:text-white hover:bg-white/10 rounded-lg"
                       onClick={() => {
                         if (locked) {
-                          navigate("/payment");
+                          router.push("/payment");
                           return;
                         }
 
@@ -483,7 +479,7 @@ const NotesChaptersPage = () => {
                         This chapter is locked. Please complete payment to access notes.
                       </p>
                       <Button
-                        onClick={() => navigate("/payment")}
+                        onClick={() => router.push("/payment")}
                         className="mt-4 bg-white text-slate-950 hover:bg-white/90 rounded-xl"
                       >
                         <CreditCard className="mr-2 h-4 w-4" />
@@ -609,7 +605,7 @@ const NotesChaptersPage = () => {
 
         <div className="mt-10">
           <Button
-            onClick={() => navigate(`/grade/${gradeNumber}/subject/${encodeURIComponent(decodedSubject)}/chapters`)}
+            onClick={() => router.push(`/grade/${gradeNumber}/subject/${encodeURIComponent(decodedSubject)}/chapters`)}
             className="bg-white text-slate-950 hover:bg-white/90 rounded-xl"
           >
             <BookOpen className="mr-2 h-4 w-4" />

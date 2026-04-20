@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Navigate, useLocation } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 
 import { useAuth } from "@/hooks/useAuth";
 
@@ -9,7 +9,7 @@ type ProtectedRouteProps = {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { isAuthenticated, isLoading } = useAuth();
-  const location = useLocation();
+  const location = useRouter();
 
   if (isLoading) {
     return (
@@ -20,7 +20,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+    const router = useRouter();
+    router.push('/login');
+    return null;
   }
 
   return <>{children}</>;

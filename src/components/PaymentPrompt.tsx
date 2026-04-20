@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { AlertCircle, CheckCircle2, Clock, CreditCard, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,7 +11,7 @@ type PaymentPromptProps = {
 };
 
 const PaymentPrompt = ({ context, className = "" }: PaymentPromptProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { hasPremiumAccess, paymentStatus } = useAuth();
   const [trialAccess, setTrialAccess] = useState<TrialAccess | null>(null);
 
@@ -42,7 +42,7 @@ const PaymentPrompt = ({ context, className = "" }: PaymentPromptProps) => {
 
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button
-            onClick={() => navigate("/payment")}
+            onClick={() => router.push('/payment')}
             className="bg-white text-slate-950 hover:bg-white/90"
           >
             <CreditCard className="mr-2 h-4 w-4" />
@@ -50,7 +50,7 @@ const PaymentPrompt = ({ context, className = "" }: PaymentPromptProps) => {
           </Button>
           <Button
             variant="outline"
-            onClick={() => navigate("/payment")}
+            onClick={() => router.push('/payment')}
             className="border-white/20 bg-transparent text-white hover:bg-white/10"
           >
             {hasPremiumAccess ? "View Payment History" : trialActive ? "Manage Trial" : "Start Free Trial"}

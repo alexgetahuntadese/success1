@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useParams } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { useAuth } from "@/contexts/auth-context";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -45,10 +45,13 @@ interface MatricQuestion {
   explanation?: string;
 }
 
-const MatricExamSessionPage = () => {
+interface MatricExamSessionPageProps {
+  roomId: string;
+}
+
+const MatricExamSessionPage = ({ roomId }: MatricExamSessionPageProps) => {
+  const router = useRouter();
   const { user, profile } = useAuth();
-  const navigate = useNavigate();
-  const { roomId } = useParams();
   
   const [session, setSession] = useState<ExamSession | null>(null);
   const [questions, setQuestions] = useState<MatricQuestion[]>([]);
@@ -69,7 +72,7 @@ const MatricExamSessionPage = () => {
       } catch (error) {
         console.error('Failed to initialize exam session:', error);
         toast.error("Failed to load exam session");
-        navigate("/matric");
+        router.push('/matric');
       }
     };
 
@@ -142,7 +145,7 @@ const MatricExamSessionPage = () => {
       setTimeRemaining(mockSession.timeLimit);
     } catch (error) {
       toast.error("Failed to load exam session");
-      navigate("/matric");
+      router.push('/matric');
     } finally {
       setLoading(false);
     }
@@ -255,7 +258,7 @@ const MatricExamSessionPage = () => {
           <CardContent className="text-center py-8">
             <AlertCircle className="h-16 w-16 text-red-400 mx-auto mb-4" />
             <div className="text-white text-xl">Session not found</div>
-            <Button onClick={() => navigate("/matric")} className="mt-4">
+            <Button onClick={() => router.push('/matric')} className="mt-4">
               Back to Matric
             </Button>
           </CardContent>
@@ -274,7 +277,7 @@ const MatricExamSessionPage = () => {
         <div className="flex items-center justify-between mb-6">
           <Button
             variant="ghost"
-            onClick={() => navigate(-1)}
+            onClick={() => router.push(-1)}
             className="text-white/70 hover:text-white"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -347,7 +350,7 @@ const MatricExamSessionPage = () => {
                     <div className="text-white/70 mb-6">
                       You answered {getAnsweredCount()} out of {questions.length} questions
                     </div>
-                    <Button onClick={() => navigate("/matric")} size="lg">
+                    <Button onClick={() => router.push('/matric')} size="lg">
                       Back to Matric
                     </Button>
                   </CardContent>

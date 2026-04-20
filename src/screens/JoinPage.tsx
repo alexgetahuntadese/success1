@@ -1,6 +1,6 @@
 import { useState } from "react";
 import StarField from '@/components/StarField';
-import { useNavigate } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const JoinPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { toast } = useToast();
   const { t } = useLanguage();
   const [sessionCode, setSessionCode] = useState("");
@@ -37,7 +37,7 @@ const JoinPage = () => {
       sessionStorage.setItem('participantId', participant.id);
       sessionStorage.setItem('isHost', 'false');
       
-      navigate(`/session/${session.session_code}`);
+      router.push(`/session/${session.session_code}`);
     } catch (error: any) {
       toast({
         title: "Error",

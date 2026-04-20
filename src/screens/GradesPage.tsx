@@ -1,4 +1,4 @@
-import { useNavigate } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, BookOpen, Trophy, Sparkles, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -45,7 +45,7 @@ const gradeData = [
 ];
 
 const GradesPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { t } = useLanguage();
 
   return (
@@ -56,7 +56,7 @@ const GradesPage = () => {
       <div className="max-w-4xl mx-auto relative z-10">
         <Button
           variant="ghost"
-          onClick={() => navigate("/")}
+          onClick={() => router.push('/')}
           className="mb-8 text-white/85 transition-colors hover:bg-white/10 hover:text-white"
         >
           {t('common.home')}

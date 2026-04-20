@@ -1,10 +1,14 @@
-import { Navigate, useNavigate, useParams } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, BookOpen, GraduationCap, Sparkles } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import StarField from "@/components/StarField";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getNotesGrade } from "@/lib/notesData";
+
+interface NotesSubjectsPageProps {
+  grade: string;
+}
 
 const subjectCategoryMap: Record<string, 'Natural Sciences' | 'Social Sciences' | 'Languages' | 'Mathematics' | 'Applied Sciences'> = {
   Mathematics: 'Mathematics',
@@ -48,9 +52,8 @@ const categoryMeta = {
 
 const categoryOrder = ['Mathematics', 'Natural Sciences', 'Social Sciences', 'Languages', 'Applied Sciences'] as const;
 
-const NotesSubjectsPage = () => {
-  const navigate = useNavigate();
-  const { grade } = useParams();
+const NotesSubjectsPage = ({ grade }: NotesSubjectsPageProps) => {
+  const router = useRouter();
   const gradeNumber = Number(grade);
   const gradeData = getNotesGrade(gradeNumber);
 
@@ -76,7 +79,7 @@ const NotesSubjectsPage = () => {
         <Button
           variant="ghost"
           className="text-white/70 hover:text-white hover:bg-white/5 mb-8 transition-colors"
-          onClick={() => navigate("/notes")}
+          onClick={() => router.push('/notes')}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Notes

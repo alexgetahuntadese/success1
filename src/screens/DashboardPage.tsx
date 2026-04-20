@@ -1,4 +1,4 @@
-import { useNavigate } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { motion } from "framer-motion";
 import {
   BookOpen,
@@ -25,7 +25,7 @@ import {
 import { getProfileKey } from "@/lib/profileUtils";
 
 const DashboardPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { displayName, profile, user } = useAuth();
   const profileKey = getProfileKey(profile, user);
   const performanceData = getPerformanceData(profileKey);
@@ -85,7 +85,7 @@ const DashboardPage = () => {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => navigate("/profile")}
+              onClick={() => router.push('/profile')}
               className="text-white/70 hover:text-white hover:bg-white/10"
             >
               <User className="mr-2 h-4 w-4" />

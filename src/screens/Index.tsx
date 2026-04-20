@@ -1,9 +1,9 @@
 ﻿import { motion } from "framer-motion";
-import { useNavigate } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { ArrowRight, FileText, ShieldCheck } from "lucide-react";
 
 const Index = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
@@ -20,7 +20,7 @@ const Index = () => {
           </div>
 
           <button
-            onClick={() => navigate("/login")}
+            onClick={() => router.push('/login')}
             className="inline-flex items-center rounded-full border border-slate-700 bg-slate-900/80 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
           >
             Login
@@ -49,7 +49,7 @@ const Index = () => {
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <button
-                onClick={() => navigate("/matric")}
+                onClick={() => router.push('/matric')}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-6 py-4 text-base font-semibold text-slate-950 transition hover:bg-emerald-400"
               >
                 Start exam practice

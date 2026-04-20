@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate, Link } from "@/lib/router";
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from "@/contexts/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +15,7 @@ import {
 } from "@/services/firebaseService";
 
 const SignUpPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { register, isLoading } = useAuth();
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -44,11 +45,11 @@ const SignUpPage = () => {
     try {
       await register({ fullName: fullName.trim(), phone: normalizedPhone, password });
       toast.success("Account created successfully!");
-      navigate("/grades");
+      router.push('/grades');
     } catch (error: unknown) {
       if (isPhoneAlreadyRegisteredError(error)) {
         toast.error("This mobile number is already registered. Please sign in instead.");
-        navigate("/login", { state: { from: "/signup", phone: normalizedPhone } });
+        router.push('/login', { state: { from: "/signup", phone: normalizedPhone } });
         return;
       }
 

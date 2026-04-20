@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link, useLocation } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { useAuth } from "@/contexts/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,12 +11,9 @@ import { Eye, EyeOff } from "lucide-react";
 import { formatAuthError, normalizePhoneNumber } from "@/services/firebaseService";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
   const { signIn, isLoading } = useAuth();
-  const [phone, setPhone] = useState(
-    ((location.state as { phone?: string } | null)?.phone || "")
-  );
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -32,8 +29,8 @@ const LoginPage = () => {
     try {
       await signIn(normalizedPhone, password);
       toast.success("Signed in successfully!");
-      const targetPath = (location.state as { from?: string } | null)?.from || "/grades";
-      navigate(targetPath, { replace: true });
+      const targetPath = "/grades";
+      router.push(targetPath, { replace: true });
     } catch (error: unknown) {
       toast.error(formatAuthError(error));
     }

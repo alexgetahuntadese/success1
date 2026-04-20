@@ -1,4 +1,4 @@
-import { useNavigate } from "@/lib/router";
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, BookOpen, Download, GraduationCap, Sparkles } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import StarField from "@/components/StarField";
@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { booksByGrade } from "@/lib/booksData";
 
 const BooksPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 pt-14 px-4 pb-4 md:p-8 md:pt-14 overflow-hidden relative">
@@ -16,7 +16,7 @@ const BooksPage = () => {
       <div className="max-w-5xl mx-auto relative z-10">
         <Button
           variant="ghost"
-          onClick={() => navigate("/")}
+          onClick={() => router.push('/')}
           className="text-white/70 hover:text-white hover:bg-white/5 mb-8 transition-colors"
         >
           Home
