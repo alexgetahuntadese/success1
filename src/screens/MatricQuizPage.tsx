@@ -97,7 +97,7 @@ const MatricQuizPage = ({ year, stream, subject }: MatricQuizPageProps) => {
         <TopBar />
         <div className="text-center text-white relative z-10">
           <p className="text-xl mb-4">No questions available yet for {subject} ({yearNum} E.C.)</p>
-          <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => navigate(`/matric/${yearNum}/${streamKey}`)}>
+          <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => router.push(`/matric/${yearNum}/${streamKey}`)}>
             Go Back
           </Button>
         </div>
@@ -218,7 +218,7 @@ const MatricQuizPage = ({ year, stream, subject }: MatricQuizPageProps) => {
               )}
               {scoreableQuestions > 0 && <div className="mb-8" />}
               <div className="flex gap-3 justify-center">
-                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => navigate(`/matric/${yearNum}/${streamKey}`)}>
+                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => router.push(`/matric/${yearNum}/${streamKey}`)}>
                   Back to Subjects
                 </Button>
                 <Button
@@ -249,7 +249,7 @@ const MatricQuizPage = ({ year, stream, subject }: MatricQuizPageProps) => {
         <div className="max-w-4xl mx-auto relative z-10">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-6">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate(`/matric/${yearNum}/${streamKey}`)} className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200">
+            <Button variant="ghost" size="icon" onClick={() => router.push(`/matric/${yearNum}/${streamKey}`)} className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200">
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
