@@ -1,3 +1,5 @@
+'use client';
+
 import { Fragment, useEffect, useState } from 'react';
 import { useParams, useNavigate, Navigate } from '@/lib/router';
 import { Button } from '@/components/ui/button';

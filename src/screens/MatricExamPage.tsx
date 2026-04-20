@@ -1,3 +1,5 @@
+'use client';
+
 import { useNavigate } from '@/lib/router';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

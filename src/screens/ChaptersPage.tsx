@@ -1,3 +1,5 @@
+'use client';
+
 import { useNavigate, useParams } from '@/lib/router';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -56,6 +58,8 @@ const ChaptersPage = () => {
 
   // Get chapters based on subject and grade
   const getChaptersForSubject = () => {
+    console.log('getChaptersForSubject called with:', { grade, decodedSubject });
+
     // Handle Grade 11 Biology
     if (decodedSubject === 'Biology' && grade === '11') {
       return Object.keys(grade11Biology).map((chapterName, index) => {
@@ -739,6 +743,7 @@ const ChaptersPage = () => {
     }
 
     // Fallback: return empty for subjects without question data yet
+    console.log('No matching subject/grade combination found, returning empty array');
     return [];
   };
 

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import StarField from '@/components/StarField';
 import { useParams, useNavigate, Navigate } from '@/lib/router';

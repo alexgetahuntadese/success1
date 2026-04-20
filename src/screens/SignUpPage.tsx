@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from "react";
 import { useNavigate, Link } from '@/lib/router';
 import { useAuth } from "@/contexts/auth-context";

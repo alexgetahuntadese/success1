@@ -1,3 +1,4 @@
+'use client';
 
 import type { ComponentType } from 'react';
 import { useNavigate, useParams } from '@/lib/router';
