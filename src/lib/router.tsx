@@ -149,6 +149,16 @@ export const useLocation = (): LocationValue => {
     }
   }, [key]);
 
+  // Return early during SSR to avoid useSearchParams issues
+  if (typeof window === 'undefined') {
+    return {
+      pathname,
+      search: search ? `?${search}` : '',
+      hash: '',
+      state: null,
+    };
+  }
+
   return {
     pathname,
     search: search ? `?${search}` : '',

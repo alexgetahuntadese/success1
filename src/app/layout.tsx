@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Ethiopian education quiz and study platform",
 };
 
+export const dynamic = 'force-dynamic';
+
 export default function RootLayout({
   children,
 }: {

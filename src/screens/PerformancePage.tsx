@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import StarField from '@/components/StarField';
-import { useNavigate } from '@/lib/router';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, User, Trophy, BookOpen, Target } from 'lucide-react';
@@ -22,7 +22,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { getProfileDisplayName, getProfileKey } from '@/lib/profileUtils';
 
 const PerformancePage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { t } = useLanguage();
   const { user, profile } = useAuth();
   const [data, setData] = useState<PerformanceData | null>(null);
@@ -67,7 +67,7 @@ const PerformancePage = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => navigate('/')}
+              onClick={() => router.push('/')}
               className="text-white hover:bg-white/10"
             >
               <ArrowLeft className="h-6 w-6" />
@@ -81,7 +81,7 @@ const PerformancePage = () => {
           </div>
           <Button
             variant="outline"
-            onClick={() => navigate('/profile')}
+            onClick={() => router.push('/profile')}
             className="border-white/[0.08] text-white hover:bg-white/10"
           >
             <User className="mr-2 h-4 w-4" />

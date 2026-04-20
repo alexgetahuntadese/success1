@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import React from 'react';
-import { useNavigate, useLocation } from '@/lib/router';
+import { useRouter, usePathname } from 'next/navigation';
 import { User, Home, GraduationCap, BookOpen, Briefcase, FileText, Menu, X, CreditCard, Download, LogOut, LogIn, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,15 +17,15 @@ import AppLogo from '@/components/AppLogo';
 import { useAuth } from '@/hooks/useAuth';
 
 const TopBar = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
   const { displayName, isAdmin, isAuthenticated, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const isActive = useCallback((path: string) => {
-    if (path === '/') return location.pathname === path;
-    return location.pathname === path || location.pathname.startsWith(`${path}/`);
-  }, [location.pathname]);
+    if (path === '/') return pathname === path;
+    return pathname === path || pathname.startsWith(`${path}/`);
+  }, [pathname]);
 
   const navItems = useMemo(() => [
     { path: '/', icon: Home, label: 'Home' },
@@ -44,13 +44,13 @@ const TopBar = () => {
   const handleSignOut = useCallback(async () => {
     await signOut();
     setIsOpen(false);
-    navigate('/');
-  }, [signOut, navigate]);
+    router.push('/');
+  }, [signOut, router]);
 
   const handleNavigate = useCallback((path: string) => {
-    navigate(path);
+    router.push(path);
     setIsOpen(false);
-  }, [navigate]);
+  }, [router]);
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.12] bg-purple-950/90 px-3 py-2 shadow-[0_10px_35px_rgba(10,10,30,0.35)] backdrop-blur-xl sm:px-4">

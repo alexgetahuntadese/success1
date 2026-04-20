@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import StarField from '@/components/StarField';
-import { useParams, useNavigate, Navigate } from '@/lib/router';
 
 import QuestionCard from '@/components/QuestionCard';
 import Results from '@/components/Results';
@@ -14,17 +14,21 @@ import { useAuth } from "@/hooks/useAuth";
 import { isFreeChapter } from '@/lib/paymentAccess';
 import { getQuestionsForSubject, getQuizChapterTitles, type QuizQuestion } from '@/lib/quizContentLoader';
 
+interface QuizPageProps {
+  grade: string;
+  subject: string;
+  chapterId: string;
+  difficulty: string;
+}
+
 const unsupportedGrade12QuizSubjects = new Set([
 ]);
 
-const QuizPage = () => {
-  const params = useParams();
-  const navigate = useNavigate();
+const QuizPage = ({ grade, subject, chapterId: chapterIdParam, difficulty: difficultyParam }: QuizPageProps) => {
+  const router = useRouter();
   const { hasPremiumAccess: premiumAccess } = useAuth();
-  const subject = params.subject;
-  const chapterId = params.chapterId ? decodeURIComponent(params.chapterId) : null;
-  const difficulty = params.difficulty;
-  const grade = params.grade;
+  const chapterId = chapterIdParam ? decodeURIComponent(chapterIdParam) : null;
+  const difficulty = difficultyParam;
   
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -147,15 +151,15 @@ const QuizPage = () => {
 
   const handleBackToChapters = () => {
     if (grade && subject) {
-      navigate(`/grade/${grade}/subject/${subject}/chapters`);
+      router.push(`/grade/${grade}/subject/${subject}/chapters`);
     } else {
-      navigate(-1);
+      router.back();
     }
   };
 
   const handleOpenLiveRoom = () => {
     const query = subject && grade ? `?grade=${encodeURIComponent(grade)}&subject=${encodeURIComponent(subject)}` : '';
-    navigate(`/matric/room${query}`);
+    router.push(`/matric/room${query}`);
   };
 
   if (isLoading) {
