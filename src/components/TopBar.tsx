@@ -32,7 +32,6 @@ const TopBar = () => {
     { path: '/matric', icon: FileText, label: 'Matric' },
     { path: '/notes', icon: BookOpen, label: 'Notes' },
     { path: '/books', icon: Download, label: 'Books' },
-    { path: '/webrtc', icon: Video, label: 'Live Call' },
     { path: '/career-simulator', icon: Briefcase, label: 'Career' },
     ...(isAdmin ? [{ path: '/dashboard', icon: User, label: 'Dashboard' }] : []),
   ];

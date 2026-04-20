@@ -39,13 +39,11 @@ const NotesSubjectsPage = lazy(() => import('./screens/NotesSubjectsPage'));
 const NotesChaptersPage = lazy(() => import('./screens/NotesChaptersPage'));
 const BooksPage = lazy(() => import('./screens/BooksPage'));
 const BookSubjectsPage = lazy(() => import('./screens/BookSubjectsPage'));
-const WebRtcPage = lazy(() => import('./screens/WebRtcPage'));
 const HostPage = lazy(() => import('./screens/HostPage'));
 const JoinPage = lazy(() => import('./screens/JoinPage'));
 const SessionPage = lazy(() => import('./screens/SessionPage'));
 const MatricStudyRoomPage = lazy(() => import('./screens/MatricStudyRoomPage'));
 const MatricExamSessionPage = lazy(() => import('./screens/MatricExamSessionPage'));
-const VideoLobbyPage = lazy(() => import('./screens/VideoLobbyPage'));
 
 type Params = Record<string, string>;
 
@@ -108,7 +106,6 @@ const routes: AppRoute[] = [
   { pattern: '/matric/room', guard: 'protected', component: MatricStudyRoomPage },
   { pattern: '/matric/room/:roomId', guard: 'protected', component: MatricStudyRoomPage },
   { pattern: '/matric/session/:roomId', guard: 'protected', component: MatricExamSessionPage },
-  { pattern: '/matric/video/:roomId', guard: 'protected', component: VideoLobbyPage },
   { pattern: '/notes', guard: 'protected', component: NotesPage },
   { pattern: '/notes/:grade', guard: 'protected', component: NotesSubjectsPage },
   { pattern: '/notes/:grade/:subject', guard: 'protected', component: NotesChaptersPage },
@@ -118,7 +115,6 @@ const routes: AppRoute[] = [
   { pattern: '/host', guard: 'protected', component: HostPage },
   { pattern: '/join', guard: 'protected', component: JoinPage },
   { pattern: '/session/:sessionCode', guard: 'protected', component: SessionPage },
-  { pattern: '/webrtc', guard: 'protected', component: WebRtcPage },
   { pattern: '/debug/auth', guard: 'protected', component: lazy(async () => ({ default: DebugAuthPage })) },
   { pattern: '/login', guard: 'public', component: LoginPage },
   { pattern: '/signup', guard: 'public', component: SignUpPage },

@@ -10,8 +10,6 @@ import { Label } from "@/components/ui/label";
 import { Clock, Users, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BeautifulLoader } from "@/components/BeautifulLoader";
-import { useWebRTC } from "@/hooks/useWebRTC";
-import { useAntiCheat } from "@/hooks/useAntiCheat";
 import { toast } from "sonner";
 import { getMatricQuestions } from "@/data/matricExams";
 
@@ -61,26 +59,6 @@ const MatricExamSessionPage = () => {
   const [showResults, setShowResults] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // WebRTC hook for video during exam
-  const {
-    localStream,
-    remoteStreams,
-    isVideoEnabled,
-    isAudioEnabled,
-    startLocalVideo,
-    toggleVideo,
-    toggleAudio,
-    cleanup: cleanupWebRTC
-  } = useWebRTC(roomId || "", user?.id || "");
-
-  // Anti-cheat hook
-  const {
-    violations: antiCheatViolations,
-    activateMonitoring,
-    deactivateMonitoring,
-    reportViolation
-  } = useAntiCheat();
-
   useEffect(() => {
     const initializeExamSession = async () => {
       if (!roomId) return;
@@ -88,9 +66,6 @@ const MatricExamSessionPage = () => {
       try {
         // Load exam session
         await loadExamSession();
-        
-        // Start video for exam monitoring
-        await startLocalVideo();
       } catch (error) {
         console.error('Failed to initialize exam session:', error);
         toast.error("Failed to load exam session");
@@ -99,11 +74,6 @@ const MatricExamSessionPage = () => {
     };
 
     initializeExamSession();
-
-    return () => {
-      deactivateMonitoring();
-      cleanupWebRTC();
-    };
   }, [roomId]);
 
   useEffect(() => {
@@ -234,9 +204,6 @@ const MatricExamSessionPage = () => {
       const score = Math.round((correct / questions.length) * 100);
       
       const results = { score, answers: userParticipant.answers };
-      
-      // Submit results via socket for real-time sync
-      socketService.socket?.emit('exam:finish', session.roomId, results);
       
       const updatedSession = {
         ...session,
@@ -509,29 +476,6 @@ const MatricExamSessionPage = () => {
               </CardContent>
             </Card>
 
-            {/* Violations */}
-            {(antiCheatViolations.length > 0 || !isVideoEnabled) && (
-              <Card className="bg-red-500/10 backdrop-blur-lg border-red-500/20">
-                <CardHeader>
-                  <CardTitle className="text-lg text-red-200 flex items-center">
-                    <AlertCircle className="mr-2 h-5 w-5" />
-                    Violations
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {!isVideoEnabled && (
-                    <div className="text-red-300 text-sm mb-2">
-                      Camera is disabled
-                    </div>
-                  )}
-                  {antiCheatViolations.map((violation, index) => (
-                    <div key={index} className="text-red-300 text-xs">
-                      {violation}
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            )}
           </div>
         </div>
       </div>

@@ -88,45 +88,6 @@ const io = new SocketIOServer(httpServer, {
   },
 });
 
-// Minimal 1:1 signaling by room.
-io.on("connection", (socket) => {
-  socket.on("webrtc:join-room", ({ roomId, displayName }) => {
-    if (!roomId || typeof roomId !== "string") return;
-    socket.join(roomId);
-    socket.data.roomId = roomId;
-    socket.data.displayName = displayName || "Student";
-
-    const room = io.sockets.adapter.rooms.get(roomId);
-    const peers = room ? Array.from(room).filter((id) => id !== socket.id) : [];
-    socket.emit("webrtc:room-users", peers);
-    socket.to(roomId).emit("webrtc:user-joined", {
-      socketId: socket.id,
-      displayName: socket.data.displayName,
-    });
-  });
-
-  socket.on("webrtc:offer", ({ target, sdp }) => {
-    if (!target || !sdp) return;
-    io.to(target).emit("webrtc:offer", { from: socket.id, sdp });
-  });
-
-  socket.on("webrtc:answer", ({ target, sdp }) => {
-    if (!target || !sdp) return;
-    io.to(target).emit("webrtc:answer", { from: socket.id, sdp });
-  });
-
-  socket.on("webrtc:ice-candidate", ({ target, candidate }) => {
-    if (!target || !candidate) return;
-    io.to(target).emit("webrtc:ice-candidate", { from: socket.id, candidate });
-  });
-
-  socket.on("disconnect", () => {
-    if (socket.data.roomId) {
-      socket.to(socket.data.roomId).emit("webrtc:user-left", { socketId: socket.id });
-    }
-  });
-});
-
 httpServer.listen(Number(PORT), () => {
   console.log(`Auth server listening on http://localhost:${PORT}`);
 });

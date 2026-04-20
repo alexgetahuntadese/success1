@@ -303,15 +303,6 @@ const MatricStudyRoomPage = () => {
                 <UserPlus className="mr-2 h-4 w-4" />
                 Invite
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={openVideoRoom}
-                className="text-white/70 border-white/20 hover:text-white"
-              >
-                <ArrowRight className="mr-2 h-4 w-4" />
-                Open Video Room
-              </Button>
             </div>
           )}
         </div>
