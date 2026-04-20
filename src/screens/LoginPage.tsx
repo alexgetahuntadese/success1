@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useCallback } from "react";
 import { useNavigate, Link, useLocation } from "@/lib/router";
 import { useAuth } from "@/contexts/auth-context";
