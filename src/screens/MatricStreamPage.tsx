@@ -1,10 +1,8 @@
-import { useParams, useNavigate } from '@/lib/router';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, BookOpen, FlaskConical, Landmark, Users, Clock, TrendingUp, Sparkles } from 'lucide-react';
-import TopBar from '@/components/TopBar';
-import StarField from '@/components/StarField';
+import { useRouter } from 'next/navigation';
+
+interface MatricStreamPageProps {
+  year: string;
+}
 import { getMatricStreamsForYear } from '@/data/matricExams';
 
 const streamIcons = {

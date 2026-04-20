@@ -1,4 +1,4 @@
-import { useNavigate } from '@/lib/router';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +8,7 @@ import StarField from '@/components/StarField';
 import { getMatricStreamsForYear, getMatricYears } from '@/data/matricExams';
 
 const MatricExamPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const yearSummaries = getMatricYears().map((year) => {
     const streams = getMatricStreamsForYear(year);
     const totalQuestions = streams.reduce(
@@ -29,7 +29,7 @@ const MatricExamPage = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
           >
             <ArrowLeft className="h-5 w-5" />

@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { useParams, useNavigate, Navigate } from '@/lib/router';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,9 +12,14 @@ import { useAuth } from '@/hooks/useAuth';
 import { isFreeMatricSubject } from '@/lib/paymentAccess';
 import { getMatricQuestions, getMatricSubjectIndex } from '@/data/matricExams';
 
-const MatricQuizPage = () => {
-  const { year, stream, subject } = useParams<{ year: string; stream: string; subject: string }>();
-  const navigate = useNavigate();
+interface MatricQuizPageProps {
+  year: string;
+  stream?: string;
+  subject: string;
+}
+
+const MatricQuizPage = ({ year, stream, subject }: MatricQuizPageProps) => {
+  const router = useRouter();
   const { hasPremiumAccess } = useAuth();
   const yearNum = Number(year);
   const streamKey = stream ?? 'natural';

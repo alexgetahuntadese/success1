@@ -55,8 +55,7 @@ const subjectColors: Record<string, string> = {
   "Scholastic Aptitude Test": 'from-violet-500 to-purple-600',
 };
 
-const MatricYearPage = () => {
-  const { year, stream } = useParams<{ year: string; stream: string }>();
+const MatricYearPage = ({ year, stream }: MatricYearPageProps) => {
   const navigate = useNavigate();
   const { hasPremiumAccess: premiumAccess } = useAuth();
   const yearNum = Number(year);

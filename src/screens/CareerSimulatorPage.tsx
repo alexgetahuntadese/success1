@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import StarField from '@/components/StarField';
-import { useNavigate } from '@/lib/router';
+import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
