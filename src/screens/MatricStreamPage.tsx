@@ -1,9 +1,15 @@
 import { useRouter } from 'next/navigation';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, BookOpen, TrendingUp, Users, Clock, Sparkles, FlaskConical, Landmark } from 'lucide-react';
+import TopBar from '@/components/TopBar';
+import StarField from '@/components/StarField';
+import { getMatricStreamsForYear } from '@/data/matricExams';
 
 interface MatricStreamPageProps {
   year: string;
 }
-import { getMatricStreamsForYear } from '@/data/matricExams';
 
 const streamIcons = {
   natural: FlaskConical,
@@ -23,9 +29,8 @@ const streamInfo = {
   }
 } as const;
 
-const MatricStreamPage = () => {
-  const { year } = useParams<{ year: string }>();
-  const navigate = useNavigate();
+const MatricStreamPage = ({ year }: MatricStreamPageProps) => {
+  const router = useRouter();
   const yearNum = Number(year);
   const streams = getMatricStreamsForYear(yearNum);
 
@@ -39,7 +44,7 @@ const MatricStreamPage = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate('/matric')}
+            onClick={() => router.push('/matric')}
             className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -79,7 +84,7 @@ const MatricStreamPage = () => {
                 <div className={`absolute -inset-1 bg-gradient-to-r ${info.color} rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500`} />
                 <Card
                   className="relative bg-white/[0.04] backdrop-blur-xl border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300 cursor-pointer group h-full"
-                  onClick={() => navigate(`/matric/${yearNum}/${stream.key}`)}
+                  onClick={() => router.push(`/matric/${yearNum}/${stream.key}`)}
                 >
                   <CardHeader className="pb-4">
                     <div className="flex items-center gap-4 mb-3">
@@ -121,7 +126,7 @@ const MatricStreamPage = () => {
                         className={`w-full bg-gradient-to-r ${info.color} hover:opacity-90 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/matric/${yearNum}/${stream.key}`);
+                          router.push(`/matric/${yearNum}/${stream.key}`);
                         }}
                       >
                         View Subjects

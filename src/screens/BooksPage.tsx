@@ -39,7 +39,7 @@ const BooksPage = () => {
           {booksByGrade.map((grade, index) => (
             <div
               key={grade.grade}
-              onClick={() => navigate(`/books/${grade.grade}`)}
+              onClick={() => router.push(`/books/${grade.grade}`)}
               className="group relative cursor-pointer opacity-0 animate-fade-in"
               style={{ animationDelay: `${0.2 + index * 0.1}s`, animationFillMode: "forwards" }}
             >

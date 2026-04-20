@@ -58,7 +58,8 @@ const NotesSubjectsPage = ({ grade }: NotesSubjectsPageProps) => {
   const gradeData = getNotesGrade(gradeNumber);
 
   if (!gradeData) {
-    return <Navigate to="/notes" replace />;
+    router.push('/notes');
+    return null;
   }
 
   const groupedSubjects = categoryOrder

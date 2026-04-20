@@ -315,7 +315,8 @@ const QuizPage = ({ grade, subject, chapterId: chapterIdParam, difficulty: diffi
   const lockedChapter = chapterIndex >= 0 && !premiumAccess && !isFreeChapter(chapterIndex);
 
   if (lockedChapter) {
-    return <Navigate to="/payment" replace />;
+    router.push('/payment');
+    return null;
   }
 
   if (!currentQuestion) {

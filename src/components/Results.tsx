@@ -44,9 +44,8 @@ const Results = ({
   subject,
   chapter,
   difficulty
-}: Resulrous)r => {Rour
-  const navigate = useNavigate();
-  const params = useParams();
+}: ResultsProps) => {
+  const router = useRouter();
   const { t } = useLanguage();
   const { user, profile } = useAuth();
   const hasSavedAttemptRef = useRef(false);
@@ -100,10 +99,10 @@ const Results = ({
   };
 
   const handleBackToChapters = () => {
-    if (params.grade && params.subject) {
-      navigate(`/grade/${params.grade}/subject/${params.subject}/chapters`);
+    if (grade && subject) {
+      router.push(`/grade/${grade}/subject/${subject}/chapters`);
     } else {
-      navigate(-1);
+      router.back();
     }
   };
 
@@ -194,7 +193,7 @@ const Results = ({
               {t('results.retake')}
             </Button>
             <Button 
-              onClick={() => navigate('/performance')}
+              onClick={() => router.push('/performance')}
               className="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white shadow-lg hover:shadow-emerald-500/30 transition-all duration-300"
             >
               <TrendingUp className="mr-2 h-4 w-4" />

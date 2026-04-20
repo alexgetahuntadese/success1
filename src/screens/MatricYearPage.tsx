@@ -1,4 +1,9 @@
-import { useParams, useNavigate } from '@/lib/router';
+import { useRouter } from 'next/navigation';
+
+interface MatricYearPageProps {
+  year: string;
+  stream?: string;
+}
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -56,7 +61,7 @@ const subjectColors: Record<string, string> = {
 };
 
 const MatricYearPage = ({ year, stream }: MatricYearPageProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { hasPremiumAccess: premiumAccess } = useAuth();
   const yearNum = Number(year);
   const streamKey = stream ?? 'natural';
@@ -73,7 +78,7 @@ const MatricYearPage = ({ year, stream }: MatricYearPageProps) => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate(`/matric/${yearNum}`)}
+            onClick={() => router.push(`/matric/${yearNum}`)}
             className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -132,11 +137,11 @@ const MatricYearPage = ({ year, stream }: MatricYearPageProps) => {
                     }
 
                     if (locked) {
-                      navigate("/payment");
+                      router.push("/payment");
                       return;
                     }
 
-                    navigate(`/matric/${yearNum}/${streamKey}/${subj.subject}`);
+                    router.push(`/matric/${yearNum}/${streamKey}/${subj.subject}`);
                   }}
                 >
                   <CardHeader className="pb-3">
@@ -180,10 +185,10 @@ const MatricYearPage = ({ year, stream }: MatricYearPageProps) => {
                           onClick={(e) => {
                             e.stopPropagation();
                             if (locked) {
-                              navigate("/payment");
+                              router.push("/payment");
                               return;
                             }
-                            navigate(`/matric/${yearNum}/${streamKey}/${subj.subject}`);
+                            router.push(`/matric/${yearNum}/${streamKey}/${subj.subject}`);
                           }}
                         >
                           {isFreeMatricSubject(index) ? "Start Free Exam" : "Start Exam"}
@@ -195,7 +200,7 @@ const MatricYearPage = ({ year, stream }: MatricYearPageProps) => {
                           className="w-full border-white/20 text-white hover:bg-white/10"
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate("/payment");
+                            router.push("/payment");
                           }}
                         >
                           <Lock className="mr-2 h-4 w-4" />

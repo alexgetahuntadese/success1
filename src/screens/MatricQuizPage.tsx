@@ -82,11 +82,12 @@ const MatricQuizPage = ({ year, stream, subject }: MatricQuizPageProps) => {
   }
 
   if (locked) {
-    return <Navigate to="/payment" replace />;
+    router.push('/payment');
+    return null;
   }
 
   const handleStartCollaborativeQuiz = () => {
-    navigate(`/matric/room?year=${yearNum}&stream=${encodeURIComponent(streamKey)}&subject=${encodeURIComponent(subject ?? '')}`);
+    router.push(`/matric/room?year=${yearNum}&stream=${encodeURIComponent(streamKey)}&subject=${encodeURIComponent(subject ?? '')}`);
   };
 
   if (questions.length === 0) {

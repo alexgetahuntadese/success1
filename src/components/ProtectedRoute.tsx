@@ -9,7 +9,7 @@ type ProtectedRouteProps = {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { isAuthenticated, isLoading } = useAuth();
-  const location = useRouter();
+  const router = useRouter();
 
   if (isLoading) {
     return (
@@ -20,7 +20,6 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   if (!isAuthenticated) {
-    const router = useRouter();
     router.push('/login');
     return null;
   }

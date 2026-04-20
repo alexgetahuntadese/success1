@@ -21,7 +21,7 @@ interface Choice {
 }
 
 const CareerSimulatorPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { toast } = useToast();
   const { language } = useLanguage();
   const [stage, setStage] = useState<Stage>('select');
@@ -98,7 +98,7 @@ const CareerSimulatorPage = () => {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="text-white hover:bg-white/10">
+          <Button variant="ghost" size="icon" onClick={() => router.push('/')} className="text-white hover:bg-white/10">
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
@@ -331,7 +331,7 @@ const CareerSimulatorPage = () => {
               <Button onClick={handleRestart} className="bg-white/10 hover:bg-white/20 text-white">
                 <RotateCcw className="h-4 w-4 mr-2" /> Try Another Career
               </Button>
-              <Button onClick={() => navigate('/')} variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <Button onClick={() => router.push('/')} variant="outline" className="border-white/20 text-white hover:bg-white/10">
                 Home
               </Button>
             </div>
