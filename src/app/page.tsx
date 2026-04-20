@@ -1,11 +1,14 @@
 'use client';
 
-import dynamic from 'next/dynamic';
+import { lazy, Suspense } from 'react';
+import PageLoader from '@/components/PageLoader';
 
-const App = dynamic(() => import('@/App'), {
-  ssr: false,
-});
+const Index = lazy(() => import('@/screens/Index'));
 
 export default function Home() {
-  return <App />;
+  return (
+    <Suspense fallback={<PageLoader />}>
+      <Index />
+    </Suspense>
+  );
 }

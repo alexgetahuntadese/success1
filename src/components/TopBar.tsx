@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from '@/lib/router';
-import { User, Home, GraduationCap, BookOpen, Briefcase, FileText, Menu, X, CreditCard, Download, LogOut, LogIn, ChevronDown, Video } from 'lucide-react';
+import { User, Home, GraduationCap, BookOpen, Briefcase, FileText, Menu, X, CreditCard, Download, LogOut, LogIn, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -21,12 +22,12 @@ const TopBar = () => {
   const { displayName, isAdmin, isAuthenticated, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
-  const isActive = (path: string) => {
+  const isActive = useCallback((path: string) => {
     if (path === '/') return location.pathname === path;
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
-  };
+  }, [location.pathname]);
 
-  const navItems = [
+  const navItems = useMemo(() => [
     { path: '/', icon: Home, label: 'Home' },
     { path: '/grades', icon: GraduationCap, label: 'Grades' },
     { path: '/matric', icon: FileText, label: 'Matric' },
@@ -34,17 +35,22 @@ const TopBar = () => {
     { path: '/books', icon: Download, label: 'Books' },
     { path: '/career-simulator', icon: Briefcase, label: 'Career' },
     ...(isAdmin ? [{ path: '/dashboard', icon: User, label: 'Dashboard' }] : []),
-  ];
+  ], [isAdmin]);
 
-  const mobileAccountItems = [
+  const mobileAccountItems = useMemo(() => [
     ...(isAuthenticated ? [{ path: '/profile', icon: User, label: 'Profile' }] : []),
-  ];
+  ], [isAuthenticated]);
 
-  const handleSignOut = async () => {
+  const handleSignOut = useCallback(async () => {
     await signOut();
     setIsOpen(false);
     navigate('/');
-  };
+  }, [signOut, navigate]);
+
+  const handleNavigate = useCallback((path: string) => {
+    navigate(path);
+    setIsOpen(false);
+  }, [navigate]);
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.12] bg-purple-950/90 px-3 py-2 shadow-[0_10px_35px_rgba(10,10,30,0.35)] backdrop-blur-xl sm:px-4">
@@ -80,10 +86,7 @@ const TopBar = () => {
                       key={item.path}
                       variant={isActive(item.path) ? 'secondary' : 'ghost'}
                       size="sm"
-                      onClick={() => {
-                        navigate(item.path);
-                        setIsOpen(false);
-                      }}
+                      onClick={() => handleNavigate(item.path)}
                       className={`justify-start h-12 text-base ${
                         isActive(item.path)
                           ? 'bg-white/20 text-white'
@@ -99,10 +102,7 @@ const TopBar = () => {
                       key={item.path}
                       variant={isActive(item.path) ? 'secondary' : 'ghost'}
                       size="sm"
-                      onClick={() => {
-                        navigate(item.path);
-                        setIsOpen(false);
-                      }}
+                      onClick={() => handleNavigate(item.path)}
                       className={`justify-start h-12 text-base ${
                         isActive(item.path)
                           ? 'bg-white/20 text-white'
@@ -127,10 +127,7 @@ const TopBar = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => {
-                        navigate('/login');
-                        setIsOpen(false);
-                      }}
+                      onClick={() => handleNavigate('/login')}
                       className="justify-start h-12 text-base text-white/85 hover:bg-white/12 hover:text-white"
                     >
                       <LogIn className="h-5 w-5 mr-3" />
@@ -159,7 +156,7 @@ const TopBar = () => {
               key={item.path}
               variant={isActive(item.path) ? 'secondary' : 'ghost'}
               size="sm"
-              onClick={() => navigate(item.path)}
+              onClick={() => handleNavigate(item.path)}
               className={`shrink-0 px-2.5 ${
                 isActive(item.path)
                   ? 'bg-white/20 text-white'
@@ -236,4 +233,4 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+export default React.memo(TopBar);

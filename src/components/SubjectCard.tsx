@@ -1,5 +1,6 @@
 
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 // import { Progress } from '@/components/ui/progress';
@@ -40,14 +41,16 @@ interface SubjectCardProps {
 const SubjectCard = ({ subject, progress, grade, onSelectQuiz, isMobile = false }: SubjectCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const getProgressColor = (percentage: number) => {
+  const getProgressColor = useCallback((percentage: number) => {
     if (percentage >= 80) return 'text-green-500';
     if (percentage >= 60) return 'text-yellow-500';
     if (percentage >= 40) return 'text-orange-500';
     return 'text-red-500';
-  };
+  }, []);
 
-  const ChapterContent = () => (
+  const progressColor = useMemo(() => getProgressColor(progress.percentage), [progress.percentage, getProgressColor]);
+
+  const ChapterContent = useCallback(() => (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
@@ -99,7 +102,7 @@ const SubjectCard = ({ subject, progress, grade, onSelectQuiz, isMobile = false 
               <Target className="h-4 w-4 text-gray-400" />
               <span className="text-gray-400">Progress</span>
             </div>
-            <span className={`font-medium ${getProgressColor(progress.percentage)}`}>
+            <span className={`font-medium ${progressColor}`}>
               {progress.completed}/{progress.total} completed
             </span>
           </div>
@@ -112,7 +115,7 @@ const SubjectCard = ({ subject, progress, grade, onSelectQuiz, isMobile = false 
           </div>
           
           <div className="text-right">
-            <span className={`text-sm font-medium ${getProgressColor(progress.percentage)}`}>
+            <span className={`text-sm font-medium ${progressColor}`}>
               {progress.percentage}%
             </span>
           </div>
@@ -168,4 +171,4 @@ const SubjectCard = ({ subject, progress, grade, onSelectQuiz, isMobile = false 
   );
 };
 
-export default SubjectCard;
+export default React.memo(SubjectCard);
