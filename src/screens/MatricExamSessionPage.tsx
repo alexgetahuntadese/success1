@@ -10,7 +10,6 @@ import { Label } from "@/components/ui/label";
 import { Clock, Users, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BeautifulLoader } from "@/components/BeautifulLoader";
-import { VideoGrid } from "@/components/VideoGrid";
 import { useWebRTC } from "@/hooks/useWebRTC";
 import { useAntiCheat } from "@/hooks/useAntiCheat";
 import { toast } from "sonner";
@@ -360,25 +359,6 @@ const MatricExamSessionPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Exam Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Video Grid */}
-            <VideoGrid
-              localStream={localStream}
-              remoteStreams={remoteStreams}
-              participants={session.participants.map(p => ({
-                id: p.id,
-                name: p.name,
-                isHost: false,
-                videoEnabled: true,
-                audioEnabled: true
-              }))}
-              currentUserId={user?.id || ""}
-              isVideoEnabled={isVideoEnabled}
-              isAudioEnabled={isAudioEnabled}
-              onToggleVideo={toggleVideo}
-              onToggleAudio={toggleAudio}
-              className="max-h-64"
-            />
-
             {/* Results View */}
             {showResults && userParticipant?.score !== undefined ? (
               <motion.div

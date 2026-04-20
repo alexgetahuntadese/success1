@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Eye, Clock, Target, Brain, CheckCircle2, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Eye, Clock, Target, Brain, CheckCircle2, RotateCcw, Play } from 'lucide-react';
 import TopBar from "@/components/TopBar";
 import { useAuth } from "@/hooks/useAuth";
 import { isFreeChapter } from '@/lib/paymentAccess';
