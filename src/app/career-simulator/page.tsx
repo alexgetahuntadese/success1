@@ -6,6 +6,8 @@ import PageLoader from '@/components/PageLoader';
 
 const CareerSimulatorPage = lazy(() => import('@/screens/CareerSimulatorPage'));
 
+export const dynamic = 'force-dynamic';
+
 export default function CareerSimulatorPageRoute() {
   return (
     <ProtectedRoute>

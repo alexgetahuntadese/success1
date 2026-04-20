@@ -6,6 +6,8 @@ import PageLoader from '@/components/PageLoader';
 
 const LoginPage = lazy(() => import('@/screens/LoginPage'));
 
+export const dynamic = 'force-dynamic';
+
 export default function LoginPageRoute() {
   return (
     <PublicRoute>

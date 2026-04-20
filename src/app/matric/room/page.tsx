@@ -6,6 +6,8 @@ import PageLoader from '@/components/PageLoader';
 
 const MatricStudyRoomPage = lazy(() => import('@/screens/MatricStudyRoomPage'));
 
+export const dynamic = 'force-dynamic';
+
 export default function MatricStudyRoomPageRoute() {
   return (
     <ProtectedRoute>

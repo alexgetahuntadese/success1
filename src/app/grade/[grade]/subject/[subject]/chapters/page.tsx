@@ -6,6 +6,8 @@ import PageLoader from '@/components/PageLoader';
 
 const ChaptersPage = lazy(() => import('@/screens/ChaptersPage'));
 
+export const dynamic = 'force-dynamic';
+
 export default function ChaptersPageRoute({ params }: { params: { grade: string; subject: string } }) {
   return (
     <ProtectedRoute>

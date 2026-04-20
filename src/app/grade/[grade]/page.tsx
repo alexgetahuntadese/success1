@@ -6,6 +6,8 @@ import PageLoader from '@/components/PageLoader';
 
 const GradeSelection = lazy(() => import('@/screens/GradeSelection'));
 
+export const dynamic = 'force-dynamic';
+
 export default function GradeSelectionPage({ params }: { params: { grade: string } }) {
   return (
     <ProtectedRoute>

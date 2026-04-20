@@ -104,7 +104,3 @@ const GradeSelection = ({ grade }: GradeSelectionProps) => {
 };
 
 export default GradeSelection;
-  );
-};
-
-export default GradeSelection;

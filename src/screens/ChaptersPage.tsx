@@ -50,6 +50,11 @@ import { grade10HistoryQuestions } from '@/data/grade10HistoryQuestions';
 import { grade10AmharicQuestions } from '@/data/grade10AmharicQuestions';
 import { isFreeChapter } from '@/lib/paymentAccess';
 
+interface ChaptersPageProps {
+  grade: string;
+  subject: string;
+}
+
 const ChaptersPage = ({ grade, subject }: ChaptersPageProps) => {
   const router = useRouter();
   const { hasPremiumAccess: premiumAccess } = useAuth();
@@ -1080,7 +1085,7 @@ const ChaptersPage = ({ grade, subject }: ChaptersPageProps) => {
   const handleStartQuiz = (chapterId: number, chapterTitle: string, difficulty: 'Easy' | 'Medium' | 'Hard') => {
     const chapterSlug = encodeURIComponent(chapterTitle);
     const difficultySlug = encodeURIComponent(difficulty);
-    navigate(`/grade/${grade}/subject/${encodeURIComponent(decodedSubject)}/chapter/${chapterSlug}/difficulty/${difficultySlug}/quiz`);
+    router.push(`/grade/${grade}/subject/${encodeURIComponent(decodedSubject)}/chapter/${chapterSlug}/difficulty/${difficultySlug}/quiz`);
   };
 
   const overallProgress = chapters.length
@@ -1096,7 +1101,7 @@ const ChaptersPage = ({ grade, subject }: ChaptersPageProps) => {
         <Button
           variant="ghost"
           className="mb-8 text-white/85 transition-colors hover:bg-white/10 hover:text-white"
-          onClick={() => navigate(`/grade/${grade}/subjects`)}
+          onClick={() => router.push(`/grade/${grade}/subjects`)}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Subjects
