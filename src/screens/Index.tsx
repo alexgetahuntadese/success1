@@ -101,19 +101,16 @@ const Index = () => {
             </h1>
 
             <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
-              The landing page now reflects what the platform actually offers: grade-based learning materials,
-              textbook access, subject quizzes, and Ethiopian entrance exam preparation inspired by the clearer
-              academic structure seen on Kehulum.
+              The Achievement-Oriented Approach
+Focuses on the end goal and elite status.
+Headline: Join the 500+ students Club.
+Sub-headline: The highest scorers have one thing in common: consistent practice. Master the exam with the questions that actually matter.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <button
-                onClick={() => navigate("/signup")}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800"
-              >
-                Create student account
-                <ArrowRight className="h-4 w-4" />
-              </button>
+
+        
+
               <button
                 onClick={() => navigate("/matric")}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-6 py-4 text-base font-semibold text-slate-800 transition hover:border-slate-400 hover:bg-stone-50"
