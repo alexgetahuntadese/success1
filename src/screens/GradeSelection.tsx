@@ -1,11 +1,22 @@
-import { useNavigate } from '@/lib/router';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import StarField from '@/components/StarField';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { GraduationCap, BookOpen, Users } from 'lucide-react';
 
-const GradeSelection = () => {
-  const navigate = useNavigate();
+interface GradeSelectionProps {
+  grade?: string;
+}
+
+const GradeSelection = ({ grade }: GradeSelectionProps) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (grade) {
+      router.push(`/grade/${grade}/subjects`);
+    }
+  }, [grade, router]);
 
   const grades = [
     { number: 9, students: '5,200+', subjects: 10 },
@@ -14,8 +25,8 @@ const GradeSelection = () => {
     { number: 12, students: '8,300+', subjects: 14 },
   ];
 
-  const handleGradeSelect = (grade: number) => {
-    navigate(`/grade/${grade}/subjects`);
+  const handleGradeSelect = (gradeNum: number) => {
+    router.push(`/grade/${gradeNum}/subjects`);
   };
 
   return (
@@ -82,13 +93,17 @@ const GradeSelection = () => {
           <Button 
             variant="outline" 
             className="bg-white/10 border-white/20 text-white hover:bg-white/20"
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
           >
             Home
           </Button>
         </div>
       </div>
     </div>
+  );
+};
+
+export default GradeSelection;
   );
 };
 

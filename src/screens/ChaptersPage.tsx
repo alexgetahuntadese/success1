@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from '@/lib/router';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -6,6 +6,11 @@ import { ArrowLeft, Play, CheckCircle, Clock, BookOpen, Target, Sparkles, Gradua
 import TopBar from "@/components/TopBar";
 import StarField from '@/components/StarField';
 import { useAuth } from "@/hooks/useAuth";
+
+interface ChaptersPageProps {
+  grade: string;
+  subject: string;
+}
 import { grade12Mathematics } from '@/data/grade12Mathematics';
 import { grade12BiologyQuestions } from '@/data/grade12BiologyQuestions';
 import { grade12ChemistryQuestions } from '@/data/grade12ChemistryQuestions';
@@ -45,10 +50,9 @@ import { grade10HistoryQuestions } from '@/data/grade10HistoryQuestions';
 import { grade10AmharicQuestions } from '@/data/grade10AmharicQuestions';
 import { isFreeChapter } from '@/lib/paymentAccess';
 
-const ChaptersPage = () => {
-  const navigate = useNavigate();
+const ChaptersPage = ({ grade, subject }: ChaptersPageProps) => {
+  const router = useRouter();
   const { hasPremiumAccess: premiumAccess } = useAuth();
-  const { grade, subject } = useParams();
   const decodedSubject = decodeURIComponent(subject || '');
   const isUnavailableGrade12QuizSubject =
     grade === '12' &&

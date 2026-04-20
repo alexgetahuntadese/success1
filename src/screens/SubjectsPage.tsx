@@ -71,9 +71,8 @@ const categoryOrder: SubjectCardData['category'][] = [
   'Applied Sciences',
 ];
 
-const SubjectsPage = () => {
-  const navigate = useNavigate();
-  const { grade } = useParams();
+const SubjectsPage = ({ grade }: SubjectsPageProps) => {
+  const router = useRouter();
 
   const subjectIcons = {
     'Mathematics': Calculator,
@@ -282,7 +281,7 @@ const SubjectsPage = () => {
   };
 
   const handleSubjectSelect = (subject: SubjectCardData) => {
-    navigate(`/grade/${grade}/subject/${encodeURIComponent(subject.name)}/chapters`);
+    router.push(`/grade/${grade}/subject/${encodeURIComponent(subject.name)}/chapters`);
   };
 
   return (
@@ -294,7 +293,7 @@ const SubjectsPage = () => {
         <Button
           variant="ghost"
           className="text-white/70 hover:text-white hover:bg-white/5 mb-8 transition-colors"
-          onClick={() => navigate('/grades')}
+          onClick={() => router.push('/grades')}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Grades
